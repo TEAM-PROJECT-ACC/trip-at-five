@@ -12,15 +12,15 @@ export const ClassNamesTest = () => {
 
 	return (
 		<UtilsTestPageLayout testSubTitle={'classNames'}>
-			<div className='test--page__test--area'>
+			<div className='test-page__test-area'>
 				<input
 					type='text'
 					value={classNameValue}
 					onChange={handleChangeClassNames}
 				/>
-				<div className={classNames('test--page__class--names', classNameValue)}>
+				<div className={classNames('test-page__class-names', classNameValue)}>
 					<h2>추가 된 클래스</h2>
-					<div className='test--page__added--class'>{classNameValue}</div>
+					<div className='test-page__added-class'>{classNameValue}</div>
 				</div>
 			</div>
 		</UtilsTestPageLayout>

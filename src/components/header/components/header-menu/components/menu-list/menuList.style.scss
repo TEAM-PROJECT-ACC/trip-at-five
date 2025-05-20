@@ -1,0 +1,29 @@
+.global-header__menu-list {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	width: max-content;
+	top: 100%;
+	right: 0;
+	border: 1px solid;
+	border-radius: 4px;
+	z-index: -1;
+	opacity: 0;
+	transition: all 150ms linear;
+	@include border-c8adff;
+
+	&.show {
+		opacity: 1;
+		z-index: 1000;
+		top: calc(100% + 4px);
+	}
+
+	.global-header__menu-link-btn {
+		padding: 8px 24px;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid;
+			@include border-c8adff;
+		}
+	}
+}
