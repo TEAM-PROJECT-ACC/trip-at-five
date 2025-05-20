@@ -22,7 +22,10 @@ export default function Login() {
         </div>
 
         <div className='login-page bottom'>
-        <p>test</p>
+
+        <div class="kakao">
+        <img  src="https://developers.kakao.com/tool/resource/static/img/button/kakaosync/complete/ko/kakao_login_large_wide.png"/>
+        </div>
         </div>
 
      </div>
