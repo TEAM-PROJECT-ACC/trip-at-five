@@ -1,0 +1,39 @@
+.calendar-text {
+  position: relative;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  background-color: inherit;
+
+  span {
+    margin-left: 1rem;
+    background-color: inherit;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.calendar-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(-0.7rem);
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}

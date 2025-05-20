@@ -1,0 +1,9 @@
+.main-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(to bottom, rgba(90, 0, 92, 0.5), rgba(137, 0, 139, 0.5), rgba(174, 0, 194, 0.5)),
+    url(../../assets/images/main-page/bg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

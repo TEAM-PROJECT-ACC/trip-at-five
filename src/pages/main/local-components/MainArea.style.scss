@@ -1,0 +1,8 @@
+.main-area-container {
+  width: 100%;
+  background-color: transparent;
+
+  & > div {
+    padding: 5rem;
+  }
+}
