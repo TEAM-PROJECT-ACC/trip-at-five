@@ -1,4 +1,5 @@
 // 전역 컴포넌트 관리 폴더입니다.
-import { Header } from './header/Header.component';
+import { AppHeader } from './header/Header.component';
+import { TestPageLayout } from './test-page-layout/TestPageLayout.component';
 
-export { Header };
+export { AppHeader, TestPageLayout };

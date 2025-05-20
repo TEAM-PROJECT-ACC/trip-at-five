@@ -1,0 +1,13 @@
+// 색상 관련 css 추가
+
+@mixin main-color {
+	& {
+		color: #5500ff;
+	}
+}
+
+@mixin main-color-border {
+	& {
+		border-color: #5500ff;
+	}
+}
