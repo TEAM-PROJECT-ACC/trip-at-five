@@ -1,20 +1,30 @@
 /*logins.css*/
 
 .login-wrap {
-    border: 1px solid black ;
+    border: px solid black ;
+    border: 1px solid rgba(255, 255, 255) ;
     width: 500px;
     height: 650px;
+    margin: auto;
+    margin-top: 10%;
+    
+    box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
+    // filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.5));
+
+
 }
 
 .login-page {
     border: px solid black ;
-    width: 80%;
-    margin-top: 6%;
-    margin-left: 8%;
+    width: 340px;
+    margin-top: 13%;
+    margin-left: 80px;
 }
 
 .up { height: 10%; text-align: center; }
-.mid { height: 30%; 
+.mid { 
+    height: 30%; 
+    // margin-top: 8%;
     input {
         border: px solid black ;
         margin-top: 5%;
@@ -22,11 +32,13 @@
         width: 100%;
         height: 15%;
         font-size: 16px;
+        background-color: transparent;
     }
 
     input:hover {
         border-bottom: 1px solid #5500FF;
         font-size: 16px;
+        background-color: transparent;
     }
 
     p {
@@ -56,10 +68,10 @@
 
 }
 .bottom { 
-     height: 30%; 
-     .kakao {
-        width: 100%;
-        height: 20px;
+     height: 20%; 
+     margin-top: 8%;
+     img {
+        margin-bottom: 10px;
      }
 }
 

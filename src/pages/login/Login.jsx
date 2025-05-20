@@ -1,5 +1,10 @@
 import './login.scss'
 import '../../reset.scss';
+import kakao from './resource/kakao-sns-auth-btn.png'
+import naver from './resource/naver-sns-auth-btn.png'
+import google from './resource/google-sns-auth-btn.png'
+
+
 
 export default function Login() {
     return (
@@ -14,17 +19,20 @@ export default function Login() {
             <button className="sendBtn">이메일로 시작하기</button>
             <br/>
             <div> 
-                <span>회원가입</span>
-                <span>비밀번호 재설정</span>
+                <button><span>회원가입</span></button>
+                <button><span>비밀번호 재설정</span></button>
             </div> 
             <br/>
             <hr/>
         </div>
+        
 
         <div className='login-page bottom'>
 
         <div className="sns-logo">
-        <img  src="https://developers.kakao.com/tool/resource/static/img/button/kakaosync/complete/ko/kakao_login_large_wide.png"/>
+        <button><img src={kakao} alt="카카오 로그인 이미지"/></button>
+        <button><img src={naver} alt="카카오 로그인 이미지"/></button>
+        <button><img src={google} alt="카카오 로그인 이미지"/></button>
         </div>
         </div>
 
