@@ -3,7 +3,7 @@ import './Banner.style.scss';
 
 const Banner = () => {
   return (
-    <div className='banner-container'>
+    <div className='banner__container'>
       <p className='banner-text'>
         여행다섯시가 찾아낸 가장 아름다운 곳에서,
         <br />

@@ -4,7 +4,7 @@ import MainArea from './local-components/MainArea.component';
 
 const Main = () => {
   return (
-    <div className='main-page-container'>
+    <div className='main-page__container'>
       <MainArea />
     </div>
   );

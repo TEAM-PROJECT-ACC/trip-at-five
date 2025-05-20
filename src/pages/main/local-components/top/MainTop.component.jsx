@@ -5,7 +5,7 @@ import './MainTop.style.scss';
 
 const MainTop = () => {
   return (
-    <div className='main-top-container'>
+    <div className='main-top__container'>
       <Banner />
       <SearchArea />
     </div>

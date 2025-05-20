@@ -8,13 +8,10 @@ import { FaCalendar } from '../../../assets/icons/index';
 import { useAccomSearchStore } from '../../../states';
 
 const AccomCalendar = ({ ...props }) => {
-  const { keyword, checkIn, checkOut, tripDay, numberOfPeople } = useAccomSearchStore((state) => state);
-  const { setKeywordState, setCheckInState, setCheckOutState, setTripDayState, setNumberOfPeople } = useAccomSearchStore((state) => state.actions);
+  const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
+  const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state.actions);
 
   const [calendarFlag, setCalendarFlag] = useState(false);
-  // const [checkInDate, setCheckInDate] = useState();
-  // const [checkOutDate, setCheckOutDate] = useState();
-  // const [tripDay, setTripDay] = useState(1);
 
   const [state, setState] = useState([
     {
@@ -24,39 +21,65 @@ const AccomCalendar = ({ ...props }) => {
     },
   ]);
 
-  const getCheckDate = (start, end) => {
-    setCheckInState(start.getMonth() + '.' + start.getDate());
-    setCheckOutState(end.getMonth() + '.' + end.getDate());
-  };
-
-  const calculatorDay = (start, end) => {
-    setTripDayState(end.getDate() - start.getDate());
-  };
-
   useEffect(() => {
-    // console.log('keyword : ' + keyword);
-    // console.log('checkIn : ' + checkIn);
-    // console.log('checkOut : ' + checkOut);
-    // console.log('numberOfPeople : ' + numberOfPeople);
+    const start = state[0].startDate;
+    const end = state[0].endDate;
 
-    // console.log(state);
-    getCheckDate(state[0].startDate, state[0].endDate);
-    calculatorDay(state[0].startDate, state[0].endDate);
-  }, [state]);
+    if (end && start && end.getTime() !== start.getTime()) {
+      const startDateText = `${start.getMonth() + 1}.${start.getDate()}`;
+      const endDateText = `${end.getMonth() + 1}.${end.getDate()}`;
+      setCheckInState(startDateText);
+      setCheckOutState(endDateText);
+
+      const diffTime = end.getTime() - start.getTime();
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      if (diffDays <= 0) {
+        resetState();
+      } else {
+        setTripDayState(diffDays);
+      }
+    }
+  }, [state[0].endDate]);
+
+  const dateHandler = (item) => {
+    setState(item);
+  };
+
+  const dayHandler = (day) => {
+    switch (day) {
+      case 0:
+        return '일';
+      case 1:
+        return '월';
+      case 2:
+        return '화';
+      case 3:
+        return '수';
+      case 4:
+        return '목';
+      case 5:
+        return '금';
+      case 6:
+        return '토';
+      default:
+        return '';
+    }
+  };
 
   return (
     <div {...props}>
       <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
         <FaCalendar className='calendar-icon' />
         <span>
-          {checkIn} {state[0].startDate.getDay()} ~ {checkOut} ({tripDay}박)
+          {checkIn} {dayHandler(state[0].startDate.getDay())} ~ {checkOut} {dayHandler(state[0].endDate.getDay())} ({tripDay}박)
         </span>
       </div>
-      <div className={`calendar-container ${calendarFlag ? 'visible' : ''}`}>
+      <div className={`calendar__container ${calendarFlag ? 'visible' : ''}`}>
         {calendarFlag && (
           <DateRange
             editableDateInputs={true}
-            onChange={(item) => setState([item.selection])}
+            minDate={new Date()}
+            onChange={(item) => dateHandler([item.selection])}
             moveRangeOnFirstSelection={false}
             ranges={state}
             months={2}

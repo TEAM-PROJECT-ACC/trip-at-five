@@ -3,10 +3,10 @@
   font-size: 1.3rem;
   display: flex;
   align-items: center;
-  color: #5500ff;
+  @include color-5500ff;
 
   .calendar-icon {
-    color: #5500ff;
+    @include color-5500ff;
   }
 
   span {
@@ -18,7 +18,7 @@
   }
 }
 
-.calendar-container {
+.calendar__container {
   width: 100%;
   display: flex;
   align-items: center;
@@ -38,5 +38,10 @@
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+  }
+
+  .rdrCalendarWrapper,
+  .rdrDateDisplayWrapper {
+    border-radius: 0.7rem;
   }
 }

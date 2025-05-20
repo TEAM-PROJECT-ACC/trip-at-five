@@ -5,7 +5,7 @@ import MainBottom from './bottom/MainBottom.component';
 
 const MainArea = () => {
   return (
-    <div className='main-area-container'>
+    <div className='main-area__container'>
       <MainTop />
       <MainBottom />
     </div>

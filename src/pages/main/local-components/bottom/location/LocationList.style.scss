@@ -1,12 +1,12 @@
-.location-list-container {
+.location-list__container {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  background-color: transparent;
   gap: 3rem;
 
   & > div {
-    width: calc(100% / 8);
+    width: calc(100% / 10);
     display: flex;
     align-items: center;
     justify-content: center;

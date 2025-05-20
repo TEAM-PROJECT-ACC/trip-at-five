@@ -4,7 +4,7 @@ import LocationList from './location/LocationList.component';
 
 const MainBottom = () => {
   return (
-    <div className='main-bottom-container'>
+    <div className='main-bottom__container'>
       <LocationList />
     </div>
   );

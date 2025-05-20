@@ -7,7 +7,7 @@ const LocationList = () => {
   const colorArr = ['red', 'orange', 'yellow', 'green', 'blue', 'darkblue', 'purple', 'black'];
 
   return (
-    <div className='location-list-container'>
+    <div className='location-list__container'>
       {locationName.map((name, idx) => {
         return (
           <div key={idx} style={{ backgroundColor: `${colorArr[idx]}` }}>
