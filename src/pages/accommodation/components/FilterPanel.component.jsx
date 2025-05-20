@@ -1,54 +1,54 @@
-import { FaHotel } from "../../../assets/icons/ys/index";
-import "./FilterPanel.style.css";
+import Slider from "rc-slider";
+import {
+  FaBed,
+  MdVilla,
+  FaHotel,
+  Mdhouse,
+  FaCampground,
+  FaHouseUser,
+} from "../../../assets/icons/ys/index";
+
 const FilterPanel = () => {
   return (
     <div className="filter-panel">
-      <h3>필터</h3>
-
       <div className="filter-group">
         <label>숙소 유형</label>
         <div className="filter-options">
           <button id="filter-btn">
+            <FaBed />
+          </button>
+          <button id="filter-btn">
             <FaHotel />
           </button>
           <button id="filter-btn">
-            <FaHome />
+            <Mdhouse />
           </button>
           <button id="filter-btn">
-            <FaHome />
+            <MdVilla />
           </button>
           <button id="filter-btn">
-            <FaHome />
+            <FaCampground />
+          </button>
+          <button id="filter-btn">
+            <FaHouseUser />
           </button>
         </div>
       </div>
-
+      <hr />
+      <div className="filter-group">
+        <label>가격</label>
+        <Slider />
+      </div>
       <div className="filter-group">
         <label>시설</label>
+        <h3>공용시설</h3>
         <div className="filter-options">
-          <button>
-            <FaCar />
-          </button>
-          <button>
-            <FaWifi />
-          </button>
-          <button>
-            <FaUtensils />
-          </button>
+          <button></button>
+          <button></button>
+          <button></button>
         </div>
       </div>
-
-      <div className="filter-group">
-        <label>기타</label>
-        <div className="filter-options">
-          <button>
-            <FaPaw />
-          </button>
-          <button>
-            <MdSmokeFree />
-          </button>
-        </div>
-      </div>
+      <hr />
     </div>
   );
 };
