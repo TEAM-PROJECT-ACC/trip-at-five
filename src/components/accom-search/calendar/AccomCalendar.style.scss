@@ -3,10 +3,14 @@
   font-size: 1.3rem;
   display: flex;
   align-items: center;
+  color: #5500ff;
+
+  .calendar-icon {
+    color: #5500ff;
+  }
 
   span {
     margin-left: 1rem;
-    background-color: inherit;
   }
 
   &:hover {

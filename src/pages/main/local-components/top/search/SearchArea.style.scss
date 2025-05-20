@@ -1,6 +1,44 @@
+.search-container {
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  & > div {
+    border-radius: 0.5rem;
+    padding: 0.7rem;
+    background-color: #baabfa;
+  }
+}
+
 .check-calendar-container {
   position: relative;
   width: 30%;
-  background-color: #baabfa;
-  padding: 0.7rem;
+}
+
+.search-input-container {
+  width: 35%;
+}
+
+.search-input {
+  width: 100%;
+  font-size: 1.3rem;
+  border-radius: inherit;
+  border: none;
+  color: #50f;
+  background-color: inherit;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #50f;
+  }
+}
+
+.number-of-people-container {
+  width: 20%;
+  font-size: 1.3rem;
 }
