@@ -28,3 +28,9 @@
 		background: #c8adff;
 	}
 }
+
+@mixin background-fafafa {
+	& {
+		background: #fafafa;
+	}
+}
