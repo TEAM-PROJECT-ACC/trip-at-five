@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-node_modules
-
-.env
-.env.development
-=======
 # Logs
 logs
 *.log
@@ -32,5 +26,4 @@ dist-ssr
 # 환경 변수
 .env
 .env.development
->>>>>>> e715edadb8d3f98401d710e2e26495b881730f31
 .env.production
