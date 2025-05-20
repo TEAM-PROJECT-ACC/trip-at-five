@@ -11,7 +11,7 @@ export default function Login() {
             <p>이메일</p>
             <input type="text" placeholder='  Email' /> <br></br>
             <input type="password" placeholder='  비밀번호' /> <br></br>
-            <button class="sendBtn">이메일로 시작하기</button>
+            <button className="sendBtn">이메일로 시작하기</button>
             <br/>
             <div> 
                 <span>회원가입</span>
@@ -23,7 +23,7 @@ export default function Login() {
 
         <div className='login-page bottom'>
 
-        <div class="kakao">
+        <div className="sns-logo">
         <img  src="https://developers.kakao.com/tool/resource/static/img/button/kakaosync/complete/ko/kakao_login_large_wide.png"/>
         </div>
         </div>
