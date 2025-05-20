@@ -1,6 +1,7 @@
-import { Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { VITE_TEST_ENV } from './env.config';
+import { TestPage } from './pages/test/Test.page';
 import './App.css';
 import Login from './pages/login/Login';
 
@@ -11,10 +12,6 @@ function App() {
 	// 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
 	// 로그아웃 할 때 회원 상태 초기화
 
-	useEffect(() => {
-		console.log(VITE_TEST_ENV);
-	}, []);
-
 	return (
     <>
 
@@ -24,7 +21,15 @@ function App() {
 
         <
 		<Routes>
+<<<<<<< HEAD
 	
+=======
+			<Route
+				path='/test'
+				element={<TestPage />}
+			/>
+			{/*
+>>>>>>> 353231be80d3109c315aba208a6075aedc8ae566
         // TODO: 회원 팀
         로그인/회원가입
         
