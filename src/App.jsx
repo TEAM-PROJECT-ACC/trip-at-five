@@ -1,4 +1,6 @@
 import { Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { VITE_TEST_ENV } from './env.config';
 import './App.css';
 
 function App() {
@@ -8,6 +10,10 @@ function App() {
 	// 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
 	// 로그아웃 할 때 회원 상태 초기화
 
+	useEffect(() => {
+		console.log(VITE_TEST_ENV);
+	}, []);
+
 	return (
 		<Routes>
 			{/*
@@ -15,10 +21,10 @@ function App() {
         로그인/회원가입
         
         마이페이지(index)
-        내 정보
-        내 쿠폰
-        내 예약
-        챌린지
+          내 정보
+          내 쿠폰
+          내 예약
+          챌린지
         
         비회원 예약
         장바구니
