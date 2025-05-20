@@ -47,6 +47,20 @@ const FilterPanel = () => {
           <button></button>
           <button></button>
         </div>
+        <hr />
+        <h3>객실 내 시설</h3>
+        <div className="filter-options">
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
+        <hr />
+        <h3>기타 시설</h3>
+        <div className="filter-options">
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
       </div>
       <hr />
     </div>

@@ -25,6 +25,7 @@ const AccommodationList = () => {
       <div className="search-bar"></div>
       <div className="main-section">
         <aside className="filter-section">
+          <h3>Map</h3>
           <MapButton />
           <FilterPanel />
         </aside>

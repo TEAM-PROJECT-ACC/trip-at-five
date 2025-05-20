@@ -1,16 +1,8 @@
+import { WiFire } from "react-icons/wi";
+export { WiFire };
+
 import {
   FaBed,
-  WiFire,
-  FcFilingCabinet,
-  MdOutlineFoodBankMdHouse,
-  MdVilla,
-  MdOutlineRestaurant,
-  MdLocalBar,
-  MdOutlineRssFeed,
-  MdAcUnit,
-  MdShower,
-  MdFreeBreakfast,
-  MdLuggage,
   FaHotel,
   FaCampground,
   FaHouseUser,
@@ -23,7 +15,6 @@ import {
   FaRestroom,
   FaStore,
   FaHotTub,
-  FaBath,
   FaPumpSoap,
   FaPlug,
   FaParking,
@@ -31,21 +22,10 @@ import {
   FaShuttleVan,
   FaSmoking,
   FaBurn,
-} from "./ys/icon";
+} from "react-icons/fa";
 
 export {
   FaBed,
-  WiFire,
-  FcFilingCabinet,
-  MdOutlineFoodBankMdHouse,
-  MdVilla,
-  MdOutlineRestaurant,
-  MdLocalBar,
-  MdOutlineRssFeed,
-  MdAcUnit,
-  MdShower,
-  MdFreeBreakfast,
-  MdLuggage,
   FaHotel,
   FaCampground,
   FaHouseUser,
@@ -58,7 +38,6 @@ export {
   FaRestroom,
   FaStore,
   FaHotTub,
-  FaBath,
   FaPumpSoap,
   FaPlug,
   FaParking,
@@ -66,4 +45,31 @@ export {
   FaShuttleVan,
   FaSmoking,
   FaBurn,
+};
+
+import { FcFilingCabinet } from "react-icons/fc";
+export { FcFilingCabinet };
+
+import {
+  MdVilla,
+  MdOutlineRestaurant,
+  MdLocalBar,
+  MdOutlineRssFeed,
+  MdAcUnit,
+  MdShower,
+  MdFreeBreakfast,
+  MdLuggage,
+  MdHouse,
+} from "react-icons/md";
+
+export {
+  MdVilla,
+  MdOutlineRestaurant,
+  MdLocalBar,
+  MdOutlineRssFeed,
+  MdAcUnit,
+  MdShower,
+  MdFreeBreakfast,
+  MdLuggage,
+  MdHouse,
 };
