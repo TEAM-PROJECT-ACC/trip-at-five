@@ -11,7 +11,7 @@ const SearchArea = () => {
       </div>
       <AccomCalendar className='check-calendar-container' />
       <NumberOfPeople className='number-of-people-container' />
-      <button className=''>검색</button>
+      <button className='search-button'>검색</button>
     </div>
   );
 };
