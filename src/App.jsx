@@ -2,6 +2,7 @@ import { Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { VITE_TEST_ENV } from './env.config';
 import './App.css';
+import Login from './pages/login/Login';
 
 function App() {
 	// TODO : 규형님 로그인 상태 확인
@@ -15,8 +16,15 @@ function App() {
 	}, []);
 
 	return (
+    <>
+
+      <Login/>
+
+    		{/*
+
+        <
 		<Routes>
-			{/*
+	
         // TODO: 회원 팀
         로그인/회원가입
         
@@ -47,8 +55,10 @@ function App() {
           예약취소요청
           사용자문의
           회원관리
-      */}
+      
 		</Routes>
+    */}
+    </>
 	);
 }
 
