@@ -6,6 +6,18 @@
 	}
 }
 
+@mixin color-c8adff {
+	& {
+		color: #c8adff;
+	}
+}
+
+@mixin color-b8b8b8 {
+	& {
+		color: #b8b8b8;
+	}
+}
+
 @mixin border-5500ff {
 	& {
 		border-color: #5500ff;
@@ -17,17 +29,21 @@
 		border-color: #c8adff;
 	}
 }
-
-@mixin color-c8adff {
+@mixin border-1e2022 {
 	& {
-		color: #c8adff;
+		border-color: #1e2022;
 	}
 }
+
 @mixin background-c8adff {
 	& {
 		background: #c8adff;
 	}
 }
+
+@mixin background-1e2022 {
+	& {
+		background: #1e2022;
 
 @mixin background-fafafa {
 	& {
