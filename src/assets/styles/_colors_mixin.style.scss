@@ -1,13 +1,30 @@
 // 색상 관련 css 추가
 
-@mixin main-color {
+@mixin color-5500ff {
 	& {
 		color: #5500ff;
 	}
 }
 
-@mixin main-color-border {
+@mixin border-5500ff {
 	& {
 		border-color: #5500ff;
+	}
+}
+
+@mixin border-c8adff {
+	& {
+		border-color: #c8adff;
+	}
+}
+
+@mixin color-c8adff {
+	& {
+		color: #c8adff;
+	}
+}
+@mixin background-c8adff {
+	& {
+		background: #c8adff;
 	}
 }

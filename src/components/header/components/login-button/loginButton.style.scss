@@ -1,0 +1,27 @@
+.global-header__login-button {
+	position: relative;
+	font-size: 16px;
+	font-weight: 900;
+	padding: 4px 8px;
+	border: 1px solid;
+	border-radius: 8px;
+	// width: 40px;
+	// transition: width 150ms linear;
+	margin-right: 12px;
+	overflow: hidden;
+	@include color-5500ff;
+	@include border-5500ff;
+
+	&.hover {
+		@include background-c8adff;
+	}
+
+	.global-header__login-button-inner {
+		line-height: 24px;
+	}
+
+	.login-button__icon {
+		width: 24px;
+		height: 24px;
+	}
+}
