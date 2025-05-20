@@ -31,9 +31,12 @@ const AccommodationList = () => {
         </aside>
         <section className="list-section">
           <ul className="accommodation-list">
-            {accommodations.map((item) => (
-              <AccommodationItem key={item.accomSq} item={item} />
-            ))}
+            <li className="accommodation-item">
+              <img src="" alt=""></img>
+            </li>
+            <li className="accommodation-item"></li>
+            <li className="accommodation-item"></li>
+            <li className="accommodation-item"></li>
           </ul>
         </section>
       </div>

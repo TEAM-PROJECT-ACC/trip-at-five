@@ -3,7 +3,7 @@ import {
   FaBed,
   MdVilla,
   FaHotel,
-  Mdhouse,
+  MdHouse,
   FaCampground,
   FaHouseUser,
 } from "../../../assets/icons/ys/index";
@@ -21,7 +21,7 @@ const FilterPanel = () => {
             <FaHotel />
           </button>
           <button id="filter-btn">
-            <Mdhouse />
+            <MdHouse />
           </button>
           <button id="filter-btn">
             <MdVilla />
