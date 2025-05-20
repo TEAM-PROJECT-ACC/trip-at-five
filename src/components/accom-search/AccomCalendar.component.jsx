@@ -4,6 +4,7 @@ import { addDays } from 'date-fns';
 import './AccomCalendar.style.scss';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { FaCalendarIcon } from '../../assets/icons/sj/Icon';
 
 const AccomCalendar = ({ ...props }) => {
   const [calendarFlag, setCalendarFlag] = useState(false);
