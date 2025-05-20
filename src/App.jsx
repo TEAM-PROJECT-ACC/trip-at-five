@@ -1,7 +1,9 @@
-import { Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { VITE_TEST_ENV } from "./env.config";
 import "./App.css";
+import AccommodationList from "./pages/accommodation/AccommodationList.page";
+import Main from "./pages/main/Main.page";
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -16,6 +18,7 @@ function App() {
 
   return (
     <Routes>
+      <Route index element={<Main />} />
       {/*
         // TODO: 회원 팀
         로그인/회원가입
@@ -48,6 +51,9 @@ function App() {
           사용자문의
           회원관리
       */}
+      <Route path="/accommodations">
+        <Route index element={<AccommodationList />} />
+      </Route>
     </Routes>
   );
 }
