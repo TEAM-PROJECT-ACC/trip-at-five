@@ -31,12 +31,11 @@ export const LoginButton = ({ className }) => {
 					'global-header__login-button-inner',
 					isHover ? 'hover' : ''
 				)}>
-				{/* {isHover ? (
+				{isHover ? (
 					'로그인/회원가입'
 				) : (
 					<FaUser className='login-button__icon' />
-				)} */}
-				로그인/회원가입
+				)}
 			</span>
 		</Button>
 	);

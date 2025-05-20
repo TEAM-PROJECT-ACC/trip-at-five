@@ -40,8 +40,13 @@
 		background: #c8adff;
 	}
 }
+
 @mixin background-1e2022 {
 	& {
 		background: #1e2022;
+
+@mixin background-fafafa {
+	& {
+		background: #fafafa;
 	}
 }
