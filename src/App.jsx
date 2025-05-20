@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { VITE_TEST_ENV } from './env.config';
+import { TestPage } from './pages/test/Test.page';
 import './App.css';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
@@ -18,8 +19,11 @@ function App() {
 
   return (
     <Routes>
-      <Route index element={<Main />} />
+      <Route path='/test' element={<TestPage />} />
       {/*
+	return (
+		<Routes>
+			{/*
         // TODO: 회원 팀
         로그인/회원가입
         
@@ -51,6 +55,8 @@ function App() {
           사용자문의
           회원관리
       */}
+
+      <Route index element={<Main />} />
       <Route path='/accommodations'>
         <Route index element={<AccommodationList />} />
       </Route>
