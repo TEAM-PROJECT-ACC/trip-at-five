@@ -13,23 +13,13 @@ function App() {
 	// 로그아웃 할 때 회원 상태 초기화
 
 	return (
-    <>
-
-      <Login/>
-
-    		{/*
-
-        <
+    
 		<Routes>
-<<<<<<< HEAD
-	
-=======
 			<Route
 				path='/test'
 				element={<TestPage />}
 			/>
 			{/*
->>>>>>> 353231be80d3109c315aba208a6075aedc8ae566
         // TODO: 회원 팀
         로그인/회원가입
         
@@ -60,10 +50,10 @@ function App() {
           예약취소요청
           사용자문의
           회원관리
-      
+      */}
 		</Routes>
-    */}
-    </>
+
+
 	);
 }
 
