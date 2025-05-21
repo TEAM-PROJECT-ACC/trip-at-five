@@ -21,9 +21,21 @@ export const TestPage = () => {
         <h1>전역 (공용) 컴포넌트 확인</h1>
         <h3>input component</h3>
         <div className='test-page__test-area'>
-          <InputPrimary />
-          <InputSecondary />
-          <InputShrink labelText={'라벨'} />
+          <div className='test-page__test-input'>
+            <InputPrimary />
+          </div>
+          <div className='test-page__test-input'>
+            <InputSecondary />
+          </div>
+          <div className='test-page__test-input'>
+            <InputShrink labelText={'라벨'} id='test-input-1' />
+          </div>
+          <div className='test-page__test-input'>
+            <InputShrink labelText={'라벨'} id='test-input-2' />
+          </div>
+          <div className='test-page__test-input'>
+            <InputShrink labelText={'라벨'} id='test-input-3' />
+          </div>
         </div>
         <h3>button component</h3>
         <div className='test-page__test-area'>

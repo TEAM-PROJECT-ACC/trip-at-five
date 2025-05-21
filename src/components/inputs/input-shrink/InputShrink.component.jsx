@@ -4,57 +4,78 @@ import { Input } from '../index';
 import './inputShrink.style.scss';
 
 export const InputShrink = ({
-	className,
-	defaultValue,
-	onChange,
-	type,
-	labelText,
-	...props
+  id,
+  className,
+  defaultValue,
+  onChange,
+  type,
+  labelText,
+  ...props
 }) => {
-	const [isFocus, setIsFocus] = useState(() => false);
-	const focusRef = useRef();
+  const [isFocus, setIsFocus] = useState(() => false);
+  const [value, setValue] = useState(() => defaultValue || '');
+  const focusRef = useRef();
 
-	const handleFocus = () => {
-		setIsFocus((prev) => !prev);
-	};
+  const handleFocus = () => {
+    if (value !== '') {
+      return;
+    }
+    setIsFocus((prev) => !prev);
+  };
 
-	useEffect(() => {
-		const handleClickOut = (event) => {
-			if (focusRef.current && !focusRef.current.contains(event.target)) {
-				setIsFocus(() => false);
-			}
-		};
+  const handleChange = (event) => {
+    const targetValue = event.target.value;
+    setValue(() => targetValue);
 
-		document.addEventListener('mousedown', handleClickOut);
+    if (onChange) {
+      onChange(event);
+    }
+  };
 
-		return () => {
-			document.removeEventListener('mousedown', handleClickOut);
-		};
-	}, []);
+  useEffect(() => {
+    const handleClickOut = (event) => {
+      console.log(value === '');
+      if (
+        focusRef.current &&
+        !focusRef.current.contains(event.target) &&
+        value === ''
+      ) {
+        setIsFocus(() => false);
+      }
+    };
 
-	return (
-		<span
-			ref={focusRef}
-			className={classNames(
-				'global-input__shrink-container',
-				className,
-				isFocus ? 'focus' : ''
-			)}>
-			<label
-				htmlFor='global-input__shrink'
-				className={classNames('global-input__shrink-label', className)}>
-				{labelText}
-			</label>
-			<Input
-				id='global-input__shrink'
-				className={classNames('global-input__shrink', className)}
-				defaultValue={defaultValue}
-				onChange={onChange}
-				onFocus={handleFocus}
-				placeholder={' '}
-				type={type}
-				{...props}
-			/>
-		</span>
-	);
+    document.addEventListener('mousedown', handleClickOut);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOut);
+    };
+  }, [value]);
+
+  return (
+    <span
+      ref={focusRef}
+      className={classNames(
+        'global-input__shrink-container',
+        className,
+        isFocus ? 'focus' : ''
+      )}
+    >
+      <label
+        htmlFor={id}
+        className={classNames('global-input__shrink-label', className)}
+      >
+        {labelText}
+      </label>
+      <Input
+        id={id}
+        className={classNames('global-input__shrink', className)}
+        defaultValue={defaultValue}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        placeholder={' '}
+        type={type}
+        {...props}
+      />
+    </span>
+  );
 };
