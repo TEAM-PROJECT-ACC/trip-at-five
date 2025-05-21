@@ -1,0 +1,19 @@
+.number-of-people-icon-group {
+  width: 100%;
+  display: flex;
+  font-size: 1.3rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.number-of-people-icon {
+  @include color-ffffff;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.number-of-people-icon.active {
+  @include color-5500ff;
+}
