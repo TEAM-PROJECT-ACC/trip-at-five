@@ -8,6 +8,7 @@ import {
 	InputSecondary,
 	InputShrink,
 	Label,
+	Select,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
 import './test.style.scss';
@@ -40,6 +41,31 @@ export const TestPage = () => {
 					<Label className='secondary'>secondary</Label>
 					<Label className='neutral'>neutral</Label>
 					<Label className='danger'>danger</Label>
+				</div>
+				<h3>select component</h3>
+				<div className='test-page__test-area'>
+					<Select
+						optionList={[
+							{ value: '1', label: 'option1' },
+							{ value: '2', label: 'option2' },
+							{ value: '3', label: 'option3' },
+							{ value: '4', label: 'option4' },
+							{ value: '5', label: 'option5' },
+							{ value: '6', label: 'option6' },
+							{ value: '1', label: 'option1' },
+							{ value: '2', label: 'option2' },
+							{ value: '3', label: 'option3' },
+							{ value: '4', label: 'option4' },
+							{ value: '5', label: 'option5' },
+							{ value: '6', label: 'option6' },
+							{ value: '1', label: 'option1' },
+							{ value: '2', label: 'option2' },
+							{ value: '3', label: 'option3' },
+							{ value: '4', label: 'option4' },
+							{ value: '5', label: 'option5' },
+							{ value: '6', label: 'option6' },
+						]}
+					/>
 				</div>
 			</section>
 		</div>

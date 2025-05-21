@@ -8,7 +8,9 @@
 		}
 
 		.test-page__test-area {
+			margin-bottom: 12px;
 			.test-page__text-link-container {
+				display: inline-block;
 				border: 1px solid;
 				padding: 8px 24px;
 			}
