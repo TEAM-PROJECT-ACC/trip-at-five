@@ -78,7 +78,7 @@ const AccommodationItem = () => {
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
-              <p>최저가</p> <strong>150,000원</strong>
+              최저가 <strong>150,000원</strong>
             </p>
           </div>
         </div>

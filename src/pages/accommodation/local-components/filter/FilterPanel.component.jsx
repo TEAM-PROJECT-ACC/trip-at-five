@@ -30,7 +30,7 @@ import {
   FaShuttleVan,
   FaSmoking,
   MdLuggage,
-  FcFilingCabinet,
+  BiCabinet,
   WiFire,
   FaBurn,
   MdOutlineFoodBank,
@@ -194,7 +194,7 @@ const FilterPanel = () => {
               <MdLuggage />
             </button>
             <button id="filter-btn">
-              <FcFilingCabinet />
+              <BiCabinet />
             </button>
             <button id="filter-btn">
               <WiFire />

@@ -40,15 +40,21 @@
   vertical-align: middle;
 }
 .accom-price strong {
-  font-size: 21px;
+  font-size: 25px;
+  font-weight: 900;
+  margin-left: 10px;
   @include color-5500ff;
 }
 .accom-info-time-price {
   margin-top: 30px;
 }
 p.accom-price {
-  margin-left: 280px;
-  display: flex;
+  margin-left: 250px;
+  display: inline-flex;
+  align-items: center;
+}
+.accom-time {
+  margin-left: 15px;
 }
 
 .item-line {
@@ -58,8 +64,7 @@ p.accom-price {
 }
 
 .v-line {
-  border-left: thick solid #baabfa;
-  height: 50px;
+  border-left: 3px solid #baabfa;
+  height: 60px;
   float: left;
-  display: flex;
 }

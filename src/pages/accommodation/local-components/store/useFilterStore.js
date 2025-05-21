@@ -3,7 +3,7 @@ import { create } from "zustand";
 const useFilterStore = create((set) => ({
   selectedCategory: "",
   selectedFacilities: [],
-  priceRange: [30000, 200000],
+  priceRange: [0, 1000000],
 
   setCategory: (category) => set({ selectedCategory: category }),
   toggleFacility: (facility) =>

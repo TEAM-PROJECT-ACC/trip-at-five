@@ -1,55 +1,23 @@
 import { useEffect } from "react";
+import "./KakaoMap.style.scss";
 
-const { kakao } = window;
-
-export const KakaoMap = ({ accommodations = [] }) => {
+export const KakaoMap = () => {
   useEffect(() => {
-    const mapContainer = document.getElementById("map");
-    const options = {
-      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 중심
-      level: 5,
-    };
-    const map = new kakao.maps.Map(mapContainer, options);
-    const geocoder = new kakao.maps.services.Geocoder();
+    if (!window.kakao || !window.kakao.maps) return;
+    const { kakao } = window;
 
-    accommodations.forEach((acc) => {
-      geocoder.addressSearch(acc.address, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    const mapContainer = document.getElementById("map"),
+      mapOptions = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567),
+        level: 3,
+      };
 
-          // 마커 생성
-          const marker = new kakao.maps.Marker({
-            map,
-            position: coords,
-          });
+    const map = new kakao.maps.Map(mapContainer, mapOptions);
+    const markerPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
 
-          const content = `
-            <div style="padding:5px 10px; background:#5500ff; color:white; border-radius:6px; font-size:14px;">
-              ₩${acc.price.toLocaleString()}
-            </div>
-          `;
+    const marker = new kakao.maps.Marker({ position: markerPosition });
+    marker.setMap(map);
+  }, []);
 
-          const overlay = new kakao.maps.CustomOverlay({
-            content,
-            position: coords,
-            yAnchor: 1,
-          });
-
-          overlay.setMap(map);
-        }
-      });
-    });
-  }, [accommodations]);
-
-  return (
-    <div
-      id="map"
-      style={{
-        width: "100%",
-        height: "600px",
-        border: "2px solid #baabfa",
-        borderRadius: "8px",
-      }}
-    />
-  );
+  return <div id="map"></div>;
 };

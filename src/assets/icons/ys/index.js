@@ -49,8 +49,8 @@ export {
   FaBath,
 };
 
-import { FcFilingCabinet } from "react-icons/fc";
-export { FcFilingCabinet };
+import { BiCabinet } from "react-icons/bi";
+export { BiCabinet };
 
 import {
   MdVilla,
