@@ -1,4 +1,4 @@
-@import './colors_variable.style';
+@use '@scss/_colors_variable.style.scss' as *;
 // 색상 관련 css 추가
 
 @mixin color-fafafa {
