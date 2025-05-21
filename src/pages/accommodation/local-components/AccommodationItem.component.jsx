@@ -14,6 +14,7 @@ const AccommodationItem = () => {
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
           <div className="accom-info-time-price">
+            <div className="v-line"></div>
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
@@ -22,6 +23,7 @@ const AccommodationItem = () => {
           </div>
         </div>
       </li>
+      <div className="item-line"></div>
       <li className="accommodation-item">
         <div className="image" src="" alt=""></div>
         <div className="accom-info">
@@ -32,6 +34,7 @@ const AccommodationItem = () => {
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
           <div className="accom-info-time-price">
+            <div className="v-line"></div>
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
@@ -40,6 +43,7 @@ const AccommodationItem = () => {
           </div>
         </div>
       </li>
+      <div className="item-line"></div>
       <li className="accommodation-item">
         <div className="image" src="" alt=""></div>
         <div className="accom-info">
@@ -50,6 +54,7 @@ const AccommodationItem = () => {
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
           <div className="accom-info-time-price">
+            <div className="v-line"></div>
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
@@ -58,6 +63,7 @@ const AccommodationItem = () => {
           </div>
         </div>
       </li>
+      <div className="item-line"></div>
       <li className="accommodation-item">
         <div className="image" src="" alt=""></div>
         <div className="accom-info">
@@ -68,6 +74,7 @@ const AccommodationItem = () => {
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
           <div className="accom-info-time-price">
+            <div className="v-line"></div>
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
@@ -76,6 +83,7 @@ const AccommodationItem = () => {
           </div>
         </div>
       </li>
+      <div className="item-line"></div>
     </ul>
   );
 };

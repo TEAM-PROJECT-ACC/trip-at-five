@@ -50,3 +50,16 @@ p.accom-price {
   margin-left: 280px;
   display: flex;
 }
+
+.item-line {
+  border-top: 3px solid #baabfa;
+  margin-bottom: 25px;
+  margin-right: 30px;
+}
+
+.v-line {
+  border-left: thick solid #baabfa;
+  height: 50px;
+  float: left;
+  display: flex;
+}
