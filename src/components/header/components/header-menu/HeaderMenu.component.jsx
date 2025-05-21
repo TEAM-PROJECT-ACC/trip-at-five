@@ -12,11 +12,11 @@ export const HeaderMenu = () => {
 	};
 
 	useEffect(() => {
-		function handleClickOutside(event) {
+		const handleClickOutside = (event) => {
 			if (menuRef.current && !menuRef.current.contains(event.target)) {
 				setIsShow(() => false);
 			}
-		}
+		};
 
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => {

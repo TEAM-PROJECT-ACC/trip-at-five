@@ -1,5 +1,5 @@
 import { classNames } from '../../../../../../utils';
-import { LinkButton } from '../../../../../buttons/linkButton/LinkButton.component';
+import { LinkButton } from '../../../../../buttons/link-button/LinkButton.component';
 import './menuList.style.scss';
 
 export const MenuList = ({ isShow }) => {

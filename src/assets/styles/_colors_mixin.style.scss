@@ -1,5 +1,17 @@
 // 색상 관련 css 추가
 
+@mixin color-fafafa {
+	& {
+		color: #fafafa;
+	}
+}
+
+@mixin color-1e2022 {
+	& {
+		color: #1e2022;
+	}
+}
+
 @mixin color-5500ff {
   & {
     color: #5500ff;
@@ -48,6 +60,12 @@
   }
 }
 
+@mixin background-5500ff {
+	& {
+		background: #5500ff;
+	}
+}
+
 @mixin background-c8adff {
   & {
     background: #c8adff;
@@ -82,4 +100,16 @@
   & {
     background: #baabfa;
   }
+}
+
+@mixin background-ffaf45 {
+	& {
+		background: #ffaf45;
+	}
+}
+
+@mixin background-ff4545 {
+	& {
+		background: #ff4545;
+	}
 }
