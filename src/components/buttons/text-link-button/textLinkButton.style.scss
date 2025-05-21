@@ -1,0 +1,6 @@
+.global-link__text-button {
+	font-weight: 600;
+	&:hover {
+		@include color-5500ff;
+	}
+}

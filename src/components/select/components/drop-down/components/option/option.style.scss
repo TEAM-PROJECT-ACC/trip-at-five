@@ -1,0 +1,9 @@
+.global-drop-down__option {
+	padding: 8px 12px;
+	cursor: pointer;
+
+	&:hover {
+		@include background-c8adff;
+		@include color-5500ff;
+	}
+}
