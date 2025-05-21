@@ -1,4 +1,4 @@
-#map {
+.container {
   width: 80rem;
   height: 700px;
   border: 2px solid #baabfa;
@@ -8,4 +8,10 @@
   position: absolute;
   left: -3rem;
   top: 3rem;
+}
+
+#map {
+  width: 640px;
+  height: 700px;
+  background-color: #baabfa;
 }

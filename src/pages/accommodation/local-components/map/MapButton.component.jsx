@@ -10,7 +10,7 @@ const MapButton = () => {
       <button className="map-btn-text" onClick={() => setShowMap(true)}>
         지도보기
       </button>
-      {showMap && <KakaoMap accommodations={accommodations} />}
+      {showMap && <KakaoMap />}
     </div>
   );
 };

@@ -19,5 +19,9 @@ export const KakaoMap = () => {
     marker.setMap(map);
   }, []);
 
-  return <div id="map"></div>;
+  return (
+    <div className="container">
+      <div id="map"></div>
+    </div>
+  );
 };
