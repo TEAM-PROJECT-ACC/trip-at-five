@@ -9,9 +9,18 @@ import {
   InputShrink,
   Label,
   Select,
+  Pagination,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
 import './test.style.scss';
+
+const PAGINATION_PROPS = {
+  className: '',
+  totalCount: 150,
+  pageLength: 7,
+  currentPage: 8,
+  numOfRows: 10,
+};
 
 export const TestPage = () => {
   return (
@@ -92,6 +101,10 @@ export const TestPage = () => {
               ]}
             />
           </form>
+        </div>
+        <h3>pagination component</h3>
+        <div className='test-page__test-area'>
+          <Pagination {...PAGINATION_PROPS} />
         </div>
       </section>
     </div>
