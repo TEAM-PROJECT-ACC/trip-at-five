@@ -23,8 +23,6 @@
 
 	/* TEXT VERTICAL ALIGN */
 	vertical-align: top;
-	color: #1e2022;
-	background: #fafafa;
 }
 
 html,
@@ -35,6 +33,8 @@ body {
 
 body {
 	position: relative;
+	color: #1e2022;
+	background: #fafafa;
 }
 
 ul,
@@ -70,6 +70,7 @@ textarea {
 }
 
 img {
+	background: transparent;
 	display: inline-block;
 	max-width: 100%;
 }
