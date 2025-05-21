@@ -17,7 +17,7 @@ const AccommodationItem = () => {
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
-              <strong>최저가 </strong>150,000원
+              최저가 <strong>150,000원</strong>
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@ const AccommodationItem = () => {
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
-              <strong>최저가 </strong>150,000원
+              최저가 <strong>150,000원</strong>
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@ const AccommodationItem = () => {
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
-              <strong>최저가 </strong>150,000원
+              최저가 <strong>150,000원</strong>
             </p>
           </div>
         </div>
@@ -71,7 +71,7 @@ const AccommodationItem = () => {
             <p className="accom-time">15:00 체크인</p>
             <p className="accom-time">11:00 체크아웃</p>
             <p className="accom-price">
-              <strong>최저가 </strong>150,000원
+              <p>최저가</p> <strong>150,000원</strong>
             </p>
           </div>
         </div>

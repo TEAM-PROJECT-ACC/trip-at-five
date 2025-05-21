@@ -8,7 +8,10 @@
   font-size: 24px;
   @include color-5500ff;
 }
-
+.level-one {
+  display: flex;
+  justify-content: space-between;
+}
 .image {
   width: 300px;
   height: 180px;
@@ -21,6 +24,7 @@
   height: 180px;
   background-color: #f8f8f8;
   margin-left: 20px;
+  padding: 15px 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
 }
@@ -28,4 +32,21 @@
 .accom-info-icon {
   width: 30px;
   height: 25px;
+  background-color: black;
+}
+.accom-price {
+  font-size: 16px;
+  font-family: "SUIT";
+  vertical-align: middle;
+}
+.accom-price strong {
+  font-size: 21px;
+  @include color-5500ff;
+}
+.accom-info-time-price {
+  margin-top: 30px;
+}
+p.accom-price {
+  margin-left: 280px;
+  display: flex;
 }

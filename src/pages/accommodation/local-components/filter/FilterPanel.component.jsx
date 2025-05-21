@@ -34,15 +34,19 @@ import {
   WiFire,
   FaBurn,
   MdOutlineFoodBank,
-} from "../../../assets/icons/ys/index";
+} from "../../../../assets/icons/ys/index";
 import "./FilterPanel.style.scss";
+import useFilterStore from "../store/useFilterStore";
+
 const FilterPanel = () => {
+  const priceRange = useFilterStore((state) => state.priceRange);
+  const setPriceRange = useFilterStore((state) => state.setPriceRange);
   return (
     <div className="filter-panel">
       <div className="filter-group">
         <h3>숙소 유형</h3>
         <div className="filter-options">
-          <div className="filter-level-1">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaBed />
             </button>
@@ -56,7 +60,7 @@ const FilterPanel = () => {
               <MdVilla />
             </button>
           </div>
-          <div className="filter-level-1">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaCampground />
             </button>
@@ -69,14 +73,33 @@ const FilterPanel = () => {
       <div className="line"></div>
       <div className="filter-group">
         <h3>가격</h3>
-        <Slider range />
+        <div className="slider-style-length">
+          <Slider
+            range
+            min={0}
+            max={1000000}
+            step={10000}
+            value={priceRange}
+            trackStyle={[{ backgroundColor: "#5500ff" }]}
+            handleStyle={[
+              { borderColor: "#5500ff" },
+              { borderColor: "#5500ff" },
+            ]}
+            onChange={setPriceRange}
+          />
+        </div>
+        <p style={{ color: "#888", marginTop: "10px" }}>
+          ₩{priceRange[0].toLocaleString()} ~ ₩{priceRange[1].toLocaleString()}
+        </p>
       </div>
       <div className="line"></div>
       <div className="filter-group">
         <h3>시설</h3>
-        <h4>공용시설</h4>
+      </div>
+      <div className="filter-group">
+        <h4 id="together">공용시설</h4>
         <div className="filter-options">
-          <div className="filter-level-1">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaSpa />
             </button>
@@ -90,7 +113,7 @@ const FilterPanel = () => {
               <MdOutlineRestaurant />
             </button>
           </div>
-          <div className="filter-level-1">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaDumbbell />
             </button>
@@ -104,16 +127,18 @@ const FilterPanel = () => {
               <FaRestroom />
             </button>
           </div>
-          <div className="filter-level-1">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaStore />
             </button>
           </div>
         </div>
-        <div className="line"></div>
+      </div>
+      <div className="line"></div>
+      <div className="filter-group">
         <h4>객실 내 시설</h4>
         <div className="filter-options">
-          <div className="filter-level-2">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaHotTub />
             </button>
@@ -127,7 +152,7 @@ const FilterPanel = () => {
               <MdOutlineRssFeed />
             </button>
           </div>
-          <div className="filter-level-2">
+          <div className="filter-level">
             <button id="filter-btn">
               <MdAcUnit />
             </button>
@@ -142,10 +167,12 @@ const FilterPanel = () => {
             </button>
           </div>
         </div>
-        <div className="line"></div>
+      </div>
+      <div className="line"></div>
+      <div className="filter-group">
         <h4>기타 시설</h4>
         <div className="filter-options">
-          <div className="filter-level-3">
+          <div className="filter-level">
             <button id="filter-btn">
               <MdFreeBreakfast />
             </button>
@@ -159,7 +186,7 @@ const FilterPanel = () => {
               <FaShuttleVan />
             </button>
           </div>
-          <div className="filter-level-3">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaSmoking />
             </button>
@@ -173,7 +200,7 @@ const FilterPanel = () => {
               <WiFire />
             </button>
           </div>
-          <div className="filter-level-3">
+          <div className="filter-level">
             <button id="filter-btn">
               <FaBurn />
             </button>
