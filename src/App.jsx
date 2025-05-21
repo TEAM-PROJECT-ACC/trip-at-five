@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { TestPage } from "./pages/test/Test.page";
-import { AppHeader } from "./components";
+import { AppFooter, AppHeader } from "./components";
 import "./App.css";
 import AccommodationList from "./pages/accommodation/AccommodationList.page";
 import Main from "./pages/main/Main.page";
