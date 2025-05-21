@@ -1,0 +1,16 @@
+.room-list {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  gap: 1.3rem;
+}
+
+.room-item {
+  width: 100%;
+  padding: 1rem;
+  border: 0.1rem solid $color-c8adff;
+  border-radius: 0.7rem;
+  box-shadow: 0.15rem 0.15rem rgba(0, 0, 0, 0.5);
+}

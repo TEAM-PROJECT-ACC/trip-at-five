@@ -16,14 +16,41 @@ checkInDate =
   '.' +
   (checkInDate.getMonth() < 10 ? '0' + checkInDate.getMonth() : checkInDate.getMonth()) +
   '.' +
-  (checkInDate.getDate() < 10 ? '0' + checkInDate.getDate() : checkInDate.getDate());
+  (checkInDate.getDate() < 10 ? '0' + checkInDate.getDate() : checkInDate.getDate()) +
+  ' (' +
+  dayHandler(checkInDate.getDay()) +
+  ')';
 
 checkOutDate =
   checkOutDate.getFullYear() +
   '.' +
   (checkOutDate.getMonth() < 10 ? '0' + checkOutDate.getMonth() : checkOutDate.getMonth()) +
   '.' +
-  (checkOutDate.getDate() < 10 ? '0' + checkOutDate.getDate() : checkOutDate.getDate());
+  (checkOutDate.getDate() < 10 ? '0' + checkOutDate.getDate() : checkOutDate.getDate()) +
+  ' (' +
+  dayHandler(checkOutDate.getDay()) +
+  ')';
+
+const dayHandler = (day) => {
+  switch (day) {
+    case 0:
+      return '일';
+    case 1:
+      return '월';
+    case 2:
+      return '화';
+    case 3:
+      return '수';
+    case 4:
+      return '목';
+    case 5:
+      return '금';
+    case 6:
+      return '토';
+    default:
+      return '';
+  }
+};
 
 // 초기 상태
 const initialState = {

@@ -1,32 +1,38 @@
 .reservation-person-form__container {
   width: 100%;
-  padding: 1rem;
   display: flex;
-  gap: 1.5rem;
-
-  .reservation-person-form-item {
+  .reservation-person-form {
     width: 100%;
+    padding: 1rem;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
+    gap: 1.5rem;
 
-    .reservation-person-input {
-      width: 100%;
-      font-size: 1rem;
-    }
-
-    .reservation-person-form-select {
+    .reservation-person-form-item {
       width: 100%;
 
-      button {
-        @include color-5500ff;
-        @include border-5500ff;
+      .reservation-person-input {
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      .reservation-person-form-select {
+        width: 100%;
+
+        button {
+          @include color-5500ff;
+          @include border-5500ff;
+        }
       }
     }
   }
-
   .reservation-person-image {
     width: 100%;
     background-image: url(../../../../assets/images/reservation-page/reservation-form-img.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 }
