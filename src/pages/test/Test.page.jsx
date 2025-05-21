@@ -1,4 +1,11 @@
 import {
+	Button,
+	ButtonPrimary,
+	ButtonSecondary,
+	LinkButton,
+	TextLinkButton,
+} from '../../components/buttons';
+import {
 	InputPrimary,
 	InputSecondary,
 	InputShrink,
@@ -17,6 +24,16 @@ export const TestPage = () => {
 					<InputPrimary />
 					<InputSecondary />
 					<InputShrink labelText={'라벨'} />
+				</div>
+				<h3>button component</h3>
+				<div className='test-page__test-area'>
+					<Button>버튼</Button>
+					<ButtonPrimary>기본 버튼</ButtonPrimary>
+					<ButtonSecondary>두번째 버튼</ButtonSecondary>
+					<LinkButton>링크버튼</LinkButton>
+					<span className='test-page__text-link-container'>
+						<TextLinkButton>텍스트링크버튼</TextLinkButton>
+					</span>
 				</div>
 			</section>
 		</div>

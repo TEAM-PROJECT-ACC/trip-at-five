@@ -1,0 +1,10 @@
+.global-button__primary {
+	border-radius: 8px;
+	@include background-5500ff;
+	@include color-fafafa;
+
+	&:hover {
+		@include color-5500ff;
+		@include background-c8adff;
+	}
+}

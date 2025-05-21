@@ -1,5 +1,11 @@
 // 색상 관련 css 추가
 
+@mixin color-fafafa {
+	& {
+		color: #fafafa;
+	}
+}
+
 @mixin color-5500ff {
 	& {
 		color: #5500ff;
@@ -32,6 +38,12 @@
 @mixin border-1e2022 {
 	& {
 		border-color: #1e2022;
+	}
+}
+
+@mixin background-5500ff {
+	& {
+		background: #5500ff;
 	}
 }
 
