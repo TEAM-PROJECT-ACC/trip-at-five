@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { TestPage } from './pages/test/Test.page';
-import { AppHeader } from './components';
+import { AppFooter, AppHeader } from './components';
 import './App.css';
 
 function App() {
@@ -51,6 +51,7 @@ function App() {
             회원관리
         */}
 			</Routes>
+			<AppFooter />
 		</>
 	);
 }
