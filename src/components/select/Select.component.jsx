@@ -12,7 +12,8 @@ export const Select = ({ className, defaultOption, optionList, onSelect }) => {
 
 	const dropdownRef = useRef();
 
-	const handleClickSelect = () => {
+	const handleClickSelect = (event) => {
+		event.preventDefault();
 		setIsOpenDropDown((prev) => !prev);
 	};
 
