@@ -2,9 +2,9 @@ import React from 'react';
 import Room from './room/Room.component';
 import './RoomList.style.scss';
 
-const RoomList = () => {
+const RoomList = ({ className }) => {
   return (
-    <div className='room-list'>
+    <div className={className}>
       <Room className='room-item' />
       <Room className='room-item' />
       <Room className='room-item' />

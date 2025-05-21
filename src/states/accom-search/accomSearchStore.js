@@ -1,5 +1,25 @@
 // 숙박업소 검색창 전역 상태관리
 import { create } from 'zustand';
+const dayHandler = (day) => {
+  switch (day) {
+    case 0:
+      return '일';
+    case 1:
+      return '월';
+    case 2:
+      return '화';
+    case 3:
+      return '수';
+    case 4:
+      return '목';
+    case 5:
+      return '금';
+    case 6:
+      return '토';
+    default:
+      return '';
+  }
+};
 
 /**
  * checkInDate : 오늘 날짜
@@ -30,27 +50,6 @@ checkOutDate =
   ' (' +
   dayHandler(checkOutDate.getDay()) +
   ')';
-
-const dayHandler = (day) => {
-  switch (day) {
-    case 0:
-      return '일';
-    case 1:
-      return '월';
-    case 2:
-      return '화';
-    case 3:
-      return '수';
-    case 4:
-      return '목';
-    case 5:
-      return '금';
-    case 6:
-      return '토';
-    default:
-      return '';
-  }
-};
 
 // 초기 상태
 const initialState = {

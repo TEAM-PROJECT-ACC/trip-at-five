@@ -1,6 +1,7 @@
 import React from 'react';
 import PayInfo from './pay/PayInfo.component';
 import RoomList from './room-list/RoomList.component';
+import './PayArea.style.scss';
 
 const PayArea = ({ className }) => {
   return (

@@ -1,9 +1,10 @@
 .reservation-person-form__container {
   width: 100%;
   display: flex;
+  margin-bottom: 7rem;
   .reservation-person-form {
     width: 100%;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,10 +30,6 @@
     }
   }
   .reservation-person-image {
-    width: 100%;
-    background-image: url(../../../../assets/images/reservation-page/reservation-form-img.webp);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    width: 30%;
   }
 }

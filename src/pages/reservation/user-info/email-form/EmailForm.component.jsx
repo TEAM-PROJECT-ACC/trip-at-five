@@ -8,12 +8,12 @@ const EmailForm = ({ className }) => {
       <h1>이메일 인증</h1>
       <form className='email-form__container'>
         <div className='email-form-item'>
-          <InputShrink className='email-input' labelText='이메일을 입력해주세요' />
+          <InputShrink id='email' className='email-input' labelText='이메일을 입력해주세요' />
           {/* <input className='email-input' placeholder='이메일을 입력해주세요' /> */}
           <ButtonPrimary className='check-email-button' children='이메일 인증' />
         </div>
         <div className='email-form-item'>
-          <InputShrink className='email-code-input' labelText='인증코드를 입력해주세요' />
+          <InputShrink id='email-code' className='email-code-input' labelText='인증코드를 입력해주세요' />
           <ButtonSecondary className='check-email-button' children='확인' />
         </div>
       </form>

@@ -29,8 +29,8 @@ const AccomCalendar = ({ ...props }) => {
     const end = state[0].endDate;
 
     if (end && start && end.getTime() !== start.getTime()) {
-      startDateText = `${start.getMonth() + 1}.${start.getDate()}`;
-      endDateText = `${end.getMonth() + 1}.${end.getDate()}`;
+      startDateText = `${start.getMonth() + 1}.${start.getDate()} (${dayHandler(start.getDay())})`;
+      endDateText = `${end.getMonth() + 1}.${end.getDate()} (${dayHandler(end.getDay())})`;
 
       let checkInDate = start.getFullYear() + '.' + startDateText;
       let checkOutDate = end.getFullYear() + '.' + endDateText;
@@ -78,7 +78,7 @@ const AccomCalendar = ({ ...props }) => {
       <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
         <FaCalendar className='calendar-icon' />
         <span>
-          {startDateText} {dayHandler(state[0].startDate.getDay())} ~ {endDateText} {dayHandler(state[0].endDate.getDay())} ({tripDay}박)
+          {startDateText} ~ {endDateText} ({tripDay}박)
         </span>
       </div>
       <div className={`calendar__container ${calendarFlag ? 'visible' : ''}`}>

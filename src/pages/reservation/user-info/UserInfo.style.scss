@@ -5,11 +5,13 @@
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
+  h1 {
+    margin-bottom: 1rem;
+  }
 }
 .reservation-person-info-form-area__container {
   // background: yellow;
 }
 
 .email-form-area__container {
-  // background: purple;
 }

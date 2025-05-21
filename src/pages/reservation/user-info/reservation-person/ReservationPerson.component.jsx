@@ -18,6 +18,14 @@ const ReservationPerson = ({ className }) => {
       label: '3만원권',
       value: 30000,
     },
+    {
+      label: '4만원권',
+      value: 40000,
+    },
+    {
+      label: '5만원권',
+      value: 50000,
+    },
   ];
   return (
     <div className={className}>
@@ -25,17 +33,19 @@ const ReservationPerson = ({ className }) => {
       <div className='reservation-person-form__container'>
         <form className='reservation-person-form'>
           <div className='reservation-person-form-item'>
-            <InputShrink className='reservation-person-input' labelText='이메일을 입력해주세요' />
+            <InputShrink id='userName' className='reservation-person-input' labelText='예약자명을 입력해주세요' />
             {/* <input className='reservation-person-input' placeholder='이메일을 입력해주세요' /> */}
           </div>
           <div className='reservation-person-form-item'>
-            <InputShrink className='reservation-person-input' labelText='인증코드를 입력해주세요' />
+            <InputShrink id='userPhone' className='reservation-person-input' labelText='"-"없이 전화번호를 입력해주세요' />
           </div>
           <div className='reservation-person-form-item'>
-            <Select className='reservation-person-form-select' optionList={couponList} />
+            <Select defaultOption={{ label: '쿠폰을 선택해주세요' }} className='reservation-person-form-select' optionList={couponList} />
           </div>
         </form>
-        <div className='reservation-person-image'></div>
+        {/* <div className='reservation-person-image'>
+          <img src={'/assets/images/reservation-page/reservation-form-img.webp'} />
+        </div> */}
       </div>
     </div>
   );
