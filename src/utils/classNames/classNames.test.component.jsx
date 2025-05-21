@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { UtilsTestPageLayout } from '../test-page-layout/UtilsTest.component';
 import { classNames } from './classNames.util';
+import { InputPrimary } from '../../components/inputs';
 
 export const ClassNamesTest = () => {
 	const [classNameValue, setClassNameValue] = useState(() => '');
@@ -13,13 +14,13 @@ export const ClassNamesTest = () => {
 	return (
 		<UtilsTestPageLayout testSubTitle={'classNames'}>
 			<div className='test-page__test-area'>
-				<input
+				<InputPrimary
 					type='text'
 					value={classNameValue}
 					onChange={handleChangeClassNames}
 				/>
 				<div className={classNames('test-page__class-names', classNameValue)}>
-					<h2>추가 된 클래스</h2>
+					<h3>추가 된 클래스</h3>
 					<div className='test-page__added-class'>{classNameValue}</div>
 				</div>
 			</div>

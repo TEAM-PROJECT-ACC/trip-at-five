@@ -39,8 +39,10 @@ body {
 
 body {
   position: relative;
-  color: #1e2022;
-  background: #fafafa;
+  // color: #1e2022;
+  // background: #fafafa;
+  @include color-1e2022;
+  @include background-fafafa;
 }
 
 ul,
@@ -73,6 +75,7 @@ textarea {
   display: inline-block;
   outline: none;
   border: none;
+  background: transparent;
 }
 
 img {

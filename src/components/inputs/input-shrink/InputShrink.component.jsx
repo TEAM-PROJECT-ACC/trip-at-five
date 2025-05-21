@@ -41,7 +41,7 @@ export const InputShrink = ({
 				isFocus ? 'focus' : ''
 			)}>
 			<label
-				for='global-input__shrink'
+				htmlFor='global-input__shrink'
 				className={classNames('global-input__shrink-label', className)}>
 				{labelText}
 			</label>
