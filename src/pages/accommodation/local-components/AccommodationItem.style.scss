@@ -43,6 +43,7 @@
   font-size: 25px;
   font-weight: 900;
   margin-left: 10px;
+  margin-right: 5px;
   @include color-5500ff;
 }
 .accom-info-time-price {
@@ -52,6 +53,8 @@ p.accom-price {
   margin-left: 250px;
   display: inline-flex;
   align-items: center;
+  font-weight: 600;
+  font-size: 18px;
 }
 .accom-time {
   margin-left: 15px;

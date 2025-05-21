@@ -1,4 +1,4 @@
-import { KakaoMap } from "./KakaoMap";
+import { KakaoMap } from "./KakaoMap.component";
 import { useState } from "react";
 import "./MapButton.style.scss";
 
@@ -10,7 +10,7 @@ const MapButton = () => {
       <button className="map-btn-text" onClick={() => setShowMap(true)}>
         지도보기
       </button>
-      {showMap && <KakaoMap />}
+      {showMap && <KakaoMap onClose={() => setShowMap(false)} />}
     </div>
   );
 };

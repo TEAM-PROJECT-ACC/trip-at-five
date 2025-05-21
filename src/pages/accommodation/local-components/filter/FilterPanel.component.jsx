@@ -38,11 +38,16 @@ import {
 import "./FilterPanel.style.scss";
 import useFilterStore from "../store/useFilterStore";
 
-const FilterPanel = () => {
+const FilterPanel = ({ displayBorder = true }) => {
   const priceRange = useFilterStore((state) => state.priceRange);
   const setPriceRange = useFilterStore((state) => state.setPriceRange);
   return (
-    <div className="filter-panel">
+    <div
+      className={
+        "filter-panel__container " +
+        (displayBorder ? "filter-panel_border" : "")
+      }
+    >
       <div className="filter-group">
         <h3>숙소 유형</h3>
         <div className="filter-options">

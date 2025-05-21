@@ -7,31 +7,31 @@
   @include color-5500ff;
 }
 
-.filter-panel {
-  border: 3px solid #baabfa;
+.filter-panel__container {
   border-radius: 5px;
   padding: 50px 0px;
+  border: 3px solid #c8adff;
+
+  .filter-group {
+    margin-left: 30px;
+  }
+
+  .line {
+    border-top: 1px solid #c8adff;
+    margin: 10px 30px;
+  }
 }
 
 hr {
-  color: #bbaaff;
+  @include color-c8adff;
 }
 
 h4 {
-  color: #baabfa;
-}
-
-.filter-group {
-  margin-left: 30px;
+  @include color-c8adff;
 }
 
 .filter-level {
   margin-top: 8px;
-}
-
-.line {
-  border-top: 1px solid #baabfa;
-  margin: 10px 30px;
 }
 
 .slider-style-length {

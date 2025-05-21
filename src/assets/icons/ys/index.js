@@ -52,6 +52,9 @@ export {
 import { BiCabinet } from "react-icons/bi";
 export { BiCabinet };
 
+import { TiDelete } from "react-icons/ti";
+export { TiDelete };
+
 import {
   MdVilla,
   MdOutlineRestaurant,
