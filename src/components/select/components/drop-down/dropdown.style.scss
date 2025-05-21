@@ -6,9 +6,12 @@
 	top: calc(100% + 4px);
 	left: 0;
 	transition: 150ms linear;
+	z-index: 1000;
 
 	// TODO: develop pull 받은 후 색상 수정해야 함
 	box-shadow: 1px 2px 8px 0 #000000;
+
+	@include background-fafafa;
 
 	.global-select__dropdown {
 		max-height: 200px;
