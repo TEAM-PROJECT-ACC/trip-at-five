@@ -1,0 +1,24 @@
+.global-footer__github-info {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+
+	&:not(:last-child) {
+		margin-bottom: 8px;
+	}
+
+	.global-footer__member-name {
+		margin-right: 4px;
+	}
+
+	.global-footer__github-link {
+		display: flex;
+		align-items: center;
+
+		.global-footer__github-link-icon {
+			width: 20px;
+			height: 20px;
+			margin-right: 4px;
+		}
+	}
+}
