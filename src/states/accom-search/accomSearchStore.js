@@ -12,11 +12,15 @@ let checkOutDate = new Date(now.setDate(now.getDate() + 1));
 
 // YYYY-MM-DD 형식으로 변환 -> 10보다 아래일 경우 0 붙이기
 checkInDate =
+  checkInDate.getFullYear() +
+  '.' +
   (checkInDate.getMonth() < 10 ? '0' + checkInDate.getMonth() : checkInDate.getMonth()) +
   '.' +
   (checkInDate.getDate() < 10 ? '0' + checkInDate.getDate() : checkInDate.getDate());
 
 checkOutDate =
+  checkOutDate.getFullYear() +
+  '.' +
   (checkOutDate.getMonth() < 10 ? '0' + checkOutDate.getMonth() : checkOutDate.getMonth()) +
   '.' +
   (checkOutDate.getDate() < 10 ? '0' + checkOutDate.getDate() : checkOutDate.getDate());

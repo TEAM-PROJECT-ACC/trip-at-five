@@ -7,6 +7,9 @@ import 'react-date-range/dist/theme/default.css';
 import { FaCalendar } from '../../../assets/icons/index';
 import { useAccomSearchStore } from '../../../states';
 
+let startDateText = '';
+let endDateText = '';
+
 const AccomCalendar = ({ ...props }) => {
   const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
   const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state.actions);
@@ -26,10 +29,14 @@ const AccomCalendar = ({ ...props }) => {
     const end = state[0].endDate;
 
     if (end && start && end.getTime() !== start.getTime()) {
-      const startDateText = `${start.getMonth() + 1}.${start.getDate()}`;
-      const endDateText = `${end.getMonth() + 1}.${end.getDate()}`;
-      setCheckInState(startDateText);
-      setCheckOutState(endDateText);
+      startDateText = `${start.getMonth() + 1}.${start.getDate()}`;
+      endDateText = `${end.getMonth() + 1}.${end.getDate()}`;
+
+      let checkInDate = start.getFullYear() + '.' + startDateText;
+      let checkOutDate = end.getFullYear() + '.' + endDateText;
+
+      setCheckInState(checkInDate);
+      setCheckOutState(checkOutDate);
 
       const diffTime = end.getTime() - start.getTime();
       const diffDays = diffTime / (1000 * 60 * 60 * 24);
@@ -71,7 +78,7 @@ const AccomCalendar = ({ ...props }) => {
       <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
         <FaCalendar className='calendar-icon' />
         <span>
-          {checkIn} {dayHandler(state[0].startDate.getDay())} ~ {checkOut} {dayHandler(state[0].endDate.getDay())} ({tripDay}박)
+          {startDateText} {dayHandler(state[0].startDate.getDay())} ~ {endDateText} {dayHandler(state[0].endDate.getDay())} ({tripDay}박)
         </span>
       </div>
       <div className={`calendar__container ${calendarFlag ? 'visible' : ''}`}>

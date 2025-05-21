@@ -71,3 +71,15 @@
     background: #fafafa;
   }
 }
+
+@mixin background-baabfa {
+  & {
+    background: #baabfa;
+  }
+}
+
+@mixin color-baabfa {
+  & {
+    background: #baabfa;
+  }
+}
