@@ -1,7 +1,8 @@
 .pay-info-header-item {
   width: 100%;
-  border-bottom: 0.3rem dashed $color-c8adff;
   padding: 1rem;
+  // @include receipt-border-bottom;
+  border-bottom: 0.3rem dashed $color-c8adff;
 
   & > h2 {
     font-weight: normal;
