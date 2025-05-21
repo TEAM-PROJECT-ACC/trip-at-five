@@ -2,6 +2,21 @@
 import { FaCalendar } from 'react-icons/fa';
 import { MainLogoEn, MainLogoKr } from './logo/logo.icon.jsx';
 import { FaUser, FaBars } from 'react-icons/fa';
+import { IoReceipt } from 'react-icons/io5';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { FaInfoCircle } from 'react-icons/fa';
+import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 
-export { MainLogoEn, MainLogoKr, FaUser, FaBars, FaCalendar, MdOutlineArrowDropDown };
+export {
+  MainLogoEn,
+  MainLogoKr,
+  FaUser,
+  FaBars,
+  FaCalendar,
+  MdOutlineArrowDropDown,
+  IoReceipt,
+  BsFillTelephoneFill,
+  FaInfoCircle,
+  RiMoneyDollarCircleLine,
+};
