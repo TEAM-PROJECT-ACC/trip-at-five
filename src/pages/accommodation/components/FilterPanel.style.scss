@@ -1,3 +1,29 @@
-.filter-options{
-    
+#filter-btn {
+  border: 1px solid #5500ff;
+  padding: 5px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  @include color-5500ff;
+}
+
+.filter-panel {
+  border: 2px solid #baabfa;
+  border-radius: 5px;
+}
+
+hr {
+  color: #bbaaff;
+}
+
+h4 {
+  color: #baabfa;
+}
+
+.filter-group {
+  margin-left: 20px;
+}
+
+.line {
+  border-top: 1px solid #baabfa;
+  margin: 0px 50px;
 }

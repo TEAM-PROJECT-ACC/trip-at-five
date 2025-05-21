@@ -5,6 +5,7 @@ import { showAccomodationList } from "../../services/apiService";
 import FilterPanel from "./components/FilterPanel.component";
 import MapButton from "./components/MapButton.component";
 import AccommodationItem from "./components/AccommodationItem.component";
+import "./AccommodationList.style.scss";
 
 const AccommodationList = () => {
   const [accommodations, setAccommodations] = useState([]);
@@ -25,20 +26,12 @@ const AccommodationList = () => {
       <div className="search-bar"></div>
       <div className="main-section">
         <aside className="filter-section">
-          <h3>Map</h3>
           <MapButton />
           <FilterPanel />
         </aside>
-        <section className="list-section">
-          <ul className="accommodation-list">
-            <li className="accommodation-item">
-              <img src="" alt=""></img>
-            </li>
-            <li className="accommodation-item"></li>
-            <li className="accommodation-item"></li>
-            <li className="accommodation-item"></li>
-          </ul>
-        </section>
+        <div className="list-section">
+          <AccommodationItem />
+        </div>
       </div>
     </div>
   );

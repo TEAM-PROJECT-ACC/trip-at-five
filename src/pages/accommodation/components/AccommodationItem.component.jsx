@@ -1,18 +1,82 @@
 import React from "react";
+import "./AccommodationItem.style.scss";
 
-const AccommodationItem = ({ item }) => {
+const AccommodationItem = () => {
   return (
-    <li className="accommodation-item">
-      <div className="image-placeholder" />
-      <div className="hotel-info">
-        <h2 className="hotel-name">{item.accomName}</h2>
-        <p className="hotel-address">{item.accomAddr}</p>
-        <p className="hotel-time">체크인 15:00 | 체크아웃 11:00</p>
-        <p className="hotel-price">
-          <strong>최저가 </strong>100,000원
-        </p>
-      </div>
-    </li>
+    <ul>
+      <li className="accommodation-item">
+        <div className="image" src="" alt=""></div>
+        <div className="accom-info">
+          <div className="level-one">
+            <div className="accom-name">서울신라호텔</div>
+            <div className="accom-info-icon"></div>
+          </div>
+          <p className="accom-address">서울 장충동2가 202</p>
+          <div className="star">1999명 평가</div>
+          <div className="accom-info-time-price">
+            <p className="accom-time">15:00 체크인</p>
+            <p className="accom-time">11:00 체크아웃</p>
+            <p className="accom-price">
+              <strong>최저가 </strong>150,000원
+            </p>
+          </div>
+        </div>
+      </li>
+      <li className="accommodation-item">
+        <div className="image" src="" alt=""></div>
+        <div className="accom-info">
+          <div className="level-one">
+            <div className="accom-name">서울신라호텔</div>
+            <div className="accom-info-icon"></div>
+          </div>
+          <p className="accom-address">서울 장충동2가 202</p>
+          <div className="star">1999명 평가</div>
+          <div className="accom-info-time-price">
+            <p className="accom-time">15:00 체크인</p>
+            <p className="accom-time">11:00 체크아웃</p>
+            <p className="accom-price">
+              <strong>최저가 </strong>150,000원
+            </p>
+          </div>
+        </div>
+      </li>
+      <li className="accommodation-item">
+        <div className="image" src="" alt=""></div>
+        <div className="accom-info">
+          <div className="level-one">
+            <div className="accom-name">서울신라호텔</div>
+            <div className="accom-info-icon"></div>
+          </div>
+          <p className="accom-address">서울 장충동2가 202</p>
+          <div className="star">1999명 평가</div>
+          <div className="accom-info-time-price">
+            <p className="accom-time">15:00 체크인</p>
+            <p className="accom-time">11:00 체크아웃</p>
+            <p className="accom-price">
+              <strong>최저가 </strong>150,000원
+            </p>
+          </div>
+        </div>
+      </li>
+      <li className="accommodation-item">
+        <div className="image" src="" alt=""></div>
+        <div className="accom-info">
+          <div className="level-one">
+            <div className="accom-name">서울신라호텔</div>
+            <div className="accom-info-icon"></div>
+          </div>
+          <p className="accom-address">서울 장충동2가 202</p>
+          <div className="star">1999명 평가</div>
+          <div className="accom-info-time-price">
+            <p className="accom-time">15:00 체크인</p>
+            <p className="accom-time">11:00 체크아웃</p>
+            <p className="accom-price">
+              <strong>최저가 </strong>150,000원
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
   );
 };
 export default AccommodationItem;

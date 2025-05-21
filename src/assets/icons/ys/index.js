@@ -22,6 +22,7 @@ import {
   FaShuttleVan,
   FaSmoking,
   FaBurn,
+  FaBath,
 } from "react-icons/fa";
 
 export {
@@ -45,6 +46,7 @@ export {
   FaShuttleVan,
   FaSmoking,
   FaBurn,
+  FaBath,
 };
 
 import { FcFilingCabinet } from "react-icons/fc";
@@ -60,6 +62,7 @@ import {
   MdFreeBreakfast,
   MdLuggage,
   MdHouse,
+  MdOutlineFoodBank,
 } from "react-icons/md";
 
 export {
@@ -72,4 +75,5 @@ export {
   MdFreeBreakfast,
   MdLuggage,
   MdHouse,
+  MdOutlineFoodBank,
 };
