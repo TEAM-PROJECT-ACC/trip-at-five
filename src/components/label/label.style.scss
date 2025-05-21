@@ -1,0 +1,24 @@
+.global-label {
+	padding: 4px 8px;
+	border-radius: 8px;
+	font-weight: 600;
+	@include color-fafafa;
+
+	&.primary {
+		@include background-5500ff;
+	}
+
+	&.secondary {
+		border: 1px solid;
+		@include border-5500ff;
+		@include color-5500ff;
+	}
+
+	&.neutral {
+		@include background-ffaf45;
+	}
+
+	&.danger {
+		@include background-ff4545;
+	}
+}

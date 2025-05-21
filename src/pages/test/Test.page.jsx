@@ -4,12 +4,11 @@ import {
 	ButtonSecondary,
 	LinkButton,
 	TextLinkButton,
-} from '../../components/buttons';
-import {
 	InputPrimary,
 	InputSecondary,
 	InputShrink,
-} from '../../components/inputs';
+	Label,
+} from '../../components';
 import { ClassNamesTest } from '../../utils';
 import './test.style.scss';
 
@@ -34,6 +33,13 @@ export const TestPage = () => {
 					<span className='test-page__text-link-container'>
 						<TextLinkButton>텍스트링크버튼</TextLinkButton>
 					</span>
+				</div>
+				<h3>label component</h3>
+				<div className='test-page__test-area'>
+					<Label className='primary'>primary</Label>
+					<Label className='secondary'>secondary</Label>
+					<Label className='neutral'>neutral</Label>
+					<Label className='danger'>danger</Label>
 				</div>
 			</section>
 		</div>

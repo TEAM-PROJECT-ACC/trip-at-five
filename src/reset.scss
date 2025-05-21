@@ -33,8 +33,10 @@ body {
 
 body {
 	position: relative;
-	color: #1e2022;
-	background: #fafafa;
+	// color: #1e2022;
+	// background: #fafafa;
+	@include color-1e2022;
+	@include background-fafafa;
 }
 
 ul,

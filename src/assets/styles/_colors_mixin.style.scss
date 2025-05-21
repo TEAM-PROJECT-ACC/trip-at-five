@@ -6,6 +6,12 @@
 	}
 }
 
+@mixin color-1e2022 {
+	& {
+		color: #1e2022;
+	}
+}
+
 @mixin color-5500ff {
 	& {
 		color: #5500ff;
@@ -62,5 +68,17 @@
 @mixin background-fafafa {
 	& {
 		background: #fafafa;
+	}
+}
+
+@mixin background-ffaf45 {
+	& {
+		background: #ffaf45;
+	}
+}
+
+@mixin background-ff4545 {
+	& {
+		background: #ff4545;
 	}
 }
