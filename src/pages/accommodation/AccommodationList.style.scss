@@ -7,14 +7,23 @@
   margin: 0 auto;
 }
 .main-section {
+  width: 100%;
   display: flex;
-  gap: 130px;
-  margin-top: 17px;
+  gap: 200px;
+  margin-top: 20px;
 }
 
 .search-bar {
-  width: 1200px;
+  width: 100%;
   height: 108px;
   border: 2px solid #baabfa;
   border-radius: 8px;
+}
+
+.filter-section {
+  width: 25%;
+}
+
+.list-section {
+  width: 65%;
 }

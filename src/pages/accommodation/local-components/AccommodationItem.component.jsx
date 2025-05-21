@@ -1,5 +1,6 @@
 import React from "react";
 import "./AccommodationItem.style.scss";
+import { FaHome } from "react-icons/fa";
 
 const AccommodationItem = () => {
   return (
@@ -9,7 +10,9 @@ const AccommodationItem = () => {
         <div className="accom-info">
           <div className="level-one">
             <div className="accom-name">서울신라호텔</div>
-            <div className="accom-info-icon"></div>
+            <div className="accom-info-icon">
+              <FaHome />
+            </div>
           </div>
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
@@ -29,7 +32,9 @@ const AccommodationItem = () => {
         <div className="accom-info">
           <div className="level-one">
             <div className="accom-name">서울신라호텔</div>
-            <div className="accom-info-icon"></div>
+            <div className="accom-info-icon">
+              <FaHome />
+            </div>
           </div>
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
@@ -49,7 +54,9 @@ const AccommodationItem = () => {
         <div className="accom-info">
           <div className="level-one">
             <div className="accom-name">서울신라호텔</div>
-            <div className="accom-info-icon"></div>
+            <div className="accom-info-icon">
+              <FaHome />
+            </div>
           </div>
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
@@ -69,7 +76,9 @@ const AccommodationItem = () => {
         <div className="accom-info">
           <div className="level-one">
             <div className="accom-name">서울신라호텔</div>
-            <div className="accom-info-icon"></div>
+            <div className="accom-info-icon">
+              <FaHome />
+            </div>
           </div>
           <p className="accom-address">서울 장충동2가 202</p>
           <div className="star">1999명 평가</div>
