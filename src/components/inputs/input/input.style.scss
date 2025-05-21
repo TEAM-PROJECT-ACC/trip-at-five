@@ -1,8 +1,9 @@
 .global-input {
-	padding: 6px 12px;
-	font-size: 16px;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  font-size: 16px;
 
-	&::placeholder {
-		@include color-b8b8b8;
-	}
+  &::placeholder {
+    @include color-b8b8b8;
+  }
 }
