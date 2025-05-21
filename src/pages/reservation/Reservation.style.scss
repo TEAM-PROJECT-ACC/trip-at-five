@@ -1,0 +1,21 @@
+.reservation__container {
+  width: 100%;
+  // background-color: red;
+  padding: 5rem 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+
+  .user-info__container {
+    width: 100%;
+    // background-color: blue;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .pay-info__container {
+    width: 100%;
+    background-color: green;
+  }
+}

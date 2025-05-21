@@ -6,6 +6,7 @@ import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
 import { useEffect } from 'react';
 import Receipt from './pages/payment/Receipt.page';
+import Reservation from './pages/reservation/Reservation.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -58,6 +59,7 @@ function App() {
         <Route index element={<Main />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
+          <Route path='1/reservations' element={<Reservation />} />
           <Route path='1/payments' element={<Receipt />} />
         </Route>
       </Routes>
