@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import './linkButton.style.scss';
 import { classNames } from '../../../utils';
+import './linkButton.style.scss';
 
 export const LinkButton = ({ className, children, to, ...props }) => {
 	return (
 		<Link
-			className={classNames('global-link-button', className)}
+			className={classNames('global-link__button', className)}
 			to={to}
 			{...props}>
 			{children}
