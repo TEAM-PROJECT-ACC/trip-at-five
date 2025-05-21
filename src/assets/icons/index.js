@@ -2,5 +2,9 @@
 import { MainLogoEn, MainLogoKr } from './logo/logo.icon.jsx';
 import { FaUser, FaBars } from 'react-icons/fa';
 import { FaCalendar } from 'react-icons/fa';
+import { IoReceipt } from 'react-icons/io5';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { FaInfoCircle } from 'react-icons/fa';
+import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 
-export { MainLogoEn, MainLogoKr, FaUser, FaBars, FaCalendar };
+export { MainLogoEn, MainLogoKr, FaUser, FaBars, FaCalendar, IoReceipt, BsFillTelephoneFill, FaInfoCircle, RiMoneyDollarCircleLine };
