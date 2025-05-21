@@ -23,14 +23,12 @@
 .check-calendar__container {
   position: relative;
   width: 30%;
+  padding: 1.05rem;
 }
 
 .search-input {
   width: 100%;
-  font-size: 1.3rem;
-  border-radius: inherit;
   border: none;
-  background-color: inherit;
   @include color-5500ff;
 
   &:focus {
@@ -45,13 +43,14 @@
 .number-of-people__container {
   width: 20%;
   font-size: 1.3rem;
+  padding: 1.05rem;
 }
 
 .search-button {
   width: 15%;
   border: none;
   font-size: 1.3rem;
-  padding: 0.7rem;
+  padding: 1.05rem 0.7rem;
   border-radius: 0.5rem;
   @include color-ffffff;
   @include background-5500ff;

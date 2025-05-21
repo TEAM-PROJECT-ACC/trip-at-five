@@ -3,6 +3,7 @@ import AccomCalendar from '../../../../../components/accom-search/calendar/Accom
 import './SearchArea.style.scss';
 import NumberOfPeople from '../../../../../components/accom-search/number-of-people/NumberOfPeople.component';
 import { useAccomSearchStore } from '../../../../../states';
+import { ButtonSecondary, InputSecondary, InputShrink } from '../../../../../components';
 const SearchArea = () => {
   const { keyword, checkIn, checkOut, numberOfPeople, tripDay } = useAccomSearchStore((state) => state);
   const { setKeywordState } = useAccomSearchStore((state) => state.actions);
@@ -30,7 +31,7 @@ const SearchArea = () => {
     <div className='search__container'>
       <div className='search-input__container'>
         {/* 추후 공통 컴포넌트로 대체될 예정 */}
-        <input
+        <InputSecondary
           className='search-input'
           type='search'
           onChange={(data) => setKeywordState(data.target.value)}
@@ -39,9 +40,7 @@ const SearchArea = () => {
       </div>
       <AccomCalendar className='check-calendar__container' />
       <NumberOfPeople className='number-of-people__container' />
-      <button className='search-button' onClick={searchHandler}>
-        검색
-      </button>
+      <ButtonSecondary className='search-button' onClick={searchHandler} children='검색' />
     </div>
   );
 };
