@@ -4,10 +4,6 @@
 @mixin color-fafafa {
 	& {
 		color: $color-fafafa;
-
-		@at-root .darkmode #{&} {
-			color: #000000;
-		}
 	}
 }
 
