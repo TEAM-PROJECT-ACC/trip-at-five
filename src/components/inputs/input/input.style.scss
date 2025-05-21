@@ -1,0 +1,8 @@
+.global-input {
+	padding: 6px 12px;
+	font-size: 16px;
+
+	&::placeholder {
+		@include color-b8b8b8;
+	}
+}

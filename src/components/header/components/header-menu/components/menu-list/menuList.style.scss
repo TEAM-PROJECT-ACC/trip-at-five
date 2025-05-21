@@ -11,6 +11,7 @@
 	opacity: 0;
 	transition: all 150ms linear;
 	@include border-c8adff;
+	@include background-fafafa;
 
 	&.show {
 		opacity: 1;
