@@ -11,18 +11,6 @@ import {
   Select,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
-<<<<<<< HEAD
-import Login from '../login/Login';
-
-
-export const TestPage = () => {
-	return (
-		<div className='test--page__container'>
-			{/* <ClassNamesTest /> */}
-			<Login/>
-		</div>
-	);
-=======
 import './test.style.scss';
 
 export const TestPage = () => {
@@ -108,5 +96,4 @@ export const TestPage = () => {
       </section>
     </div>
   );
->>>>>>> 90b9ebb727e4b488d3ebd514940526a565a69d4e
 };
