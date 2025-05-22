@@ -6,12 +6,10 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { FaCalendar } from '../../../assets/icons/index';
 import { useAccomSearchStore } from '../../../states';
-
-let startDateText = '';
-let endDateText = '';
+import { formatDate } from '../../../utils/formatDate/formatDate';
 
 const AccomCalendar = ({ ...props }) => {
-  const { tripDay } = useAccomSearchStore((state) => state);
+  const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
   const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state);
 
   const [calendarFlag, setCalendarFlag] = useState(false);
@@ -29,17 +27,8 @@ const AccomCalendar = ({ ...props }) => {
     const end = state[0].endDate;
 
     if (end && start && end.getTime() !== start.getTime()) {
-      startDateText = `${start.getMonth() + 1}.${start.getDate()} (${dayHandler(start.getDay())})`;
-      endDateText = `${end.getMonth() + 1}.${end.getDate()} (${dayHandler(end.getDay())})`;
-
-      let checkInDate = start.getFullYear() + '.' + startDateText;
-      let checkOutDate = end.getFullYear() + '.' + endDateText;
-
-      // console.log(checkInDate);
-      // console.log(checkOutDate);
-
-      setCheckInState(checkInDate);
-      setCheckOutState(checkOutDate);
+      setCheckInState(formatDate(start));
+      setCheckOutState(formatDate(end));
 
       const diffTime = end.getTime() - start.getTime();
       const diffDays = diffTime / (1000 * 60 * 60 * 24);
@@ -55,33 +44,12 @@ const AccomCalendar = ({ ...props }) => {
     setState(item);
   };
 
-  const dayHandler = (day) => {
-    switch (day) {
-      case 0:
-        return '일';
-      case 1:
-        return '월';
-      case 2:
-        return '화';
-      case 3:
-        return '수';
-      case 4:
-        return '목';
-      case 5:
-        return '금';
-      case 6:
-        return '토';
-      default:
-        return '';
-    }
-  };
-
   return (
     <div {...props}>
       <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
         <FaCalendar className='calendar-icon' />
         <span>
-          {startDateText} ~ {endDateText} ({tripDay}박)
+          {checkIn.substring(5)} ~ {checkOut.substring(5)} ({tripDay}박)
         </span>
       </div>
       <div className={`calendar__container ${calendarFlag ? 'visible' : ''}`}>
