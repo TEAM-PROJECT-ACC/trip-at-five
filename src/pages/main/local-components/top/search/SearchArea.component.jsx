@@ -5,27 +5,34 @@ import NumberOfPeople from '../../../../../components/accom-search/number-of-peo
 import { useAccomSearchStore } from '../../../../../states';
 import { ButtonSecondary, InputSecondary, InputShrink } from '../../../../../components';
 const SearchArea = () => {
-  const { keyword, checkIn, checkOut, numberOfPeople, tripDay } = useAccomSearchStore((state) => state);
-  const { setKeywordState } = useAccomSearchStore((state) => state.actions);
+  const state = useAccomSearchStore.getState();
+  const { setKeywordState } = useAccomSearchStore();
 
-  useEffect(() => {
-    console.log(keyword);
-    console.log(checkIn);
-    console.log(checkOut);
-    console.log(numberOfPeople);
-    console.log(tripDay);
-  }, [keyword]);
+  const [inputValue, setInputValue] = useState('');
 
   const searchHandler = async () => {
-    const requestData = {
-      keyword: keyword,
-      checkIn: checkIn,
-      checkOut: checkOut,
-      numberOfPeople: numberOfPeople,
-      tripDay: tripDay,
+    console.log(inputValue);
+    setKeywordState(inputValue);
+    // 필요한 상태만 추출
+    const searchData = {
+      keyword: inputValue,
+      checkIn: state.checkIn,
+      checkOut: state.checkOut,
+      tripDay: state.tripDay,
+      numberOfPeople: state.numberOfPeople,
     };
-    console.log(requestData);
+
+    // localStorage에 수동 저장
+    // localStorage.setItem('accomSearchStore', JSON.stringify(searchData));
   };
+
+  // useEffect(() => {
+  //   console.log(inputValue);
+  //   console.log(checkIn);
+  //   console.log(checkOut);
+  //   console.log(numberOfPeople);
+  //   console.log(tripDay);
+  // }, [inputValue]);
 
   return (
     <div className='search__container'>
@@ -34,7 +41,9 @@ const SearchArea = () => {
         <InputSecondary
           className='search-input'
           type='search'
-          onChange={(data) => setKeywordState(data.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
           placeholder='가고싶은 곳 혹은 숙박명으로 찾아보세요'
         />
       </div>

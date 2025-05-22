@@ -1,0 +1,23 @@
+.room-image {
+  width: 40%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 100%;
+  }
+}
+
+.room-info {
+  width: 60%;
+
+  * {
+    margin-bottom: 1rem;
+  }
+
+  .room-price {
+    font-size: 2rem;
+    font-weight: 900;
+  }
+}
