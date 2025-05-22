@@ -1,0 +1,39 @@
+.global-pagination__page-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  width: 36px;
+  height: 36px;
+
+  .global-pagination__button {
+    width: 100%;
+    height: 100%;
+    font-weight: 600;
+  }
+
+  &:hover {
+    @include background-c8adff;
+
+    .global-pagination__button {
+      @include color-5500ff;
+    }
+  }
+
+  &.selected {
+    @include background-5500ff;
+    .global-pagination__button {
+      @include color-fafafa;
+    }
+  }
+
+  &.disabled {
+    @include background-fafafa;
+
+    .global-pagination__button {
+      pointer-events: none;
+      cursor: not-allowed;
+      @include color-b8b8b8;
+    }
+  }
+}

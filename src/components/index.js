@@ -12,6 +12,7 @@ import {
 import { Input, InputPrimary, InputSecondary, InputShrink } from "./inputs";
 import { Label } from "./label/Label.component";
 import { Select } from "./select/Select.component";
+import { Pagination } from "./pagination/Pagination.component";
 
 export {
   AppHeader,
@@ -28,4 +29,5 @@ export {
   TextLinkButton,
   Label,
   Select,
+  Pagination,
 };
