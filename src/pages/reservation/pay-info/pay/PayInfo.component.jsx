@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './PayInfo.style.scss';
 import { ButtonPrimary } from '../../../../components';
 import { usePaymentInfoStore } from '../../../../states';
-import { createResCode } from '../../../../utils/res-code/createResCode';
 
 const PayInfo = ({ className }) => {
   const state = usePaymentInfoStore((state) => state);
+  const { setResCode } = usePaymentInfoStore((state) => state.actions);
 
   const paymentHandler = () => {
-    const resCode = createResCode();
-    console.log(state);
+    const resCode = '예약코드';
+    setResCode(resCode);
   };
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <div className={className}>
