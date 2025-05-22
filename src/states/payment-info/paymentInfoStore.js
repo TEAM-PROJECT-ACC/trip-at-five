@@ -3,8 +3,9 @@ import { create } from 'zustand';
 const initialState = {
   resCode: '',
   resName: '',
+  resEmail: '',
   resPhone: '',
-  userCoupon: [],
+  userCoupon: {},
   roomInfo: [],
   // 검색 상태에도 있는 정보
   checkIn: '',
@@ -18,11 +19,12 @@ export const usePaymentInfoStore = create((set, get) => {
     actions: {
       setResCode: (value) => set({ resCode: value }),
       setResName: (value) => set({ resName: value }),
+      setResEmail: (value) => set({ resEmail: value }),
       setResPhone: (value) => set({ resPhone: value }),
-      setResCoupon: (value) => set({ userCoupon: value }),
+      setUserCoupon: (value) => set({ userCoupon: value }),
       setRoomInfo: (value) => set({ roomInfo: value }),
-      setCheckIn: (date) => set({ checkIn: date }),
-      setCheckOut: (date) => set({ checkOut: date }),
+      setCheckIn: (value) => set({ checkIn: value }),
+      setCheckOut: (value) => set({ checkOut: value }),
       setNumberOfPeople: (value) => set({ numberOfPeople: value }),
       resetState: () => set(initialState),
     },
