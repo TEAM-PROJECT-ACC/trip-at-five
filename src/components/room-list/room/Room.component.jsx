@@ -10,9 +10,9 @@ const Room = ({ className, checkArea, value, checkHandler, isChecked }) => {
     checkHandler(value);
   };
 
-  useEffect(() => {
-    console.log(value);
-  }, []);
+  // useEffect(() => {
+  //   console.log(value);
+  // }, []);
 
   return (
     <div className={className}>
