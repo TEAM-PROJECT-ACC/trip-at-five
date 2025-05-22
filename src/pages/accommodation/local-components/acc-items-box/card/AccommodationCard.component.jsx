@@ -14,7 +14,10 @@ const AccommodationCard = ({ accom }) => {
           </div>
         </div>
         <p className="accom-address">{accom.address}</p>
-        <div className="star">{accom.rating}명 평가</div>
+        <div className="star">
+          <span className="star-icon"></span>
+          {accom.rating}명 평가
+        </div>
         <div className="accom-info-time-price">
           <div className="v-line"></div>
           <p className="accom-time">{accom.checkIn} 체크인</p>

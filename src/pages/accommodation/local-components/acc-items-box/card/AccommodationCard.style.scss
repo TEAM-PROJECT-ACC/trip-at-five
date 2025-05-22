@@ -15,6 +15,14 @@
   justify-content: space-between;
 }
 
+p.accom-address {
+  color: #888888;
+}
+
+.star {
+  font-size: 13px;
+  @include color-c8adff;
+}
 .image {
   width: 300px;
   height: 180px;
@@ -22,6 +30,7 @@
   background-color: black;
   object-fit: cover;
   background-image: url(/src/assets/images/acc-list-page/hotel-img.png);
+  background-size: cover;
 }
 
 .accom-info {

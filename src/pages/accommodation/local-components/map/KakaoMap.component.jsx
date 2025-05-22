@@ -40,7 +40,9 @@ export const KakaoMap = ({ onClose }) => {
           border: 1px solid #5500ff;
           padding: 16px 24px;
           border-radius: 3px;
-          font-size: 12px;
+          font-size: 16px;
+          font-familt: 'SUIT';
+          font-weight: 500;
           margin-top: 120px;
           white-space: nowrap;
           box-shadow: 3px 3px 2px 0px rgb(0, 0, 0, 0.5);

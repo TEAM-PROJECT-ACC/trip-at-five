@@ -26,4 +26,13 @@
 
 .list-section {
   width: 65%;
+
+  ul {
+    min-height: 1125px;
+  }
+}
+
+.accom-pagination {
+  margin: 40px;
+  display: flex;
 }
