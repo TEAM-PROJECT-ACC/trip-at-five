@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   ButtonPrimary,
@@ -18,11 +19,30 @@ const PAGINATION_PROPS = {
   className: '',
   totalCount: 150,
   pageLength: 7,
-  currentPage: 8,
+  currentPage: 1,
   numOfRows: 10,
 };
 
 export const TestPage = () => {
+  const [pageNationProps, setPagintionProps] = useState(() => {
+    return {
+      className: '',
+      totalCount: 150,
+      pageLength: 7,
+      currentPage: 1,
+      numOfRows: 10,
+    };
+  });
+
+  const handlePagination = (pageNo) => {
+    setPagintionProps((prev) => {
+      return {
+        ...prev,
+        currentPage: pageNo,
+      };
+    });
+  };
+
   return (
     <div className='test-page__container'>
       <ClassNamesTest />
@@ -104,7 +124,10 @@ export const TestPage = () => {
         </div>
         <h3>pagination component</h3>
         <div className='test-page__test-area'>
-          <Pagination {...PAGINATION_PROPS} />
+          <Pagination
+            onClick={handlePagination}
+            {...pageNationProps}
+          />
         </div>
       </section>
     </div>

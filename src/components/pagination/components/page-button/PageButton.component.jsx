@@ -27,9 +27,12 @@ export const PageButton = ({
   );
 };
 
-const Button = ({ children, className }) => {
+const Button = ({ children, className, onClick }) => {
   return (
-    <button className={classNames('global-pagination__button', className)}>
+    <button
+      className={classNames('global-pagination__button', className)}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
