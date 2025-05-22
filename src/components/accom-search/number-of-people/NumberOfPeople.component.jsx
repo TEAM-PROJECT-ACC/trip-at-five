@@ -5,7 +5,7 @@ import { useAccomSearchStore } from '../../../states/accom-search/accomSearchSto
 
 const NumberOfPeople = ({ ...props }) => {
   const { numberOfPeople } = useAccomSearchStore((state) => state);
-  const { setNumberOfPeople } = useAccomSearchStore((state) => state.actions);
+  const { setNumberOfPeople } = useAccomSearchStore((state) => state);
 
   const setNumberOfPeopleHandler = (data) => {
     if (data === 8) {
