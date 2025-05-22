@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import "./KakaoMap.style.scss";
 import FilterPanel from "../filter/FilterPanel.component";
 import { MapInnerList } from "../acc/MapInnerList.component";
+import { markedData } from "./mapMarker";
 import { TiDelete } from "../../../../assets/icons/ys/index";
 
 export const KakaoMap = ({ onClose }) => {
@@ -22,10 +23,13 @@ export const KakaoMap = ({ onClose }) => {
 
       const map = new window.kakao.maps.Map(mapContainer, mapOptions);
 
-      const markerPosition = new window.kakao.maps.LatLng(
-        37.566826,
-        126.9786567
-      );
+      markedData.forEach((el) => {
+        new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(el.lat, el.lng),
+          title: el.title,
+        });
+      });
       const marker = new window.kakao.maps.Marker({ position: markerPosition });
       marker.setMap(map);
     });

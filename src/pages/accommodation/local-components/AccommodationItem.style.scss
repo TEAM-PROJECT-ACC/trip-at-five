@@ -35,8 +35,10 @@
   background-color: #baabfa;
   border-radius: 0px 10px 0px 10px;
   box-shadow: inset 2px 2px 2px 0px rgb(0, 0, 0, 0.45);
-  text-align: center;
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
   @include color-5500ff;
 }
 .accom-price {

@@ -3,11 +3,40 @@ ul {
 }
 
 .acc-list__box {
-  width: 280px;
+  display: flex;
+  padding: 19px;
 }
 
 .acc-list-img {
-  width: 50px;
-  background-color: black;
-  border-radius: 5px;
+  width: 100px;
+  height: 100px;
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.acc-list-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.acc-list-title {
+  font-weight: bold;
+  font-size: 19px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.acc-list-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #5500ff;
+  padding-top: 70px;
+  padding-left: 75px;
+  position: absolute;
+}
+.line {
+  border-bottom: 1px solid #baabfa;
+  margin: 0px 12px;
 }
