@@ -126,6 +126,7 @@ export const TestPage = () => {
         <div className='test-page__test-area'>
           <Pagination
             onClick={handlePagination}
+            useMoveToEnd
             {...pageNationProps}
           />
         </div>

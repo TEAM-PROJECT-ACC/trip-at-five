@@ -48,7 +48,10 @@ export const Pagination = ({
   return (
     <div className={classNames('global-pagination__container', className)}>
       {useMoveToEnd && (
-        <PageButton>
+        <PageButton
+          onClick={() => handleClick({ pageNo: 1 })}
+          disabled={currentPage === 1}
+        >
           <FaAngleDoubleLeft />
         </PageButton>
       )}
@@ -71,7 +74,10 @@ export const Pagination = ({
         <FaAngleRight />
       </PageButton>
       {useMoveToEnd && (
-        <PageButton>
+        <PageButton
+          onClick={() => handleClick({ pageNo: totalPage })}
+          disabled={currentPage === totalPage}
+        >
           <FaAngleDoubleRight />
         </PageButton>
       )}
