@@ -13,7 +13,7 @@ import { Input, InputPrimary, InputSecondary, InputShrink } from './inputs';
 import { Label } from './label/Label.component';
 import { Select } from './select/Select.component';
 import { Pagination } from './pagination/Pagination.component';
-import { CountScoreByStars } from './countScoreByStars/CountScoreByStars.component';
+import { StarRating } from './StarRating/StarRating.component';
 
 export {
   AppHeader,
@@ -31,5 +31,5 @@ export {
   Label,
   Select,
   Pagination,
-  CountScoreByStars,
+  StarRating,
 };

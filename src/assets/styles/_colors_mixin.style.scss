@@ -2,84 +2,90 @@
 // 색상 관련 css 추가
 
 @mixin color-fafafa {
-	& {
-		color: $color-fafafa;
-	}
+  & {
+    color: $color-fafafa;
+  }
 }
 
 @mixin color-1e2022 {
-	& {
-		color: $color-1e2022;
-	}
+  & {
+    color: $color-1e2022;
+  }
 }
 
 @mixin color-5500ff {
-	& {
-		color: $color-5500ff;
-	}
+  & {
+    color: $color-5500ff;
+  }
 }
 
 @mixin color-c8adff {
-	& {
-		color: $color-c8adff;
-	}
+  & {
+    color: $color-c8adff;
+  }
 }
 
 @mixin color-b8b8b8 {
-	& {
-		color: $color-b8b8b8;
-	}
+  & {
+    color: $color-b8b8b8;
+  }
+}
+
+@mixin color-ffaf45 {
+  & {
+    color: $color-ffaf45;
+  }
 }
 
 @mixin border-5500ff {
-	& {
-		border-color: $color-5500ff;
-	}
+  & {
+    border-color: $color-5500ff;
+  }
 }
 
 @mixin border-c8adff {
-	& {
-		border-color: $color-c8adff;
-	}
+  & {
+    border-color: $color-c8adff;
+  }
 }
 @mixin border-1e2022 {
-	& {
-		border-color: $color-1e2022;
-	}
+  & {
+    border-color: $color-1e2022;
+  }
 }
 
 @mixin background-5500ff {
-	& {
-		background: $color-5500ff;
-	}
+  & {
+    background: $color-5500ff;
+  }
 }
 
 @mixin background-c8adff {
-	& {
-		background: $color-c8adff;
-	}
+  & {
+    background: $color-c8adff;
+  }
 }
 
 @mixin background-1e2022 {
-	& {
-		background: $color-1e2022;
-	}
+  & {
+    background: $color-1e2022;
+  }
 }
 
 @mixin background-fafafa {
-	& {
-		background: $color-fafafa;
-	}
+  & {
+    background: $color-fafafa;
+  }
 }
 
 @mixin background-ffaf45 {
-	& {
-		background: $color-ffaf45;
-	}
+  & {
+    background: $color-ffaf45;
+  }
 }
 
 @mixin background-ff4545 {
-	& {
-		background: $color-ff4545;
-	}
+  & {
+    background: $color-ff4545;
+  }
 }

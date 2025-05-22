@@ -1,0 +1,23 @@
+.global-star-rating__star-list {
+  color: transparent;
+  z-index: 5;
+
+  .global-star-rating__rate-star-container {
+    width: 36px;
+    height: 36px;
+
+    &.hover {
+      @include color-ffaf45;
+    }
+    &.half-hover {
+      .global-star-rating__rate-star {
+        width: 50%;
+      }
+    }
+    .global-star-rating__rate-star {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+}

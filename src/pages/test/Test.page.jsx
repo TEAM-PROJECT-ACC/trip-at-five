@@ -11,7 +11,7 @@ import {
   Label,
   Select,
   Pagination,
-  CountScoreByStars,
+  StarRating,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
 import './test.style.scss';
@@ -35,6 +35,8 @@ export const TestPage = () => {
     };
   });
 
+  const [starRateScore, setStarRateScore] = useState(() => 2.6);
+
   const handlePagination = (pageNo) => {
     setPagintionProps((prev) => {
       return {
@@ -42,6 +44,11 @@ export const TestPage = () => {
         currentPage: pageNo,
       };
     });
+  };
+
+  const handleStarRating = (score) => {
+    console.log(score);
+    setStarRateScore(() => score);
   };
 
   return (
@@ -131,9 +138,13 @@ export const TestPage = () => {
             {...pageNationProps}
           />
         </div>
-        <h3>countScoreByStars component</h3>
+        <h3>starRating component</h3>
         <div className='test-page__test-area'>
-          <CountScoreByStars />
+          <StarRating
+            score={starRateScore}
+            onClick={handleStarRating}
+            isDisabled={true}
+          />
         </div>
       </section>
     </div>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { classNames } from '../../utils/index';
 import { PageButton } from './components/page-button/PageButton.component';
 import {
@@ -6,9 +7,8 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from '../../assets/icons/index';
-import './pagination.style.scss';
 import { PageList } from './components/page-list/PageList.component';
-import { useMemo } from 'react';
+import './pagination.style.scss';
 
 /**
  *
