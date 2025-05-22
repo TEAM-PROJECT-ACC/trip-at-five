@@ -7,6 +7,7 @@ import { BsFillTelephoneFill } from 'react-icons/bs';
 import { FaInfoCircle } from 'react-icons/fa';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 export {
   MainLogoEn,
@@ -20,4 +21,8 @@ export {
   FaInfoCircle,
   RiMoneyDollarCircleLine,
   FaGithub,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaAngleLeft,
+  FaAngleRight,
 };
