@@ -16,6 +16,13 @@ const EmailForm = ({ className }) => {
   const { resEmail } = usePaymentInfoStore((state) => state);
   const { setResEmail } = usePaymentInfoStore((state) => state.actions);
 
+  const checkEmailHandler = () => {
+    console.log(resEmail);
+  };
+  const checkEmailCodeHandler = () => {
+    console.log('이메일 코드 체크');
+  };
+
   useEffect(() => {
     console.log(resEmail);
   }, [resEmail]);
@@ -32,11 +39,11 @@ const EmailForm = ({ className }) => {
             labelText='이메일을 입력해주세요'
             onChange={(e) => setResEmail(e.target.value)}
           />
-          <ButtonPrimary className='check-email-button' children='이메일 인증' />
+          <ButtonPrimary type='button' className='check-email-button' children='이메일 인증' onClick={checkEmailHandler} />
         </div>
         <div className='email-form-item'>
           <InputShrink id='email-code' type='text' className='email-input' labelText='인증코드를 입력해주세요' />
-          <ButtonSecondary className='check-email-button' children='확인' />
+          <ButtonSecondary type='button' className='check-email-button' children='확인' onClick={checkEmailCodeHandler} />
         </div>
       </form>
     </div>

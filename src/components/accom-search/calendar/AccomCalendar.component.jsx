@@ -11,8 +11,8 @@ let startDateText = '';
 let endDateText = '';
 
 const AccomCalendar = ({ ...props }) => {
-  const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
-  const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state.actions);
+  const { tripDay } = useAccomSearchStore((state) => state);
+  const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state);
 
   const [calendarFlag, setCalendarFlag] = useState(false);
 
@@ -34,6 +34,9 @@ const AccomCalendar = ({ ...props }) => {
 
       let checkInDate = start.getFullYear() + '.' + startDateText;
       let checkOutDate = end.getFullYear() + '.' + endDateText;
+
+      // console.log(checkInDate);
+      // console.log(checkOutDate);
 
       setCheckInState(checkInDate);
       setCheckOutState(checkOutDate);
