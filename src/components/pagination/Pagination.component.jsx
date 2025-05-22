@@ -17,6 +17,7 @@ import { PageList } from './components/page-list/PageList.component';
  * pageLength 페이지 단위
  * currentPage 현재 페이지
  * numOfRows 페이지 당 아이템 요청 수
+ * useMoveToEnd 시작 페이지 또는 마지막 페이지로 이동 사용 여부
  * }
  * @returns
  */
