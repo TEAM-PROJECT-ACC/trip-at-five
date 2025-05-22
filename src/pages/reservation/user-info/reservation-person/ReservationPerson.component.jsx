@@ -5,6 +5,10 @@ import { DropDown } from '../../../../components/select/components/drop-down/Dro
 import { InputShrink, Select } from '../../../../components';
 
 const ReservationPerson = ({ className }) => {
+  /**
+   * 예약자 정보를 입력받고 해당 값을 예약 상태관리 정보에 저장
+   */
+
   const couponList = [
     {
       label: '1만원권',
@@ -33,19 +37,15 @@ const ReservationPerson = ({ className }) => {
       <div className='reservation-person-form__container'>
         <form className='reservation-person-form'>
           <div className='reservation-person-form-item'>
-            <InputShrink id='userName' className='reservation-person-input' labelText='예약자명을 입력해주세요' />
-            {/* <input className='reservation-person-input' placeholder='이메일을 입력해주세요' /> */}
+            <InputShrink id='userName' type='text' className='reservation-person-input' labelText='예약자명을 입력해주세요' />
           </div>
           <div className='reservation-person-form-item'>
-            <InputShrink id='userPhone' className='reservation-person-input' labelText='"-"없이 전화번호를 입력해주세요' />
+            <InputShrink id='userPhone' type='text' className='reservation-person-input' labelText='"-"없이 전화번호를 입력해주세요' />
           </div>
           <div className='reservation-person-form-item'>
             <Select defaultOption={{ label: '쿠폰을 선택해주세요' }} className='reservation-person-form-select' optionList={couponList} />
           </div>
         </form>
-        {/* <div className='reservation-person-image'>
-          <img src={'/assets/images/reservation-page/reservation-form-img.webp'} />
-        </div> */}
       </div>
     </div>
   );

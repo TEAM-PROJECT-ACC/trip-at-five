@@ -17,14 +17,19 @@
       .reservation-person-input {
         width: 100%;
         font-size: 1rem;
+        @include border-bottom-reservation-baabfa;
+      }
+
+      .reservation-person-input:focus {
+        @include border-bottom-reservation-5500ff;
       }
 
       .reservation-person-form-select {
         width: 100%;
 
         button {
-          @include color-5500ff;
-          @include border-5500ff;
+          @include color-888888;
+          @include border-c8adff;
         }
       }
     }

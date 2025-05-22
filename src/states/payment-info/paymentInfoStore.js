@@ -24,6 +24,7 @@ export const usePaymentInfoStore = create((set, get) => {
       setCheckIn: (date) => set({ checkIn: date }),
       setCheckOut: (date) => set({ checkOut: date }),
       setNumberOfPeople: (value) => set({ numberOfPeople: value }),
+      resetState: () => set(initialState),
     },
   };
 });

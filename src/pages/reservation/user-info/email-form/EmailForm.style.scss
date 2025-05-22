@@ -14,15 +14,16 @@
     .email-input {
       width: 70%;
       font-size: 1rem;
+      @include border-bottom-reservation-baabfa;
     }
+
+    .email-input:focus {
+      @include border-bottom-reservation-5500ff;
+    }
+
     .check-email-button {
       width: 30%;
       padding: 1rem;
-      font-size: 1rem;
-    }
-
-    .email-code-input {
-      width: 70%;
       font-size: 1rem;
     }
   }
