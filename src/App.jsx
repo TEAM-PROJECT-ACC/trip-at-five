@@ -2,7 +2,10 @@ import { Route, Routes } from 'react-router-dom';
 import { TestPage } from './pages/test/Test.page';
 import { AppFooter, AppHeader } from './components';
 import './App.css';
-import Login from './pages/login/Login';
+import LoginPage from './pages/login/Login';
+import LoginPage1 from './pages/login/Login1';
+import SignUp from './pages/sign/SignUp';
+
 
 function App() {
 	// TODO : 규형님 로그인 상태 확인
@@ -10,6 +13,8 @@ function App() {
 	// 2. 로그인 회원 상태 관리가 zustand 전역 상태 관리로
 	// 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
 	// 로그아웃 할 때 회원 상태 초기화
+
+
 
 	return (
 		<>
@@ -19,6 +24,13 @@ function App() {
 					path='/test'
 					element={<TestPage />}
 				/>
+         {/* 로그인 부분 */}
+        <Route path='/login' element={<LoginPage/>}></Route>
+        <Route path='/login1' element={<LoginPage1/>}></Route>        
+
+        {/* 회원가입 */}
+        <Route path='/signUp' element={<SignUp/>}/>
+
 				{/*
           // TODO: 회원 팀
           로그인/회원가입
