@@ -11,6 +11,7 @@ import './starRating.style.scss';
  *  score 점수 값
  *  starCount 필요한 별 개수, default = 5
  *  onClick 점수를 전달 받을 함수 (0 ~ 5) .5 단위로 증가
+ *  isDisabled 별점 표시만 필요한 경우 설정 값
  * }
  */
 

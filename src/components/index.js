@@ -14,6 +14,7 @@ import { Label } from './label/Label.component';
 import { Select } from './select/Select.component';
 import { Pagination } from './pagination/Pagination.component';
 import { StarRating } from './star-rating/StarRating.component';
+import { PageContainer } from './page-container/PageContainer.component';
 
 export {
   AppHeader,
@@ -32,4 +33,5 @@ export {
   Select,
   Pagination,
   StarRating,
+  PageContainer,
 };
