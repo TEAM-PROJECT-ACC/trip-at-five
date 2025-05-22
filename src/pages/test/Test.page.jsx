@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   ButtonPrimary,
@@ -9,11 +10,39 @@ import {
   InputShrink,
   Label,
   Select,
+  Pagination,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
 import './test.style.scss';
 
+const PAGINATION_PROPS = {
+  className: '',
+  totalCount: 150,
+  pageLength: 7,
+  currentPage: 1,
+  numOfRows: 10,
+};
+
 export const TestPage = () => {
+  const [pageNationProps, setPagintionProps] = useState(() => {
+    return {
+      className: '',
+      totalCount: 150,
+      pageLength: 7,
+      currentPage: 1,
+      numOfRows: 10,
+    };
+  });
+
+  const handlePagination = (pageNo) => {
+    setPagintionProps((prev) => {
+      return {
+        ...prev,
+        currentPage: pageNo,
+      };
+    });
+  };
+
   return (
     <div className='test-page__container'>
       <ClassNamesTest />
@@ -92,6 +121,14 @@ export const TestPage = () => {
               ]}
             />
           </form>
+        </div>
+        <h3>pagination component</h3>
+        <div className='test-page__test-area'>
+          <Pagination
+            onClick={handlePagination}
+            useMoveToEnd
+            {...pageNationProps}
+          />
         </div>
       </section>
     </div>

@@ -3,29 +3,31 @@ import { AppHeader } from './header/Header.component';
 import { AppFooter } from './footer/Footer.component';
 import { TestPageLayout } from './test-page-layout/TestPageLayout.component';
 import {
-	Button,
-	ButtonPrimary,
-	ButtonSecondary,
-	LinkButton,
-	TextLinkButton,
+  Button,
+  ButtonPrimary,
+  ButtonSecondary,
+  LinkButton,
+  TextLinkButton,
 } from './buttons';
 import { Input, InputPrimary, InputSecondary, InputShrink } from './inputs';
 import { Label } from './label/Label.component';
 import { Select } from './select/Select.component';
+import { Pagination } from './pagination/Pagination.component';
 
 export {
-	AppHeader,
-	AppFooter,
-	TestPageLayout,
-	Input,
-	InputPrimary,
-	InputSecondary,
-	InputShrink,
-	Button,
-	ButtonPrimary,
-	ButtonSecondary,
-	LinkButton,
-	TextLinkButton,
-	Label,
-	Select,
+  AppHeader,
+  AppFooter,
+  TestPageLayout,
+  Input,
+  InputPrimary,
+  InputSecondary,
+  InputShrink,
+  Button,
+  ButtonPrimary,
+  ButtonSecondary,
+  LinkButton,
+  TextLinkButton,
+  Label,
+  Select,
+  Pagination,
 };

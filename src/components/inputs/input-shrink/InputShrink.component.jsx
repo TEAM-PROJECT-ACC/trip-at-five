@@ -34,7 +34,6 @@ export const InputShrink = ({
 
   useEffect(() => {
     const handleClickOut = (event) => {
-      console.log(value === '');
       if (
         focusRef.current &&
         !focusRef.current.contains(event.target) &&
