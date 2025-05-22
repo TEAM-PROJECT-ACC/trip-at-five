@@ -1,4 +1,38 @@
 // 전역 컴포넌트 관리 폴더입니다.
+<<<<<<< HEAD
+=======
+import { AppHeader } from './header/Header.component';
+import { AppFooter } from './footer/Footer.component';
+>>>>>>> 90b9ebb727e4b488d3ebd514940526a565a69d4e
 import { TestPageLayout } from './test-page-layout/TestPageLayout.component';
+import {
+	Button,
+	ButtonPrimary,
+	ButtonSecondary,
+	LinkButton,
+	TextLinkButton,
+} from './buttons';
+import { Input, InputPrimary, InputSecondary, InputShrink } from './inputs';
+import { Label } from './label/Label.component';
+import { Select } from './select/Select.component';
 
+<<<<<<< HEAD
 export {  TestPageLayout };
+=======
+export {
+	AppHeader,
+	AppFooter,
+	TestPageLayout,
+	Input,
+	InputPrimary,
+	InputSecondary,
+	InputShrink,
+	Button,
+	ButtonPrimary,
+	ButtonSecondary,
+	LinkButton,
+	TextLinkButton,
+	Label,
+	Select,
+};
+>>>>>>> 90b9ebb727e4b488d3ebd514940526a565a69d4e

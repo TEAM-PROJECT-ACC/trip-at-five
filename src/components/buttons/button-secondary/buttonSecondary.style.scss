@@ -1,0 +1,10 @@
+.global-button__secondary {
+	border: 1px solid;
+	border-radius: 8px;
+	@include border-5500ff;
+	@include color-5500ff;
+
+	&:hover {
+		@include background-c8adff;
+	}
+}
