@@ -14,7 +14,7 @@
 
   .check-all__true {
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 1.5rem;
     @include color-5500ff;
   }
 
@@ -29,7 +29,7 @@
 }
 
 .room-area__container {
-  width: 70%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   justify-content: center;

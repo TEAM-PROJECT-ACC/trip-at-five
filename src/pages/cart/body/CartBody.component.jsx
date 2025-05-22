@@ -4,7 +4,7 @@ import PayInfo from '../../../components/pay/PayInfo.component';
 import './CartBody.style.scss';
 import { usePaymentInfoStore } from '../../../states';
 import Room from '../../../components/room-list/room/Room.component';
-import { accomData } from '../../../assets/sample-data/accomData';
+import { accomData } from '../../../assets/sample-data/accomSampleData';
 
 const accomDataList = accomData.accommodation_tb;
 
@@ -12,32 +12,44 @@ const CartBody = ({ className }) => {
   const state = usePaymentInfoStore((state) => state);
   const [selectedAll, setSelectedAll] = useState(false);
 
-  const [checkList, setCheckList] = useState([]);
+  const [selectedList, setSelectedList] = useState([]);
 
   // 전체 선택
   const checkAllHandler = () => {
-    if (selectedAll) return;
-    const roomAllList = document.querySelectorAll('.room-item');
-    setCheckList([...checkList, roomAllList]);
+    setSelectedList(accomDataList);
     setSelectedAll(true);
   };
 
   // 전체 해제
   const checkAllClearHandler = () => {
-    setCheckList([]);
+    setSelectedList([]);
+    setSelectedAll(false);
   };
 
   // 하나 선택
   const checkHandler = (data) => {
-    setCheckList(...checkList, data);
+    const exists = selectedList.some((item) => item.accom_sq === data.accom_sq);
+    if (exists) {
+      setSelectedList(selectedList.filter((item) => item.accom_sq !== data.accom_sq));
+    } else {
+      setSelectedList([...selectedList, data]);
+    }
   };
 
-  const reserveHandler = () => {};
+  const reserveHandler = () => {
+    if (selectedList.length === 0) {
+      alert('선택된 숙소가 없습니다.');
+      return;
+    }
+
+    console.log('예약할 숙소:', selectedList);
+    // 상태 저장 후 페이지 이동 또는 결제 API 호출 등
+  };
 
   useEffect(() => {
-    console.log(accomDataList);
-    console.log(checkList);
-  }, [checkList]);
+    // console.log(accomDataList);
+    console.log(selectedList);
+  }, [selectedList]);
 
   return (
     <>
@@ -51,11 +63,12 @@ const CartBody = ({ className }) => {
               전체해제
             </span>
           </div>
-          {accomDataList?.map((value, idx) => (
-            <Room key={idx} className='room-item' value={value} checkArea={true} />
-          ))}
+          {accomDataList?.map((value, idx) => {
+            const isChecked = selectedList.some((item) => item.accom_sq === value.accom_sq);
+            return <Room key={idx} className='room-item' value={value} checkArea={true} checkHandler={checkHandler} isChecked={isChecked} />;
+          })}
         </div>
-        <PayInfo className='cart-pay-area__container' clickHandler={reserveHandler} />
+        <PayInfo className='cart-pay-area__container' selectedList={selectedList} clickHandler={reserveHandler} />
       </div>
     </>
   );
