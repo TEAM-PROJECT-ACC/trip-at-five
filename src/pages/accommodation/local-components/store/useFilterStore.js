@@ -12,6 +12,7 @@ const useFilterStore = create((set) => ({
         ? state.selectedFacilities.filter((f) => f !== facility)
         : [...state.selectedFacilities, facility],
     })),
+
   setPriceRange: (range) => set({ priceRange: range }),
 
   resetFilters: () =>

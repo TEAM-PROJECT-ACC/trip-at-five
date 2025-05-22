@@ -5,7 +5,7 @@ import "./AccommodationCard.style.scss";
 const AccommodationCard = ({ accom }) => {
   return (
     <li className="accommodation-item">
-      <div className="image" src="" alt=""></div>
+      <div className="image"></div>
       <div className="accom-info">
         <div className="level-one">
           <div className="accom-name">{accom.name}</div>

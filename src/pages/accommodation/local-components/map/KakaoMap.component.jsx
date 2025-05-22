@@ -7,7 +7,7 @@ import { TiDelete } from "../../../../assets/icons/ys/index";
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
-
+  const kakaoMap = useRef(null);
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) return;
 
@@ -22,6 +22,8 @@ export const KakaoMap = ({ onClose }) => {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
         level: 3,
       });
+
+      kakaoMap.current = map;
 
       markedData.forEach((el) => {
         const position = new kakao.maps.LatLng(el.lat, el.lng);
@@ -61,6 +63,15 @@ export const KakaoMap = ({ onClose }) => {
     });
   }, []);
 
+  const zoomIn = () => {
+    const map = kakaoMap.current;
+    if (map) map.setLevel(map.getLevel() - 1);
+  };
+
+  const zoomOut = () => {
+    const map = kakaoMap.current;
+    if (map) map.setLevel(map.getLevel() + 1);
+  };
   return (
     <div className="container">
       <button className="btn-exit" onClick={onClose}>
@@ -72,6 +83,20 @@ export const KakaoMap = ({ onClose }) => {
       <div id="acc-list">
         <MapInnerList />
         <div id="map" ref={mapRef}></div>
+        <div className="custom_zoomcontrol">
+          <div id="level__btn--plus" onClick={zoomIn}>
+            <img
+              src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
+              alt="확대"
+            />
+          </div>
+          <div id="level__btn--minus" onClick={zoomOut}>
+            <img
+              src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
+              alt="축소"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
