@@ -3,15 +3,18 @@
   height: 202px;
   display: flex;
 }
+
 .accom-name {
   font-family: "KCC-Ganpan";
   font-size: 24px;
   @include color-5500ff;
 }
+
 .level-one {
   display: flex;
   justify-content: space-between;
 }
+
 .image {
   width: 300px;
   height: 180px;
@@ -41,11 +44,13 @@
   margin-top: 5px;
   @include color-5500ff;
 }
+
 .accom-price {
   font-size: 16px;
   font-family: "SUIT";
   vertical-align: middle;
 }
+
 .accom-price strong {
   font-size: 25px;
   font-weight: 900;
@@ -53,9 +58,11 @@
   margin-right: 5px;
   @include color-5500ff;
 }
+
 .accom-info-time-price {
   margin-top: 30px;
 }
+
 p.accom-price {
   margin-left: 250px;
   display: inline-flex;
@@ -63,6 +70,7 @@ p.accom-price {
   font-weight: 600;
   font-size: 18px;
 }
+
 .accom-time {
   margin-left: 15px;
 }

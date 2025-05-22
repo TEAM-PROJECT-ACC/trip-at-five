@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import "./KakaoMap.style.scss";
 import FilterPanel from "../filter/FilterPanel.component";
-import { MapInnerList } from "../acc/MapInnerList.component";
+import { MapInnerList } from "../acc-map-list/MapInnerList.component";
+import { markedData } from "./MapData";
 import { TiDelete } from "../../../../assets/icons/ys/index";
 
 export const KakaoMap = ({ onClose }) => {
@@ -17,32 +18,46 @@ export const KakaoMap = ({ onClose }) => {
         return;
       }
 
-      const mapOptions = {
-        center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
+      const map = new window.kakao.maps.Map(mapContainer, {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567),
         level: 3,
-      };
-
-      const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+      });
 
       markedData.forEach((el) => {
-        new window.kakao.maps.Marker({
-          position: new kakao.maps.LatLng(el.lat, el.lng),
-          map: map,
+        const position = new kakao.maps.LatLng(el.lat, el.lng);
+
+        const marker = new kakao.maps.Marker({
+          position,
+          map,
         });
 
         const overlayContent = document.createElement("div");
-        overlayContent.innerText = el.content;
-        overlayContent.style.cssText =
-          "background:white; padding:5px; border:1px solid #333;";
+        overlayContent.innerText = el.name;
+        overlayContent.style.cssText = `
+          background: #fafafa;
+          border: 1px solid #5500ff;
+          padding: 16px 24px;
+          border-radius: 3px;
+          font-size: 12px;
+          margin-top: 120px;
+          white-space: nowrap;
+          box-shadow: 3px 3px 2px 0px rgb(0, 0, 0, 0.5);
+          z-index: 111;
+        `;
 
-        const customOverlay = new window.kakao.maps.CustomOverlay({
+        const overlay = new kakao.maps.CustomOverlay({
           content: overlayContent,
-          position: marker.getPosition(),
-          yAnchor: 1,
+          position,
+          yAnchor: 1.2,
+        });
+        kakao.maps.event.addListener(marker, "mouseover", () => {
+          overlay.setMap(map);
+        });
+
+        kakao.maps.event.addListener(marker, "mouseout", () => {
+          overlay.setMap(null);
         });
       });
-
-      customOverlay.setMap(map);
     });
   }, []);
 

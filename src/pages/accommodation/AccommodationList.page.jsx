@@ -4,7 +4,6 @@ import { showAccomodationList } from "../../services/apiService";
 //import { VITE_KAKAO_JAVA_API } from "./env.config";
 import FilterPanel from "./local-components/filter/FilterPanel.component";
 import MapButton from "./local-components/map/MapButton.component";
-import AccommodationItem from "./local-components/AccommodationItem.component";
 import "./AccommodationList.style.scss";
 
 const AccommodationList = () => {
@@ -30,7 +29,7 @@ const AccommodationList = () => {
           <FilterPanel />
         </aside>
         <div className="list-section">
-          <AccommodationItem />
+          <AccommodationList />
         </div>
       </div>
     </div>
