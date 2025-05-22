@@ -1,32 +1,27 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { PageButton } from '../page-button/PageButton.component';
 import './pageList.style.scss';
 
-export const PageList = ({
-  totalCount,
-  pageLength,
-  currentPage,
-  numOfRows,
-}) => {
+export const PageList = ({ pageLength, currentPage, totalPage, onClick }) => {
   const pageList = useMemo(() => {
     const list = [];
-    const totalPage = Math.ceil(totalCount / numOfRows);
+
     const pageDistanceIndex = Math.ceil(pageLength / 2) - 1;
 
     let startPage = currentPage - pageDistanceIndex;
+
     if (currentPage >= totalPage - pageDistanceIndex) {
-      startPage = totalPage - pageLength;
-      if (startPage < 0) {
-        startPage = 0;
+      startPage = totalPage - pageLength + 1;
+      if (startPage < 1) {
+        startPage = 1;
       }
     }
-    if (currentPage < pageDistanceIndex) {
-      startPage = 0;
+    if (currentPage <= pageDistanceIndex) {
+      startPage = 1;
     }
 
-    // endPage가 totalPage보다 커질 수 있음
     let endPage = startPage + (pageLength - 1);
-    if (endPage > totalPage) {
+    if (endPage >= totalPage) {
       endPage = totalPage;
     }
 
@@ -38,12 +33,7 @@ export const PageList = ({
     }
 
     return list;
-  }, [currentPage, numOfRows, pageLength, totalCount]);
-
-  useEffect(() => {
-    // NOTI: 테스트 후 삭제
-    console.log(pageList);
-  }, [pageList]);
+  }, [currentPage, pageLength, totalPage]);
 
   return (
     <span className='global-pagination__page-list'>
@@ -54,6 +44,7 @@ export const PageList = ({
             <PageButton
               key={idx}
               selected={selected}
+              onClick={() => onClick({ pageNo: page })}
             >
               {page}
             </PageButton>
