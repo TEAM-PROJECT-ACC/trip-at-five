@@ -1,0 +1,20 @@
+.cart-container {
+  width: 100%;
+  padding: 5rem 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .cart-header {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .cart-list-container {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+}

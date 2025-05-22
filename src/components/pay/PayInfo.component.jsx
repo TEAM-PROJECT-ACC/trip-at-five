@@ -1,20 +1,12 @@
 import React, { useEffect } from 'react';
 import './PayInfo.style.scss';
-import { ButtonPrimary } from '../../../../components';
-import { usePaymentInfoStore } from '../../../../states';
+import { ButtonPrimary } from '..';
+import { usePaymentInfoStore } from '../../states';
 
-const PayInfo = ({ className }) => {
-  const state = usePaymentInfoStore((state) => state);
-  const { setResCode } = usePaymentInfoStore((state) => state.actions);
-
-  const paymentHandler = () => {
-    const resCode = '예약코드';
-    setResCode(resCode);
-  };
-
+const PayInfo = ({ className, clickHandler, resState }) => {
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    console.log(resState);
+  }, [resState]);
 
   return (
     <div className={className}>
@@ -50,7 +42,7 @@ const PayInfo = ({ className }) => {
           </h3>
         </div>
         {/* 결제 버튼 텍스트 총 금액 표기하기 ex) 총금액 원 결제하기 */}
-        <ButtonPrimary className='payment-button' children='9,000,000원 결제하기' onClick={paymentHandler} />
+        <ButtonPrimary className='payment-button' children='9,000,000원 결제하기' onClick={clickHandler} />
       </div>
     </div>
   );

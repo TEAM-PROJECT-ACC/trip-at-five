@@ -8,6 +8,8 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { IoCart } from 'react-icons/io5';
+import { GoCheckCircle, GoCheckCircleFill } from 'react-icons/go';
 
 export {
   MainLogoEn,
@@ -25,4 +27,7 @@ export {
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
+  IoCart,
+  GoCheckCircle,
+  GoCheckCircleFill,
 };
