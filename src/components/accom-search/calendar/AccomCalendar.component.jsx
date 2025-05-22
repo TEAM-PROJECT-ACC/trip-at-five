@@ -49,7 +49,7 @@ const AccomCalendar = ({ ...props }) => {
       <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
         <FaCalendar className='calendar-icon' />
         <span>
-          {checkIn.substring(5)} ~ {checkOut.substring(5)} ({tripDay}박)
+          {checkIn?.substring(5)} ~ {checkOut?.substring(5)} ({tripDay}박)
         </span>
       </div>
       <div className={`calendar__container ${calendarFlag ? 'visible' : ''}`}>
