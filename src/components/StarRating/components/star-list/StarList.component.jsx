@@ -11,8 +11,9 @@ export const StarList = ({
   isDisabled,
 }) => {
   const selectedScore = useMemo(() => {
-    const offset = Number.isInteger(score) ? 1 : score - Math.floor(score);
-    const index = Number.isInteger(score) ? score - 1 : score - offset;
+    const isIntegerScore = Number.isInteger(score);
+    const offset = isIntegerScore ? 1 : score - Math.floor(score);
+    const index = isIntegerScore ? score - 1 : score - offset;
 
     return {
       index: index,
