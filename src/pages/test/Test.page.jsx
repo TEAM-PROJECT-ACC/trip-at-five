@@ -11,6 +11,7 @@ import {
   Label,
   Select,
   Pagination,
+  CountScoreByStars,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
 import './test.style.scss';
@@ -129,6 +130,10 @@ export const TestPage = () => {
             useMoveToEnd
             {...pageNationProps}
           />
+        </div>
+        <h3>countScoreByStars component</h3>
+        <div className='test-page__test-area'>
+          <CountScoreByStars />
         </div>
       </section>
     </div>
