@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUser } from '../../../assets/icons/index';
 import './NumberOfPeople.style.scss';
 import { useAccomSearchStore } from '../../../states/accom-search/accomSearchStore';
 
 const NumberOfPeople = ({ ...props }) => {
-  const { numberOfPeople } = useAccomSearchStore((state) => state);
+  const { initialState } = useAccomSearchStore((state) => state);
   const { setNumberOfPeople } = useAccomSearchStore((state) => state);
 
   const setNumberOfPeopleHandler = (data) => {
@@ -21,7 +21,7 @@ const NumberOfPeople = ({ ...props }) => {
     for (let i = 0; i < 8; i++) {
       result.push(
         <span key={i + 1} onClick={() => setNumberOfPeopleHandler(i + 1)}>
-          {i + 1 <= numberOfPeople || numberOfPeople === '8+' ? (
+          {i + 1 <= initialState.numberOfPeople || initialState.numberOfPeople === '8+' ? (
             <FaUser className='number-of-people-icon active' />
           ) : (
             <FaUser className='number-of-people-icon' />
@@ -32,6 +32,10 @@ const NumberOfPeople = ({ ...props }) => {
 
     return result;
   };
+
+  useEffect(() => {
+    console.log(initialState.numberOfPeople);
+  }, []);
 
   return (
     <div {...props}>

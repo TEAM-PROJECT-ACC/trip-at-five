@@ -1,12 +1,13 @@
 import React from 'react';
 import ReceiptArea from './local-components/ReceiptArea.component';
 import './Receipt.style.scss';
+import { PageContainer } from '../../components';
 
 const Receipt = () => {
   return (
-    <div className='receipt__container'>
+    <PageContainer className='receipt__container'>
       <ReceiptArea />
-    </div>
+    </PageContainer>
   );
 };
 

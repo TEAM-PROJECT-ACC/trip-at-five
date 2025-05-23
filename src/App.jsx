@@ -7,6 +7,7 @@ import Main from './pages/main/Main.page';
 import { useEffect } from 'react';
 import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
+import CartMain from './pages/cart/CartMain.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -34,7 +35,6 @@ function App() {
           챌린지
         
         비회원 예약
-        장바구니
         나의 일지
         채팅페이지(index)
         문의
@@ -42,6 +42,7 @@ function App() {
         
         // TODO: 숙박 팀
         메인
+        장바구니
         숙박
           예약
           결제
@@ -57,11 +58,12 @@ function App() {
       */}
 
         <Route index element={<Main />} />
+        <Route path='/carts' element={<CartMain />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
-          <Route path='1/reservations' element={<Reservation />} />
-          <Route path='1/payments' element={<Receipt />} />
         </Route>
+        <Route path='/reservations' element={<Reservation />} />
+        <Route path='/payments' element={<Receipt />} />
       </Routes>
     </>
   );
