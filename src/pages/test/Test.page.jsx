@@ -142,7 +142,15 @@ export const TestPage = () => {
           </div>
           <h3>starRating component</h3>
           <div className='test-page__test-area'>
+            <h3>30px</h3>
             <StarRating
+              score={starRateScore}
+              onClick={handleStarRating}
+            />
+            <br></br>
+            <h3></h3>
+            <StarRating
+              className='test'
               score={starRateScore}
               onClick={handleStarRating}
               isDisabled={true}

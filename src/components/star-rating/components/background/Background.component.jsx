@@ -2,7 +2,7 @@ import { classNames } from '../../../../utils';
 import { DisplayStarList } from '../display-star-list/DisplayStarList.component';
 import './background.style.scss';
 
-export const Background = ({ starList }) => {
+export const Background = ({ className, starList }) => {
   return (
     <div
       className={classNames(
@@ -11,7 +11,12 @@ export const Background = ({ starList }) => {
         'star-list'
       )}
     >
-      {<DisplayStarList starList={starList} />}
+      {
+        <DisplayStarList
+          className={className}
+          starList={starList}
+        />
+      }
     </div>
   );
 };

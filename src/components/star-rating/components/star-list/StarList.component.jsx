@@ -4,6 +4,7 @@ import { Star } from '../star/Star.component';
 import './starList.style.scss';
 
 export const StarList = ({
+  className,
   score,
   starList,
   starCount,
@@ -77,6 +78,7 @@ export const StarList = ({
         starList.map((_, idx) => {
           return (
             <RateStar
+              className={className}
               key={idx}
               index={idx}
               selectedStars={selectedStars}
@@ -87,7 +89,7 @@ export const StarList = ({
   );
 };
 
-const RateStar = ({ index, selectedStars }) => {
+const RateStar = ({ className, index, selectedStars }) => {
   const isMouseOver = useMemo(
     () => index <= selectedStars.index,
     [index, selectedStars.index]
@@ -105,11 +107,12 @@ const RateStar = ({ index, selectedStars }) => {
       className={classNames(
         'global-star-rating__rate-star-container',
         isMouseOver ? 'hover' : '',
-        isHalfOver ? 'half-hover' : ''
+        isHalfOver ? 'half-hover' : '',
+        className
       )}
     >
       <div className='global-star-rating__rate-star'>
-        <Star className={classNames()} />
+        <Star className={className} />
       </div>
     </div>
   );

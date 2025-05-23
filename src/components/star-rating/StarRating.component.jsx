@@ -23,6 +23,7 @@ export const StarRating = ({
   isDisabled,
 }) => {
   const starList = setStarList({ starCount });
+  console.log(className);
 
   const handleClick = ({ rateScore }) => {
     if (onClick) {
@@ -39,13 +40,17 @@ export const StarRating = ({
       )}
     >
       <StarList
+        className={className}
         starList={starList}
         starCount={starCount}
         score={score}
         onClick={handleClick}
         isDisabled={isDisabled}
       />
-      <Background starList={starList} />
+      <Background
+        className={className}
+        starList={starList}
+      />
     </div>
   );
 };
