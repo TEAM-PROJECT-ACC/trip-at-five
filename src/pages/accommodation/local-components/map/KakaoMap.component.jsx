@@ -8,15 +8,12 @@ import { TiDelete } from "../../../../assets/icons/ys/index";
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
+
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) return;
 
-    window.kakao.maps.load(() => {
+    const initializeMap = () => {
       const mapContainer = mapRef.current;
-      if (!mapContainer) {
-        console.error("Map container not found");
-        return;
-      }
 
       const map = new window.kakao.maps.Map(mapContainer, {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
@@ -25,44 +22,85 @@ export const KakaoMap = ({ onClose }) => {
 
       kakaoMap.current = map;
 
-      markedData.forEach((el) => {
-        const position = new kakao.maps.LatLng(el.lat, el.lng);
+      setTimeout(() => {
+        map.relayout();
+      });
 
-        const marker = new kakao.maps.Marker({
-          position,
-          map,
-        });
+      let openOverlayId = null;
 
-        const overlayContent = document.createElement("div");
-        overlayContent.innerText = el.name;
-        overlayContent.style.cssText = `
-          background: #fafafa;
-          border: 1px solid #5500ff;
-          padding: 16px 24px;
-          border-radius: 3px;
-          font-size: 16px;
-          font-familt: 'SUIT';
-          font-weight: 500;
-          margin-top: 120px;
-          white-space: nowrap;
-          box-shadow: 3px 3px 2px 0px rgb(0, 0, 0, 0.5);
-          z-index: 111;
+      markedData.forEach((accom, idx) => {
+        const position = new kakao.maps.LatLng(accom.lat, accom.lng);
+
+        const container = document.createElement("div");
+        container.className = "customoverlay-wrapper";
+
+        container.innerHTML = `
+          <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
+          <div class="text__box" data-id="${accom.id}">
+            <button class="btn-close">X</button>
+            <strong>${accom.name}</strong>
+            <p class="address">${accom.address}</p>
+            <p class="price">₩${accom.price.toLocaleString()}</p>
+          </div>
         `;
+        const box = container.querySelector(".text__box");
+        box.style.opacity = "0";
+        box.style.visibility = "hidden";
+        box.style.transition = "all 0.3s ease";
 
         const overlay = new kakao.maps.CustomOverlay({
-          content: overlayContent,
           position,
-          yAnchor: 1.2,
-        });
-        kakao.maps.event.addListener(marker, "mouseover", () => {
-          overlay.setMap(map);
+          content: container,
+          yAnchor: 1,
+          zIndex: 3 + idx,
         });
 
-        kakao.maps.event.addListener(marker, "mouseout", () => {
-          overlay.setMap(null);
+        overlay.setMap(map);
+
+        const bubble = container.querySelector(".price-bubble");
+
+        bubble.addEventListener("click", () => {
+          document.querySelectorAll(".text__box").forEach((el) => {
+            el.style.opacity = "0";
+            el.style.visibility = "hidden";
+          });
+          document.querySelectorAll(".price-bubble").forEach((el) => {
+            el.style.opacity = "0";
+            el.style.visibility = "hidden";
+            el.style.pointerEvents = "none";
+          });
+          if (openOverlayId === accom.id) {
+            openOverlayId = null;
+          } else {
+            box.style.opacity = "1";
+            box.style.visibility = "visible";
+            openOverlayId = accom.id;
+          }
+        });
+
+        const button = container.querySelector(".btn-close");
+        button.addEventListener("click", (e) => {
+          e.stopPropagation();
+          box.style.opacity = "0";
+          box.style.visibility = "hidden";
+          openOverlayId = null;
+
+          document.querySelectorAll(".price-bubble").forEach((el) => {
+            el.style.opacity = "1";
+            el.style.visibility = "visible";
+            el.style.pointerEvents = "auto";
+          });
         });
       });
-    });
+    };
+
+    if (window.kakao?.maps?.load) {
+      window.kakao.maps.load(() => {
+        initializeMap();
+      });
+    } else if (window.kakao?.maps) {
+      initializeMap();
+    }
   }, []);
 
   const zoomIn = () => {
@@ -74,6 +112,7 @@ export const KakaoMap = ({ onClose }) => {
     const map = kakaoMap.current;
     if (map) map.setLevel(map.getLevel() + 1);
   };
+
   return (
     <div className="container">
       <button className="btn-exit" onClick={onClose}>

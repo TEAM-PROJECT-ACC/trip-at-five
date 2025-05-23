@@ -14,6 +14,8 @@
 
 #map {
   flex: 1;
+  width: 100%;
+  height: 100%;
 }
 
 #filter {
@@ -81,5 +83,102 @@
     &:hover {
       background-color: #c8adff;
     }
+  }
+}
+
+.customoverlay-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.price-bubble {
+  display: block;
+  background: #5500ff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  transform: translate(-50%, 0);
+  top: 0;
+  left: 50%;
+  position: absolute;
+  z-index: 1;
+
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease;
+}
+
+.text__box::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 54px solid transparent;
+  border-top-color: #5500ff;
+  border-bottom: 0;
+  margin-left: -54px;
+  margin-bottom: -54px;
+}
+
+.text__box {
+  position: relative;
+  top: -65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: auto;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 20px 15px;
+  font-size: 13px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+
+  strong {
+    display: block;
+    font-size: 18px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .price {
+    font-size: 14px;
+    font-family: "SUIT";
+    font-weight: bold;
+    text-align: right;
+    @include color-5500ff;
+  }
+
+  .address {
+    font-size: 12px;
+    font-family: "SUIT";
+    color: #101010;
+    padding-bottom: 10px;
+  }
+  .btn-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    color: #aaa;
+    cursor: pointer;
+  }
+
+  .btn-close:hover {
+    color: #5500ff;
   }
 }

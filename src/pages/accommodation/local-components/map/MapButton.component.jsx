@@ -1,16 +1,25 @@
 import { KakaoMap } from "./KakaoMap.component";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./MapButton.style.scss";
 
 const MapButton = () => {
   const [showMap, setShowMap] = useState(false);
+  useEffect(() => {
+    if (showMap) {
+      setTimeout(() => {
+        window.dispatchEvent(new Event("resize"));
+      }, 100);
+    }
+  }, [showMap]);
 
   return (
     <div className="map-button">
       <button className="map-btn-text" onClick={() => setShowMap(true)}>
         지도보기
       </button>
-      {showMap && <KakaoMap onClose={() => setShowMap(false)} />}
+      <div style={{ display: showMap ? "block" : "none" }}>
+        <KakaoMap onClose={() => setShowMap(false)} />
+      </div>
     </div>
   );
 };
