@@ -4,6 +4,7 @@ import "./MapButton.style.scss";
 
 const MapButton = () => {
   const [showMap, setShowMap] = useState(false);
+
   useEffect(() => {
     if (showMap) {
       setTimeout(() => {
@@ -18,7 +19,7 @@ const MapButton = () => {
         지도보기
       </button>
       <div style={{ display: showMap ? "block" : "none" }}>
-        <KakaoMap onClose={() => setShowMap(false)} />
+        {showMap && <KakaoMap onClose={() => setShowMap(false)} />}
       </div>
     </div>
   );

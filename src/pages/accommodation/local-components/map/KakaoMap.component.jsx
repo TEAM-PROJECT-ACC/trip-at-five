@@ -4,37 +4,41 @@ import FilterPanel from "../filter/FilterPanel.component";
 import { MapInnerList } from "../acc-map-list/MapInnerList.component";
 import { markedData } from "./MapData";
 import { TiDelete } from "../../../../assets/icons/ys/index";
+import Script from "./Script";
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
 
   useEffect(() => {
+    if (window.kakao && window.kakao.maps && mapRef.current) {
+      window.kakao.maps.load(() => {
+        init();
+      });
+    }
+  }, [mapRef.current]);
+
+  const init = () => {
+    const mapContainer = mapRef.current;
+
     if (!window.kakao || !window.kakao.maps) return;
 
-    const initializeMap = () => {
-      const mapContainer = mapRef.current;
+    const map = new window.kakao.maps.Map(mapContainer, {
+      center: new kakao.maps.LatLng(37.566826, 126.9786567),
+      level: 3,
+    });
 
-      const map = new window.kakao.maps.Map(mapContainer, {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3,
-      });
+    kakaoMap.current = map;
 
-      kakaoMap.current = map;
+    let openOverlayId = null;
 
-      setTimeout(() => {
-        map.relayout();
-      });
+    markedData.forEach((accom, idx) => {
+      const position = new kakao.maps.LatLng(accom.lat, accom.lng);
 
-      let openOverlayId = null;
+      const container = document.createElement("div");
+      container.className = "customoverlay-wrapper";
 
-      markedData.forEach((accom, idx) => {
-        const position = new kakao.maps.LatLng(accom.lat, accom.lng);
-
-        const container = document.createElement("div");
-        container.className = "customoverlay-wrapper";
-
-        container.innerHTML = `
+      container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
           <div class="text__box" data-id="${accom.id}">
             <button class="btn-close">X</button>
@@ -43,66 +47,64 @@ export const KakaoMap = ({ onClose }) => {
             <p class="price">₩${accom.price.toLocaleString()}</p>
           </div>
         `;
-        const box = container.querySelector(".text__box");
-        box.style.opacity = "0";
-        box.style.visibility = "hidden";
-        box.style.transition = "all 0.3s ease";
 
-        const overlay = new kakao.maps.CustomOverlay({
-          position,
-          content: container,
-          yAnchor: 1,
-          zIndex: 3 + idx,
+      const box = container.querySelector(".text__box");
+      box.style.opacity = "0";
+      box.style.visibility = "hidden";
+      box.style.transition = "all 0.3s ease";
+
+      const overlay = new kakao.maps.CustomOverlay({
+        position,
+        content: container,
+        yAnchor: 0.3,
+        zIndex: 3 + idx,
+      });
+
+      overlay.setMap(map);
+
+      const bubble = container.querySelector(".price-bubble");
+
+      bubble.addEventListener("click", () => {
+        document.querySelectorAll(".text__box").forEach((el) => {
+          el.style.opacity = "0";
+          el.style.visibility = "hidden";
         });
 
-        overlay.setMap(map);
-
-        const bubble = container.querySelector(".price-bubble");
-
-        bubble.addEventListener("click", () => {
-          document.querySelectorAll(".text__box").forEach((el) => {
-            el.style.opacity = "0";
-            el.style.visibility = "hidden";
-          });
-          document.querySelectorAll(".price-bubble").forEach((el) => {
+        document.querySelectorAll(".price-bubble").forEach((el) => {
+          if (el === bubble) {
+            el.style.opacity = "1";
+            el.style.visibility = "visible";
+            el.style.pointerEvents = "none";
+          } else {
             el.style.opacity = "0";
             el.style.visibility = "hidden";
             el.style.pointerEvents = "none";
-          });
-          if (openOverlayId === accom.id) {
-            openOverlayId = null;
-          } else {
-            box.style.opacity = "1";
-            box.style.visibility = "visible";
-            openOverlayId = accom.id;
           }
         });
-
-        const button = container.querySelector(".btn-close");
-        button.addEventListener("click", (e) => {
-          e.stopPropagation();
-          box.style.opacity = "0";
-          box.style.visibility = "hidden";
+        if (openOverlayId === accom.id) {
           openOverlayId = null;
+        } else {
+          box.style.opacity = "1";
+          box.style.visibility = "visible";
+          openOverlayId = accom.id;
+        }
+      });
 
-          document.querySelectorAll(".price-bubble").forEach((el) => {
-            el.style.opacity = "1";
-            el.style.visibility = "visible";
-            el.style.pointerEvents = "auto";
-          });
+      const button = container.querySelector(".btn-close");
+      button.addEventListener("click", (e) => {
+        e.stopPropagation();
+        box.style.opacity = "0";
+        box.style.visibility = "hidden";
+        openOverlayId = null;
+
+        document.querySelectorAll(".price-bubble").forEach((el) => {
+          el.style.opacity = "1";
+          el.style.visibility = "visible";
+          el.style.pointerEvents = "auto";
         });
       });
-    };
-
-    if (window.kakao?.maps?.load) {
-      window.kakao.maps.load(() => {
-        initializeMap();
-      });
-    } else if (window.kakao?.maps) {
-      initializeMap();
-    }
-  }, []);
-
+    });
+  };
   const zoomIn = () => {
     const map = kakaoMap.current;
     if (map) map.setLevel(map.getLevel() - 1);
@@ -115,7 +117,21 @@ export const KakaoMap = ({ onClose }) => {
 
   return (
     <div className="container">
-      <button className="btn-exit" onClick={onClose}>
+      <Script
+        async
+        src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
+          import.meta.env.VITE_KAKAO_JAVA_API
+        }&autoload=false`}
+        onLoad={() => {
+          if (window.kakao && window.kakao.maps) {
+            window.kakao.maps.load(() => {
+              init();
+            });
+          }
+        }}
+      />
+
+      <button className="btn-exit" type="button" onClick={onClose}>
         <TiDelete />
       </button>
       <div id="filter">
