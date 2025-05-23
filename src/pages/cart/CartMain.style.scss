@@ -1,19 +1,19 @@
 .cart-container {
-  width: 1280px;
-  padding: 1.3rem 5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  padding: 5rem 0;
 
   .cart-header {
     width: 100%;
   }
+}
 
-  .cart-list-container {
-    width: 100%;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 3rem;
-  }
+.cart-list-container {
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  gap: 3rem;
 }

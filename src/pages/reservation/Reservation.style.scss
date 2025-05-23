@@ -1,24 +1,16 @@
 .reservation__container {
-  width: 100%;
-  padding: 5rem 15rem;
+  padding: 5rem 0;
+}
+
+.user-info__container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+.pay-info__container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
   justify-content: center;
   gap: 3rem;
-
-  .user-info__container,
-  .pay-info__container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .pay-info__container {
-    // background-color: green;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 3rem;
-  }
 }

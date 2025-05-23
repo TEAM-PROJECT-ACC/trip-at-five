@@ -61,9 +61,9 @@ function App() {
         <Route path='/carts' element={<CartMain />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
-          <Route path='1/reservations' element={<Reservation />} />
-          <Route path='1/payments' element={<Receipt />} />
         </Route>
+        <Route path='/reservations' element={<Reservation />} />
+        <Route path='/payments' element={<Receipt />} />
       </Routes>
     </>
   );
