@@ -2,9 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import { TestPage } from './pages/test/Test.page';
 import { AppFooter, AppHeader } from './components';
 import './App.css';
-import LoginPage from './pages/login/Login';
-import LoginPage1 from './pages/login/Login1';
 import SignUp from './pages/sign/SignUp';
+import LoginPage from './pages/login/Login';
 
 
 function App() {
@@ -14,36 +13,24 @@ function App() {
   // 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
   // 로그아웃 할 때 회원 상태 초기화
 
-<<<<<<< HEAD
-
-
-	return (
-		<>
-			<AppHeader />
-			<Routes>
-				<Route
-					path='/test'
-					element={<TestPage />}
-				/>
-         {/* 로그인 부분 */}
-        <Route path='/login' element={<LoginPage/>}></Route>
-        <Route path='/login1' element={<LoginPage1/>}></Route>        
-
-        {/* 회원가입 */}
-        <Route path='/signUp' element={<SignUp/>}/>
-
-				{/*
-=======
   return (
     <>
       <AppHeader />
+
       <Routes>
         <Route
           path='/test'
           element={<TestPage />}
         />
+
+         {/* 로그인 부분 */}
+        <Route path='/login' element={<LoginPage/>}></Route>
+        {/* <Route path='/login1' element={<LoginPag1/>}></Route>         */}
+
+        {/* 회원가입 */}
+        <Route path='/signUp' element={<SignUp/>}/>
+        
         {/*
->>>>>>> 7ea405c76443cc10926b47b7ad4a259a27b5d2d5
           // TODO: 회원 팀
           로그인/회원가입
           

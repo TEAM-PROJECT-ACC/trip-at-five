@@ -1,0 +1,64 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+
+.sign-address-wrap{
+
+    padding: 0px 85px;
+
+    .sign-address-text {
+        font-size: 16px;    
+        margin-bottom: 8px;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+
+    .sign-address-Postal {
+        width: 340px;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+
+    .sign-address-input{
+
+            width: 174px;
+            height: 36px;
+            font-size: 16px;
+            
+
+    }
+
+    .sign-address-serch {
+           width: 158px;
+           height: 36px;
+           font-size: 14px;
+    }
+    
+
+    
+
+    input {      
+    width: 340px;
+    height: 36x;
+    margin-bottom: 20px;
+    }
+
+    .sign-address-btn {
+        width: 340px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {        
+    width: 166px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: normal;
+    }
+
+}
+

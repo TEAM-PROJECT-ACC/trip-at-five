@@ -10,6 +10,7 @@ import {
   FaAngleRight,
   FaStar,
 } from 'react-icons/fa';
+
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 
 export {
