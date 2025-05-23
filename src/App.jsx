@@ -8,12 +8,13 @@ import SignUp from './pages/sign/SignUp';
 
 
 function App() {
-	// TODO : 규형님 로그인 상태 확인
-	// 1. 비로그인 시 리디렉트 로그인 페이지로
-	// 2. 로그인 회원 상태 관리가 zustand 전역 상태 관리로
-	// 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
-	// 로그아웃 할 때 회원 상태 초기화
+  // TODO : 규형님 로그인 상태 확인
+  // 1. 비로그인 시 리디렉트 로그인 페이지로
+  // 2. 로그인 회원 상태 관리가 zustand 전역 상태 관리로
+  // 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
+  // 로그아웃 할 때 회원 상태 초기화
 
+<<<<<<< HEAD
 
 
 	return (
@@ -32,6 +33,17 @@ function App() {
         <Route path='/signUp' element={<SignUp/>}/>
 
 				{/*
+=======
+  return (
+    <>
+      <AppHeader />
+      <Routes>
+        <Route
+          path='/test'
+          element={<TestPage />}
+        />
+        {/*
+>>>>>>> 7ea405c76443cc10926b47b7ad4a259a27b5d2d5
           // TODO: 회원 팀
           로그인/회원가입
           
@@ -63,10 +75,10 @@ function App() {
             사용자문의
             회원관리
         */}
-			</Routes>
-			<AppFooter />
-		</>
-	);
+      </Routes>
+      <AppFooter />
+    </>
+  );
 }
 
 export default App;

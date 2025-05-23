@@ -1,8 +1,9 @@
 .global-link__button {
-	font-weight: 900;
-	padding: 8px 24px;
-	&:hover {
-		@include color-5500ff;
-		@include background-c8adff;
-	}
+  font-weight: 900;
+  padding: 8px 24px;
+  transition: 100ms linear;
+  &:hover {
+    @include color-5500ff;
+    @include background-c8adff;
+  }
 }
