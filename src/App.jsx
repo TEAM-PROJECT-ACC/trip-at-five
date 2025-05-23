@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
+import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -59,6 +60,7 @@ function App() {
 
         <Route index element={<Main />} />
         <Route path='/carts' element={<CartMain />} />
+        <Route path='/guest/reservations' element={<NonMemberReservation />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
         </Route>

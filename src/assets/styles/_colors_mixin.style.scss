@@ -157,3 +157,9 @@
     border-bottom-color: $color-5500ff;
   }
 }
+
+@mixin color-cccccc {
+  & {
+    color: $color-cccccc;
+  }
+}
