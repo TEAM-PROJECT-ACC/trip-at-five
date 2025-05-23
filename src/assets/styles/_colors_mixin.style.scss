@@ -31,6 +31,12 @@
   }
 }
 
+@mixin color-ffaf45 {
+  & {
+    color: $color-ffaf45;
+  }
+}
+
 @mixin border-5500ff {
   & {
     border-color: $color-5500ff;
