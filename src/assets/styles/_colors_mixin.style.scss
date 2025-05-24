@@ -163,3 +163,9 @@
     color: $color-cccccc;
   }
 }
+
+@mixin color-aaaab3 {
+  & {
+    color: $color-aaaab3;
+  }
+}
