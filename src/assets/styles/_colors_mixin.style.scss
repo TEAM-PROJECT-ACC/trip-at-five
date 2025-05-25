@@ -169,3 +169,14 @@
     color: $color-aaaab3;
   }
 }
+@mixin background-f6f6f6 {
+  & {
+    background-color: $color-f6f6f6;
+  }
+}
+
+@mixin color-888888 {
+  & {
+    color: $color-888888;
+  }
+}
