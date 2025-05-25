@@ -5,10 +5,13 @@ import { MapInnerList } from "../acc-map-list/MapInnerList.component";
 import { markedData } from "./MapData";
 import { TiDelete } from "../../../../assets/icons/ys/index";
 import Script from "./Script";
+import useFilterStore from "../store/useFilterStore";
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
+
+  const priceRange = useFilterStore((state) => state.priceRange);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps && mapRef.current) {
@@ -16,9 +19,11 @@ export const KakaoMap = ({ onClose }) => {
         init();
       });
     }
-  }, [mapRef.current]);
+  }, [mapRef.current, priceRange]);
 
   const init = () => {
+    const [minPrice, maxPrice] = priceRange;
+
     const mapContainer = mapRef.current;
 
     if (!window.kakao || !window.kakao.maps) return;
@@ -32,7 +37,11 @@ export const KakaoMap = ({ onClose }) => {
 
     let openOverlayId = null;
 
-    markedData.forEach((accom, idx) => {
+    const filteredData = markedData.filter(
+    (accom) => accom.price >= minPrice && accom.price <= maxPrice
+    );
+
+    filteredData.forEach((accom, idx) => {
       const position = new kakao.maps.LatLng(accom.lat, accom.lng);
 
       const container = document.createElement("div");
@@ -40,7 +49,7 @@ export const KakaoMap = ({ onClose }) => {
 
       container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
-          <div class="text__box" data-id="${accom.id}">
+          <div class="text__box" data-id="${accom.name}">
             <button class="btn-close">X</button>
             <strong>${accom.name}</strong>
             <p class="address">${accom.address}</p>
@@ -135,7 +144,7 @@ export const KakaoMap = ({ onClose }) => {
         <TiDelete />
       </button>
       <div id="filter">
-        <FilterPanel />
+        <FilterPanel  />
       </div>
       <div id="acc-list">
         <MapInnerList />

@@ -1,40 +1,5 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import {
-  FaBed,
-  MdVilla,
-  FaHotel,
-  MdHouse,
-  FaCampground,
-  FaHouseUser,
-  FaSpa,
-  FaSwimmer,
-  FaDrumstickBite,
-  MdOutlineRestaurant,
-  FaDumbbell,
-  FaSwimmingPool,
-  FaShower,
-  FaRestroom,
-  FaStore,
-  FaHotTub,
-  FaBath,
-  MdLocalBar,
-  MdOutlineRssFeed,
-  MdAcUnit,
-  FaPumpSoap,
-  MdShower,
-  FaPlug,
-  MdFreeBreakfast,
-  FaParking,
-  FaDog,
-  FaShuttleVan,
-  FaSmoking,
-  MdLuggage,
-  BiCabinet,
-  WiFire,
-  FaBurn,
-  MdOutlineFoodBank,
-} from "../../../../assets/icons/ys/index";
 import "./FilterPanel.style.scss";
 import useFilterStore from "../store/useFilterStore";
 import CategoryFilter from "./components/CategoryFilter.component";
