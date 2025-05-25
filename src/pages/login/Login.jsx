@@ -7,6 +7,7 @@ import { TextLinkButton, ButtonPrimary, InputSecondary } from '../../components'
 import { KAKAO_AUTH_URL } from './loginUtil';
 import {  useState } from 'react';
 import LoginStateStore from '../../states/LoginState';
+import { Link } from 'react-router-dom';
 
 
 
@@ -37,7 +38,7 @@ export default function Login() {
             <ButtonPrimary className={'login-Btn'} >이메일로 시작하기</ButtonPrimary>
             <br/>
             <div> 
-                <TextLinkButton className={'login__font'}>회원가입</TextLinkButton>
+                <TextLinkButton className={'login__font'}><Link to="/signUp">회원가입</Link></TextLinkButton>
                 <TextLinkButton className={'login__font'}>비밀번호 재설정</TextLinkButton>
             </div> 
             <br/>

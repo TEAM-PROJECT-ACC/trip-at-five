@@ -1,9 +1,17 @@
 import './SignUp.address.conponent.scss';
 import { ButtonPrimary, ButtonSecondary, InputPrimary } from "../../../components";
+import { useSignUpStore } from '../SignUpStore';
 
 
 
 export default function SignUpAdress() {
+
+
+  const {step, setAddStep} = useSignUpStore();
+
+  const addressOk=() => {
+    setAddStep();
+  }
 
       return(
       <div className='sign-address-wrap'>
@@ -26,8 +34,8 @@ export default function SignUpAdress() {
 
 
           <div className='sign-address-btn'>    
-          <ButtonSecondary>나중에 입력</ButtonSecondary>     
-          <ButtonPrimary >회원가입</ButtonPrimary>
+          <ButtonSecondary onClick={addressOk}>나중에 입력</ButtonSecondary>     
+          <ButtonPrimary  >회원가입</ButtonPrimary>
           
           </div>         
       </div>

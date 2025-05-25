@@ -5,17 +5,50 @@
 
     padding: 0px 85px;
 
+
+
+    .sign-nickName-overlap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+    }
+
+    .overlap-icon {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 90%;
+    top: 30px;
+    cursor: pointer;
+    @include color-5500ff;
+    }
+
     .sign-nickName-text {
         font-size: 16px;    
         margin-bottom: 8px;
+        z-index: 1;
     }
+
+    .nickName-duplicate-check{
+        font-size: 12px;
+        padding-top: 10px;
+    }
+
+    .nickName-duplicate-check-ok{
+        color: #6FFF00;
+    }
+
+     .nickName-duplicate-check-fail{
+        color: #FF0F0F;
+    }
+
 
  
 
     input {      
     width: 340px;
     height: 36x;
-    margin-bottom: 40px;
+    
     }
 
     .sign-nickname-btn {
