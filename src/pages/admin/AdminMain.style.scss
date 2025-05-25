@@ -1,0 +1,19 @@
+.admin-main__container {
+  width: 100%;
+  padding: 5rem 7rem;
+  @include color-aaaab3;
+  @include background-f6f6f6;
+
+  .admin-main-header {
+    margin-bottom: 1rem;
+  }
+
+  // 숙박업소 관리 body
+  .admin-main-body {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0.1rem 0.1rem 0.3rem #888888, -0.1rem -0.1rem 0.1rem #ffffff;
+    padding: 1rem;
+    @include background-f6f6f6;
+  }
+}
