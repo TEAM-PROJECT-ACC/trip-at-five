@@ -1,0 +1,208 @@
+.accom-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__image {
+    width: 100%;
+    height: 650px;
+    object-fit:contain;
+    background-image: url(./img/sample1.png);
+  }
+
+  &__text {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    h1 {
+      font-size: 38px;
+      font-weight: bold;
+      font-family: "KCC-Ganpan";
+      @include color-5500ff;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    .accom-header__price {
+      font-size: 34px;
+      font-family: "SUIT";
+      font-weight: bold;
+      display: flex;
+      @include color-5500ff;
+
+      > p{
+        display: flex;
+        font-size: 20px;
+        align-items: center;
+        font-family: "SUIT";
+        padding-left: 5px
+      }
+    }
+  }
+}
+.accom-location{
+    font-size: 24px;
+}
+.accom-info {
+  display: flex;
+	gap: 2.5rem;
+	margin: 2rem 0;
+	flex-wrap: wrap;
+	height: 240px; 
+	
+  &__map,
+  &__review,
+  &__facility {
+    flex: 1 1 30%;
+    min-width: 280px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 0.9rem;
+		box-shadow: 
+			inset 3px 0 3px 2px #555555,   
+			inset -3px 0 3px 2px #555555,  
+			inset 0 3px 3px 2px #555555,   
+			inset 0 -3px 3px 2px #555555;
+  	}
+
+  h4 {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  li {
+    background: #eee;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+}
+
+.room-list {
+  margin-top: 3rem;
+
+  h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .room-card {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+		margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+
+    .room-img {
+			background-image: url(./img/bedroom.png);
+      width: 490px;
+      height: 300px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .room-info {
+      flex: 1;
+
+      h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .room-price {
+        color: #5500ff;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 0.85rem;
+        margin: 0.2rem 0;
+      }
+
+      .btn-reserve {
+        margin-top: 0.8rem;
+        padding: 6px 12px;
+        background: #5500ff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.room-line{
+	border-bottom: 2px solid #5500ff;
+}
+.review-section {
+  margin: 3rem 0;
+
+  h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .review-card {
+    border-radius: 8px;
+    padding: 1rem;
+		width: 100%;
+    margin-bottom: 1.5rem;
+
+    .nickname {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stars {
+      font-size: 1.1rem;
+      color: #ffaa00;
+    }
+
+    .comment {
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+    }
+
+    .images {
+      display: flex;
+      gap: 0.5rem;
+
+      .img {
+        width: 220px;
+        height: 160px;
+        object-fit: cover;
+				background-image: url(./img/sample1.png);
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+.detail-info {
+  margin: 3rem 0;
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+}

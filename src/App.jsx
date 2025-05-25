@@ -9,6 +9,7 @@ import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
+import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -63,6 +64,7 @@ function App() {
         <Route path='/guest/reservations' element={<NonMemberReservation />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
+          <Route path="/accommodations/detail" element={<AccommodationDetail />} />
         </Route>
         <Route path='/reservations' element={<Reservation />} />
         <Route path='/payments' element={<Receipt />} />
