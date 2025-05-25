@@ -1,5 +1,5 @@
 // 숙박업소관리 검색 버튼
-.search-button {
+.admin-search-button {
   display: inline-block;
   transition: all 0.2s ease-in;
   position: relative;
@@ -10,17 +10,17 @@
   font-size: 18px;
   border-radius: 0.5em;
   border: 1px solid #e8e8e8;
-  box-shadow: 0.1rem 0.1rem 0.3rem #c5c5c5, -0.1rem -0.1rem 0.3rem #ffffff;
+  box-shadow: 0.1rem 0.1rem 0.3rem #bebebe, -0.1rem -0.1rem 0.3rem #ffffff;
   @include color-aaaab3;
   @include background-f6f6f6;
 
   &:hover {
-    border: 1px solid white;
+    border: 1px solid #ffffff;
   }
 
   &:active {
-    color: #666;
-    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+    box-shadow: inset 4px 4px 12px #bebebe, inset -4px -4px 12px #ffffff;
+    @include color-aaaab3;
   }
 
   &:before {

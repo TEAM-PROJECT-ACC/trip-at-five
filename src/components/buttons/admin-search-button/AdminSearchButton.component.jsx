@@ -3,7 +3,7 @@ import './AdminSearchButton.style.scss';
 
 const AdminSearchButton = ({ onClick }) => {
   return (
-    <button className='search-button' onClick={onClick}>
+    <button className='admin-search-button' onClick={onClick}>
       검색
     </button>
   );

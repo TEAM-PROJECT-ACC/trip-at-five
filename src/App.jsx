@@ -72,6 +72,9 @@ function App() {
         <Route path='/admins'>
           {/* 숙박등록페이지 */}
           <Route path='accommodations' element={<AdminMain />} />
+          {/* 추후 컴포넌트 수정 */}
+          <Route path='accommodations/new' element={<AdminMain />} />
+          <Route path='accommodations/:id/edit' element={<AdminMain />} />
           {/* 객실등록페이지 */}
           <Route path=':id/rooms' />
           <Route path='reservations' />
