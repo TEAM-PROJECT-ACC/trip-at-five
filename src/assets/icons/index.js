@@ -9,20 +9,30 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaStar,
+  FaRegUser,
+  FaFireAlt,
 } from 'react-icons/fa';
+import {
+  MdOutlineArrowDropDown,
+  MdArrowForwardIos,
+  MdDocumentScanner,
+} from 'react-icons/md';
+import { FcGoogle } from 'react-icons/fc';
 
-import { MdOutlineArrowDropDown } from 'react-icons/md';
+export { MainLogoEn, MainLogoKr };
 
 export {
-  MainLogoEn,
-  MainLogoKr,
   FaUser,
   FaBars,
-  MdOutlineArrowDropDown,
   FaGithub,
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
   FaStar,
+  FaRegUser,
+  FaFireAlt,
 };
+
+export { MdOutlineArrowDropDown, MdArrowForwardIos, MdDocumentScanner };
+export { FcGoogle };

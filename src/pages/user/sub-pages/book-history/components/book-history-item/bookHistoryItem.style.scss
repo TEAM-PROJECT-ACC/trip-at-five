@@ -1,0 +1,60 @@
+.user-page.book-history-item__container {
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid;
+  overflow: hidden;
+  @include border-c8adff;
+
+  .book-history-item__img-container {
+    position: relative;
+    width: 26.37%;
+    padding: 10%;
+    @include background-c8adff;
+
+    .book-history-item__img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .book-history-item__info-container {
+    padding: 12px 12px 12px 16px;
+    width: 100%;
+    .book-history-item__state {
+      margin-bottom: 8px;
+    }
+    .book-history-item__date {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+    .book-history-item__acc-name {
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    .book-history-item__room-name {
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+    .book-history-item__book-person-info {
+      display: flex;
+      margin-bottom: 16px;
+      font-size: 18px;
+      .book-history-item__book-person-name {
+        margin-right: 12px;
+      }
+    }
+    .book-history-item__btn-container {
+      display: flex;
+      justify-content: flex-end;
+      .book-history-item__button {
+        padding: 12px 26px;
+        font-size: 22px;
+      }
+    }
+  }
+}

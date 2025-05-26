@@ -1,0 +1,14 @@
+.user-page .btn-container {
+  .user-page__menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 24px;
+  }
+
+  &.active {
+    @include color-5500ff;
+    @include background-c8adff;
+  }
+}
