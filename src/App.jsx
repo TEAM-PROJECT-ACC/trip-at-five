@@ -10,7 +10,7 @@ import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
 import AdminMain from './pages/admin/AdminMain.page';
-
+import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 function App() {
   // TODO : 규형님 로그인 상태 확인
   // 1. 비로그인 시 리디렉트 로그인 페이지로

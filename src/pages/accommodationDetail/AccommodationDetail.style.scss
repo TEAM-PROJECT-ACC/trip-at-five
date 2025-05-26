@@ -6,8 +6,8 @@
   &__image {
     width: 100%;
     height: 650px;
-    object-fit:contain;
-    background-image: url(./img/sample1.png);
+    object-fit: fill;
+    background-image: url(./img/sampleImg2.png);
   }
 
   &__text {
@@ -18,42 +18,39 @@
     h1 {
       font-size: 38px;
       font-weight: bold;
-      font-family: "KCC-Ganpan";
+      font-family: 'KCC-Ganpan';
       @include color-5500ff;
     }
 
     p {
-      font-size: 0.95rem;
       color: #666;
     }
 
     .accom-header__price {
       font-size: 34px;
-      font-family: "SUIT";
       font-weight: bold;
       display: flex;
       @include color-5500ff;
 
-      > p{
+      > p {
         display: flex;
         font-size: 20px;
         align-items: center;
-        font-family: "SUIT";
-        padding-left: 5px
+        padding-left: 5px;
       }
     }
   }
 }
-.accom-location{
-    font-size: 24px;
+.accom-location {
+  font-size: 24px;
 }
 .accom-info {
   display: flex;
-	gap: 2.5rem;
-	margin: 2rem 0;
-	flex-wrap: wrap;
-	height: 240px; 
-	
+  gap: 2.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  height: 240px;
+
   &__map,
   &__review,
   &__facility {
@@ -64,12 +61,7 @@
     border-radius: 8px;
     padding: 1rem;
     font-size: 0.9rem;
-		box-shadow: 
-			inset 3px 0 3px 2px #555555,   
-			inset -3px 0 3px 2px #555555,  
-			inset 0 3px 3px 2px #555555,   
-			inset 0 -3px 3px 2px #555555;
-  	}
+  }
 
   h4 {
     margin-bottom: 0.5rem;
@@ -104,12 +96,12 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
-		margin-top: 1rem;
+    margin-top: 1rem;
     padding: 1rem;
     border-radius: 8px;
 
     .room-img {
-			background-image: url(./img/bedroom.png);
+      background-image: url(./img/bedroom.png);
       width: 490px;
       height: 300px;
       object-fit: contain;
@@ -125,9 +117,9 @@
       }
 
       .room-price {
-        color: #5500ff;
         font-weight: bold;
         margin-bottom: 0.5rem;
+        @include color-5500ff;
       }
 
       p {
@@ -147,8 +139,8 @@
     }
   }
 }
-.room-line{
-	border-bottom: 2px solid #5500ff;
+.room-line {
+  border-bottom: 2px solid #5500ff;
 }
 .review-section {
   margin: 3rem 0;
@@ -161,7 +153,7 @@
   .review-card {
     border-radius: 8px;
     padding: 1rem;
-		width: 100%;
+    width: 100%;
     margin-bottom: 1.5rem;
 
     .nickname {
@@ -187,7 +179,7 @@
         width: 220px;
         height: 160px;
         object-fit: cover;
-				background-image: url(./img/sample1.png);
+        background-image: url(./img/sample1.png);
         border-radius: 4px;
       }
     }
@@ -205,4 +197,8 @@
     line-height: 1.6;
     white-space: pre-line;
   }
+}
+
+.map {
+  margin-bottom: 200px;
 }
