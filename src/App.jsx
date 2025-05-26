@@ -10,6 +10,7 @@ import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
 import AdminMain from './pages/admin/AdminMain.page';
+import AccommodationForm from './pages/admin/accom-reg-form/AccommodationForm.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -73,7 +74,7 @@ function App() {
           {/* 숙박등록페이지 */}
           <Route path='accommodations' element={<AdminMain />} />
           {/* 추후 컴포넌트 수정 */}
-          <Route path='accommodations/new' element={<AdminMain />} />
+          <Route path='accommodations/new' element={<AccommodationForm />} />
           <Route path='accommodations/:id/edit' element={<AdminMain />} />
           {/* 객실등록페이지 */}
           <Route path=':id/rooms' />

@@ -11,7 +11,7 @@ const AdminSearch = ({ className }) => {
 
   // 등록 페이지 이동 핸들러
   const registerPageHandler = () => {
-    navigate('/admins/accommodations');
+    navigate('/admins/accommodations/new');
   };
 
   // 검색 핸들러
