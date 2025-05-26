@@ -34,4 +34,5 @@ export {
   FaStar,
   FaPlus,
   BsFillHouseAddFill,
+  FaFill,
 };
