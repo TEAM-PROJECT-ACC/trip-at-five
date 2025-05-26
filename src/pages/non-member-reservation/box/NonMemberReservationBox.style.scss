@@ -1,0 +1,54 @@
+h1 {
+  margin-bottom: 2rem;
+}
+
+.select-form__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+
+  .form-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    .email-input,
+    .resCode-input {
+      @include border-bottom-baabfa;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .email-input {
+      width: 75%;
+      font-size: 1rem;
+    }
+
+    .email-check-button {
+      width: 25%;
+      padding: 1rem;
+    }
+
+    .resCode-input {
+      width: 100%;
+    }
+
+    p {
+      width: 75%;
+      text-align: right;
+      @include color-c8adff;
+    }
+
+    .select-button {
+      width: 25%;
+      padding: 1rem;
+    }
+  }
+}

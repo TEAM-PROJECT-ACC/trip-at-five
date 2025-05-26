@@ -22,6 +22,10 @@ const AccomCalendar = ({ ...props }) => {
     },
   ]);
 
+  const dateHandler = (item) => {
+    setState(item);
+  };
+
   useEffect(() => {
     const start = state[0].startDate;
     const end = state[0].endDate;
@@ -39,10 +43,6 @@ const AccomCalendar = ({ ...props }) => {
       }
     }
   }, [state[0].endDate]);
-
-  const dateHandler = (item) => {
-    setState(item);
-  };
 
   return (
     <div {...props}>

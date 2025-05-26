@@ -1,6 +1,6 @@
 // 숙박업소 검색창 전역 상태관리
 import { create } from 'zustand';
-import { combine, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { formatDate } from '../../utils/formatDate/formatDate';
 
 /**

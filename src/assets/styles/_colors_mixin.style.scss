@@ -157,3 +157,26 @@
     border-bottom-color: $color-5500ff;
   }
 }
+
+@mixin color-cccccc {
+  & {
+    color: $color-cccccc;
+  }
+}
+
+@mixin color-aaaab3 {
+  & {
+    color: $color-aaaab3;
+  }
+}
+@mixin background-f6f6f6 {
+  & {
+    background-color: $color-f6f6f6;
+  }
+}
+
+@mixin color-888888 {
+  & {
+    color: $color-888888;
+  }
+}
