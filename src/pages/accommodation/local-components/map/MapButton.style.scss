@@ -14,12 +14,12 @@
 .map-btn-text {
   padding: 15px 40px;
   border-radius: 8px;
-  background-color: #5500ff;
   color: #fafafa;
   font-weight: 700;
   font-family: 'SUIT';
   font-size: 16px;
   box-shadow: 2px 2px 3px 0px #555555;
+  @include background-5500ff;
 }
 .map-btn-text:hover {
   background-color: #baabfa;
