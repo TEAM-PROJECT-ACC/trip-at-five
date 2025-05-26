@@ -37,6 +37,12 @@
   }
 }
 
+@mixin color-e6e6e6 {
+  & {
+    color: $color-e6e6e6;
+  }
+}
+
 @mixin border-5500ff {
   & {
     border-color: $color-5500ff;
@@ -87,5 +93,17 @@
 @mixin background-ff4545 {
   & {
     background: $color-ff4545;
+  }
+}
+
+@mixin background-b8b8b8 {
+  & {
+    background: $color-b8b8b8;
+  }
+}
+
+@mixin background-e6e6e6 {
+  & {
+    background: $color-e6e6e6;
   }
 }
