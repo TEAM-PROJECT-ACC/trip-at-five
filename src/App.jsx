@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { TestPage, UserPage } from './pages';
+import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import './App.css';
@@ -28,6 +28,10 @@ function App() {
             );
           })}
         </Route>
+        <Route
+          path='/diary'
+          element={<DiaryPage />}
+        />
       </Routes>
       <AppFooter />
     </>
