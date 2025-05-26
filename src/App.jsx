@@ -4,6 +4,9 @@ import { AppFooter, AppHeader } from './components';
 import './App.css';
 import SignUp from './pages/sign/SignUp';
 import LoginPage from './pages/login/Login';
+import PwdRestting from './pages/login/login-pwd-resetting/Login.password.resetting.conponent';
+
+
 
 
 function App() {
@@ -29,6 +32,11 @@ function App() {
 
         {/* 회원가입 */}
         <Route path='/signUp' element={<SignUp/>}/>
+
+        
+        {/* 비밀번호 재설정 */}
+        <Route path='/resetting' element={<PwdRestting />}/>
+        
         
         {/*
           // TODO: 회원 팀

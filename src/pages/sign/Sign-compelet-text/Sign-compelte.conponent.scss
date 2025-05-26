@@ -21,8 +21,8 @@
     margin: auto;
 
     span {
-        @include color-5500ff;
         font-weight: bold;
+        @include color-5500ff;
     }
 
     .sign-comlet-btn{
