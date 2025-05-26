@@ -33,10 +33,10 @@ ul {
 .acc-list-price {
   font-size: 18px;
   font-weight: 700;
-  color: #5500ff;
   padding-top: 50px;
   padding-left: 66px;
   display: flex;
+  @include color-5500ff;
 }
 .line {
   border-bottom: 1px solid #baabfa;

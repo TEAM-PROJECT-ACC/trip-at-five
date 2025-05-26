@@ -1,9 +1,10 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 const useFilterStore = create((set) => ({
-  selectedCategory: "",
+  selectedCategory: '',
   selectedFacilities: [],
   priceRange: [0, 1000000],
+  currentPage: 1,
 
   setCategory: (category) => set({ selectedCategory: category }),
   toggleFacility: (facility) =>
@@ -11,15 +12,17 @@ const useFilterStore = create((set) => ({
       selectedFacilities: state.selectedFacilities.includes(facility)
         ? state.selectedFacilities.filter((f) => f !== facility)
         : [...state.selectedFacilities, facility],
+      currentPage: 1,
     })),
 
   setPriceRange: (range) => set({ priceRange: range }),
-
+  setCurrentPage: (page) => set({ currentPage: page }),
   resetFilters: () =>
     set({
-      selectedCategory: "",
+      selectedCategory: '',
       selectedFacilities: [],
       priceRange: [30000, 200000],
+      currentPage: 1,
     }),
 }));
 

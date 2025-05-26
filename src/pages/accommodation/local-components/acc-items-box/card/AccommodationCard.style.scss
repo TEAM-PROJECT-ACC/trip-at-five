@@ -5,7 +5,7 @@
 }
 
 .accom-name {
-  font-family: "KCC-Ganpan";
+  font-family: 'KCC-Ganpan';
   font-size: 24px;
   @include color-5500ff;
 }
@@ -23,16 +23,15 @@ p.accom-address {
   font-size: 13px;
   @include color-c8adff;
 }
-.image {
+
+img {
   width: 300px;
   height: 180px;
   border-radius: 10px;
   background-color: black;
   object-fit: cover;
-  background-image: url(/src/assets/images/acc-list-page/hotel-img.png);
   background-size: cover;
 }
-
 .accom-info {
   width: 460px;
   height: 180px;
@@ -58,7 +57,6 @@ p.accom-address {
 
 .accom-price {
   font-size: 16px;
-  font-family: "SUIT";
   vertical-align: middle;
 }
 

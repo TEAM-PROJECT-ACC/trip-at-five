@@ -8,14 +8,14 @@
   @include color-5500ff;
 
   &:hover {
-    background-color: #c8adff;
     @include color-fafafa;
+    @include background-c8adff;
   }
 
   &.selected {
-    background-color: #5500ff;
     color: white;
     box-shadow: 2px 2px 3px 0px #555555;
+    @include background-5500ff;
   }
 }
 .filter-group {

@@ -1,16 +1,39 @@
-import React from "react";
-import { FaHome } from "react-icons/fa";
-import "./AccommodationCard.style.scss";
+import React from 'react';
+import {
+  FaBed,
+  FaHotel,
+  FaCampground,
+  FaHouseUser,
+  MdHouse,
+  MdVilla,
+} from '../../../../../assets/icons/ys/index';
+import './AccommodationCard.style.scss';
+
+const typeIconMap = {
+  모텔: FaBed,
+  호텔: FaHotel,
+  펜션: MdHouse,
+  '홈&빌라': MdVilla,
+  캠핑: FaCampground,
+  '게하/한옥': FaHouseUser,
+};
 
 const AccommodationCard = ({ accom }) => {
+  const TypeIcon = typeIconMap[accom.type];
+
   return (
     <li className="accommodation-item">
-      <div className="image"></div>
+      <div className="image">
+        <img
+          src="./src/assets/images/acc-list-page/hotel-img.png"
+          alt="숙박시설 이미지"
+        />
+      </div>
       <div className="accom-info">
         <div className="level-one">
           <div className="accom-name">{accom.name}</div>
-          <div className="accom-info-icon">
-            <FaHome />
+          <div className="accom-info-icon" title={accom.type}>
+            <TypeIcon />
           </div>
         </div>
         <p className="accom-address">{accom.address}</p>

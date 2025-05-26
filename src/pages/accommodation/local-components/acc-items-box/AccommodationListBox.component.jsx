@@ -1,10 +1,17 @@
-import React, { useEffect } from "react";
-import AccommodationCard from "./card/AccommodationCard.component";
+import React from 'react';
+import AccommodationCard from './card/AccommodationCard.component';
+import useFilterStore from '../store/useFilterStore';
 
-const AccommodationList = ({ data }) => {
+const AccommodationListBox = ({ data }) => {
+  const selectedCategory = useFilterStore((state) => state.selectedCategory);
+
+  const filteredData = selectedCategory
+    ? data.filter((accom) => accom.type === selectedCategory)
+    : data;
+
   return (
     <ul>
-      {data.map((accom, idx) => (
+      {filteredData.map((accom, idx) => (
         <React.Fragment key={accom.id || idx}>
           <AccommodationCard accom={accom} />
           <div className="item-line" />
@@ -14,4 +21,4 @@ const AccommodationList = ({ data }) => {
   );
 };
 
-export default AccommodationList;
+export default AccommodationListBox;

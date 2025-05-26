@@ -21,7 +21,7 @@
 }
 
 #filter {
-  width: 22%;
+  width: 23%;
   button {
     padding: 4px 6px;
     height: 30px;
@@ -89,7 +89,7 @@
     }
 
     &:hover {
-      background-color: #c8adff;
+      @include background-c8adff;
     }
   }
   #level__btn--minus {
@@ -105,7 +105,7 @@
     }
 
     &:hover {
-      background-color: #c8adff;
+      @include background-c8adff;
     }
   }
 }
@@ -117,7 +117,6 @@
 
 .price-bubble {
   display: block;
-  background: #5500ff;
   color: rgb(230, 230, 230);
   padding: 5px 10px;
   border-radius: 20px;
@@ -134,10 +133,11 @@
   visibility: visible;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  @include background-5500ff;
 }
 
 .price-bubble::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -15px;
   left: 50%;
@@ -177,7 +177,6 @@
 
   .price {
     font-size: 14px;
-    font-family: "SUIT";
     font-weight: bold;
     text-align: right;
     @include color-5500ff;
@@ -185,7 +184,6 @@
 
   .address {
     font-size: 12px;
-    font-family: "SUIT";
     color: #101010;
     padding-bottom: 10px;
   }
@@ -201,6 +199,6 @@
   }
 
   .btn-close:hover {
-    color: #5500ff;
+    @include color-5500ff;
   }
 }

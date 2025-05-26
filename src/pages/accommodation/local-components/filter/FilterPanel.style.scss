@@ -28,8 +28,8 @@ hr {
 }
 
 h4 {
-  @include color-c8adff;
   font-size: 16px;
+  @include color-c8adff;
 }
 
 .filter-level {

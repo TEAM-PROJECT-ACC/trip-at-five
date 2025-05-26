@@ -3,6 +3,7 @@ import "./KakaoMap.style.scss";
 import FilterPanel from "../filter/FilterPanel.component";
 import { MapInnerList } from "../acc-map-list/MapInnerList.component";
 import { markedData } from "./MapData";
+import { accomData } from "../../../../assets/sample-data/accomSampleData";
 import { TiDelete } from "../../../../assets/icons/ys/index";
 import Script from "./Script";
 import useFilterStore from "../store/useFilterStore";
@@ -28,21 +29,47 @@ export const KakaoMap = ({ onClose }) => {
 
     if (!window.kakao || !window.kakao.maps) return;
 
-    const map = new window.kakao.maps.Map(mapContainer, {
-      center: new kakao.maps.LatLng(37.566826, 126.9786567),
-      level: 3,
-    });
+    if (!kakaoMap.current) {
+      kakaoMap.current = new window.kakao.maps.Map(mapContainer, {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567),
+        level: 3,
+      });
+    }
+    const map = kakaoMap.current;
 
-    kakaoMap.current = map;
+    document
+      .querySelectorAll(".customoverlay-wrapper")
+      .forEach((el) => el.remove());
 
     let openOverlayId = null;
 
-    const filteredData = markedData.filter(
-      (accom) => accom.price >= minPrice && accom.price <= maxPrice
-    );
+    const filteredData = accomData.accommodation_tb
+      .map((item) => {
+        const lat = item.accom_lat;
+        const lon = item.accom_lon;
+
+        if (lat == null || lon == null) return null;
+        const minRoomPrice = Math.min(
+          ...item.rooms.map((room) => room.room_price)
+        );
+        if (minRoomPrice < minPrice || minRoomPrice > maxPrice) return null;
+        return {
+          id: item.accom_sq,
+          name: item.accom_name,
+          address: item.accom_location,
+          rating: item.rooms.length * 100,
+          checkIn: "15:00",
+          checkOut: "11:00",
+          price: minRoomPrice,
+          lat,
+          lon,
+        };
+      })
+      .filter(Boolean);
 
     filteredData.forEach((accom, idx) => {
-      const position = new kakao.maps.LatLng(accom.lat, accom.lng);
+      console.log(accom);
+      const position = new kakao.maps.LatLng(accom.lat, accom.lon);
 
       const container = document.createElement("div");
       container.className = "customoverlay-wrapper";
