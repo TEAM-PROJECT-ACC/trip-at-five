@@ -44,19 +44,19 @@ const AccommodationList = () => {
 
   return (
     <PageContainer>
-      <div className="search-bar"></div>
-      <div className="main-section">
-        <aside className="filter-section">
+      <div className='search-bar'></div>
+      <div className='main-section'>
+        <aside className='filter-section'>
           <MapButton accommodations={accommodations} />
           <FilterPanel />
         </aside>
-        <div className="list-section">
+        <div className='list-section'>
           <AccommodationListBox
             data={currentPageData}
             accommodations={accommodations}
           />
           <Pagination
-            className="accom-pagination"
+            className='accom-pagination'
             totalCount={100}
             pageLength={5}
             currentPage={currentPage}

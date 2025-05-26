@@ -89,19 +89,19 @@ const FacilityFilter = () => {
 
   return (
     <>
-      <div className="filter-group">
-        <h4>공용시설</h4>
-        <div className="filter-options">{renderButtons(publicFacilities)}</div>
+      <div className='filter-group'>
+        <h4 className='sub-title'>공용시설</h4>
+        <div className='filter-options'>{renderButtons(publicFacilities)}</div>
       </div>
-      <div className="line"></div>
-      <div className="filter-group">
-        <h4>객실 내 시설</h4>
-        <div className="filter-options">{renderButtons(roomFacilities)}</div>
+      <div className='line'></div>
+      <div className='filter-group'>
+        <h4 className='sub-title'>객실 내 시설</h4>
+        <div className='filter-options'>{renderButtons(roomFacilities)}</div>
       </div>
-      <div className="line"></div>
-      <div className="filter-group">
-        <h4>기타 시설</h4>
-        <div className="filter-options">{renderButtons(etcFacilities)}</div>
+      <div className='line'></div>
+      <div className='filter-group'>
+        <h4 className='sub-title'>기타 시설</h4>
+        <div className='filter-options'>{renderButtons(etcFacilities)}</div>
       </div>
     </>
   );

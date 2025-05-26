@@ -15,7 +15,7 @@ export const MapInnerList = () => {
   }));
 
   return (
-    <ul className="acc-inner-list">
+    <ul className='acc-inner-list'>
       {markedData.map((accom) => (
         <MapInnerCard key={accom.id} accom={accom} />
       ))}

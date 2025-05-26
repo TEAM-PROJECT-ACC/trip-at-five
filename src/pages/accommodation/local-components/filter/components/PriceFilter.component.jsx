@@ -14,9 +14,9 @@ const PriceFilter = () => {
   };
 
   return (
-    <div className="filter-group">
-      <h3>가격</h3>
-      <div className="slider-style-length">
+    <div className='filter-group'>
+      <h3 className='title'>가격</h3>
+      <div className='slider-style-length'>
         <Slider
           range
           min={0}
@@ -28,7 +28,7 @@ const PriceFilter = () => {
           handleStyle={[{ borderColor: '#5500ff' }, { borderColor: '#5500ff' }]}
         />
       </div>
-      <p className="price-range">
+      <p className='price-range'>
         ₩{priceRange[0].toLocaleString()} ~ ₩{priceRange[1].toLocaleString()}
       </p>
     </div>

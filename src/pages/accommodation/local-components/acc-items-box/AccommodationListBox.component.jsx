@@ -10,11 +10,11 @@ const AccommodationListBox = ({ data }) => {
     : data;
 
   return (
-    <ul>
+    <ul className='accom-list-ul'>
       {filteredData.map((accom, idx) => (
         <React.Fragment key={accom.id || idx}>
           <AccommodationCard accom={accom} />
-          <div className="item-line" />
+          <div className='item-line' />
         </React.Fragment>
       ))}
     </ul>

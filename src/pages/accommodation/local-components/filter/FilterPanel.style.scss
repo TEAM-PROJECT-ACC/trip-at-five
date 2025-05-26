@@ -1,45 +1,10 @@
-#filter-btn {
-  border: 1px solid #5500ff;
-  padding: 5px 15px;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-right: 5px;
-  @include color-5500ff;
-}
-
 .filter-panel__container {
   border-radius: 5px;
   padding: 0px 15px;
   border: 3px solid #c8adff;
 
-  .filter-group {
-    margin-left: 30px;
-    margin-bottom: 10px;
-  }
-
   .line {
     border-top: 1px solid #c8adff;
     margin: 10px 30px;
   }
-}
-
-hr {
-  @include color-c8adff;
-}
-
-h4 {
-  font-size: 16px;
-  @include color-c8adff;
-}
-
-.filter-level {
-  margin-top: 8px;
-}
-
-.slider-style-length {
-  margin-right: 35px;
-}
-
-#together {
-  margin-top: 10px;
 }

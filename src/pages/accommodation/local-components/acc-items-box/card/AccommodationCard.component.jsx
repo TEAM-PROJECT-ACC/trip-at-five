@@ -22,30 +22,30 @@ const AccommodationCard = ({ accom }) => {
   const TypeIcon = typeIconMap[accom.type];
 
   return (
-    <li className="accommodation-item">
-      <div className="image">
+    <li className='accommodation-item'>
+      <div className='image'>
         <img
-          src="./src/assets/images/acc-list-page/hotel-img.png"
-          alt="숙박시설 이미지"
+          src='./src/assets/images/acc-list-page/hotel-img.png'
+          alt='숙박시설 이미지'
         />
       </div>
-      <div className="accom-info">
-        <div className="level-one">
-          <div className="accom-name">{accom.name}</div>
-          <div className="accom-info-icon" title={accom.type}>
+      <div className='accom-info'>
+        <div className='level-one'>
+          <div className='accom-name'>{accom.name}</div>
+          <div className='accom-info-icon' title={accom.type}>
             <TypeIcon />
           </div>
         </div>
-        <p className="accom-address">{accom.address}</p>
-        <div className="star">
-          <span className="star-icon"></span>
+        <p className='accom-address'>{accom.address}</p>
+        <div className='star'>
+          <span className='star-icon'></span>
           {accom.rating}명 평가
         </div>
-        <div className="accom-info-time-price">
-          <div className="v-line"></div>
-          <p className="accom-time">{accom.checkIn} 체크인</p>
-          <p className="accom-time">{accom.checkOut} 체크아웃</p>
-          <p className="accom-price">
+        <div className='accom-info-time-price'>
+          <div className='v-line'></div>
+          <p className='accom-time'>{accom.checkIn} 체크인</p>
+          <p className='accom-time'>{accom.checkOut} 체크아웃</p>
+          <p className='accom-price'>
             최저가 <strong>{accom.price.toLocaleString()}</strong>원
           </p>
         </div>

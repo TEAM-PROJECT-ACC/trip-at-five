@@ -30,9 +30,9 @@ const CategoryFilter = () => {
   };
 
   return (
-    <div className="filter-group">
-      <h3>숙소 유형</h3>
-      <div className="filter-options">
+    <div className='filter-group'>
+      <h3 className='title'>숙소 유형</h3>
+      <div className='filter-options'>
         {categoryIcons.map(({ icon, value, title }) => (
           <button
             title={title}

@@ -14,9 +14,8 @@ const MapButton = () => {
   }, [showMap]);
 
   return (
-    <div className="map-button">
-      {/*<img src="./src/assets/images/acc-list-page/fakeMapImg.png" alt="" />*/}
-      <button className="map-btn-text" onClick={() => setShowMap(true)}>
+    <div className='map-button'>
+      <button className='map-btn-text' onClick={() => setShowMap(true)}>
         지도보기
       </button>
       <div style={{ display: showMap ? 'block' : 'none' }}>

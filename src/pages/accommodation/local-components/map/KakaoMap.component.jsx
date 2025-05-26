@@ -13,14 +13,6 @@ export const KakaoMap = ({ onClose }) => {
 
   const priceRange = useFilterStore((state) => state.priceRange);
 
-  useEffect(() => {
-    if (window.kakao && window.kakao.maps && mapRef.current) {
-      window.kakao.maps.load(() => {
-        init();
-      });
-    }
-  }, [mapRef.current, priceRange]);
-
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
 
@@ -150,8 +142,16 @@ export const KakaoMap = ({ onClose }) => {
     if (map) map.setLevel(map.getLevel() + 1);
   };
 
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps && mapRef.current) {
+      window.kakao.maps.load(() => {
+        init();
+      });
+    }
+  }, [mapRef.current, priceRange]);
+
   return (
-    <div className="container">
+    <div className='container'>
       <Script
         async
         src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
@@ -166,26 +166,26 @@ export const KakaoMap = ({ onClose }) => {
         }}
       />
 
-      <button className="btn-exit" type="button" onClick={onClose}>
+      <button className='btn-exit' type='button' onClick={onClose}>
         <TiDelete />
       </button>
-      <div id="filter">
+      <div className='filter-map'>
         <FilterPanel />
       </div>
-      <div id="acc-list">
+      <div className='acc-list-map'>
         <MapInnerList />
-        <div id="map" ref={mapRef}></div>
-        <div className="custom_zoomcontrol">
-          <div id="level__btn--plus" onClick={zoomIn}>
+        <div className='map' ref={mapRef}></div>
+        <div className='custom_zoomcontrol'>
+          <div className='level__btn--plus' onClick={zoomIn}>
             <img
-              src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
-              alt="확대"
+              src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png'
+              alt='확대'
             />
           </div>
-          <div id="level__btn--minus" onClick={zoomOut}>
+          <div className='level__btn--minus' onClick={zoomOut}>
             <img
-              src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
-              alt="축소"
+              src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png'
+              alt='축소'
             />
           </div>
         </div>
