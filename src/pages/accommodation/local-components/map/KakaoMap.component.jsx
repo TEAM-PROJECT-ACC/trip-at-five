@@ -1,12 +1,11 @@
-import { useEffect, useRef } from "react";
-import "./KakaoMap.style.scss";
-import FilterPanel from "../filter/FilterPanel.component";
-import { MapInnerList } from "../acc-map-list/MapInnerList.component";
-import { markedData } from "./MapData";
-import { accomData } from "../../../../assets/sample-data/accomSampleData";
-import { TiDelete } from "../../../../assets/icons/ys/index";
-import Script from "./Script";
-import useFilterStore from "../store/useFilterStore";
+import { useEffect, useRef } from 'react';
+import './KakaoMap.style.scss';
+import FilterPanel from '../filter/FilterPanel.component';
+import { MapInnerList } from '../acc-map-list/MapInnerList.component';
+import { accomData } from '../../../../assets/sample-data/accomSampleData';
+import { TiDelete } from '../../../../assets/icons/ys/index';
+import Script from './Script';
+import useFilterStore from '../store/useFilterStore';
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
@@ -38,7 +37,7 @@ export const KakaoMap = ({ onClose }) => {
     const map = kakaoMap.current;
 
     document
-      .querySelectorAll(".customoverlay-wrapper")
+      .querySelectorAll('.customoverlay-wrapper')
       .forEach((el) => el.remove());
 
     let openOverlayId = null;
@@ -58,8 +57,8 @@ export const KakaoMap = ({ onClose }) => {
           name: item.accom_name,
           address: item.accom_location,
           rating: item.rooms.length * 100,
-          checkIn: "15:00",
-          checkOut: "11:00",
+          checkIn: '15:00',
+          checkOut: '11:00',
           price: minRoomPrice,
           lat,
           lon,
@@ -71,8 +70,8 @@ export const KakaoMap = ({ onClose }) => {
       console.log(accom);
       const position = new kakao.maps.LatLng(accom.lat, accom.lon);
 
-      const container = document.createElement("div");
-      container.className = "customoverlay-wrapper";
+      const container = document.createElement('div');
+      container.className = 'customoverlay-wrapper';
 
       container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
@@ -84,10 +83,10 @@ export const KakaoMap = ({ onClose }) => {
           </div>
         `;
 
-      const box = container.querySelector(".text__box");
-      box.style.opacity = "0";
-      box.style.visibility = "hidden";
-      box.style.transition = "all 0.3s ease";
+      const box = container.querySelector('.text__box');
+      box.style.opacity = '0';
+      box.style.visibility = 'hidden';
+      box.style.transition = 'all 0.3s ease';
 
       const overlay = new kakao.maps.CustomOverlay({
         position,
@@ -98,45 +97,45 @@ export const KakaoMap = ({ onClose }) => {
 
       overlay.setMap(map);
 
-      const bubble = container.querySelector(".price-bubble");
+      const bubble = container.querySelector('.price-bubble');
 
-      bubble.addEventListener("click", () => {
-        document.querySelectorAll(".text__box").forEach((el) => {
-          el.style.opacity = "0";
-          el.style.visibility = "hidden";
+      bubble.addEventListener('click', () => {
+        document.querySelectorAll('.text__box').forEach((el) => {
+          el.style.opacity = '0';
+          el.style.visibility = 'hidden';
         });
 
-        document.querySelectorAll(".price-bubble").forEach((el) => {
+        document.querySelectorAll('.price-bubble').forEach((el) => {
           if (el === bubble) {
-            el.style.opacity = "1";
-            el.style.visibility = "visible";
-            el.style.pointerEvents = "none";
+            el.style.opacity = '1';
+            el.style.visibility = 'visible';
+            el.style.pointerEvents = 'none';
           } else {
-            el.style.opacity = "0";
-            el.style.visibility = "hidden";
-            el.style.pointerEvents = "none";
+            el.style.opacity = '0';
+            el.style.visibility = 'hidden';
+            el.style.pointerEvents = 'none';
           }
         });
         if (openOverlayId === accom.id) {
           openOverlayId = null;
         } else {
-          box.style.opacity = "1";
-          box.style.visibility = "visible";
+          box.style.opacity = '1';
+          box.style.visibility = 'visible';
           openOverlayId = accom.id;
         }
       });
 
-      const button = container.querySelector(".btn-close");
-      button.addEventListener("click", (e) => {
+      const button = container.querySelector('.btn-close');
+      button.addEventListener('click', (e) => {
         e.stopPropagation();
-        box.style.opacity = "0";
-        box.style.visibility = "hidden";
+        box.style.opacity = '0';
+        box.style.visibility = 'hidden';
         openOverlayId = null;
 
-        document.querySelectorAll(".price-bubble").forEach((el) => {
-          el.style.opacity = "1";
-          el.style.visibility = "visible";
-          el.style.pointerEvents = "auto";
+        document.querySelectorAll('.price-bubble').forEach((el) => {
+          el.style.opacity = '1';
+          el.style.visibility = 'visible';
+          el.style.pointerEvents = 'auto';
         });
       });
     });

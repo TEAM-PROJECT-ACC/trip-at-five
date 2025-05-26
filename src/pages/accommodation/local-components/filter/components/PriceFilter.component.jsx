@@ -1,8 +1,8 @@
-import React from "react";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
-import useFilterStore from "../../store/useFilterStore";
-import "./Filter.style.scss";
+import React from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import useFilterStore from '../../store/useFilterStore';
+import './Filter.style.scss';
 
 const PriceFilter = () => {
   const priceRange = useFilterStore((state) => state.priceRange);
@@ -10,7 +10,7 @@ const PriceFilter = () => {
 
   const handleChange = (value) => {
     setPriceRange(value);
-    console.log("Selected price range:", value);
+    console.log('Selected price range:', value);
   };
 
   return (
@@ -24,11 +24,11 @@ const PriceFilter = () => {
           step={10000}
           value={priceRange}
           onChange={handleChange}
-          trackStyle={[{ backgroundColor: "#5500ff" }]}
-          handleStyle={[{ borderColor: "#5500ff" }, { borderColor: "#5500ff" }]}
+          trackStyle={[{ backgroundColor: '#5500ff' }]}
+          handleStyle={[{ borderColor: '#5500ff' }, { borderColor: '#5500ff' }]}
         />
       </div>
-      <p style={{ color: "#888", marginTop: "10px" }}>
+      <p className="price-range">
         ₩{priceRange[0].toLocaleString()} ~ ₩{priceRange[1].toLocaleString()}
       </p>
     </div>

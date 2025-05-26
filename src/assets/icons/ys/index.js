@@ -1,4 +1,4 @@
-import { WiFire } from "react-icons/wi";
+import { WiFire } from 'react-icons/wi';
 export { WiFire };
 
 import {
@@ -23,7 +23,7 @@ import {
   FaSmoking,
   FaBurn,
   FaBath,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
 export {
   FaBed,
@@ -49,10 +49,10 @@ export {
   FaBath,
 };
 
-import { BiCabinet } from "react-icons/bi";
+import { BiCabinet } from 'react-icons/bi';
 export { BiCabinet };
 
-import { TiDelete } from "react-icons/ti";
+import { TiDelete } from 'react-icons/ti';
 export { TiDelete };
 
 import {
@@ -66,7 +66,7 @@ import {
   MdLuggage,
   MdHouse,
   MdOutlineFoodBank,
-} from "react-icons/md";
+} from 'react-icons/md';
 
 export {
   MdVilla,

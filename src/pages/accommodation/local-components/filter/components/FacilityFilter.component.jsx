@@ -37,10 +37,6 @@ const FacilityFilter = () => {
   );
   const toggleFacility = useFilterStore((state) => state.toggleFacility);
 
-  useEffect(() => {
-    console.log('선택된 시설 목록:', selectedFacilities);
-  }, [selectedFacilities]);
-
   const renderButtons = (facilities) =>
     facilities.map(({ icon, label }) => (
       <button

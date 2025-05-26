@@ -1,11 +1,7 @@
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import './FilterPanel.style.scss';
-import useFilterStore from '../store/useFilterStore';
 import CategoryFilter from './components/CategoryFilter.component';
 import PriceFilter from './components/PriceFilter.component';
 import FacilityFilter from './components/FacilityFilter.component';
-import { useEffect } from 'react';
 
 const FilterPanel = () => {
   return (

@@ -13,9 +13,9 @@
   }
 
   &.selected {
-    color: white;
     box-shadow: 2px 2px 3px 0px #555555;
     @include background-5500ff;
+    @include color-ffffff;
   }
 }
 .filter-group {

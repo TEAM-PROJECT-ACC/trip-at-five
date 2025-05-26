@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-//import { showAccomodationList } from "../../services/apiService";
 import { Pagination } from '../../components/pagination/Pagination.component';
 import FilterPanel from './local-components/filter/FilterPanel.component';
 import MapButton from './local-components/map/MapButton.component';

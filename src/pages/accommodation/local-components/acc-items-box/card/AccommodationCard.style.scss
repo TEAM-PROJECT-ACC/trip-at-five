@@ -16,7 +16,7 @@
 }
 
 p.accom-address {
-  color: #888888;
+  @include color-888888;
 }
 
 .star {
@@ -28,24 +28,22 @@ img {
   width: 300px;
   height: 180px;
   border-radius: 10px;
-  background-color: black;
   object-fit: cover;
   background-size: cover;
 }
 .accom-info {
   width: 460px;
   height: 180px;
-  background-color: #f8f8f8;
   margin-left: 20px;
   padding: 15px 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
+  @include background-f6f6f6;
 }
 
 .accom-info-icon {
   width: 35px;
   height: 25px;
-  background-color: #baabfa;
   border-radius: 0px 10px 0px 10px;
   box-shadow: inset 2px 2px 2px 0px rgb(0, 0, 0, 0.45);
   display: flex;
@@ -53,6 +51,7 @@ img {
   justify-content: center;
   margin-top: 5px;
   @include color-5500ff;
+  @include background-baabfa;
 }
 
 .accom-price {
