@@ -1,0 +1,192 @@
+.container {
+  width: 75rem;
+  height: 76vh;
+  padding: 4rem 1rem 1rem 1rem;
+  border: 2px solid #baabfa;
+  border-radius: 8px;
+  background-color: #fafafa;
+  z-index: 100;
+  position: absolute;
+  left: 2.2rem;
+  box-sizing: border-box;
+  top: -6.5rem;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 3px 3px 4px 0px rgb(0, 0, 0, 0.5);
+
+  .map {
+    flex: 1;
+    width: 100%;
+  }
+
+  .filter-map {
+    width: 23%;
+    button {
+      padding: 4px 6px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 5px;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .acc-list-map {
+    position: relative;
+    width: 80%;
+    border: 3px solid #c8adff;
+    border-radius: 5px;
+    margin-left: 10px;
+    height: 638px;
+    display: flex;
+  }
+
+  .btn-exit {
+    font-size: 48px;
+    z-index: 1000;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    @include color-5500ff;
+  }
+
+  .custom_zoomcontrol {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    width: 40px;
+
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    @include background-fafafa;
+
+    .level__btn--plus {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        @include background-c8adff;
+      }
+    }
+    .level__btn--minus {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        @include background-c8adff;
+      }
+    }
+  }
+}
+
+.customoverlay-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.price-bubble {
+  display: block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  transform: translate(-50%, 0);
+  top: 0;
+  left: 50%;
+  position: absolute;
+  z-index: 1;
+  border-bottom: 2px solid #5500ff;
+  opacity: 1;
+  visibility: visible;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  @include background-5500ff;
+  @include color-fafafa;
+}
+
+.price-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #5500ff;
+}
+
+.text__box {
+  position: relative;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: auto;
+  border: 1px solid #ddd;
+  padding: 20px 15px;
+  font-size: 13px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  @include background-fafafa;
+
+  strong {
+    display: block;
+    font-size: 18px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .price {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    @include color-5500ff;
+  }
+
+  .address {
+    font-size: 12px;
+    padding-bottom: 10px;
+    @include color-888888;
+  }
+  .btn-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    @include color-cccccc;
+  }
+
+  .btn-close:hover {
+    @include color-5500ff;
+  }
+}

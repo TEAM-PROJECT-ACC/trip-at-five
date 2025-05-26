@@ -6,10 +6,17 @@ import { BsFillTelephoneFill } from 'react-icons/bs';
 import { FaInfoCircle } from 'react-icons/fa';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import {
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaAngleLeft,
+  FaAngleRight,
+  FaPlus,
+} from 'react-icons/fa';
 import { IoCart } from 'react-icons/io5';
 import { GoCheckCircle, GoCheckCircleFill } from 'react-icons/go';
 import { MainLogoEn, MainLogoKr } from './logo/logo.icon.jsx';
+import { BsFillHouseAddFill } from 'react-icons/bs';
 
 export {
   MainLogoEn,
@@ -31,4 +38,6 @@ export {
   GoCheckCircle,
   GoCheckCircleFill,
   FaStar,
+  FaPlus,
+  BsFillHouseAddFill,
 };
