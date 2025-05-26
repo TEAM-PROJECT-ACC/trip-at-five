@@ -1,0 +1,32 @@
+.room-list__container {
+  width: 100%;
+
+  .room-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    @include border-bottom-aaaab3;
+    h2 {
+      @include color-1e2022;
+    }
+  }
+
+  .room-list {
+    @include admin-body;
+
+    .edit-button,
+    .delete-button {
+      font-size: 32px;
+    }
+
+    .edit-button {
+      color: $color-ffaf45;
+    }
+
+    .delete-button {
+      color: $color-ff4545;
+    }
+  }
+}

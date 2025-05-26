@@ -5,8 +5,8 @@ import { IoReceipt } from 'react-icons/io5';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { FaInfoCircle } from 'react-icons/fa';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
-import { MdOutlineArrowDropDown } from 'react-icons/md';
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight, FaPlus, FaFill } from 'react-icons/fa';
+import { MdOutlineArrowDropDown, MdDelete } from 'react-icons/md';
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight, FaPlus, FaFill, FaEdit } from 'react-icons/fa';
 import { IoCart } from 'react-icons/io5';
 import { GoCheckCircle, GoCheckCircleFill } from 'react-icons/go';
 import { MainLogoEn, MainLogoKr } from './logo/logo.icon.jsx';
@@ -35,4 +35,6 @@ export {
   FaPlus,
   BsFillHouseAddFill,
   FaFill,
+  FaEdit,
+  MdDelete,
 };

@@ -32,6 +32,7 @@ import {
   FaHotTub,
 } from '../../../../assets/icons/ys/index';
 import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
+import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 
 const accomType = ['모텔', '호텔/리조트', '펜션', '홈/빌라', '캠핑', '게하/한옥'];
 const publicFac = [
@@ -128,7 +129,7 @@ const AccommodationForm = () => {
     <form className='accom-form' encType='multipart/form-data'>
       {/* 숙박업소 정보 등록 */}
       <FormItem title='숙박업소 정보 등록'>
-        <select className='accom-type-select'>
+        <select className='accom-type-select' name='accomTypeNo'>
           {accomType.map((value, idx) => (
             <option key={idx} value={value}>
               {value}
@@ -140,11 +141,17 @@ const AccommodationForm = () => {
       </FormItem>
       {/* 숙박업소 이미지 등록 */}
       <FormItem title='숙박업소 이미지 등록'>
-        <AdminInput type='file' multiple name='accomImage' className='accom-image' />
+        <AdminInput type='file' multiple name='accomImageList' className='accom-image' />
       </FormItem>
       {/* 숙박업소 설명 */}
       <FormItem title='숙박업소 설명' className='accom-desc__container'>
-        <textarea className='accom-desc' placeholder='숙박업소 설명을 작성해주세요...' value={word} onChange={checkWordCountHandler} />
+        <textarea
+          className='accom-desc'
+          name='accomDesc'
+          placeholder='숙박업소 설명을 작성해주세요...'
+          value={word}
+          onChange={checkWordCountHandler}
+        />
         <span className='accom-desc-count'>
           {wordCount >= 1330 && <span className='accom-desc-warning'>최대 1330자입니다!</span>}
           <span>{wordCount}</span> / 1330자
@@ -156,6 +163,11 @@ const AccommodationForm = () => {
           <div>{/* 맵 영역 */}</div>
         </div>
         <div className='map-input'>
+          {/* 경도 */}
+          <input type='hidden' name='accomLon' />
+          {/* 위도 */}
+          <input type='hidden' name='accomLat' />
+
           <AdminInput type='text' name='accomZipCode' className='accom-zip-code' placeholder={'우편번호'} />
           <AdminInput type='text' name='accomAddr' className='accom-addr' placeholder={'주소지'} />
         </div>
@@ -178,6 +190,9 @@ const AccommodationForm = () => {
           ))}
         </div>
       </FormItem>
+      <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+        등록
+      </AdminPrimaryButton>
     </form>
   );
 };
