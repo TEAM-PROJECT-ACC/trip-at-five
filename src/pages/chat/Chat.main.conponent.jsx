@@ -1,5 +1,5 @@
 import { PageContainer } from '../../components';
-import './chat.main.component.scss';
+import './chat.main.conponent.scss';
 
 export function Chat() {
 	return (
