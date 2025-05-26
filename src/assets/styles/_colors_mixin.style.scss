@@ -209,3 +209,14 @@
     box-shadow: inset 4px 4px 12px $color-b8b8b8, inset -4px -4px 12px $color-ffffff;
   }
 }
+
+// 관리자 영역 스타일
+@mixin admin-body {
+  & {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888, -0.1rem -0.1rem 0.1rem $color-ffffff;
+    padding: 1rem;
+    @include background-f6f6f6;
+  }
+}
