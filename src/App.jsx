@@ -10,6 +10,9 @@ import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
 import AdminMain from './pages/admin/AdminMain.page';
+import AccommodationFormContainer from './pages/admin/accom-reg-form/AccommodationFormContainer.page';
+import AdminLayout from './pages/admin/layout/AdminLayout.layout';
+import RoomMain from './pages/admin/room/RoomMain.component';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -69,14 +72,15 @@ function App() {
         <Route path='/payments' element={<Receipt />} />
 
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
-        <Route path='/admins'>
-          {/* 숙박등록페이지 */}
-          <Route path='accommodations' element={<AdminMain />} />
-          {/* 추후 컴포넌트 수정 */}
-          <Route path='accommodations/new' element={<AdminMain />} />
-          <Route path='accommodations/:id/edit' element={<AdminMain />} />
-          {/* 객실등록페이지 */}
-          <Route path=':id/rooms' />
+        <Route path='/admin' element={<AdminLayout />}>
+          <Route path='accommodations'>
+            <Route index element={<AdminMain />} />
+            {/* 숙박등록/수정페이지 */}
+            <Route path='new' element={<AccommodationFormContainer />} />
+            <Route path=':id/edit' element={<AccommodationFormContainer />} />
+            {/* 객실등록/수정페이지 */}
+            <Route path=':id/rooms' element={<RoomMain />} />
+          </Route>
           <Route path='reservations' />
           <Route path='cancel/reservations' />
         </Route>

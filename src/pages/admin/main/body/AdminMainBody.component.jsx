@@ -1,12 +1,16 @@
 import React from 'react';
 import './AdminMainBody.style.scss';
 import { accomData } from '../../../../assets/sample-data/accomSampleData';
+import { useNavigate } from 'react-router-dom';
 
 const dataList = accomData.accommodation_tb;
 
 const AdminMainBody = ({ className }) => {
+  const navigate = useNavigate();
   // 수정 페이지 이동 핸들러
-  const updatePageHandler = () => {};
+  const updatePageHandler = (accomNo) => {
+    navigate(`/admin/accommodations/${accomNo}/edit`);
+  };
 
   return (
     <div className={className}>
@@ -22,7 +26,7 @@ const AdminMainBody = ({ className }) => {
         </thead>
         <tbody className='admin-table-body'>
           {dataList.map((value, idx) => (
-            <tr key={idx} className='t-body-item' onClick={updatePageHandler(value.accom_sq)}>
+            <tr key={idx} className='t-body-item' onClick={() => updatePageHandler(value.accom_sq)}>
               <td className='t-body-item-col'>{value.accom_type}</td>
               <td className='t-body-item-col'>{value.accom_name}</td>
               <td className='t-body-item-col'>{value.accom_location}</td>

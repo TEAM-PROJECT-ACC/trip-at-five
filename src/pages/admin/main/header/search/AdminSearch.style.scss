@@ -4,26 +4,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-
-  // 관리자 input
-  .admin-input {
+  .admin-search {
     width: 40%;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 18px;
-    padding: 15px 5px 10px 20px;
-    box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #ffffff;
-    border-radius: 16px;
-    @include color-aaaab3;
-
-    &::placeholder {
-      transition: all 0.3s ease;
-      @include color-aaaab3;
-    }
-
-    &:focus::placeholder {
-      @include color-888888;
-    }
   }
 }

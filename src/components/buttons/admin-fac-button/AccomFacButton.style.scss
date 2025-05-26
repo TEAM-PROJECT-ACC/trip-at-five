@@ -1,0 +1,14 @@
+// 시설정보 버튼
+.accom-fac-button {
+  padding: 10px 16px;
+  font-size: 32px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  @include color-aaaab3;
+  @include admin-fac-button;
+
+  &.active {
+    @include admin-fac-button-active-shadow;
+  }
+}

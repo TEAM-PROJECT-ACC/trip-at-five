@@ -1,17 +1,15 @@
-import React from 'react';
-import { BsFillHouseAddFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-
 import './AdminSearch.style.scss';
-import AdminPlusButton from '../../../../../components/buttons/admin-plus-button/AdminPlusButton.component';
-import AdminSearchButton from '../../../../../components/buttons/admin-search-button/AdminSearchButton.component';
-
+import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
+import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
+import { BsFillHouseAddFill } from '../../../../../assets/icons/index';
+import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 const AdminSearch = ({ className }) => {
   const navigate = useNavigate();
 
   // 등록 페이지 이동 핸들러
   const registerPageHandler = () => {
-    navigate('/admins/accommodations');
+    navigate('/admin/accommodations/new');
   };
 
   // 검색 핸들러
@@ -20,10 +18,10 @@ const AdminSearch = ({ className }) => {
   return (
     <div className={className}>
       <div className='admin-search-area'>
-        <input className='admin-input' placeholder='숙박업소명 혹은 지역을 입력해주세요' />
-        <AdminSearchButton onClick={searchHandler} />
+        <AdminInput className='admin-search' placeholder='숙박업소명 혹은 지역을 입력해주세요' />
+        <AdminPrimaryButton onClick={searchHandler}>검색</AdminPrimaryButton>
       </div>
-      <AdminPlusButton onClick={registerPageHandler} />
+      <AdminIconButton onClick={registerPageHandler} children={<BsFillHouseAddFill />} />
     </div>
   );
 };
