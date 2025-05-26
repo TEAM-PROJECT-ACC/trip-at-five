@@ -3,6 +3,8 @@ import { PageContainer } from '../../components/page-container/PageContainer.com
 import AccommodationHeader from './components/AccommodationHeader.component';
 import './AccommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
+import { Button } from '../../components';
+import RoomList from './components/RoomList.component';
 
 const AccommodationDetail = () => {
   const mapRef = useRef(null);
@@ -37,8 +39,7 @@ const AccommodationDetail = () => {
       <section className='accom-header'>
         <img className='accom-header__image' />
         <div className='accom-header__text'>
-          <h1>서울신라호텔</h1>
-
+          서울신라호텔
           <div className='accom-header__price'>
             150,000원 / <p>1박</p>
           </div>
@@ -47,11 +48,15 @@ const AccommodationDetail = () => {
       </section>
 
       {/* 숙소 정보 카드 */}
-      <section className='accom-info'>
-        <div className='accom-info__map'>지도 들어갈 자리</div>
+      <section className='accom-info-detail'>
+        <div className='accom-info__map'>
+          <Button className="accom-location-btn">위치정보</Button>
+        </div>
         <div className='accom-info__review'>
-          <p className='nickname'>닉네임</p>
-          <div className='stars'>⭐⭐⭐⭐⭐</div>
+          <div className="review-header">
+            <p className='nickname'>닉네임</p>
+            <div className='stars'>⭐⭐⭐⭐⭐</div>
+          </div>
           <p className='comment'>
             편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
             좋고 청결해서 다시 방문하고 싶어요.
@@ -69,59 +74,7 @@ const AccommodationDetail = () => {
       </section>
 
       {/* 객실 목록 */}
-      <section className='room-list'>
-        <h2>객실 목록</h2>
-
-        <div className='room-card'>
-          <div className='room-img'></div>
-          <div className='room-info'>
-            <h3>디럭스 트윈룸</h3>
-            <p className='room-price'>150,000원</p>
-            <p>기준 2인 · 최대 2인 / 객실 2개</p>
-            <p>체크인 13:00 · 체크아웃 11:00</p>
-            <button className='btn-reserve'>객실 예약</button>
-          </div>
-        </div>
-
-        <div className='room-line'></div>
-
-        <div className='room-card'>
-          <div className='room-img'></div>
-          <div className='room-info'>
-            <h3>비즈니스 디럭스</h3>
-            <p className='room-price'>560,000원</p>
-            <p>기준 2인 · 최대 4인 / 객실 1개</p>
-            <p>체크인 13:00 · 체크아웃 11:00</p>
-            <button className='btn-reserve'>객실 예약</button>
-          </div>
-        </div>
-
-        <div className='room-line'></div>
-
-        <div className='room-card'>
-          <div className='room-img'></div>
-          <div className='room-info'>
-            <h3>비즈니스 디럭스</h3>
-            <p className='room-price'>560,000원</p>
-            <p>기준 2인 · 최대 4인 / 객실 1개</p>
-            <p>체크인 13:00 · 체크아웃 11:00</p>
-            <button className='btn-reserve'>객실 예약</button>
-          </div>
-        </div>
-
-        <div className='room-line'></div>
-
-        <div className='room-card'>
-          <div className='room-img'></div>
-          <div className='room-info'>
-            <h3>비즈니스 디럭스</h3>
-            <p className='room-price'>560,000원</p>
-            <p>기준 2인 · 최대 4인 / 객실 1개</p>
-            <p>체크인 13:00 · 체크아웃 11:00</p>
-            <button className='btn-reserve'>객실 예약</button>
-          </div>
-        </div>
-      </section>
+      <RoomList />
 
       {/* 후기 섹션 */}
       <section className='review-section'>
@@ -208,28 +161,23 @@ const AccommodationDetail = () => {
           <br />
         </p>
       </section>
-
-      <section className='info-map'>
-        <Script
-          async
-          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
-            import.meta.env.VITE_KAKAO_JAVA_API
-          }&autoload=false`}
-          onLoad={() => {
-            if (window.kakao && window.kakao.maps) {
-              window.kakao.maps.load(() => {
-                init();
-              });
-            }
-          }}
-        />
+      <section className='accom-info-detail'>
         <h2>위치</h2>
-        <div
-          className='map'
-          ref={mapRef}
-          style={{ width: '100%', height: '300px', borderRadius: '10px' }}
-        ></div>
-      </section>
+        <div className='accom-info__map'>
+          <Script
+            async
+            src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_JAVA_API}&autoload=false`}
+            onLoad={() => {
+              if (window.kakao && window.kakao.maps) {
+                window.kakao.maps.load(() => {
+                  init();
+                });
+              }
+            }}
+            />
+            <div ref={mapRef} style={{ width: '100%', height: '380px' }} />
+          </div>
+        </section>
     </PageContainer>
   );
 };

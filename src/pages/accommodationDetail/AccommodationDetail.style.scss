@@ -14,14 +14,11 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-
-    h1 {
-      font-size: 38px;
-      font-weight: bold;
-      font-family: 'KCC-Ganpan';
-      @include color-5500ff;
-    }
-
+    font-size: 38px;
+    font-weight: bold;
+    font-family: 'KCC-Ganpan';
+    @include color-5500ff;
+    
     p {
       color: #666;
     }
@@ -34,7 +31,7 @@
 
       > p {
         display: flex;
-        font-size: 20px;
+        font-size: 18px;
         align-items: center;
         padding-left: 5px;
       }
@@ -42,25 +39,74 @@
   }
 }
 .accom-location {
-  font-size: 24px;
+  font-size: 22px;
 }
-.accom-info {
+
+.accom-info-detail {
   display: flex;
   gap: 2.5rem;
   margin: 2rem 0;
   flex-wrap: wrap;
   height: 240px;
 
-  &__map,
-  &__review,
-  &__facility {
+  .accom-info__map,
+  .accom-info__review,
+  .accom-info__facility {
     flex: 1 1 30%;
+    box-shadow: inset 0px 0px 8px 0px #888888;
     min-width: 280px;
     background: #fafafa;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
+    border-radius: 16px;
+    padding: 1.5rem;
     font-size: 0.9rem;
+  }
+  .accom-info__map{
+    background-image: url(/src/assets/images/acc-list-page/fakeMapImg.png);
+    background-size: cover;
+
+    .accom-location-btn{
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 1px 1px 2px #222222;
+      @include color-fafafa;
+      @include background-5500ff;
+    }
+    .accom-location-btn:hover{
+      @include color-5500ff;
+      @include background-baabfa;
+    }
+  }
+  .accom-info__review{
+    display: flex;
+    font-size: 0.9rem;
+    padding: 50px;
+    line-height: 1.4;
+    flex-direction: column;
+  }
+
+  .review-header {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+
+    .nickname {
+      font-weight: bold;
+      font-size: 24px;
+      @include color-5500ff;
+    }
+
+    .stars {
+      font-size: 1rem;
+      color: #ffaa00;
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+    }
+
+    .comment{
+      font-size: 16px;
+    }
   }
 
   h4 {
@@ -152,13 +198,13 @@
 
   .review-card {
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0rem 5rem;
     width: 100%;
     margin-bottom: 1.5rem;
 
     .nickname {
       font-weight: bold;
-      margin-bottom: 0.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .stars {
@@ -199,6 +245,4 @@
   }
 }
 
-.map {
-  margin-bottom: 200px;
-}
+
