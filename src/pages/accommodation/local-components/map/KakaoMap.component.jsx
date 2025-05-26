@@ -38,7 +38,7 @@ export const KakaoMap = ({ onClose }) => {
     let openOverlayId = null;
 
     const filteredData = markedData.filter(
-    (accom) => accom.price >= minPrice && accom.price <= maxPrice
+      (accom) => accom.price >= minPrice && accom.price <= maxPrice
     );
 
     filteredData.forEach((accom, idx) => {
@@ -144,7 +144,7 @@ export const KakaoMap = ({ onClose }) => {
         <TiDelete />
       </button>
       <div id="filter">
-        <FilterPanel  />
+        <FilterPanel />
       </div>
       <div id="acc-list">
         <MapInnerList />
