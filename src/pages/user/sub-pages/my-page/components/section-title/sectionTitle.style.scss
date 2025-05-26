@@ -1,0 +1,19 @@
+.user-page.section-title__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 600;
+    @include color-5500ff;
+    .my-page__title-icon {
+      margin-right: 4px;
+    }
+  }
+  .section-title__link {
+    font-weight: 400;
+    @include color-c8adff;
+  }
+}
