@@ -1,35 +1,29 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
+.sign-tel-wrap {
+	padding: 0px 85px;
 
-.sign-tel-wrap{
+	.sign-tel-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+	}
 
-    padding: 0px 85px;
+	input {
+		width: 340px;
+		height: 36x;
+		margin-bottom: 40px;
+	}
 
-    .sign-tel-text {
-        font-size: 16px;    
-        margin-bottom: 8px;
-    }
+	.sign-tel-btn {
+		width: 340px;
+		display: flex;
+		justify-content: space-between;
+	}
 
- 
-
-    input {      
-    width: 340px;
-    height: 36x;
-    margin-bottom: 40px;
-    }
-
-    .sign-tel-btn {
-        width: 340px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    button {        
-    width: 166px;
-    height: 36px;
-    font-size: 14px;
-    font-weight: normal;
-    }
-
+	button {
+		width: 166px;
+		height: 36px;
+		font-size: 14px;
+		font-weight: normal;
+	}
 }
-

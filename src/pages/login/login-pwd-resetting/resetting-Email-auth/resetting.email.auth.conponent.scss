@@ -1,41 +1,37 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
+.pwd-resetting-content-wrap {
+	width: 340px;
+	height: 232px;
+	margin-top: 40px;
+	margin-left: 80px;
 
-.pwd-resetting-content-wrap{
-    width: 340px;
-    height: 232px;
-    margin-top: 40px;
-    margin-left: 80px;
+	.pwd-resetting-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+	}
 
-    
-    .pwd-resetting-text {
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
+	.pwd-resetting-code-input {
+		font-size: 16px;
+		margin-bottom: 8px;
+		margin-top: 20px;
+	}
 
-    .pwd-resetting-code-input {
-        font-size: 16px;
-        margin-bottom: 8px;
-        margin-top: 20px;
-    }
+	input {
+		width: 340px;
+		height: 36px;
+	}
 
-    input {
-        width: 340px;
-        height: 36px;
-        
-    }
+	button {
+		width: 340px;
+		height: 36px;
+		font-size: 14px;
+		font-weight: lighter;
+		margin-top: 20px;
+	}
 
-    button {
-        width: 340px;
-        height: 36px;
-        font-size: 14px;
-        font-weight: lighter;
-        margin-top: 20px;
-    }
-
-    .pwd-resetting-receive{
-        font-size: 10px;
-        margin-top: 8px;
-    }
-    
+	.pwd-resetting-receive {
+		font-size: 10px;
+		margin-top: 8px;
+	}
 }

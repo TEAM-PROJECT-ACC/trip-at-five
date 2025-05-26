@@ -1,5 +1,3 @@
-import { MdOutlineRefresh } from "react-icons/md";
+import { MdOutlineRefresh } from 'react-icons/md';
 
-export {
-  MdOutlineRefresh
-};
+export { MdOutlineRefresh };

@@ -1,70 +1,68 @@
-/*logins.css*/
+@use '@scss/_colors_variable.style.scss' as *;
 
 .login-wrap {
-    border: 1px solid rgba(255, 255, 255) ;
-    width: 500px;
-    height: 650px;
-    margin: auto;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    
-    box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
-    // filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.5));
+	border: 1px solid rgba(255, 255, 255);
+	width: 500px;
+	height: 650px;
+	margin: auto;
+	margin-top: 10%;
+	margin-bottom: 10%;
 
-
+	box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
+	// filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.5));
 }
 
 .login-page {
-    width: 340px;
-    margin-top: 13%;
-    margin-left: 80px;
+	width: 340px;
+	margin-top: 13%;
+	margin-left: 80px;
 }
 
-.up { height: 10%; text-align: center; }
-.mid { 
-    height: 30%; 
-    // margin-top: 8%;
-    input {
-        margin-top: 5%;
-        width: 100%;
-        height: 15%;
-    }
-
-
-    p {
-        font-size: 12px;
-        @include color-c8adff;
-    }
-
-    .login__font{
-        font-size: 8px;
-        font-weight: normal;
-    }
-
-    .login-Btn{
-        width: 100%;
-        height: 20%;
-        margin-top: 5%;
-        margin-bottom: 2%;
-        border-radius: 6px;
-    }
-
-    div {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 3%;
-
-        span{
-            font-size: 8px;
-        }
-    }
-
+.up {
+	height: 10%;
+	text-align: center;
 }
-.bottom { 
-     height: 20%; 
-     margin-top: 8%;
-     img {
-        margin-bottom: 10px;
-     }
-}
+.mid {
+	height: 30%;
+	// margin-top: 8%;
+	input {
+		margin-top: 5%;
+		width: 100%;
+		height: 15%;
+	}
 
+	p {
+		font-size: 12px;
+		@include color-c8adff;
+	}
+
+	.login__font {
+		font-size: 8px;
+		font-weight: normal;
+	}
+
+	.login-Btn {
+		width: 100%;
+		height: 20%;
+		margin-top: 5%;
+		margin-bottom: 2%;
+		border-radius: 6px;
+	}
+
+	div {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 3%;
+
+		span {
+			font-size: 8px;
+		}
+	}
+}
+.bottom {
+	height: 20%;
+	margin-top: 8%;
+	img {
+		margin-bottom: 10px;
+	}
+}
