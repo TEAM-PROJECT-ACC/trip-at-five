@@ -1,11 +1,9 @@
-import React from 'react';
-import { BsFillHouseAddFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-
 import './AdminSearch.style.scss';
-import AdminPlusButton from '../../../../../components/buttons/admin-plus-button/AdminPlusButton.component';
 import AdminSearchButton from '../../../../../components/buttons/admin-search-button/AdminSearchButton.component';
-
+import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
+import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
+import { BsFillHouseAddFill } from '../../../../../assets/icons/index';
 const AdminSearch = ({ className }) => {
   const navigate = useNavigate();
 
@@ -20,10 +18,10 @@ const AdminSearch = ({ className }) => {
   return (
     <div className={className}>
       <div className='admin-search-area'>
-        <input className='admin-input' placeholder='숙박업소명 혹은 지역을 입력해주세요' />
+        <AdminInput className='admin-search' placeholder='숙박업소명 혹은 지역을 입력해주세요' />
         <AdminSearchButton onClick={searchHandler} />
       </div>
-      <AdminPlusButton onClick={registerPageHandler} />
+      <AdminIconButton onClick={registerPageHandler} children={<BsFillHouseAddFill />} />
     </div>
   );
 };
