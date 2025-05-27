@@ -22,7 +22,12 @@ export const UserMenu = ({ className }) => {
             )
           );
         })}
-        <UserMenuButton className={CLASSNAME}>나의 일지</UserMenuButton>
+        <UserMenuButton
+          className={CLASSNAME}
+          to={'/diary'}
+        >
+          나의 일지
+        </UserMenuButton>
         <UserMenuButton classNAme={CLASSNAME}>문의하기</UserMenuButton>
       </ul>
     </div>
