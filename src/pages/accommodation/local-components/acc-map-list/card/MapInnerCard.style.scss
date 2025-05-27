@@ -1,0 +1,40 @@
+.acc-list__box {
+  display: flex;
+  padding: 19px;
+
+  .acc-list-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    background-image: url(/src/assets/images/acc-list-page/sampleImg.png);
+    background-size: cover;
+  }
+
+  .acc-list-info {
+    display: flex;
+    flex-direction: column;
+
+    .acc-list-title {
+      font-weight: bold;
+      font-size: 19px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .acc-list-price {
+      font-size: 18px;
+      font-weight: 700;
+      padding-top: 50px;
+      padding-left: 66px;
+      display: flex;
+      @include color-5500ff;
+    }
+  }
+}
+
+.line {
+  border-bottom: 1px solid #baabfa;
+  margin: 0px 12px;
+}

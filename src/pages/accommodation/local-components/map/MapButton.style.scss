@@ -1,0 +1,26 @@
+.map-button {
+  border: 3px solid #baabfa;
+  height: 227px;
+  border-radius: 8px;
+  background-image: url(/src/assets/images/acc-list-page/fakeMapImg.png);
+  background-size: cover;
+  margin-bottom: 15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .map-btn-text {
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 2px 2px 3px 0px #555555;
+    @include background-5500ff;
+    @include color-fafafa;
+  }
+  .map-btn-text:hover {
+    @include background-baabfa;
+    @include color-5500ff;
+  }
+}

@@ -48,6 +48,13 @@
     border-color: $color-c8adff;
   }
 }
+
+@mixin color-c8adff {
+  & {
+    color: #c8adff;
+  }
+}
+
 @mixin border-1e2022 {
   & {
     border-color: $color-1e2022;
@@ -66,9 +73,27 @@
   }
 }
 
+@mixin color-ffffff {
+  & {
+    color: $color-ffffff;
+  }
+}
+
 @mixin background-1e2022 {
   & {
     background: $color-1e2022;
+  }
+}
+
+@mixin background-baabfa {
+  & {
+    background: $color-baabfa;
+  }
+}
+
+@mixin color-baabfa {
+  & {
+    color: $color-baabfa;
   }
 }
 
@@ -87,5 +112,111 @@
 @mixin background-ff4545 {
   & {
     background: $color-ff4545;
+  }
+}
+
+// @mixin receipt-border-bottom {
+//   & {
+//     border-bottom: 0.3rem dashed $color-c8adff;
+//   }
+// }
+
+// @mixin location-box-shadow {
+//   & {
+//     box-shadow: 0 0 0 0.1rem $color-5500ff inset, 0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0.5rem 0 0 rgba(137, 52, 235, 0.7),
+//       0 0.5rem 0 0.1rem rgba(0, 0, 0, 0.4), 0 0.5rem 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
+//   }
+// }
+
+// @mixin location-box-shadow-active {
+//   & {
+//     box-shadow: 0 0 0 0.1rem $color-5500ff inset, 0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0 0 0.1rem rgba(0, 0, 0, 0.4);
+//   }
+// }
+
+@mixin color-888888 {
+  & {
+    color: $color-888888;
+  }
+}
+
+@mixin border-c8adff {
+  & {
+    border-color: $color-c8adff;
+  }
+}
+
+@mixin border-bottom-baabfa {
+  & {
+    border-bottom-color: $color-baabfa;
+  }
+}
+
+@mixin border-bottom-reservation-5500ff {
+  & {
+    border-bottom-color: $color-5500ff;
+  }
+}
+
+@mixin color-cccccc {
+  & {
+    color: $color-cccccc;
+  }
+}
+
+@mixin color-aaaab3 {
+  & {
+    color: $color-aaaab3;
+  }
+}
+@mixin background-f6f6f6 {
+  & {
+    background-color: $color-f6f6f6;
+  }
+}
+
+@mixin color-888888 {
+  & {
+    color: $color-888888;
+  }
+}
+
+// 관리자 input shadow
+@mixin admin-input-shadow {
+  & {
+    box-shadow: inset 8px 8px 8px $color-b8b8b8, inset -8px -8px 8px $color-ffffff;
+  }
+}
+
+@mixin border-bottom-aaaab3 {
+  & {
+    padding-bottom: 16px;
+    border-bottom: 1px solid $color-aaaab3;
+  }
+}
+
+@mixin admin-fac-button {
+  & {
+    border: 1px solid $color-e6e6e6;
+    background: $color-fafafa;
+    box-shadow: 6px 6px 12px $color-b8b8b8, -6px -6px 12px $color-ffffff;
+  }
+}
+
+@mixin admin-fac-button-active-shadow {
+  & {
+    color: $color-888888;
+    box-shadow: inset 4px 4px 12px $color-b8b8b8, inset -4px -4px 12px $color-ffffff;
+  }
+}
+
+// 관리자 영역 스타일
+@mixin admin-body {
+  & {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888, -0.1rem -0.1rem 0.1rem $color-ffffff;
+    padding: 1rem;
+    @include background-f6f6f6;
   }
 }
