@@ -18,7 +18,7 @@
     font-weight: bold;
     font-family: 'KCC-Ganpan';
     @include color-5500ff;
-    
+
     p {
       color: #666;
     }
@@ -39,7 +39,8 @@
   }
 }
 .accom-location {
-  font-size: 22px;
+  font-size: 20px;
+  @include color-888888;
 }
 
 .accom-info-detail {
@@ -61,23 +62,23 @@
     padding: 1.5rem;
     font-size: 0.9rem;
   }
-  .accom-info__map{
+  .accom-info__map {
     background-image: url(/src/assets/images/acc-list-page/fakeMapImg.png);
     background-size: cover;
 
-    .accom-location-btn{
+    .accom-location-btn {
       padding: 10px;
       border-radius: 5px;
       box-shadow: 1px 1px 2px #222222;
       @include color-fafafa;
       @include background-5500ff;
     }
-    .accom-location-btn:hover{
+    .accom-location-btn:hover {
       @include color-5500ff;
       @include background-baabfa;
     }
   }
-  .accom-info__review{
+  .accom-info__review {
     display: flex;
     font-size: 0.9rem;
     padding: 50px;
@@ -104,7 +105,7 @@
       align-items: center;
     }
 
-    .comment{
+    .comment {
       font-size: 16px;
     }
   }
@@ -213,7 +214,7 @@
     }
 
     .comment {
-      font-size: 0.9rem;
+      font-size: 1.3rem;
       margin: 0.5rem 0;
     }
 
@@ -244,5 +245,3 @@
     white-space: pre-line;
   }
 }
-
-

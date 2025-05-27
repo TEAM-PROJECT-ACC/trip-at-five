@@ -7,12 +7,16 @@ import {
 
 export const getIconsFromRoomInfo = (info = '') => {
   const icons = [];
-  const allFacilities = [...publicFacilities, ...roomFacilities, ...etcFacilities];
+  const allFacilities = [
+    ...publicFacilities,
+    ...roomFacilities,
+    ...etcFacilities,
+  ];
 
   allFacilities.forEach(({ label, icon }) => {
     if (info?.toLowerCase().includes(label.toLowerCase())) {
       icons.push(
-        <span key={label} className="room-icon" title={label}>
+        <span key={label} className='room-icon' title={label}>
           {icon}
         </span>
       );

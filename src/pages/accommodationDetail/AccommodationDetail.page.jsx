@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
 import AccommodationHeader from './components/AccommodationHeader.component';
 import './AccommodationDetail.style.scss';
@@ -37,7 +38,7 @@ const AccommodationDetail = () => {
   return (
     <PageContainer>
       <section className='accom-header'>
-        <img className='accom-header__image' />
+        <img src='' className='accom-header__image' />
         <div className='accom-header__text'>
           서울신라호텔
           <div className='accom-header__price'>
@@ -50,10 +51,10 @@ const AccommodationDetail = () => {
       {/* 숙소 정보 카드 */}
       <section className='accom-info-detail'>
         <div className='accom-info__map'>
-          <Button className="accom-location-btn">위치정보</Button>
+          <Button className='accom-location-btn'>위치정보</Button>
         </div>
         <div className='accom-info__review'>
-          <div className="review-header">
+          <div className='review-header'>
             <p className='nickname'>닉네임</p>
             <div className='stars'>⭐⭐⭐⭐⭐</div>
           </div>
@@ -166,7 +167,9 @@ const AccommodationDetail = () => {
         <div className='accom-info__map'>
           <Script
             async
-            src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_JAVA_API}&autoload=false`}
+            src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
+              import.meta.env.VITE_KAKAO_JAVA_API
+            }&autoload=false`}
             onLoad={() => {
               if (window.kakao && window.kakao.maps) {
                 window.kakao.maps.load(() => {
@@ -174,10 +177,10 @@ const AccommodationDetail = () => {
                 });
               }
             }}
-            />
-            <div ref={mapRef} style={{ width: '100%', height: '380px' }} />
-          </div>
-        </section>
+          />
+          <div ref={mapRef} style={{ width: '100%', height: '380px' }} />
+        </div>
+      </section>
     </PageContainer>
   );
 };
