@@ -1,7 +1,7 @@
 import React from 'react';
-import { accomData } from '../../../assets/sample-data/accomSampleData';
+import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import { getIconsFromRoomInfo } from './roomIconMap';
-import './RoomList.style.scss';
+import './roomList.style.scss';
 
 const RoomList = () => {
   return (

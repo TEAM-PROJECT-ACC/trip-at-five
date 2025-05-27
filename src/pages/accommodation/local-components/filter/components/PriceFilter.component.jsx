@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import useFilterStore from '../../store/useFilterStore';
-import './Filter.style.scss';
+import './filter.style.scss';
 
 const PriceFilter = () => {
   const priceRange = useFilterStore((state) => state.priceRange);

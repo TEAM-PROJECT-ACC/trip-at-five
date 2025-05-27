@@ -1,6 +1,6 @@
 import { KakaoMap } from './KakaoMap.component';
 import { useState, useEffect } from 'react';
-import './MapButton.style.scss';
+import './mapButton.style.scss';
 
 const MapButton = () => {
   const [showMap, setShowMap] = useState(false);

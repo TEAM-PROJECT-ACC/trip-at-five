@@ -1,11 +1,11 @@
-import './FilterPanel.style.scss';
+import './filterPanel.style.scss';
 import CategoryFilter from './components/CategoryFilter.component';
 import PriceFilter from './components/PriceFilter.component';
 import FacilityFilter from './components/FacilityFilter.component';
 
-const FilterPanel = () => {
+const FilterPanel = ({ className }) => {
   return (
-    <div className='filter-panel__container'>
+    <div className={`filter-panel__container ${className ? className : ''}`}>
       <CategoryFilter />
       <div className='line'></div>
       <PriceFilter />

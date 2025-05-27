@@ -4,7 +4,7 @@ import { Pagination } from '../../components/pagination/Pagination.component';
 import FilterPanel from './local-components/filter/FilterPanel.component';
 import MapButton from './local-components/map/MapButton.component';
 import AccommodationListBox from './local-components/acc-items-box/AccommodationListBox.component';
-import './AccommodationList.style.scss';
+import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
 import { accomData } from '../../assets/sample-data/accomSampleData';
 import useFilterStore from './local-components/store/useFilterStore';
@@ -46,9 +46,9 @@ const AccommodationList = () => {
     <PageContainer>
       <div className='search-bar'></div>
       <div className='main-section'>
-        <aside className='filter-section'>
+        <aside className='filter-section accom-filter-section'>
           <MapButton accommodations={accommodations} />
-          <FilterPanel />
+          <FilterPanel className={'accom-filter-panel'} />
         </aside>
         <div className='list-section'>
           <AccommodationListBox

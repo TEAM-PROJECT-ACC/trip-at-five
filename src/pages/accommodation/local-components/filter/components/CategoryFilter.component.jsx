@@ -6,7 +6,7 @@ import {
   FaHouseUser,
 } from '../../../../../assets/icons/ys/index';
 import useFilterStore from '../../store/useFilterStore';
-import './Filter.style.scss';
+import './filter.style.scss';
 
 const CategoryFilter = () => {
   const selectedCategory = useFilterStore((state) => state.selectedCategory);

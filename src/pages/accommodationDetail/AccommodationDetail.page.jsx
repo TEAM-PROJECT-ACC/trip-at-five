@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
-import AccommodationHeader from './components/AccommodationHeader.component';
-import './AccommodationDetail.style.scss';
+//import AccommodationHeader from './components/AccommodationHeader.component';
+import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
-import { Button } from '../../components';
-import RoomList from './components/RoomList.component';
+import RoomList from './components/room-list-component/RoomList.component';
+import { Modal } from '../../components';
 
 const AccommodationDetail = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   const mapRef = useRef(null);
 
   const lat = 37.559945;
@@ -51,9 +52,11 @@ const AccommodationDetail = () => {
       {/* 숙소 정보 카드 */}
       <section className='accom-info-detail'>
         <div className='accom-info__map'>
-          <Button className='accom-location-btn'>위치정보</Button>
+          <a href='#ancher-map' className='accom-location-btn'>
+            위치정보
+          </a>
         </div>
-        <div className='accom-info__review'>
+        <a href='#ancher-review' className='accom-info__review'>
           <div className='review-header'>
             <p className='nickname'>닉네임</p>
             <div className='stars'>⭐⭐⭐⭐⭐</div>
@@ -62,7 +65,7 @@ const AccommodationDetail = () => {
             편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
             좋고 청결해서 다시 방문하고 싶어요.
           </p>
-        </div>
+        </a>
         <div className='accom-info__facility'>
           <h4>기본 제공 시설</h4>
           <ul>
@@ -78,8 +81,22 @@ const AccommodationDetail = () => {
       <RoomList />
 
       {/* 후기 섹션 */}
-      <section className='review-section'>
-        <h2>이용 후기</h2>
+      <section id='ancher-review' className='review-section'>
+        <h2 className='acc-detail-section__title'>이용 후기</h2>
+        <div className='review-stars'>⭐3.0</div>
+        <button
+          onClick={() => {
+            setModalOpen(true);
+          }}
+          className='accom-modal-btn'
+        >
+          후기 등록
+        </button>
+        {modalOpen && (
+          <Modal>
+            <>모달 테스트</>
+          </Modal>
+        )}
 
         <div className='review-card'>
           <div className='images'>
@@ -135,7 +152,7 @@ const AccommodationDetail = () => {
 
       {/* 상세 정보 */}
       <section className='detail-info'>
-        <h2>상세정보</h2>
+        <h2 className='acc-detail-section__title'>상세정보</h2>
         <p>
           [사계절 온수풀 해온 HE:ON 정기 점검 안내]
           <br />
@@ -162,9 +179,10 @@ const AccommodationDetail = () => {
           <br />
         </p>
       </section>
-      <section className='accom-info-detail'>
-        <h2>위치</h2>
-        <div className='accom-info__map'>
+
+      <section id='ancher-map' className='accom__map-container'>
+        <h2 className='acc-detail-section__title'>위치</h2>
+        <div className='accom-info-mapContainer'>
           <Script
             async
             src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
@@ -178,7 +196,7 @@ const AccommodationDetail = () => {
               }
             }}
           />
-          <div ref={mapRef} style={{ width: '100%', height: '380px' }} />
+          <div ref={mapRef} className='mapStyle' />
         </div>
       </section>
     </PageContainer>

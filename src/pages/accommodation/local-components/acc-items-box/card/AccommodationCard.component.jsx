@@ -7,7 +7,7 @@ import {
   MdHouse,
   MdVilla,
 } from '../../../../../assets/icons/ys/index';
-import './AccommodationCard.style.scss';
+import './accommodationCard.style.scss';
 
 const typeIconMap = {
   모텔: FaBed,

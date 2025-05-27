@@ -56,26 +56,32 @@
     flex: 1 1 30%;
     box-shadow: inset 0px 0px 8px 0px #888888;
     min-width: 280px;
-    background: #fafafa;
     border: 1px solid #ddd;
     border-radius: 16px;
     padding: 1.5rem;
     font-size: 0.9rem;
+    @include background-fafafa;
   }
   .accom-info__map {
     background-image: url(/src/assets/images/acc-list-page/fakeMapImg.png);
     background-size: cover;
 
     .accom-location-btn {
-      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 20px;
       border-radius: 5px;
       box-shadow: 1px 1px 2px #222222;
       @include color-fafafa;
       @include background-5500ff;
     }
+
+    /* 호버하면 글자가 보이지 않는 오류*/
     .accom-location-btn:hover {
+      padding: 20px 50px;
+      border: 1px solid #baabfa;
+      background-color: none;
       @include color-5500ff;
-      @include background-baabfa;
     }
   }
   .accom-info__review {
@@ -105,8 +111,8 @@
       align-items: center;
     }
 
-    .comment {
-      font-size: 16px;
+    p.comment {
+      font-size: 18px;
     }
   }
 
@@ -196,7 +202,19 @@
     font-size: 1.7rem;
     margin-bottom: 1rem;
   }
-
+  .review-stars {
+    display: flex;
+    padding: 10px;
+    border-radius: 8px;
+    width: 80px;
+    border: 1px solid #5500ff;
+  }
+  .accom-modal-btn {
+    padding: 10px;
+    border-radius: 8px;
+    @include color-fafafa;
+    @include background-5500ff;
+  }
   .review-card {
     border-radius: 8px;
     padding: 0rem 5rem;
@@ -223,11 +241,12 @@
       gap: 0.5rem;
 
       .img {
-        width: 220px;
-        height: 160px;
+        width: 240px;
+        height: 180px;
         object-fit: cover;
         background-image: url(./img/sample1.png);
-        border-radius: 4px;
+        border-radius: 8px;
+        border: 1.5px solid #baabfa;
       }
     }
   }
@@ -244,4 +263,15 @@
     line-height: 1.6;
     white-space: pre-line;
   }
+}
+
+.mapStyle {
+  width: 100%;
+  height: 380px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: url(http://t1.daumcdn.net/mapjsapi/images/bg_tile.png);
+  box-shadow: 5px 5px 5px -4px rgb(0, 0, 0, 0.25);
+  margin-top: 20px;
 }

@@ -1,18 +1,17 @@
 import React from 'react';
+import './roomList.style.scss';
 
-const AccommodationHeader = ({ name, location, basePrice}) => {
+const AccommodationHeader = ({ name, location, basePrice }) => {
   return (
-    <section className="accom-header">
-        <div className="accom-header__img">
-        </div>
-        <div className="accom-header__info">
-        <h1 className="accom-header__title">{name}</h1>
-        <p className="accom-header__location">{location}</p>
-        <div className="accom-header__price">
-          <span className="price">₩{basePrice}</span>
-          <span className="per-night"> / 1박</span>
+    <section className='accom-header'>
+      <img src='' className='accom-header__image' />
+      <div className='accom-header__text'>
+        서울신라호텔
+        <div className='accom-header__price'>
+          150,000원 / <p>1박</p>
         </div>
       </div>
+      <p className='accom-location'>서울 중구 장충동2가 202</p>
     </section>
   );
 };

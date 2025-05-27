@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import './KakaoMap.style.scss';
+import './kakaoMap.style.scss';
 import FilterPanel from '../filter/FilterPanel.component';
 import { MapInnerList } from '../acc-map-list/MapInnerList.component';
 import { accomData } from '../../../../assets/sample-data/accomSampleData';

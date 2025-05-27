@@ -26,7 +26,7 @@ import {
   WiFire,
   FaBurn,
   MdOutlineFoodBank,
-} from '../../../assets/icons/ys/index';
+} from '../../../../assets/icons/ys/index';
 
 export const publicFacilities = [
   { icon: <FaSpa />, label: '사우나' },

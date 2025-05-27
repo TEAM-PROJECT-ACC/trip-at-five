@@ -1,5 +1,5 @@
 import React from 'react';
-import './MapInnerCard.style.scss';
+import './mapInnerCard.style.scss';
 
 const MapInnerCard = ({ accom }) => {
   return (
