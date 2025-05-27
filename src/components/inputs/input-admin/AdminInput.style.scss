@@ -1,0 +1,21 @@
+// 관리자 input
+.admin-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  @include color-1e2022;
+  @include admin-input-shadow;
+
+  &::placeholder {
+    transition: all 0.3s ease;
+    @include color-aaaab3;
+  }
+
+  &:focus::placeholder {
+    @include color-888888;
+  }
+}

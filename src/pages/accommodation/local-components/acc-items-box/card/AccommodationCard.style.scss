@@ -1,0 +1,88 @@
+.accommodation-item {
+  width: 815px;
+  height: 202px;
+  display: flex;
+
+  img {
+    width: 300px;
+    height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+    background-size: cover;
+  }
+
+  .accom-info {
+    width: 460px;
+    height: 180px;
+    margin-left: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
+    @include background-f6f6f6;
+
+    .level-one {
+      display: flex;
+      justify-content: space-between;
+
+      .accom-name {
+        font-family: 'KCC-Ganpan';
+        font-size: 24px;
+        @include color-5500ff;
+      }
+
+      .accom-info-icon {
+        width: 35px;
+        height: 25px;
+        border-radius: 0px 10px 0px 10px;
+        box-shadow: inset 2px 2px 2px 0px rgb(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5px;
+        @include color-5500ff;
+        @include background-baabfa;
+      }
+    }
+    p.accom-address {
+      @include color-888888;
+    }
+    .star {
+      font-size: 13px;
+      @include color-c8adff;
+    }
+    .accom-info-time-price {
+      margin-top: 30px;
+
+      .v-line {
+        border-left: 3px solid #baabfa;
+        height: 60px;
+        float: left;
+      }
+
+      .accom-price {
+        font-size: 16px;
+        vertical-align: middle;
+      }
+
+      .accom-price strong {
+        font-size: 25px;
+        font-weight: 900;
+        margin-left: 10px;
+        margin-right: 5px;
+        @include color-5500ff;
+      }
+
+      p.accom-price {
+        margin-left: 240px;
+        display: inline-flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .accom-time {
+        margin-left: 15px;
+      }
+    }
+  }
+}

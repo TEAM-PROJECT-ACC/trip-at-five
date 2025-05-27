@@ -1,0 +1,30 @@
+.email-form__container {
+  width: 100%;
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .email-form-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .email-input {
+      width: 70%;
+      font-size: 1rem;
+      @include border-bottom-baabfa;
+    }
+
+    .email-input:focus {
+      @include border-bottom-reservation-5500ff;
+    }
+
+    .check-email-button {
+      width: 30%;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.pay-info-header,
+.pay-info-body {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.pay-info-body {
+  gap: 1.5rem;
+  & > p {
+    width: 100%;
+    text-align: right;
+    font-size: 1.3rem;
+  }
+}

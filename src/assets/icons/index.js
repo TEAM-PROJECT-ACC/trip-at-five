@@ -11,34 +11,56 @@ import {
   FaStar,
   FaRegUser,
   FaFireAlt,
+  FaPlus,
+  FaFill,
+  FaEdit,
+  FaCalendar,
 } from 'react-icons/fa';
 import {
   MdOutlineArrowDropDown,
+  MdDelete,
   MdArrowForwardIos,
   MdDocumentScanner,
   MdClose,
 } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
-
-export { MainLogoEn, MainLogoKr };
+import { IoCart } from 'react-icons/io5';
+import { GoCheckCircle, GoCheckCircleFill } from 'react-icons/go';
+import { BsFillHouseAddFill } from 'react-icons/bs';
+import { IoReceipt } from 'react-icons/io5';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { FaInfoCircle } from 'react-icons/fa';
+import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 
 export {
-  FaUser,
-  FaBars,
+  MainLogoEn,
+  MainLogoKr,
+  MdOutlineArrowDropDown,
+  IoReceipt,
+  BsFillTelephoneFill,
+  RiMoneyDollarCircleLine,
   FaGithub,
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
-  FaStar,
+  IoCart,
+  GoCheckCircle,
+  GoCheckCircleFill,
+  FcGoogle,
+  BsFillHouseAddFill,
+  FaUser,
+  FaBars,
   FaRegUser,
   FaFireAlt,
-};
-
-export {
-  MdOutlineArrowDropDown,
+  FaCalendar,
+  FaInfoCircle,
+  FaStar,
+  FaPlus,
+  FaFill,
+  FaEdit,
+  MdDelete,
   MdArrowForwardIos,
   MdDocumentScanner,
   MdClose,
 };
-export { FcGoogle };
