@@ -2,21 +2,41 @@
   display: flex;
   justify-content: center;
   @include background-f6f6f6;
-
   .admin-header__inner {
     width: 1280px;
-    display: flex;
     padding: 16px 12px;
-    justify-content: space-between;
-
-    .admin-header__button {
+    .admin-header__logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
       font-weight: 600;
       font-size: 24px;
-      padding: 7px 44px;
-      .admin-header__btn-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
+      @include color-aaaab3;
+
+      .admin-header__page-title {
+        padding: 12px;
+      }
+
+      .admin-header__logo {
+        height: 60px;
+        margin-right: 24px;
+      }
+    }
+
+    .admin-header__link-container {
+      display: flex;
+      justify-content: space-between;
+
+      .admin-header__button {
+        font-weight: 600;
+        font-size: 24px;
+        padding: 7px 44px;
+
+        .admin-header__btn-icon {
+          width: 24px;
+          height: 24px;
+          margin-right: 8px;
+        }
       }
     }
   }

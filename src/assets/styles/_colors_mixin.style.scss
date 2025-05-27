@@ -37,6 +37,12 @@
   }
 }
 
+@mixin color-f6f6f6 {
+  & {
+    color: $color-f6f6f6;
+  }
+}
+
 @mixin border-5500ff {
   & {
     border-color: $color-5500ff;
@@ -184,7 +190,8 @@
 // 관리자 input shadow
 @mixin admin-input-shadow {
   & {
-    box-shadow: inset 8px 8px 8px $color-b8b8b8, inset -8px -8px 8px $color-ffffff;
+    box-shadow: inset 8px 8px 8px $color-b8b8b8,
+      inset -8px -8px 8px $color-ffffff;
   }
 }
 
@@ -206,7 +213,8 @@
 @mixin admin-fac-button-active-shadow {
   & {
     color: $color-888888;
-    box-shadow: inset 4px 4px 12px $color-b8b8b8, inset -4px -4px 12px $color-ffffff;
+    box-shadow: inset 4px 4px 12px $color-b8b8b8,
+      inset -4px -4px 12px $color-ffffff;
   }
 }
 
@@ -215,7 +223,8 @@
   & {
     width: 100%;
     border-radius: 1rem;
-    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888, -0.1rem -0.1rem 0.1rem $color-ffffff;
+    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888,
+      -0.1rem -0.1rem 0.1rem $color-ffffff;
     padding: 1rem;
     @include background-f6f6f6;
   }

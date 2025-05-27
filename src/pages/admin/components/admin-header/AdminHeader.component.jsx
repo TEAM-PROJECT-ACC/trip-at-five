@@ -3,6 +3,7 @@ import {
   FaHotel,
   FaCalendarAlt,
   FaCalendarTimes,
+  MainLogoKr,
 } from '../../../../assets/icons/index';
 import { classNames } from '../../../../utils';
 import { AdminLinkButton } from '../../../../components/buttons/admin-link-button/AdminLinkButton.component';
@@ -22,19 +23,25 @@ export const AdminHeader = () => {
   return (
     <header className='admin-header__container'>
       <div className='admin-header__inner'>
-        {ADMIN_ROUTE.map((route, idx) => {
-          const Icons = buttonIcons[route.path];
-          return (
-            <AdminLinkButton
-              key={idx}
-              className={classNames('admin-header__button', route.className)}
-              to={route.path}
-            >
-              {<Icons className='admin-header__btn-icon' />}
-              {route.title}
-            </AdminLinkButton>
-          );
-        })}
+        <div className='admin-header__logo-container'>
+          <MainLogoKr className='admin-header__logo' />
+          <div className='admin-header__page-title'>관리자</div>
+        </div>
+        <div className='admin-header__link-container'>
+          {ADMIN_ROUTE.map((route, idx) => {
+            const Icons = buttonIcons[route.path];
+            return (
+              <AdminLinkButton
+                key={idx}
+                className={classNames('admin-header__button', route.className)}
+                to={route.path}
+              >
+                {<Icons className='admin-header__btn-icon' />}
+                {route.title}
+              </AdminLinkButton>
+            );
+          })}
+        </div>
       </div>
     </header>
   );
