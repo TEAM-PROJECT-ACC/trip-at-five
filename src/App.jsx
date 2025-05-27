@@ -1,7 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import { TestPage } from './pages/test/Test.page';
+import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
+import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import './App.css';
+import SignUp from './pages/sign/SignUp';
+import LoginPage from './pages/login/Login';
+import PwdRestting from './pages/login/pwd-resetting/Login.password.resetting.conponent';
+import { Chat } from './pages/chat/Chat.main.conponent';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
 import { useEffect } from 'react';
@@ -15,83 +20,133 @@ import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
-function App() {
-  // TODO : 규형님 로그인 상태 확인
-  // 1. 비로그인 시 리디렉트 로그인 페이지로
-  // 2. 로그인 회원 상태 관리가 zustand 전역 상태 관리로
-  // 전역 상태 관리 초기화 (jwt access token, refresh token) 둘 다 없으면 1번 처리
-  // 로그아웃 할 때 회원 상태 초기화
+import ChatRoom from './pages/chat/room/Chat.room.conponent';
 
+function App() {
   return (
     <>
+      {/* 관리자인 경우 삭제 */}
       <AppHeader />
+
       <Routes>
-        <Route path='/test' element={<TestPage />} />
-        {/*
-	return (
-		<Routes>
-			{/*
-        // TODO: 회원 팀
-        로그인/회원가입
-        
-        마이페이지(index)
-          내 정보
-          내 쿠폰
-          내 예약
-          챌린지
-        
-        비회원 예약
-        나의 일지
-        채팅페이지(index)
-        문의
-        채팅
-        
-        // TODO: 숙박 팀
-        메인
-        장바구니
-        숙박
-          예약
-          결제
-          목록
-          상세보기
+        <Route
+          path='/test'
+          element={<TestPage />}
+        />
+        {/* path member로 변경 */}
+        {/* 복수형으로  */}
+        <Route
+          path='/user'
+          element={<UserPage />}
+        >
+          {USER_ROUTE.map((route, idx) => {
+            return (
+              <Route
+                key={idx}
+                index={route.index}
+                path={route.path}
+                element={<route.element className={route.className} />}
+              />
+            );
+          })}
+        </Route>
+        <Route
+          path='/diary'
+          element={<DiaryPage />}
+        />
+        {/* 로그인 부분 */}
+        <Route
+          path='/login'
+          element={<LoginPage />}
+        ></Route>
 
-        관리자 페이지
-          숙박업소관리
-          예약관리
-          예약취소요청
-          사용자문의
-          회원관리
-      */}
+        {/* 회원가입 */}
+        <Route
+          path='/signUp'
+          element={<SignUp />}
+        />
 
-        <Route index element={<Main />} />
-        <Route path='/carts' element={<CartMain />} />
-        <Route path='/guest/reservations' element={<NonMemberReservation />} />
+        {/* 비밀번호 재설정 */}
+        <Route
+          path='/resetting'
+          element={<PwdRestting />}
+        />
+
+        {/* 채팅 */}
+        <Route
+          path='/chat'
+          element={<Chat />}
+        />
+
+        <Route
+          index
+          element={<Main />}
+        />
+        <Route
+          path='/carts'
+          element={<CartMain />}
+        />
+        <Route
+          path='/guest/reservations'
+          element={<NonMemberReservation />}
+        />
         <Route path='/accommodations'>
-          <Route index element={<AccommodationList />} />
+          <Route
+            index
+            element={<AccommodationList />}
+          />
           <Route
             path='/accommodations/detail'
             element={<AccommodationDetail />}
           />
         </Route>
-        <Route path='/reservations' element={<Reservation />} />
-        <Route path='/payments' element={<Receipt />} />
+        <Route
+          path='/reservations'
+          element={<Reservation />}
+        />
+        <Route
+          path='/payments'
+          element={<Receipt />}
+        />
 
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
-        <Route path='/admin' element={<AdminLayout />}>
+        <Route
+          path='/admin'
+          element={<AdminLayout />}
+        >
           <Route path='accommodations'>
-            <Route index element={<AdminMain />} />
+            <Route
+              index
+              element={<AdminMain />}
+            />
             {/* 숙박등록/수정페이지 */}
-            <Route path='new' element={<AccommodationFormContainer />} />
-            <Route path=':id/edit' element={<AccommodationFormContainer />} />
+            <Route
+              path='new'
+              element={<AccommodationFormContainer />}
+            />
+            <Route
+              path=':id/edit'
+              element={<AccommodationFormContainer />}
+            />
             {/* 객실등록/수정페이지 */}
-            <Route path=':id/rooms' element={<RoomMain />} />
+            <Route
+              path=':id/rooms'
+              element={<RoomMain />}
+            />
           </Route>
-          <Route path='reservations' element={<ReservationManagementList />} />
+          <Route
+            path='reservations'
+            element={<ReservationManagementList />}
+          />
           <Route path='cancel-reservations' />
         </Route>
-
-        {/* error 컴포넌트 */}
+        <Route
+          path='/chat/room'
+          element={<ChatRoom />}
+        />
       </Routes>
+      {/* 관리자인 경우 삭제 */}
+      <AppFooter />
     </>
   );
 }

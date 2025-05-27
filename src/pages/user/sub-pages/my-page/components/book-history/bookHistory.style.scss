@@ -1,0 +1,11 @@
+.book-history__container {
+  .book-history__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    .book-history__info-title {
+      font-weight: 600;
+    }
+  }
+}

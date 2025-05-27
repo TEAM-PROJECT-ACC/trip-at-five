@@ -15,6 +15,8 @@ import { Select } from './select/Select.component';
 import { Pagination } from './pagination/Pagination.component';
 import { StarRating } from './star-rating/StarRating.component';
 import { PageContainer } from './page-container/PageContainer.component';
+import { Modal } from './modal/Modal.component';
+import { Textarea } from './textarea/Textarea.component';
 
 export {
   AppHeader,
@@ -34,4 +36,6 @@ export {
   Pagination,
   StarRating,
   PageContainer,
+  Modal,
+  Textarea,
 };

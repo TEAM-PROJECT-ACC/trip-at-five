@@ -1,0 +1,33 @@
+.user-page {
+  .aside-user-profile__container {
+    width: 100%;
+    padding: 16px 12px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    @include border-c8adff;
+    .aside-user-profile__user-nickname {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      .aside-user-profile__nickname-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        @include color-5500ff;
+      }
+    }
+    .aside-user-profile__user-email {
+      margin-bottom: 12px;
+      font-weight: 400;
+      @include color-c8adff;
+    }
+    .aside-user-profile__user-lv {
+      @include color-5500ff;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.chat-main-wrap {
+	border: 1px solid rgba(255, 255, 255);
+	width: 352px;
+	height: 293px;
+	margin: auto;
+	margin-top: 10%;
+	margin-bottom: 10%;
+
+	box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
+	// filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.5));
+}
+
+.chat-main-title {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 32px;
+	margin-left: 139px;
+}
+
+.chat-main-content-input {
+	width: 320px;
+	height: 36px;
+	margin-top: 40px;
+	margin-left: 16px;
+}
+
+.chat-main-content-select {
+	width: 320px;
+	height: 36px;
+	margin-top: 24px;
+	margin-left: 16px;
+}
+
+.chat-main-button {
+	  width: 320px;
+	  height: 36px;
+		margin-top: 32px;
+	  margin-left: 16px;
+    display:flex;
+		justify-content: space-between;
+
+		button{
+			width: 125px;
+			height: 36px;
+		}
+}

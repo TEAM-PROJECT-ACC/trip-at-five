@@ -1,0 +1,101 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.sign-wrap {
+	width: 500px;
+	margin: 402px 402px 403px 402px;
+	border: 1px solid rgba(255, 255, 255);
+	box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
+
+	.sign-wrap-up {
+		width: 100%;
+		// height: 50%;
+	}
+
+	.sign-wrap-down {
+		width: 100%;
+		// height: 50%;
+	}
+}
+
+/* 회원가입 wrap 부분의 크기 조절 */
+
+.sign-email {
+	height: 413px;
+}
+.sign-email-code {
+	height: 497px;
+}
+
+.sign-password {
+	height: 497px;
+}
+
+.sign-nickName {
+	height: 433px;
+}
+
+.sign-tel {
+	height: 433px;
+}
+
+.sign-address {
+	height: 621px;
+}
+.sign-compelet {
+	height: 348px;
+}
+
+/* 회원가입 내 상/하단 div 크기 비율 조절*/
+
+// 이메일
+.sign-wrap-up-email {
+	height: 50%;
+}
+
+.sign-wrap-down-email {
+	height: 50%;
+}
+
+// 이메일인증코드
+.sign-wrap-up-emailCode {
+	height: 45%;
+}
+
+.sign-wrap-down-emailCode {
+	height: 55%;
+}
+
+//  비밀번호
+.sign-wrap-up-pwd {
+	height: 40%;
+}
+
+.sign-wrap-down-pwdCode {
+	height: 60%;
+}
+
+// 닉네임
+.sign-wrap-up-nickName {
+	height: 50%;
+}
+
+.sign-wrap-down-nickName {
+	height: 50%;
+}
+
+.sign-wrap-up-tel {
+	height: 50%;
+}
+
+.sign-wrap-down-tel {
+	height: 50%;
+}
+
+// 주소
+.sign-wrap-up-address {
+	height: 35%;
+}
+
+.sign-wrap-down-ddress {
+	height: 65%;
+}
