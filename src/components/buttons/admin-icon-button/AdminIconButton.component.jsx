@@ -3,11 +3,9 @@ import './AdminIconButton.style.scss';
 
 const AdminIconButton = ({ onClick, children }) => {
   return (
-    <div>
-      <button className='icon-button' onClick={onClick}>
-        {children}
-      </button>
-    </div>
+    <button className='icon-button' onClick={onClick}>
+      {children}
+    </button>
   );
 };
 
