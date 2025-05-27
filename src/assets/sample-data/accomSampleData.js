@@ -21,7 +21,7 @@ export const accomData = {
           room_count: 5,
         },
         {
-          room_sq: 2,
+          room_sq: 2,     
           room_name: '프리미엄 스위트',
           room_price: 250000,
           max_person: 4,

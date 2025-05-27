@@ -80,3 +80,6 @@ export {
   MdHouse,
   MdOutlineFoodBank,
 };
+
+import { GrCart } from 'react-icons/gr';
+export { GrCart };

@@ -10,14 +10,17 @@
     object-fit: cover;
     background-size: cover;
   }
-
+  .accom-info:hover{
+    background-color: #eeeeee;
+  }
   .accom-info {
     width: 480px;
     height: 240px;
     margin-left: 20px;
-    padding: 15px 20px;
+    padding: 25px;
     border-radius: 8px;
     box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
+    cursor: pointer;
     @include background-f6f6f6;
 
     .level-one {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './roomList.style.scss';
+//import './roomList.style.scss';
 
 const AccommodationHeader = ({ name, location, basePrice }) => {
   return (
