@@ -1,0 +1,11 @@
+.reservation-person-info-form-area__container,
+.email-form-area__container {
+  width: 50%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  h1 {
+    margin-bottom: 1rem;
+  }
+}

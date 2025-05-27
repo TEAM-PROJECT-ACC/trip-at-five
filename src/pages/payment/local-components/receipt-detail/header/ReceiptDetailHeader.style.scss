@@ -1,0 +1,14 @@
+.receipt-detail-header-item {
+  width: 100%;
+  padding: 1rem;
+  // @include receipt-border-bottom;
+
+  border-bottom: 0.3rem dashed $color-c8adff;
+  & > h3:first-child {
+    margin-bottom: 1.5rem;
+  }
+
+  & > h3 {
+    font-weight: normal;
+  }
+}

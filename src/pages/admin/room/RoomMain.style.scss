@@ -1,0 +1,11 @@
+.room-main__container {
+  width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .room-main-header {
+    @include color-1e2022;
+  }
+}

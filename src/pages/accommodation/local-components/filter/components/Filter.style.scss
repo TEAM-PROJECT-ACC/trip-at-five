@@ -1,0 +1,39 @@
+.filter-group {
+  margin-left: 30px;
+
+  .title {
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  .slider-style-length {
+    margin-right: 35px;
+    margin-bottom: 10px;
+  }
+  .sub-title {
+    margin-bottom: 10px;
+    margin-top: 5px;
+  }
+  .filter-btn {
+    border: 1px solid #5500ff;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    @include color-5500ff;
+
+    &:hover {
+      @include color-fafafa;
+      @include background-c8adff;
+    }
+
+    &.selected {
+      box-shadow: 2px 2px 3px 0px #555555;
+      @include background-5500ff;
+      @include color-ffffff;
+    }
+  }
+  p.price-range {
+    @include color-888888;
+  }
+}

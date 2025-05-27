@@ -1,0 +1,41 @@
+.accom-form__container {
+  width: 1280px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  @include color-aaaab3;
+  @include background-f6f6f6;
+
+  .accom-reg-date {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    align-items: baseline;
+
+    .accom-date {
+      font-size: 22px;
+      font-weight: 900;
+      margin-right: 8px;
+      @include color-1e2022;
+    }
+  }
+}
+
+// TODO : 애니메이션 적용하기
+@keyframes word-warning {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
