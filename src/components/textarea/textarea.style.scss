@@ -1,0 +1,14 @@
+.global-textarea {
+  display: block;
+  width: 100%;
+  resize: none;
+  padding: 12px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 16px;
+  @include border-b8b8b8;
+
+  &::placeholder {
+    @include color-b8b8b8;
+  }
+}
