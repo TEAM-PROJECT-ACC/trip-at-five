@@ -2,6 +2,6 @@
   width: 100%;
   max-width: 1280px;
   height: auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 78px - 220px);
   margin: 0 auto;
 }

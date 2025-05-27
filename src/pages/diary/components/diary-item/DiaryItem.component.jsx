@@ -1,24 +1,22 @@
-import { useState } from 'react';
 import { diaryCover } from '../../../../assets/images/index';
-import './diaryItem.style.scss';
-import { DiaryModal } from '../modal/DiaryModal.component';
+import { Modal } from '../../../../components';
 import { useModal } from '../../../../hooks';
+import { DiaryModal } from '../modal/DiaryModal.component';
+import './diaryItem.style.scss';
 
 export const DiaryItem = ({ diary }) => {
-  // const [isOpen, setIsOpen] = useState(() => false);
-  const { handleModalPortals } = useModal();
+  const { isModalOpen, handleModalOpen } = useModal();
 
   const handleClick = () => {
     // item click 시 애니메이션 적용 후 모달 열기
     // setIsOpen((prev) => !prev);
-    handleModalPortals(DiaryModal);
   };
 
   return (
     <>
       <article
         className='diary-item__container'
-        onClick={handleClick}
+        onClick={handleModalOpen}
       >
         <img
           className='diary-item__cover-img'
@@ -34,7 +32,14 @@ export const DiaryItem = ({ diary }) => {
         {/* 날짜 */}
         <div className='diary-item__date diary-text'>2025/05/26</div>
       </article>
-      {/* {isOpen && <DiaryModal onClose={handleClick} />} */}
+      {isModalOpen && (
+        <Modal modalHandler={handleModalOpen}>
+          <DiaryModal
+            diary={diary}
+            isReadOnly
+          />
+        </Modal>
+      )}
     </>
   );
 };

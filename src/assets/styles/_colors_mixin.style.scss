@@ -48,7 +48,11 @@
     color: $color-a9813d;
   }
 }
-
+@mixin border-b8b8b8 {
+  & {
+    border-color: $color-b8b8b8;
+  }
+}
 @mixin border-5500ff {
   & {
     border-color: $color-5500ff;

@@ -1,16 +1,14 @@
-import { createPortal } from 'react-dom';
+import { useState } from 'react';
 
 export const useModal = () => {
-  // const [isOpen, setIsOpen] = useState(() => false);
+  const [isModalOpen, setIsModalOpen] = useState(() => false);
 
-  const handleModalPortals = (modalComponent) => {
-    const modalContainer = document.getElementById('modal-container');
-    console.log(modalContainer);
-
-    return createPortal(modalComponent, modalContainer);
+  const handleModalOpen = () => {
+    setIsModalOpen((prev) => !prev);
   };
 
   return {
-    handleModalPortals,
+    isModalOpen,
+    handleModalOpen,
   };
 };
