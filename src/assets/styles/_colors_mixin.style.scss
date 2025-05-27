@@ -180,3 +180,43 @@
     color: $color-888888;
   }
 }
+
+// 관리자 input shadow
+@mixin admin-input-shadow {
+  & {
+    box-shadow: inset 8px 8px 8px $color-b8b8b8, inset -8px -8px 8px $color-ffffff;
+  }
+}
+
+@mixin border-bottom-aaaab3 {
+  & {
+    padding-bottom: 16px;
+    border-bottom: 1px solid $color-aaaab3;
+  }
+}
+
+@mixin admin-fac-button {
+  & {
+    border: 1px solid $color-e6e6e6;
+    background: $color-fafafa;
+    box-shadow: 6px 6px 12px $color-b8b8b8, -6px -6px 12px $color-ffffff;
+  }
+}
+
+@mixin admin-fac-button-active-shadow {
+  & {
+    color: $color-888888;
+    box-shadow: inset 4px 4px 12px $color-b8b8b8, inset -4px -4px 12px $color-ffffff;
+  }
+}
+
+// 관리자 영역 스타일
+@mixin admin-body {
+  & {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888, -0.1rem -0.1rem 0.1rem $color-ffffff;
+    padding: 1rem;
+    @include background-f6f6f6;
+  }
+}
