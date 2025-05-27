@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   z-index: 2000;
 
   .modal__inner {
