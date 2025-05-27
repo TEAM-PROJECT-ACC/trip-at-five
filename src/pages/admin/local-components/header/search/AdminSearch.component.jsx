@@ -4,7 +4,7 @@ import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.
 import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import { BsFillHouseAddFill } from '../../../../../assets/icons/index';
 import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-const AdminSearch = ({ className }) => {
+const AdminSearch = ({ className, placeholder, children }) => {
   const navigate = useNavigate();
 
   // 등록 페이지 이동 핸들러
@@ -18,10 +18,10 @@ const AdminSearch = ({ className }) => {
   return (
     <div className={className}>
       <div className='admin-search-area'>
-        <AdminInput className='admin-search' placeholder='숙박업소명 혹은 지역을 입력해주세요' />
+        <AdminInput className='admin-search' placeholder={placeholder} />
         <AdminPrimaryButton onClick={searchHandler}>검색</AdminPrimaryButton>
       </div>
-      <AdminIconButton onClick={registerPageHandler} children={<BsFillHouseAddFill />} />
+      {children}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import './RoomList.style.scss';
 import { accomData } from '../../../../../assets/sample-data/accomSampleData';
-
 import { BsFillHouseAddFill, FaEdit, MdDelete } from '../../../../../assets/icons/index';
 import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import { useNavigate } from 'react-router-dom';
@@ -44,6 +43,7 @@ const RoomList = ({ accomNo }) => {
                   <td className='t-body-item-col edit-button'>
                     <FaEdit />
                   </td>
+                  {/* 추후 삭제 여부 확인 모달창으로 변경 */}
                   <td className='t-body-item-col delete-button'>
                     <MdDelete />
                   </td>

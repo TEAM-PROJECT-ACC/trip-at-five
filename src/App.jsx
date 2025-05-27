@@ -13,8 +13,8 @@ import AccommodationFormContainer from './pages/admin/accom-reg-form/Accommodati
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
+import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
-
 function App() {
   // TODO : 규형님 로그인 상태 확인
   // 1. 비로그인 시 리디렉트 로그인 페이지로
@@ -86,8 +86,8 @@ function App() {
             {/* 객실등록/수정페이지 */}
             <Route path=':id/rooms' element={<RoomMain />} />
           </Route>
-          <Route path='reservations' />
-          <Route path='cancel/reservations' />
+          <Route path='reservations' element={<ReservationManagementList />} />
+          <Route path='cancel-reservations' />
         </Route>
 
         {/* error 컴포넌트 */}

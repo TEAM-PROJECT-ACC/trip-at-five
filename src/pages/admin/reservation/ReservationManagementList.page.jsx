@@ -1,29 +1,17 @@
-import './AdminMain.style.scss';
 import AdminHeader from '../local-components/header/AdminHeader.component';
 import AdminSearch from '../local-components/header/search/AdminSearch.component';
-import { useNavigate } from 'react-router-dom';
-import { BsFillHouseAddFill } from '../../../assets/icons/index';
-import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
+import './ReservationManagementList.style.scss';
 import { accomData } from '../../../assets/sample-data/accomSampleData';
 const dataList = accomData.accommodation_tb;
 
-const AdminMain = () => {
-  const navigate = useNavigate();
-
-  // 등록 페이지 이동 핸들러
-  const registerPageHandler = () => {
-    navigate('/admin/accommodations/new');
-  };
-  // 수정 페이지 이동 핸들러
-  const updatePageHandler = (accomNo) => {
-    navigate(`/admin/accommodations/${accomNo}/edit`);
+const ReservationManagementList = () => {
+  const detailPageHandler = () => {
+    console.log('예약상세페이지로 이동!');
   };
   return (
-    <div className='accom-list__container'>
-      <AdminHeader className='admin-main-header' title='숙박업소관리'>
-        <AdminSearch className='admin-search-area__container' placeholder={'숙박업소명 혹은 지역을 입력해주세요'}>
-          <AdminIconButton onClick={registerPageHandler} children={<BsFillHouseAddFill />} />
-        </AdminSearch>
+    <div className='reservation-management__container'>
+      <AdminHeader className='admin-main-header' title='예약관리'>
+        <AdminSearch className='admin-search-area__container' placeholder={'숙박업소명 혹은 지역을 입력해주세요'} />
       </AdminHeader>
       <div className='admin-main-body'>
         <table className='admin-table'>
@@ -38,7 +26,7 @@ const AdminMain = () => {
           </thead>
           <tbody className='admin-table-body'>
             {dataList.map((value, idx) => (
-              <tr key={idx} className='t-body-item' onClick={() => updatePageHandler(value.accom_sq)}>
+              <tr key={idx} className='t-body-item' onClick={() => detailPageHandler(value.accom_sq)}>
                 <td className='t-body-item-col'>{value.accom_type}</td>
                 <td className='t-body-item-col'>{value.accom_name}</td>
                 <td className='t-body-item-col'>{value.accom_location}</td>
@@ -54,4 +42,4 @@ const AdminMain = () => {
   );
 };
 
-export default AdminMain;
+export default ReservationManagementList;
