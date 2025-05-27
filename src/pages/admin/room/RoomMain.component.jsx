@@ -1,6 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 import './RoomMain.style.scss';
 import RoomRegForm from './local-components/RoomRegForm';
+import { useEffect } from 'react';
 const RoomMain = () => {
   /**
    * useParams로 숙박업소 Id 값 받아오기
@@ -10,6 +11,11 @@ const RoomMain = () => {
   const id = useParams();
   const accomNo = id.id;
   const { no } = location.state;
+
+  useEffect(() => {
+    console.log('accomNo : ' + accomNo);
+    console.log('no : ' + no);
+  }, []);
 
   return (
     <div className='room-main__container'>
