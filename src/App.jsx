@@ -14,7 +14,7 @@ import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
-
+import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 function App() {
   // TODO : 규형님 로그인 상태 확인
   // 1. 비로그인 시 리디렉트 로그인 페이지로
@@ -68,6 +68,10 @@ function App() {
         <Route path='/guest/reservations' element={<NonMemberReservation />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
+          <Route
+            path='/accommodations/detail'
+            element={<AccommodationDetail />}
+          />
         </Route>
         <Route path='/reservations' element={<Reservation />} />
         <Route path='/payments' element={<Receipt />} />

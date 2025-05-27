@@ -25,7 +25,7 @@ const AccommodationCard = ({ accom }) => {
     <li className='accommodation-item'>
       <div className='image'>
         <img
-          src='./src/assets/images/acc-list-page/hotel-img.png'
+          src='/src/assets/images/acc-list-page/hotel-img.png'
           alt='숙박시설 이미지'
         />
       </div>
