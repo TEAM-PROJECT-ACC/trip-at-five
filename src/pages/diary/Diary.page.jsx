@@ -14,6 +14,7 @@ export const DiaryPage = () => {
   return (
     <PageContainer className='diary-page__container'>
       <div className='diary-page__title-container'>
+        {/* 타이틀 폰트 변경 */}
         <div className='diary-page__title'>나의 일지</div>
         <ButtonPrimary
           className='diary-page__button'

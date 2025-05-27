@@ -5,7 +5,7 @@ import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constan
 import './App.css';
 import SignUp from './pages/sign/SignUp';
 import LoginPage from './pages/login/Login';
-import PwdRestting from './pages/login/login-pwd-resetting/Login.password.resetting.conponent';
+import PwdRestting from './pages/login/pwd-resetting/Login.password.resetting.conponent';
 import { Chat } from './pages/chat/Chat.main.conponent';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
@@ -20,10 +20,12 @@ import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
+import ChatRoom from './pages/chat/room/Chat.room.conponent';
 
 function App() {
   return (
     <>
+      {/* 관리자인 경우 삭제 */}
       <AppHeader />
 
       <Routes>
@@ -31,6 +33,8 @@ function App() {
           path='/test'
           element={<TestPage />}
         />
+        {/* path member로 변경 */}
+        {/* 복수형으로  */}
         <Route
           path='/user'
           element={<UserPage />}
@@ -136,7 +140,12 @@ function App() {
           />
           <Route path='cancel-reservations' />
         </Route>
+        <Route
+          path='/chat/room'
+          element={<ChatRoom />}
+        />
       </Routes>
+      {/* 관리자인 경우 삭제 */}
       <AppFooter />
     </>
   );

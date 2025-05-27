@@ -5,6 +5,7 @@ import './AdminLayout.style.scss';
 const AdminLayout = () => {
   return (
     <div className='admin-main__container'>
+      {/* 대시보드 */}
       <Outlet />
     </div>
   );
