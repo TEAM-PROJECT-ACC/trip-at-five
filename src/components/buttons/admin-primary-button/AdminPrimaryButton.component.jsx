@@ -4,7 +4,11 @@ import { classNames } from '../../../utils';
 
 const AdminPrimaryButton = ({ className, onClick, children, ...props }) => {
   return (
-    <button className={classNames('admin-button', className)} onClick={onClick} {...props}>
+    <button
+      className={classNames('admin-button', className)}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
   );
