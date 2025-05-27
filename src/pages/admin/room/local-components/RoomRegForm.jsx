@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './RoomRegForm.style.scss';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
@@ -31,7 +31,7 @@ const timeArray = [
   '23:00',
 ];
 
-const RoomRegForm = () => {
+const RoomRegForm = ({ accomId, roomId }) => {
   const [word, setWord] = useState('');
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
@@ -94,9 +94,14 @@ const RoomRegForm = () => {
     setCheckTime(false);
   };
 
+  // useEffect(() => {
+  //   console.log('객실 아이디 : ' + roomId);
+  // }, []);
+
   return (
     <form className='room-main-form__container' encType='multiple/form-data'>
-      <input type='hidden' name='accomNo' value={''} />
+      <input type='hidden' name='accomNo' value={accomId} />
+      <input type='hidden' name='roomSq' value={roomId} />
       <div className='room-main-form-left'>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실명</label>
@@ -158,7 +163,12 @@ const RoomRegForm = () => {
           <label className='admin-form-label'>객실 이미지 등록</label>
           <AdminInput type={'file'} multiple name='imageList' />
         </div>
-        <AdminPrimaryButton className='room-reg-button'>등록하기</AdminPrimaryButton>
+        {/* 각 버튼에 따라 다른 메서드 호출 */}
+        {accomId ? (
+          <AdminPrimaryButton className='room-reg-button'>수정하기</AdminPrimaryButton>
+        ) : (
+          <AdminPrimaryButton className='room-reg-button'>등록하기</AdminPrimaryButton>
+        )}
       </div>
     </form>
   );
