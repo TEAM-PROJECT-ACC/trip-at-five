@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './RoomRegForm.style.scss';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-import { Select } from '../../../../components';
 
 const timeArray = [
   '00:00',
@@ -94,9 +93,9 @@ const RoomRegForm = ({ accomId, roomId }) => {
     setCheckTime(false);
   };
 
-  // useEffect(() => {
-  //   console.log('객실 아이디 : ' + roomId);
-  // }, []);
+  useEffect(() => {
+    console.log('객실 아이디 : ' + roomId);
+  }, []);
 
   return (
     <form className='room-main-form__container' encType='multiple/form-data'>
@@ -164,11 +163,16 @@ const RoomRegForm = ({ accomId, roomId }) => {
           <AdminInput type={'file'} multiple name='imageList' />
         </div>
         {/* 각 버튼에 따라 다른 메서드 호출 */}
-        {accomId ? (
-          <AdminPrimaryButton className='room-reg-button'>수정하기</AdminPrimaryButton>
-        ) : (
-          <AdminPrimaryButton className='room-reg-button'>등록하기</AdminPrimaryButton>
-        )}
+        <div className='room-reg-button-group'>
+          {roomId ? (
+            <>
+              <AdminPrimaryButton className='room-reg-button'>수정</AdminPrimaryButton>
+              <AdminPrimaryButton className='room-reg-button'>삭제</AdminPrimaryButton>
+            </>
+          ) : (
+            <AdminPrimaryButton className='room-reg-button'>등록</AdminPrimaryButton>
+          )}
+        </div>
       </div>
     </form>
   );

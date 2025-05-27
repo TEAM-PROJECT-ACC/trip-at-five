@@ -3,7 +3,7 @@ import './RoomList.style.scss';
 import { accomData } from '../../../../../assets/sample-data/accomSampleData';
 import { BsFillHouseAddFill, FaEdit, MdDelete } from '../../../../../assets/icons/index';
 import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AdminHeader from '../../../local-components/header/AdminHeader.component';
 import AdminSearch from '../../../local-components/header/search/AdminSearch.component';
 import AdminManagementList from '../../../local-components/list/AdminManagementList.component';
@@ -19,13 +19,15 @@ const roomColumnList = [
 ];
 
 const RoomList = () => {
+  const params = useParams();
   const navigate = useNavigate();
+  const accomNo = params.id;
 
   // 객실 등록 페이지 이동 핸들러
-  const roomFormPageHandler = (no, accomNo) => {
+  const roomFormPageHandler = (no) => {
     console.log(no);
     console.log(accomNo);
-    navigate(`/admin/accommodations/${accomNo ? accomNo : no}/rooms`, { state: { no } });
+    navigate(`/admin/accommodations/${accomNo}/rooms`, { state: { no } });
   };
 
   return (
