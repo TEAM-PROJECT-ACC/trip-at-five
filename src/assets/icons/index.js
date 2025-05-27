@@ -15,6 +15,9 @@ import {
   FaFill,
   FaEdit,
   FaCalendar,
+  FaCalendarAlt,
+  FaCalendarTimes,
+  FaHotel,
 } from 'react-icons/fa';
 import {
   MdOutlineArrowDropDown,
@@ -22,6 +25,7 @@ import {
   MdArrowForwardIos,
   MdDocumentScanner,
   MdClose,
+  MdContactSupport,
 } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { IoCart } from 'react-icons/io5';
@@ -54,13 +58,17 @@ export {
   FaRegUser,
   FaFireAlt,
   FaCalendar,
+  FaCalendarAlt,
+  FaCalendarTimes,
   FaInfoCircle,
   FaStar,
   FaPlus,
   FaFill,
   FaEdit,
+  FaHotel,
   MdDelete,
   MdArrowForwardIos,
   MdDocumentScanner,
   MdClose,
+  MdContactSupport,
 };
