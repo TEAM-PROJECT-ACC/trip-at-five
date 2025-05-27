@@ -76,11 +76,11 @@ const AccommodationForm = () => {
   // 글자 수 세기
   const checkWordCountHandler = (e) => {
     // console.log(e.target.value);
-    let word = e.target.value;
+    let value = e.target.value;
 
-    if (word.length <= 1330) {
-      setWord(word);
-      setWordCount(word.length);
+    if (value.length <= 1330) {
+      setWord(value);
+      setWordCount(value.length);
     }
   };
   const [facList, setFacList] = useState({

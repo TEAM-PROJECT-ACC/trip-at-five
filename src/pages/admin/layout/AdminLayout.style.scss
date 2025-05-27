@@ -1,0 +1,8 @@
+.admin-main__container {
+  width: 1280px;
+  min-height: 100vh;
+  padding: 32px 0;
+  margin: 0 auto;
+  @include color-aaaab3;
+  @include background-f6f6f6;
+}

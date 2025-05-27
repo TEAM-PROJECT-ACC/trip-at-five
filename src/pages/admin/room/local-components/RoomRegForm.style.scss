@@ -1,0 +1,64 @@
+.room-main-form__container {
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+
+  .room-main-form-left,
+  .room-main-form-right {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .room-main-form-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+
+    .input-group {
+      display: flex;
+      gap: 16px;
+
+      .group-item {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .chk-select {
+          position: relative;
+          width: 100%;
+          font-size: 16px;
+          padding: 8px;
+          border: none;
+          outline: none;
+          border-radius: 10px;
+          text-align: center;
+
+          -o-appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+
+          @include admin-input-shadow;
+        }
+      }
+    }
+
+    .admin-form-label {
+      font-size: 24px;
+      font-weight: 900;
+      @include color-1e2022;
+    }
+  }
+
+  .room-main-form-right {
+    .room-reg-button {
+      width: 30%;
+      align-self: flex-end;
+    }
+  }
+}

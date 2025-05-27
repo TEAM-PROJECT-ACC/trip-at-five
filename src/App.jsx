@@ -9,10 +9,10 @@ import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
-import AdminMain from './pages/admin/AdminMain.page';
 import AccommodationFormContainer from './pages/admin/accom-reg-form/AccommodationFormContainer.page';
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
+import AdminMain from './pages/admin/main/AdminMain.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
