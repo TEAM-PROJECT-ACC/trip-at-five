@@ -1,0 +1,39 @@
+.diary-item__container {
+  position: relative;
+  text-align: center;
+  flex-direction: column;
+  padding-top: 140%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 1px 1px 12px 4px $color-a9813d;
+  cursor: pointer;
+
+  .diary-item__cover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .diary-text {
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    word-break: break-all;
+    font-family: EF_jejudoldam, SUIT-Regular;
+    @include color-a9813d;
+  }
+  .diary-item__title {
+    position: absolute;
+    top: 125px;
+    .diary-item__title-inner {
+      display: inline-block;
+      width: 74%;
+    }
+  }
+  .diary-item__date {
+    position: absolute;
+    bottom: 72px;
+    font-size: 12px;
+  }
+}

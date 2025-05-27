@@ -34,6 +34,7 @@ const timeArray = [
 const RoomRegForm = () => {
   const [word, setWord] = useState('');
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
+  const [checkTime, setCheckTime] = useState(false);
 
   const checkInRef = useRef();
   const checkOutRef = useRef();
@@ -54,42 +55,43 @@ const RoomRegForm = () => {
     return hours;
   };
 
+  // 체크인/아웃 시간 설정
+  const setTimeFunc = (checkTime) => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1); // 내일 날짜
+
+    const [checkHour, checkMin] = timeChangeMinute(checkTime);
+    const checkDate = new Date(today);
+    checkDate.setHours(checkHour, checkMin, 0, 0);
+
+    return checkDate;
+  };
+
   // 체크인/아웃 시간차 21시간 이하 유효성 검사 핸들러
   const checkTimeHandler = () => {
     const checkIn = checkInRef.current.value;
     const checkOut = checkOutRef.current.value;
-
-    console.log('CheckIn:', checkIn);
-    console.log('CheckOut:', checkOut);
 
     // 오늘날짜와 내일 날짜를 구한다.
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1); // 내일 날짜
 
-    // 각각 시간을 입력받은 ref 값으로 설정한다
-    // 체크인 시간 설정
-    const [checkInHour, checkInMin] = timeChangeMinute();
-    const checkInDate = new Date(today);
-    checkInDate.setHours(checkInHour, checkInMin, 0, 0);
-
-    // 체크아웃 시간 설정
-    const [checkOutHour, checkOutMin] = checkOut.split(':').map(Number);
-    const checkOutDate = new Date(tomorrow);
-    checkOutDate.setHours(checkOutHour, checkOutMin, 0, 0);
+    const checkInDate = setTimeFunc(checkIn);
+    const checkOutDate = setTimeFunc(checkOut);
 
     // 두 시간 차이 계산 (밀리초 → 시간으로 변환)
     const diffMs = checkOutDate - checkInDate;
     const diffHours = diffMs / (1000 * 60 * 60);
 
-    console.log('시간 차이:', diffHours, '시간');
-
     // 유효성 검사
-    if (diffHours > 21) {
-      console.log('체크인과 체크아웃 시간 차이가 21시간을 초과합니다.');
-    } else {
-      console.log('체크인/아웃 시간이 유효합니다.');
+    if (diffHours > 21 || diffHours < 8) {
+      setCheckTime(!checkTime);
+      return;
     }
+
+    setCheckTime(false);
   };
 
   return (
@@ -99,6 +101,7 @@ const RoomRegForm = () => {
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실명</label>
           <AdminInput type={'text'} name='roomName' value={word} onChange={roomNameWordCountHandler} />
+          {roomNameWordCount >= 18 && <span className='check-warning'>글자 수는 최대 18자 입니다. (현재 18자)</span>}
         </div>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>가격 설정</label>
@@ -148,6 +151,8 @@ const RoomRegForm = () => {
               </select>
             </div>
           </div>
+
+          {checkTime && <span className='check-warning'>입/퇴실 시간을 다시 설정해주세요</span>}
         </div>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실 이미지 등록</label>

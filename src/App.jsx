@@ -1,7 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import { TestPage } from './pages/test/Test.page';
+import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
+import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import './App.css';
+import SignUp from './pages/sign/SignUp';
+import LoginPage from './pages/login/Login';
+import PwdRestting from './pages/login/pwd-resetting/Login.password.resetting.conponent';
+import { Chat } from './pages/chat/Chat.main.conponent';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
 import { useEffect, useState } from 'react';
@@ -10,6 +15,9 @@ import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
 import AccommodationFormContainer from './pages/admin/accom-reg-form/AccommodationFormContainer.page';
+import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
+import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
+import ChatRoom from './pages/chat/room/Chat.room.conponent';
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
@@ -17,7 +25,7 @@ import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
-  const [isAdmin, setIsAdmin] = useState(() => true);
+  const [isAdmin, setIsAdmin] = useState(() => false);
 
   return (
     <>
@@ -27,6 +35,50 @@ function App() {
         <Route
           path='/test'
           element={<TestPage />}
+        />
+        {/* path member로 변경 */}
+        {/* 복수형으로  */}
+        <Route
+          path='/user'
+          element={<UserPage />}
+        >
+          {USER_ROUTE.map((route, idx) => {
+            return (
+              <Route
+                key={idx}
+                index={route.index}
+                path={route.path}
+                element={<route.element className={route.className} />}
+              />
+            );
+          })}
+        </Route>
+        <Route
+          path='/diary'
+          element={<DiaryPage />}
+        />
+        {/* 로그인 부분 */}
+        <Route
+          path='/login'
+          element={<LoginPage />}
+        ></Route>
+
+        {/* 회원가입 */}
+        <Route
+          path='/signUp'
+          element={<SignUp />}
+        />
+
+        {/* 비밀번호 재설정 */}
+        <Route
+          path='/resetting'
+          element={<PwdRestting />}
+        />
+
+        {/* 채팅 */}
+        <Route
+          path='/chat'
+          element={<Chat />}
         />
 
         <Route
@@ -45,6 +97,10 @@ function App() {
           <Route
             index
             element={<AccommodationList />}
+          />
+          <Route
+            path='/accommodations/detail'
+            element={<AccommodationDetail />}
           />
         </Route>
         <Route
@@ -86,11 +142,16 @@ function App() {
               element={<RoomMain />}
             />
           </Route>
-          <Route path='reservations' />
+          <Route
+            path='reservations'
+            element={<ReservationManagementList />}
+          />
           <Route path='cancel-reservations' />
         </Route>
-
-        {/* error 컴포넌트 */}
+        <Route
+          path='/chat/room'
+          element={<ChatRoom />}
+        />
       </Routes>
       {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
       {!isAdmin && <AppFooter />}

@@ -1,0 +1,18 @@
+.user-page.info__input-container {
+  display: flex;
+  align-items: center;
+
+  .info__input {
+    width: 51.88%;
+    font-size: 16px;
+  }
+
+  .info__input-btn-container {
+    display: flex;
+    align-items: center;
+    .input__button {
+      padding: 8px 16px;
+      margin-left: 10px;
+    }
+  }
+}

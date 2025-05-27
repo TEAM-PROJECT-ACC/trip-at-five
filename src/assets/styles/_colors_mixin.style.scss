@@ -43,6 +43,22 @@
   }
 }
 
+@mixin color-e6e6e6 {
+  & {
+    color: $color-e6e6e6;
+  }
+}
+
+@mixin color-a9813d {
+  & {
+    color: $color-a9813d;
+  }
+}
+@mixin border-b8b8b8 {
+  & {
+    border-color: $color-b8b8b8;
+  }
+}
 @mixin border-5500ff {
   & {
     border-color: $color-5500ff;
@@ -121,6 +137,17 @@
   }
 }
 
+@mixin background-b8b8b8 {
+  & {
+    background: $color-b8b8b8;
+  }
+}
+
+@mixin background-e6e6e6 {
+  & {
+    background: $color-e6e6e6;
+  }
+}
 // @mixin receipt-border-bottom {
 //   & {
 //     border-bottom: 0.3rem dashed $color-c8adff;

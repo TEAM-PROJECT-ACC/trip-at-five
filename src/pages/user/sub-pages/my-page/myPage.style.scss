@@ -1,0 +1,14 @@
+.user-page {
+  .my-page__container {
+    .my-page-section {
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 12px 12px 28px;
+      @include border-c8adff;
+
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}

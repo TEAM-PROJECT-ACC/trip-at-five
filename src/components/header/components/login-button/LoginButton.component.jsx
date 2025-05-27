@@ -16,7 +16,6 @@ export const LoginButton = ({ className }) => {
 	};
 
 	// TODO: 로그인/회원가입 페이지 이동 기능 구현
-
 	return (
 		<Button
 			className={classNames(
@@ -31,12 +30,14 @@ export const LoginButton = ({ className }) => {
 					'global-header__login-button-inner',
 					isHover ? 'hover' : ''
 				)}>
+
 				{isHover ? (
 					'로그인/회원가입'
 				) : (
 					<FaUser className='login-button__icon' />
-				)}
-			</span>
+				)}	
+			</span>			
 		</Button>
+
 	);
 };

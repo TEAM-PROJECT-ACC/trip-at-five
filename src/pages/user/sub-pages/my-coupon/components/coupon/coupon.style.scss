@@ -1,0 +1,30 @@
+.user-page.coupon__container {
+  border-radius: 8px;
+  border: 3px solid;
+  @include border-c8adff;
+
+  .coupon__name {
+    padding: 12px;
+    font-weight: 600;
+    @include color-5500ff;
+    @include background-c8adff;
+  }
+  .coupon__info-container {
+    padding: 14px 12px;
+    .coupon__date {
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+    .coupon__price {
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+    .coupon__btn-container {
+      display: flex;
+      justify-content: flex-end;
+      .coupon__button {
+        padding: 8px 12px;
+      }
+    }
+  }
+}

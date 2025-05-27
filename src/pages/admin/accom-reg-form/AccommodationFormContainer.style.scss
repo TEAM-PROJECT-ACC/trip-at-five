@@ -1,7 +1,8 @@
 .accom-form__container {
-  width: 100%;
+  width: 1280px;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   @include color-aaaab3;
   @include background-f6f6f6;
 
@@ -14,8 +15,8 @@
     .accom-date {
       font-size: 22px;
       font-weight: 900;
-      @include color-1e2022;
       margin-right: 8px;
+      @include color-1e2022;
     }
   }
 }
