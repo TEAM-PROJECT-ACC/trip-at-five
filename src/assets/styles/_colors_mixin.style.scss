@@ -37,6 +37,22 @@
   }
 }
 
+@mixin color-e6e6e6 {
+  & {
+    color: $color-e6e6e6;
+  }
+}
+
+@mixin color-a9813d {
+  & {
+    color: $color-a9813d;
+  }
+}
+@mixin border-b8b8b8 {
+  & {
+    border-color: $color-b8b8b8;
+  }
+}
 @mixin border-5500ff {
   & {
     border-color: $color-5500ff;
@@ -115,6 +131,17 @@
   }
 }
 
+@mixin background-b8b8b8 {
+  & {
+    background: $color-b8b8b8;
+  }
+}
+
+@mixin background-e6e6e6 {
+  & {
+    background: $color-e6e6e6;
+  }
+}
 // @mixin receipt-border-bottom {
 //   & {
 //     border-bottom: 0.3rem dashed $color-c8adff;
@@ -184,7 +211,8 @@
 // 관리자 input shadow
 @mixin admin-input-shadow {
   & {
-    box-shadow: inset 8px 8px 8px $color-b8b8b8, inset -8px -8px 8px $color-ffffff;
+    box-shadow: inset 8px 8px 8px $color-b8b8b8,
+      inset -8px -8px 8px $color-ffffff;
   }
 }
 
@@ -206,7 +234,8 @@
 @mixin admin-fac-button-active-shadow {
   & {
     color: $color-888888;
-    box-shadow: inset 4px 4px 12px $color-b8b8b8, inset -4px -4px 12px $color-ffffff;
+    box-shadow: inset 4px 4px 12px $color-b8b8b8,
+      inset -4px -4px 12px $color-ffffff;
   }
 }
 
@@ -215,7 +244,8 @@
   & {
     width: 100%;
     border-radius: 1rem;
-    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888, -0.1rem -0.1rem 0.1rem $color-ffffff;
+    box-shadow: 0.1rem 0.1rem 0.3rem $color-888888,
+      -0.1rem -0.1rem 0.1rem $color-ffffff;
     padding: 1rem;
     @include background-f6f6f6;
   }
