@@ -5,8 +5,10 @@ import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constan
 import './App.css';
 import SignUp from './pages/sign/SignUp';
 import LoginPage from './pages/login/Login';
-import PwdRestting from './pages/login/login-pwd-resetting/Login.password.resetting.conponent';
+import PwdRestting from './pages/login/pwd-resetting/Login.password.resetting.conponent';
 import { Chat } from './pages/chat/Chat.main.conponent';
+import ChatRoom from './pages/chat/room/Chat.room.conponent';
+
 
 function App() {
 	return (
@@ -56,6 +58,11 @@ function App() {
 				<Route
 					path='/chat'
 					element={<Chat />}
+				/>
+
+				<Route
+					path='/chat/room'
+					element={<ChatRoom />}
 				/>
 
 			</Routes>
