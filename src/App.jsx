@@ -96,7 +96,7 @@ function App() {
             element={<AccommodationList />}
           />
           <Route
-            path='/accommodations/detail'
+            path=':id'
             element={<AccommodationDetail />}
           />
         </Route>

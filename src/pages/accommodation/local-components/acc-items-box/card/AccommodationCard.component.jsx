@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FaBed,
   FaHotel,
@@ -19,10 +20,14 @@ const typeIconMap = {
 };
 
 const AccommodationCard = ({ accom }) => {
+  const nav = useNavigate();
   const TypeIcon = typeIconMap[accom.type];
 
+  const handleNav = () => {
+    nav(`/accommodations/${accom.id}`);
+  }
   return (
-    <li className='accommodation-item'>
+    <li className='accommodation-item' onClick={handleNav}>
       <div className='image'>
         <img
           src='/src/assets/images/acc-list-page/hotel-img.png'
