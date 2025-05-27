@@ -13,6 +13,7 @@ import AccommodationFormContainer from './pages/admin/accom-reg-form/Accommodati
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
+import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
 function App() {
   // TODO : 규형님 로그인 상태 확인
@@ -73,6 +74,8 @@ function App() {
 
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
         <Route path='/admin' element={<AdminLayout />}>
+          {/* 사용자 문의 */}
+          <Route path='contact' element={<AdminContactPage />} />
           <Route path='accommodations'>
             <Route index element={<AdminMain />} />
             {/* 숙박등록/수정페이지 */}
