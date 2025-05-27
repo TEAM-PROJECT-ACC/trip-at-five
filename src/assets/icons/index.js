@@ -16,6 +16,7 @@ import {
   MdOutlineArrowDropDown,
   MdArrowForwardIos,
   MdDocumentScanner,
+  MdClose,
 } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -34,5 +35,10 @@ export {
   FaFireAlt,
 };
 
-export { MdOutlineArrowDropDown, MdArrowForwardIos, MdDocumentScanner };
+export {
+  MdOutlineArrowDropDown,
+  MdArrowForwardIos,
+  MdDocumentScanner,
+  MdClose,
+};
 export { FcGoogle };
