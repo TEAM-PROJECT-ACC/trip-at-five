@@ -29,8 +29,8 @@ export function EmailAuth() {
 		<div className='pwd-resetting-content-wrap'>
 
 			<ResettingInput
-				text_className={'pwd-resetting-text'}
-				input_className={'pwd-resetting-input'}
+				TclassName={'pwd-resetting-email-text'}
+				IclassName={'pwd-resetting-email-input'}
 				text={'이메일'}
 				placeholder={'이메일을 입력해주세요'}
 				onChange={(e) => {
@@ -40,7 +40,8 @@ export function EmailAuth() {
 			{isSend && (
 				<>
 					<ResettingInput
-						className={'pwd-resetting-code-input'}
+						TclassName={'pwd-resetting-email-code-text'}
+				    IclassName={'pwd-resetting-email-code-input'}
 						type={'email'}
 						text={'인증코드'}
 						placeholder={'인증코드를 입력해주세요'}

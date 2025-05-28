@@ -17,7 +17,7 @@ import NonMemberReservation from './pages/non-member-reservation/NonMemberReserv
 import AccommodationFormContainer from './pages/admin/accom-reg-form/AccommodationFormContainer.page';
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
-import ChatRoom from './pages/chat/room/Chat.room.conponent';
+import ChatRoom from './pages/chat/room/Chat.room.component';
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';

@@ -1,20 +1,26 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
 .pwd-resetting-content-wrap {
-	padding: 10% 0%;
-
-	.pwd-resetting-text {
-		font-size: 32px;
-		
-	}
-	.pwd-resetting-input {
-		width: 340px;
-	}
+	padding-bottom: 10%;
 
 
-	.pwd-resetting-code-input {
-		width: 340px;
+	.pwd-resetting-email-text {
 		font-size: 16px;
+		margin-bottom: 8px ;
+	}
+
+	.pwd-resetting-email-input {
+		width: 340px;
+		margin-bottom: 20px ;
+	}
+
+	.pwd-resetting-email-code-text {
+		font-size: 16px;
+		margin-bottom: 8px ;
+	}
+
+	.pwd-resetting-email-code-input {
+		width: 340px;
 	}
 
 	.pwd-resetting-receive {

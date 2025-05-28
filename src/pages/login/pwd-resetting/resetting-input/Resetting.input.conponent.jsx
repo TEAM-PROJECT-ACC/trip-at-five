@@ -2,8 +2,8 @@ import { InputPrimary } from '../../../../components';
 import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
 
 export function ResettingInput({
-	text_className,
-	input_className,
+	TclassName,
+	IclassName,
 	text,
 	placeholder,
 	onChange,
@@ -12,11 +12,11 @@ export function ResettingInput({
 	return (
 		<>
 			<ResttingTitle
-				className={text_className}
+				className={TclassName}
 				text={text}
 			/>
 			<InputPrimary
-			  className={input_className}
+			  className={IclassName}
 				type={type}
 				placeholder={placeholder}
 				onChange={onChange}

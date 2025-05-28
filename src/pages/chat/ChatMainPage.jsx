@@ -6,11 +6,11 @@ import {
 	Select,
 } from '../../components';
 import { ChatTitle } from './chat-title/Chat.title.conponent';
-import './chat.main.conponent.scss';
+import './chatMainPage.scss';
 
 export function Chat() {
 	return (
-		<PageContainer>
+		<PageContainer className={'chat-container'}>
 			<div className='chat-main-wrap'>
 				<ChatTitle
 					className={'chat-main-title'}
@@ -27,8 +27,8 @@ export function Chat() {
 				/>
 
 				<div className='chat-main-button'>
-					<ButtonSecondary>취소</ButtonSecondary>
-					<ButtonPrimary>문의하기</ButtonPrimary>
+					<ButtonSecondary className={'chat-send'}>취소</ButtonSecondary>
+					<ButtonPrimary className={'chat-cancle'}>문의하기</ButtonPrimary>
 				</div>
 			</div>
 		</PageContainer>
