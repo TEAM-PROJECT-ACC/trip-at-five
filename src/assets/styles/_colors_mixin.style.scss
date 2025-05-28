@@ -256,3 +256,15 @@
     @include background-f6f6f6;
   }
 }
+
+@mixin admin-reservation-modal-border-right {
+  & {
+    border-right: 1px solid $color-ff4545;
+  }
+}
+
+@mixin color-ff4545 {
+  & {
+    color: $color-ff4545;
+  }
+}

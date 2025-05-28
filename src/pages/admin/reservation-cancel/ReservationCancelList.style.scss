@@ -8,3 +8,52 @@
     margin-bottom: 1rem;
   }
 }
+
+.reservation-cancel-modal {
+  width: 500px;
+
+  .reservation-cancel-header {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 8px;
+    .res-code {
+      @include color-ff4545;
+    }
+  }
+
+  .reservation-cancel-body {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.7fr 2fr;
+    padding: 8px;
+    margin-bottom: 16px;
+
+    .reservation-cancel-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 8px;
+    }
+
+    .reservation-cancel-item:nth-child(1) {
+      @include admin-reservation-modal-border-right;
+    }
+
+    .reservation-cancel-item:nth-child(2) {
+      text-align: center;
+    }
+  }
+
+  .reservation-cancel-button {
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 28px;
+    font-weight: 900;
+    @include color-ffffff;
+    @include background-ff4545;
+  }
+}
