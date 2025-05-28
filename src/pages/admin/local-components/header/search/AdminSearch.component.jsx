@@ -18,7 +18,10 @@ const AdminSearch = ({ className, placeholder, children }) => {
   return (
     <div className={className}>
       <div className='admin-search-area'>
-        <AdminInput className='admin-search' placeholder={placeholder} />
+        <AdminInput
+          className='admin-search'
+          placeholder={placeholder}
+        />
         <AdminPrimaryButton onClick={searchHandler}>검색</AdminPrimaryButton>
       </div>
       {children}

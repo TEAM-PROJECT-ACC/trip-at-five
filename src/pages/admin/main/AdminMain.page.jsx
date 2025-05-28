@@ -32,12 +32,25 @@ const AdminMain = () => {
 
   return (
     <div className='accom-list__container'>
-      <AdminHeader className='admin-main-header' title='숙박업소관리'>
-        <AdminSearch className='admin-search-area__container' placeholder={'숙박업소명 혹은 지역을 입력해주세요'}>
-          <AdminIconButton onClick={registerPageHandler} children={<BsFillHouseAddFill />} />
+      <AdminHeader
+        className='admin-main-header'
+        title='숙박업소관리'
+      >
+        <AdminSearch
+          className='admin-search-area__container'
+          placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
+        >
+          <AdminIconButton
+            onClick={registerPageHandler}
+            children={<BsFillHouseAddFill />}
+          />
         </AdminSearch>
       </AdminHeader>
-      <AdminManagementList columnList={accomColumnList} dataList={dataList} onClickRow={detailPageHandler} />
+      <AdminManagementList
+        columnList={accomColumnList}
+        dataList={dataList}
+        onClickRow={detailPageHandler}
+      />
 
       {/* 관리자 페이지 네이션 */}
     </div>

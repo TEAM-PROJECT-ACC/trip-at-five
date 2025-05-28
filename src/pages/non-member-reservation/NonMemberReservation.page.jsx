@@ -13,7 +13,10 @@ const NonMemberReservation = () => {
   return (
     <PageContainer>
       <div className='non-m-reservation__container'>
-        <NonMemberReservationBox className='non-m-reservation-box__container' onClick={selectReservationHandler} />
+        <NonMemberReservationBox
+          className='non-m-reservation-box__container'
+          onClick={selectReservationHandler}
+        />
         <NonMemberReservationList className='non-m-reservation-list__container' />
       </div>
     </PageContainer>

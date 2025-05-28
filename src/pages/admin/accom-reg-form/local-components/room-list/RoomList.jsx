@@ -1,7 +1,11 @@
 import React from 'react';
 import './RoomList.style.scss';
 import { accomData } from '../../../../../assets/sample-data/accomSampleData';
-import { BsFillHouseAddFill, FaEdit, MdDelete } from '../../../../../assets/icons/index';
+import {
+  BsFillHouseAddFill,
+  FaEdit,
+  MdDelete,
+} from '../../../../../assets/icons/index';
 import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminHeader from '../../../local-components/header/AdminHeader.component';
@@ -34,11 +38,24 @@ const RoomList = () => {
     <>
       {/* 숙박업소 객실관리(목록) */}
       <div className='room-list__container'>
-        <AdminHeader className='admin-main-header' title='객실관리'>
-          <AdminSearch className='admin-search-area__container' placeholder={'객실명을 입력해주세요'}>
-            <AdminIconButton onClick={roomFormPageHandler} children={<BsFillHouseAddFill />} />
+        <AdminHeader
+          className='admin-main-header'
+          title='객실관리'
+        >
+          <AdminSearch
+            className='admin-search-area__container'
+            placeholder={'객실명을 입력해주세요'}
+          >
+            <AdminIconButton
+              onClick={roomFormPageHandler}
+              children={<BsFillHouseAddFill />}
+            />
           </AdminSearch>
-          <AdminManagementList columnList={roomColumnList} dataList={roomList} onClickRow={roomFormPageHandler} />
+          <AdminManagementList
+            columnList={roomColumnList}
+            dataList={roomList}
+            onClickRow={roomFormPageHandler}
+          />
         </AdminHeader>
       </div>
     </>

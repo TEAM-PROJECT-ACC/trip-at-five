@@ -8,8 +8,12 @@ import { useEffect } from 'react';
  */
 const ReservationPerson = ({ className }) => {
   // 상태 정보
-  const { resName, resPhone, userCoupon } = usePaymentInfoStore((state) => state);
-  const { setResName, setResPhone, setUserCoupon } = usePaymentInfoStore((state) => state.actions);
+  const { resName, resPhone, userCoupon } = usePaymentInfoStore(
+    (state) => state
+  );
+  const { setResName, setResPhone, setUserCoupon } = usePaymentInfoStore(
+    (state) => state.actions
+  );
 
   /**
    * coupon은 추후 데이터 서버에서 불러와서 출력할 예정

@@ -31,7 +31,10 @@ const ReservationCancelList = () => {
 
   return (
     <div className='reservation-cancel__container'>
-      <AdminHeader className='admin-main-header' title='예약취소요청'>
+      <AdminHeader
+        className='admin-main-header'
+        title='예약취소요청'
+      >
         <AdminSearch
           className='admin-search-area__container'
           placeholder={'예약코드 혹은 예약자명을 입력해주세요'}

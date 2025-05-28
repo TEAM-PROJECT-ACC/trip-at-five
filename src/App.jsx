@@ -156,7 +156,10 @@ function App() {
               element={<ReservationManagementDetail />}
             />
           </Route>
-          <Route path='cancel-reservations' element={<ReservationCancelList />} />
+          <Route
+            path='cancel-reservations'
+            element={<ReservationCancelList />}
+          />
         </Route>
         <Route
           path='/chat/room'

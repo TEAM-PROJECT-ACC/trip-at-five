@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom';
 
 const Card = ({ cardText, ...props }) => {
   return (
-    <Link to='/accommodations' {...props}>
+    <Link
+      to='/accommodations'
+      {...props}
+    >
       <span>{cardText}</span>
     </Link>
   );
