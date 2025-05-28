@@ -1,4 +1,58 @@
-export const cancelData = {
-  no: 'R001',
-  receiptId: 1,
-};
+export const cancelData = [
+  {
+    no: 'R001',
+    receipt_id: 1,
+    res_name: '김철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R002',
+    receipt_id: 2,
+    res_name: '임철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R003',
+    receipt_id: 3,
+    res_name: '박철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R004',
+    receipt_id: 4,
+    res_name: '오철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R005',
+    receipt_id: 5,
+    res_name: '이철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R006',
+    receipt_id: 6,
+    res_name: '수철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R007',
+    receipt_id: 7,
+    res_name: '우철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+  {
+    no: 'R008',
+    receipt_id: 8,
+    res_name: '조철수',
+    pay_method: '카드',
+    pay_state: '결제상태',
+  },
+];

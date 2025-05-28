@@ -22,6 +22,7 @@ import ReservationManagementList from './pages/admin/reservation/ReservationMana
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 import ChatRoom from './pages/chat/room/Chat.room.conponent';
 import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
+import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 
 function App() {
   return (
@@ -75,7 +76,7 @@ function App() {
             <Route index element={<ReservationManagementList />} />
             <Route path=':id/detail' element={<ReservationManagementDetail />} />
           </Route>
-          <Route path='cancel-reservations' />
+          <Route path='cancel-reservations' element={<ReservationCancelList />} />
         </Route>
         <Route path='/chat/room' element={<ChatRoom />} />
       </Routes>

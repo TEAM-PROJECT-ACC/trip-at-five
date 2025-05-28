@@ -26,7 +26,7 @@ const ReservationManagementList = () => {
   return (
     <div className='reservation-management__container'>
       <AdminHeader className='admin-main-header' title='예약관리'>
-        <AdminSearch className='admin-search-area__container' placeholder={'숙박업소명 혹은 지역을 입력해주세요'} />
+        <AdminSearch className='admin-search-area__container' placeholder={'예약코드, 예약자명, 전화번호 중 하나를 입력해주세요'} />
       </AdminHeader>
       <AdminManagementList columnList={reservationColumnList} dataList={dataList} onClickRow={detailPageHandler} />
       {/* 관리자 페이지 네이션 */}
