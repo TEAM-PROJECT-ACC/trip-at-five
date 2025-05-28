@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AccomCalendar from '../../../../../components/accom-search/calendar/AccomCalendar.component';
 import './SearchArea.style.scss';
 import NumberOfPeople from '../../../../../components/accom-search/number-of-people/NumberOfPeople.component';
