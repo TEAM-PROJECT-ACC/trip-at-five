@@ -21,6 +21,7 @@ export const Modal = ({ children, modalHandler }) => {
     document.body.addEventListener('wheel', preventBodyScroll, {
       passive: false,
     });
+
     return () => {
       document.body.removeEventListener('wheel', preventBodyScroll, {
         passive: false,
