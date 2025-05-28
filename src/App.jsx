@@ -21,6 +21,7 @@ import ChatRoom from './pages/chat/room/Chat.room.conponent';
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
+import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
 function App() {
@@ -115,11 +116,11 @@ function App() {
         />
 
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
-        {/* 사용자 문의 */}
         <Route
           path='/admin'
           element={<AdminLayout />}
         >
+          {/* 사용자 문의 */}
           <Route
             path='contact'
             element={<AdminContactPage />}
@@ -144,10 +145,16 @@ function App() {
               element={<RoomMain />}
             />
           </Route>
-          <Route
-            path='reservations'
-            element={<ReservationManagementList />}
-          />
+          <Route path='reservations'>
+            <Route
+              index
+              element={<ReservationManagementList />}
+            />
+            <Route
+              path=':id/detail'
+              element={<ReservationManagementDetail />}
+            />
+          </Route>
           <Route path='cancel-reservations' />
         </Route>
         <Route

@@ -16,8 +16,8 @@ import {
   Modal,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
-import './test.style.scss';
 import { useModal } from '../../hooks';
+import './test.style.scss';
 
 const PAGINATION_PROPS = {
   className: '',
@@ -28,7 +28,6 @@ const PAGINATION_PROPS = {
 };
 
 export const TestPage = () => {
-  const { isModalOpen, handleModalOpen } = useModal();
   const [pageNationProps, setPagintionProps] = useState(() => {
     return {
       className: '',

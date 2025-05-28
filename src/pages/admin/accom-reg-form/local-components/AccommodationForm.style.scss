@@ -9,6 +9,13 @@
   gap: 32px;
   margin-bottom: 32px;
 
+  .accom-reg-button-group {
+    width: 100%;
+    display: flex;
+    gap: 32px;
+    justify-content: flex-end;
+  }
+
   .accom-reg-button {
     width: 25%;
     font-size: 24px;
