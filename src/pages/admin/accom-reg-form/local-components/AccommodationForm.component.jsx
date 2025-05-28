@@ -33,6 +33,7 @@ import {
 } from '../../../../assets/icons/ys/index';
 import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
+import { useParams } from 'react-router-dom';
 
 const accomType = ['모텔', '호텔/리조트', '펜션', '홈/빌라', '캠핑', '게하/한옥'];
 const publicFac = [
@@ -70,6 +71,7 @@ const etcFac = [
 ];
 
 const AccommodationForm = () => {
+  const { id } = useParams();
   const [word, setWord] = useState('');
   const [wordCount, setWordCount] = useState(0);
 
@@ -190,9 +192,16 @@ const AccommodationForm = () => {
           ))}
         </div>
       </FormItem>
-      <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
-        등록
-      </AdminPrimaryButton>
+
+      {id ? (
+        <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+          수정
+        </AdminPrimaryButton>
+      ) : (
+        <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+          등록
+        </AdminPrimaryButton>
+      )}
     </form>
   );
 };
