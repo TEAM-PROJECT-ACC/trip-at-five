@@ -15,9 +15,17 @@ export const Modal = ({ children, modalHandler }) => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    const preventBodyScroll = (event) => {
+      event.preventDefault();
+    };
+    document.body.addEventListener('wheel', preventBodyScroll, {
+      passive: false,
+    });
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.removeEventListener('wheel', preventBodyScroll, {
+        passive: false,
+      });
     };
   }, []);
 

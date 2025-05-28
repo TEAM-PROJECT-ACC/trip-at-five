@@ -1,0 +1,52 @@
+export const listSampleData = {
+  accommodation_tb: [
+    {
+      no: 1,
+      accom_type: '호텔',
+      accom_name: '그랜드하얏트',
+      accom_location: '서울특별시 용산구 소월로 322',
+      accom_phone: '02-123-4567',
+      room_price: 135000,
+    },
+    {
+      no: 2,
+      accom_type: '호텔',
+      accom_name: '그랜드 워커힐 서울 ',
+      accom_location: '서울특별시 광진구 워커힐로 177',
+      accom_phone: '051-234-5678',
+      room_price: 135000,
+    },
+    {
+      no: 3,
+      accom_type: '호텔',
+      accom_name: '골든호텔',
+      accom_location: '서울특별시 강서구 마곡중앙6로 89 (마곡동)',
+      accom_phone: '064-987-6543',
+      room_price: 135000,
+    },
+    {
+      no: 4,
+      accom_type: '호텔',
+      accom_name: '노보텔 앰버서더 서울 용산',
+      accom_location: '서울특별시 용산구 청파로20길 95 (한강로3가)',
+      accom_phone: '064-987-6543',
+      room_price: 135000,
+    },
+    {
+      no: 5,
+      accom_type: '호텔',
+      accom_name: '나인트리 프리미어 로카우스 호텔',
+      accom_location: '서울특별시 용산구 한강대로23길 25 (한강로3가)',
+      accom_phone: '064-987-6543',
+      room_price: 135000,
+    },
+    {
+      no: 6,
+      accom_type: '게하/한옥',
+      accom_name: '김치한옥게스트하우스',
+      accom_location: '서울특별시 종로구 자하문로5가길 11',
+      accom_phone: '064-987-6543',
+      room_price: 135000,
+    },
+  ],
+};

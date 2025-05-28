@@ -40,6 +40,7 @@ export const TestPage = () => {
   });
 
   const [starRateScore, setStarRateScore] = useState(() => 2.6);
+  const { isModalOpen, handleModalOpen } = useModal();
 
   const handlePagination = (pageNo) => {
     setPagintionProps((prev) => {
@@ -61,6 +62,9 @@ export const TestPage = () => {
         <ClassNamesTest />
         <section className='test-page__section'>
           <h1>전역 (공용) 컴포넌트 확인</h1>
+          <ButtonPrimary onClick={handleModalOpen}>
+            어느 위치에서든 모달 열기
+          </ButtonPrimary>
           <h3>input component</h3>
           <div className='test-page__test-area'>
             <div className='test-page__test-input'>
@@ -90,6 +94,9 @@ export const TestPage = () => {
           </div>
           <h3>button component</h3>
           <div className='test-page__test-area'>
+            <ButtonPrimary onClick={handleModalOpen}>
+              어느 위치에서든 모달 열기
+            </ButtonPrimary>
             <Button>버튼</Button>
             <ButtonPrimary>기본 버튼</ButtonPrimary>
             <ButtonSecondary>두번째 버튼</ButtonSecondary>
@@ -161,7 +168,7 @@ export const TestPage = () => {
           </div>
           <h3>modal test</h3>
           <div className='test-page__test-area'>
-            <button onClick={handleModalOpen}>모달 열기</button>
+            <ButtonPrimary onClick={handleModalOpen}>모달 열기</ButtonPrimary>
             {isModalOpen && (
               <Modal modalHandler={handleModalOpen}>
                 <>모달 테스트</>

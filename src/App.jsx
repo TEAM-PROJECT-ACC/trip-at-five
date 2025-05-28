@@ -24,8 +24,10 @@ import AdminMain from './pages/admin/main/AdminMain.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
 function App() {
-  // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
+  // TODO: 로그인 정보 확인 후 사용자/관리자 처리 용 상태
   const [isAdmin, setIsAdmin] = useState(() => false);
+
+  // TODO: admin인 경우 /admin으로 redirect
 
   return (
     <>
@@ -113,11 +115,11 @@ function App() {
         />
 
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
+        {/* 사용자 문의 */}
         <Route
           path='/admin'
           element={<AdminLayout />}
         >
-          {/* 사용자 문의 */}
           <Route
             path='contact'
             element={<AdminContactPage />}
