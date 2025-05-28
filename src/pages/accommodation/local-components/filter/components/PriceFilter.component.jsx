@@ -1,14 +1,9 @@
 import React from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import useFilterStore from '../../store/useFilterStore';
 import './filter.style.scss';
 
-//const PriceFilter = ({ priceRange, setPriceRange }) => {
-const PriceFilter = () => {
-  const priceRange = useFilterStore((state) => state.priceRange);
-  const setPriceRange = useFilterStore((state) => state.setPriceRange);
-
+const PriceFilter = ({ priceRange, setPriceRange }) => {
   const handleChange = (value) => {
     setPriceRange(value);
     console.log('Selected price range:', value);

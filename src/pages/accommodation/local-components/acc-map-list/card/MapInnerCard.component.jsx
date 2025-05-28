@@ -6,7 +6,10 @@ const MapInnerCard = ({ accom }) => {
     <>
       <li className='acc-list__box'>
         <div className='acc-list-img'>
-          <img src={accom.thumbnail} alt={accom.name} />
+          <img
+            src={accom.thumbnail}
+            alt={accom.name}
+          />
         </div>
         <div className='acc-list-info'>
           <div className='acc-list-title'>{accom.name}</div>

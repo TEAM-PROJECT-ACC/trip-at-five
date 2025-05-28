@@ -15,7 +15,10 @@ const MapButton = () => {
 
   return (
     <div className='map-button'>
-      <button className='map-btn-text' onClick={() => setShowMap(true)}>
+      <button
+        className='map-btn-text'
+        onClick={() => setShowMap(true)}
+      >
         지도보기
       </button>
       <div style={{ display: showMap ? 'block' : 'none' }}>

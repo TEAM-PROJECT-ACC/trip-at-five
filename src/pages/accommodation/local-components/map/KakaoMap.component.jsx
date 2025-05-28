@@ -5,13 +5,15 @@ import { MapInnerList } from '../acc-map-list/MapInnerList.component';
 import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
-import useFilterStore from '../store/useFilterStore';
+import { useFilterState } from '../../hooks/useFilterState.hook';
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
 
-  const priceRange = useFilterStore((state) => state.priceRange);
+  const filterHook = useFilterState();
+  const { filter } = filterHook;
+  const { priceRange } = filter;
 
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
@@ -166,7 +168,7 @@ export const KakaoMap = ({ onClose }) => {
         <TiDelete />
       </button>
       <div className='filter-map'>
-        <FilterPanel />
+        <FilterPanel filterHook={filterHook} />
       </div>
       <div className='acc-list-map'>
         <MapInnerList />

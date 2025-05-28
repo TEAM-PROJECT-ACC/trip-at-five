@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, use } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
-//import AccommodationHeader from './components/AccommodationHeader.component';
 import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';

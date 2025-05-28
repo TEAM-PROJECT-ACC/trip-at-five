@@ -25,9 +25,12 @@ const AccommodationCard = ({ accom }) => {
 
   const handleNav = () => {
     nav(`/accommodations/${accom.id}`);
-  }
+  };
   return (
-    <li className='accommodation-item' onClick={handleNav}>
+    <li
+      className='accommodation-item'
+      onClick={handleNav}
+    >
       <div className='image'>
         <img
           src='/src/assets/images/acc-list-page/hotel-img.png'
@@ -37,7 +40,10 @@ const AccommodationCard = ({ accom }) => {
       <div className='accom-info'>
         <div className='level-one'>
           <div className='accom-name'>{accom.name}</div>
-          <div className='accom-info-icon' title={accom.type}>
+          <div
+            className='accom-info-icon'
+            title={accom.type}
+          >
             <TypeIcon />
           </div>
         </div>

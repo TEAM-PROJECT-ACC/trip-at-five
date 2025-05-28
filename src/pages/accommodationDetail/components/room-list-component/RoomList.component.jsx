@@ -17,7 +17,10 @@ const RoomList = () => {
     <section className='room-list'>
       <div className='acc-detail-section__title'>객실 목록</div>
       {visibleRooms.map((room) => (
-        <div className='room-card' key={room.room_sq}>
+        <div
+          className='room-card'
+          key={room.room_sq}
+        >
           <div className='room-img' />
           <div className='room-info-container'>
             <div className='room-info-line'></div>
@@ -34,7 +37,10 @@ const RoomList = () => {
                   <div className='room-info-fac__name'>객실 시설</div>
                 </div>
                 {getIconsFromRoomInfo(room.room_info).map((icon, idx) => (
-                  <div key={idx} className='room-icon'>
+                  <div
+                    key={idx}
+                    className='room-icon'
+                  >
                     {icon}
                   </div>
                 ))}
@@ -45,7 +51,10 @@ const RoomList = () => {
             </div>
           </div>
           <div className='room-info__btn'>
-            <a href='/carts' className='btn-cart'>
+            <a
+              href='/carts'
+              className='btn-cart'
+            >
               <GrCart />
             </a>
             <button className='btn-reserve'>객실 예약</button>

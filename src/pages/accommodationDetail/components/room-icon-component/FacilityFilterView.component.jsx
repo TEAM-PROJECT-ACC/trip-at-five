@@ -34,7 +34,10 @@ const FacilityFilterView = ({ selectedFacilities = [] }) => {
     facility
       .filter((fac) => selectedFacilities.includes(fac.label))
       .map(({ icon, label }) => (
-        <div key={label} className='facility-icon'>
+        <div
+          key={label}
+          className='facility-icon'
+        >
           {icon}
           <span>{label}</span>
         </div>

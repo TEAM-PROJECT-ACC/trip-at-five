@@ -10,7 +10,7 @@
     object-fit: cover;
     background-size: cover;
   }
-  .accom-info:hover{
+  .accom-info:hover {
     background-color: #eeeeee;
   }
   .accom-info {
@@ -70,8 +70,7 @@
       .accom-price strong {
         font-size: 25px;
         font-weight: 900;
-        margin-left: 10px;
-        margin-right: 5px;
+        margin-left: 7px;
         @include color-5500ff;
       }
 

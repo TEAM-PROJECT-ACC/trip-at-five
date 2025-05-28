@@ -7,19 +7,15 @@ import AccommodationListBox from './local-components/acc-items-box/Accommodation
 import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
 import { accomData } from '../../assets/sample-data/accomSampleData';
-import useFilterStore from './local-components/store/useFilterStore';
 import { useFilterState } from './hooks/useFilterState.hook';
 
 const AccommodationList = () => {
   const filterHook = useFilterState();
-
-  const currentPage = useFilterStore((state) => state.currentPage);
-  const setCurrentPage = useFilterStore((state) => state.setCurrentPage);
+  const { setCurrentPage, filter } = filterHook;
   const pageSize = 5;
 
-  const priceRange = useFilterStore((state) => state.priceRange);
-
-  const [minPrice, maxPrice] = priceRange;
+  const [minPrice, maxPrice] = filter.priceRange;
+  const currentPage = filter.currentPage;
 
   const accommodations = accomData.accommodation_tb
     .map((item) => {
@@ -60,6 +56,7 @@ const AccommodationList = () => {
           <AccommodationListBox
             data={currentPageData}
             accommodations={accommodations}
+            filterHook={filterHook}
           />
           <Pagination
             className='accom-pagination'
