@@ -22,9 +22,26 @@ const AccommodationDetail = () => {
   const accom = accomData.accommodation_tb.find(
     (item) => String(item.accom_sq) === String(id)
   );
+  //const [reviewImages, setReviewImages] = useState([]);
+  const imageList = [
+    '/img/bedroom.png',
+    '/img/bedroom.png',
+    '/img/bedroom.png',
+    '/img/bedroom.png',
+    '/img/bedroom.png',
+  ];
 
   const [starRateScore, setStarRateScore] = useState(() => 2.6);
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState(imageList[0]);
+  const [showImageList, setShowImageList] = useState(false);
+
+  const toggleImageList = () => setShowImageList((prev) => !prev);
+  const handleImageSelect = (imgUrl) => {
+    setSelectedImage(imgUrl);
+    setShowImageList(false);
+  };
 
   const handleRatingStar = (score) => {
     setStarRateScore(() => score);
@@ -72,6 +89,35 @@ const AccommodationDetail = () => {
     }
   };
 
+   const modalHandler = () => {
+    setModalOpen(true);
+  };
+  
+  const handleScrollToReview = () => {
+    const target = document.getElementById('ancher-review');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToMap = () => {
+    const target = document.getElementById('ancher-map');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  /*
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    const newImages = files.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setReviewImages((prev) => [...prev, ...newImages]);
+  };
+  */
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(() => {
@@ -80,14 +126,27 @@ const AccommodationDetail = () => {
     }
   }, [accom]);
 
-  const modalHandler = () => {
-    setModalOpen(true);
-  };
-
   return (
     <PageContainer>
       <section className='accom-header'>
-        <img className='accom-header__image' />
+        <div className="image-wrapper">
+          <img className='accom-header__image' src={selectedImage} />
+          <button className="accom-header-img-change-btn" onClick={toggleImageList}></button>
+        </div>
+        
+        {showImageList && (
+          <div className="image-boxs">
+            {imageList.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                className="image-box"
+                onClick={() => handleImageSelect(img)}
+              />
+            ))}
+          </div>
+        )}
+
         <div className='accom-header__text'>
           {accom?.accom_name}
           <div className='accom-header__price'>
@@ -104,26 +163,24 @@ const AccommodationDetail = () => {
       {/* 숙소 정보 카드 */}
       <section className='accom-info-detail'>
         <div className='accom-info__map'>
-          <a
-            href='#ancher-map'
+          <button onClick={handleScrollToMap}
             className='accom-location-btn'
           >
             위치정보
-          </a>
+          </button>
         </div>
-        <a
-          href='#ancher-review'
+        <button onClick={handleScrollToReview}
           className='accom-info__review'
         >
           <div className='review-header'>
             <p className='nickname'>닉네임</p>
             <div className='stars'>⭐⭐⭐⭐⭐</div>
           </div>
-          <p className='comment'>
+          <p className='info-comment'>
             편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
             좋고 청결해서 다시 방문하고 싶어요.
           </p>
-        </a>
+        </button>
         <div className='accom-info__facility'>
           <FacilityFilterView />
         </div>
@@ -176,7 +233,7 @@ const AccommodationDetail = () => {
                     placeholder={'후기를 작성해주세요'}
                     className='accom-modal-textbox'
                   />
-                  <div className='accom-modal-img'>
+                  <div type="file" className='accom-modal-img' >
                     <MdAddPhotoAlternate className='accom-modal-img-icon' />
                   </div>
                 </div>

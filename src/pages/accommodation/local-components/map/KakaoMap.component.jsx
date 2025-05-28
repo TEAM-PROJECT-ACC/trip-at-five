@@ -66,6 +66,7 @@ export const KakaoMap = ({ onClose }) => {
 
       const container = document.createElement('div');
       container.className = 'customoverlay-wrapper';
+      container.style.zIndex = `${1000 + idx}`;
 
       container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
@@ -86,7 +87,7 @@ export const KakaoMap = ({ onClose }) => {
         position,
         content: container,
         yAnchor: 0.3,
-        zIndex: 3 + idx,
+        zIndex: 1000 + idx,
       });
 
       overlay.setMap(map);

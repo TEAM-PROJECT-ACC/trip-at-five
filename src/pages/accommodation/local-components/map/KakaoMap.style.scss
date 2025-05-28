@@ -1,6 +1,6 @@
 .container {
   width: 95rem;
-  height: 75vh;
+  height: 86vh;
   padding: 4rem 1rem 1rem 1rem;
   border: 2px solid #baabfa;
   border-radius: 8px;
@@ -104,6 +104,7 @@
 .customoverlay-wrapper {
   position: relative;
   cursor: pointer;
+  z-index: 9999;
 }
 
 .price-bubble {
@@ -117,7 +118,7 @@
   top: 0;
   left: 50%;
   position: absolute;
-  z-index: 1;
+  z-index: 1000;
   border-bottom: 2px solid #5500ff;
   opacity: 1;
   visibility: visible;
@@ -139,7 +140,7 @@
 
 .text__box {
   position: relative;
-  top: 40px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   width: 240px;
@@ -149,7 +150,6 @@
   font-size: 13px;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  z-index: 9999;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
