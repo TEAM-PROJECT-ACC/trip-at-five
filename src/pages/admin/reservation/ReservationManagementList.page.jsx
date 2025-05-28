@@ -5,6 +5,8 @@ import { accomData } from '../../../assets/sample-data/accomSampleData';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { sampleReservations } from '../../../assets/sample-data/reservation';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { AdminPagination } from '../../../components/admin-pagination/AdminPagination.component';
 const dataList = sampleReservations;
 
 const reservationColumnList = [
@@ -23,13 +25,23 @@ const ReservationManagementList = () => {
     console.log(resCode);
     navigate(`/admin/reservations/${resCode}/detail`);
   };
+
   return (
     <div className='reservation-management__container'>
-      <AdminHeader className='admin-main-header' title='예약관리'>
-        <AdminSearch className='admin-search-area__container' placeholder={'숙박업소명 혹은 지역을 입력해주세요'} />
+      <AdminHeader
+        className='admin-main-header'
+        title='예약관리'
+      >
+        <AdminSearch
+          className='admin-search-area__container'
+          placeholder={'예약코드, 예약자명, 전화번호 중 하나를 입력해주세요'}
+        />
       </AdminHeader>
-      <AdminManagementList columnList={reservationColumnList} dataList={dataList} onClickRow={detailPageHandler} />
-      {/* 관리자 페이지 네이션 */}
+      <AdminManagementList
+        columnList={reservationColumnList}
+        dataList={dataList}
+        onClickRow={detailPageHandler}
+      />
     </div>
   );
 };

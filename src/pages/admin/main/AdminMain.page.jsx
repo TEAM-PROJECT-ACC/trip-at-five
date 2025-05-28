@@ -6,6 +6,8 @@ import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { listSampleData } from '../../../assets/sample-data/listSampleData';
+import { AdminPagination } from '../../../components/admin-pagination/AdminPagination.component';
+import { useEffect, useState } from 'react';
 const dataList = listSampleData.accommodation_tb;
 
 const accomColumnList = [
@@ -32,14 +34,25 @@ const AdminMain = () => {
 
   return (
     <div className='accom-list__container'>
-      <AdminHeader className='admin-main-header' title='숙박업소관리'>
-        <AdminSearch className='admin-search-area__container' placeholder={'숙박업소명 혹은 지역을 입력해주세요'}>
-          <AdminIconButton onClick={registerPageHandler} children={<BsFillHouseAddFill />} />
+      <AdminHeader
+        className='admin-main-header'
+        title='숙박업소관리'
+      >
+        <AdminSearch
+          className='admin-search-area__container'
+          placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
+        >
+          <AdminIconButton
+            onClick={registerPageHandler}
+            children={<BsFillHouseAddFill />}
+          />
         </AdminSearch>
       </AdminHeader>
-      <AdminManagementList columnList={accomColumnList} dataList={dataList} onClickRow={detailPageHandler} />
-
-      {/* 관리자 페이지 네이션 */}
+      <AdminManagementList
+        columnList={accomColumnList}
+        dataList={dataList}
+        onClickRow={detailPageHandler}
+      />
     </div>
   );
 };

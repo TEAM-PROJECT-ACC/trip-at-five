@@ -18,7 +18,9 @@ const AccommodationFormContainer = () => {
         <span>에 등록되었습니다.</span>
       </div>
       <AccommodationForm />
-      {accomNo.id !== null && accomNo.id !== undefined && <RoomList accomNo={accomNo.id} />}
+      {accomNo.id !== null && accomNo.id !== undefined && (
+        <RoomList accomNo={accomNo.id} />
+      )}
     </div>
   );
 };

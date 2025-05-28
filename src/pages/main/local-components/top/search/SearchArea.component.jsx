@@ -37,7 +37,11 @@ const SearchArea = () => {
       </div>
       <AccomCalendar className='check-calendar__container' />
       <NumberOfPeople className='number-of-people__container' />
-      <ButtonSecondary className='search-button' onClick={searchHandler} children='검색' />
+      <ButtonSecondary
+        className='search-button'
+        onClick={searchHandler}
+        children='검색'
+      />
     </div>
   );
 };

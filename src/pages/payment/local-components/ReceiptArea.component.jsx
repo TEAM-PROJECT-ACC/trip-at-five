@@ -10,7 +10,11 @@ const ReceiptArea = () => {
     <div className='receipt-area__container'>
       <ReceiptDetail className='card__container' />
       <PaymentInfo className='card__container' />
-      <LinkButton className='link-button--move' to='/' children={'메인페이지로 이동'} />
+      <LinkButton
+        className='link-button--move'
+        to='/'
+        children={'메인페이지로 이동'}
+      />
     </div>
   );
 };
