@@ -56,9 +56,16 @@
   }
 
   .room-main-form-right {
-    .room-reg-button {
-      width: 30%;
-      align-self: flex-end;
+    .room-reg-button-group {
+      width: 100%;
+      display: flex;
+      padding: 16px;
+      justify-content: flex-end;
+      gap: 16px;
+      .room-reg-button {
+        width: 30%;
+        align-self: flex-end;
+      }
     }
   }
 }
