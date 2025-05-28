@@ -253,6 +253,7 @@
     box-shadow: 0.1rem 0.1rem 0.3rem $color-888888,
       -0.1rem -0.1rem 0.1rem $color-ffffff;
     padding: 1rem;
+    margin-bottom: 32px;
     @include background-f6f6f6;
   }
 }

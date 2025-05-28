@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import './AdminSearch.style.scss';
 import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
-import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
-import { BsFillHouseAddFill } from '../../../../../assets/icons/index';
 import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
+
 const AdminSearch = ({ className, placeholder, children }) => {
   const navigate = useNavigate();
 
