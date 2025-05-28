@@ -169,7 +169,10 @@ export const TestPage = () => {
           <div className='test-page__test-area'>
             <ButtonPrimary onClick={handleModalOpen}>모달 열기</ButtonPrimary>
             {isModalOpen && (
-              <Modal modalHandler={handleModalOpen}>
+              <Modal
+                modalHandler={handleModalOpen}
+                useCloseIcon={true}
+              >
                 <>모달 테스트</>
               </Modal>
             )}
