@@ -29,6 +29,7 @@ export const DeactiveAccModal = ({ onClose }) => {
       </div>
       <div className='deactive-acc-modal__btn-container'>
         {/* 비활성화 */}
+        {/* TODO: disabled 작업해야 함 */}
         <ButtonSecondary className='deactive-acc-modal__button'>
           비활성화
         </ButtonSecondary>
