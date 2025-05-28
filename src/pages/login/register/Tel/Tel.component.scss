@@ -1,0 +1,39 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.register-tel-wrap {
+	.register-tel-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+	}
+
+	.register-tel-input {
+		width: 100%;
+		margin-bottom: 40px;
+	}
+
+	.register-tel-btn {
+		width: 340px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.register-tel-btn {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.tel-btn-later {
+		width: 176px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+
+	.tel-btn-check {
+		width: 176px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+}

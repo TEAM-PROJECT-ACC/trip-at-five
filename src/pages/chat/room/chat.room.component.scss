@@ -1,0 +1,50 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.chat-container {
+	padding: 10% 0%;
+}
+
+.chat-room-wrap {
+	border: 1px solid rgba(255, 255, 255);
+	width: 848px;
+	margin: auto;
+	padding: 0px 24px;
+	box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
+}
+
+.chat-room-close-icon {
+	width: 24px;
+	height: 24px;
+	margin-left: 1%;
+	margin-top: 20px;
+	cursor: pointer;
+	@include color-5500ff;
+}
+
+.chat-room-textarea-wrap {
+	width: 799px;
+	margin: auto;
+	padding: 12% 0px;
+	font-size: 20px;
+	border: 1px solid;
+	border-radius: 8px;
+	box-sizing: border-box;
+	position: relative;
+	@include border-5500ff;
+}
+
+.chat-room-textarea {
+	position: absolute;
+	bottom: 70%;
+	border: none;
+}
+
+.chat-room-send-btn {
+	width: 110px;
+	padding: 10px;
+	border-radius: 30px;
+	margin: 5% 0%;
+	margin-left: 85%;
+	font-size: 20px;
+	font-weight: normal;
+}
