@@ -23,7 +23,10 @@ export const DiaryPage = () => {
           +
         </ButtonPrimary>
         {isModalOpen && (
-          <Modal modalHandler={handleModalOpen}>
+          <Modal
+            modalHandler={handleModalOpen}
+            useCloseIcon={true}
+          >
             <DiaryModal isReadOnly={false} />
           </Modal>
         )}
