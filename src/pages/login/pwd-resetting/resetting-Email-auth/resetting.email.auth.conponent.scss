@@ -26,6 +26,8 @@
 	.pwd-resetting-receive {
 		font-size: 10px;
 		margin-top: 8px;
+		cursor: pointer;
+		@include color-5500ff;
 	}
 
 	.email-auth {

@@ -9,16 +9,21 @@ export function EmailAuth() {
 	const [email, setEmail] = useState(null);
 	const [isSend, setIsSend] = useState(false);
 	const [emailCode, setEmailCode] = useState();
-  const {isTrue, setIsTrue, setIsFalse} = useIsResetting();
+	const { isTrue, setIsTrue, setIsFalse } = useIsResetting();
 
 	const testCode = '1234';
 
+
+	/*이메일 인증코드 보내기  */
 	const sendCode = () => {
 		{
 			email != null && setIsSend(true);
 		}
 	};
 
+
+
+	/* 인증코드 유효성 체크 부분 */
 	const codeCheck = () => {
 		const test = emailCode == testCode ? 'ok' : 'fail';
 		console.log(test);
@@ -27,7 +32,6 @@ export function EmailAuth() {
 
 	return (
 		<div className='pwd-resetting-content-wrap'>
-
 			<ResettingInput
 				TclassName={'pwd-resetting-email-text'}
 				IclassName={'pwd-resetting-email-input'}
@@ -41,7 +45,7 @@ export function EmailAuth() {
 				<>
 					<ResettingInput
 						TclassName={'pwd-resetting-email-code-text'}
-				    IclassName={'pwd-resetting-email-code-input'}
+						IclassName={'pwd-resetting-email-code-input'}
 						type={'email'}
 						text={'인증코드'}
 						placeholder={'인증코드를 입력해주세요'}
@@ -56,7 +60,10 @@ export function EmailAuth() {
 				</>
 			)}
 
-			<ButtonPrimary className={'email-auth'} onClick={isSend ? codeCheck : sendCode}>
+			<ButtonPrimary
+				className={'email-auth'}
+				onClick={isSend ? codeCheck : sendCode}
+			>
 				이메일 인증
 			</ButtonPrimary>
 		</div>
