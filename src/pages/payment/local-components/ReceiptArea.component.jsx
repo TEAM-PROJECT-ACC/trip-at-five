@@ -1,9 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './ReceiptArea.style.scss';
 import PaymentInfo from './payment-info/PaymentInfo.component';
 import ReceiptDetail from './receipt-detail/ReceiptDetail.component';
 import { LinkButton } from '../../../components';
+import './ReceiptArea.style.scss';
 
 const ReceiptArea = () => {
   return (

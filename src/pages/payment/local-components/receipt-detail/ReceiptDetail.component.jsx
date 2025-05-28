@@ -1,4 +1,3 @@
-import React from 'react';
 import ReceiptDetailHeader from './header/ReceiptDetailHeader.component';
 import ReceiptDetailBody from './body/ReceiptDetailBody.component';
 import './ReceiptDetail.style.scss';

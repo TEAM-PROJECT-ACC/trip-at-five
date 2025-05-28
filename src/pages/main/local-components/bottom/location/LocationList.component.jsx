@@ -1,6 +1,5 @@
-import React from 'react';
-import './LocationList.style.scss';
 import Card from '../card/Card.component';
+import './LocationList.style.scss';
 
 const LocationList = () => {
   // 추후 데이터 불러올것

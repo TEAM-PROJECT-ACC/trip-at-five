@@ -1,7 +1,7 @@
-import './ReservationPerson.style.scss';
+import { useEffect } from 'react';
 import { InputShrink, Select } from '../../../../components';
 import { usePaymentInfoStore } from '../../../../states';
-import { useEffect } from 'react';
+import './ReservationPerson.style.scss';
 
 /**
  * 예약자 정보를 입력받고 해당 값을 예약 상태관리 정보에 저장

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import './Main.style.scss';
+import { useEffect } from 'react';
 import MainArea from './local-components/MainArea.component';
 import { useAccomSearchStore } from '../../states';
 import { testServer } from '../../services/test/testServerAPI';
+import './Main.style.scss';
 
 const Main = () => {
   const state = useAccomSearchStore((state) => state);

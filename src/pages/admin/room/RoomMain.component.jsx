@@ -1,7 +1,7 @@
-import { useLocation, useParams } from 'react-router-dom';
-import './RoomMain.style.scss';
-import RoomRegForm from './local-components/RoomRegForm';
 import { useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import RoomRegForm from './local-components/RoomRegForm.component';
+import './RoomMain.style.scss';
 const RoomMain = () => {
   /**
    * useParams로 숙박업소 Id 값 받아오기

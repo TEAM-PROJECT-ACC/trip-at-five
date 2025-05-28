@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react';
-import './ReservationManagementDetail.style.scss';
-import AdminInput from '../../../components/inputs/input-admin/AdminInput.component';
 import { useParams } from 'react-router-dom';
-import { FaRegCalendarCheck, FaTimesCircle } from 'react-icons/fa';
-import { MdHourglassTop } from 'react-icons/md';
+import AdminInput from '../../../components/inputs/input-admin/AdminInput.component';
 import AccomFacButton from '../../../components/buttons/admin-fac-button/AccomFacButton.component';
+import {
+  FaRegCalendarCheck,
+  FaTimesCircle,
+  MdHourglassTop,
+} from '../../../assets/icons/index';
+import './ReservationManagementDetail.style.scss';
 
 const ReservationManagementDetail = () => {
   const params = useParams();
 
   const resCode = params.id;
-
-  useEffect(() => {
-    console.log(params);
-    console.log(resCode);
-  }, []);
 
   return (
     <div className='reservation-detail__container'>

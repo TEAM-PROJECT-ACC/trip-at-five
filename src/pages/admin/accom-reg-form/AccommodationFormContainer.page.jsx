@@ -1,15 +1,10 @@
-import { useEffect } from 'react';
-import './AccommodationFormContainer.style.scss';
+import { useParams } from 'react-router-dom';
 import AccommodationForm from './local-components/AccommodationForm.component';
 import RoomList from './local-components/room-list/RoomList';
-import { useParams } from 'react-router-dom';
+import './AccommodationFormContainer.style.scss';
 
 const AccommodationFormContainer = () => {
   const accomNo = useParams();
-
-  useEffect(() => {
-    console.log(accomNo.id);
-  }, []);
 
   return (
     <div className='accom-form__container'>

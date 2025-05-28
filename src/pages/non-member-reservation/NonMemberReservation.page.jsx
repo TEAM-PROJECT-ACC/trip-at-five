@@ -1,8 +1,7 @@
-import React from 'react';
 import { PageContainer } from '../../components';
-import './NonMemberReservation.style.scss';
 import NonMemberReservationBox from './box/NonMemberReservationBox.component';
 import NonMemberReservationList from './list/NonMemberReservationList.component';
+import './NonMemberReservation.style.scss';
 
 const NonMemberReservation = () => {
   const selectReservationHandler = async () => {

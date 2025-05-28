@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './AdminManagementList.style.scss';
+import { useState } from 'react';
 import AdminTableHead from './table/thead/AdminTableHead.component';
 import AdminTableBody from './table/tbody/AdminTableBody.component';
 import { AdminPagination } from '../../../../components/admin-pagination/AdminPagination.component';
+import './AdminManagementList.style.scss';
 
 const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
   const [pageNationProps, setPageNationProps] = useState(() => {
@@ -16,14 +16,13 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
   });
 
   const handlePagination = (pageNo) => {
+    // 상태가 변경된 현재 페이지 번호 : pageNo
     setPageNationProps((prev) => {
       return {
         ...prev,
         currentPage: pageNo,
       };
     });
-
-    console.log('현재 페이지 번호 : ' + pageNo);
   };
   return (
     <>

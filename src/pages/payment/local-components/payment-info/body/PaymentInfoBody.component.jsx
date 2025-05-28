@@ -1,5 +1,3 @@
-import React from 'react';
-
 const PaymentInfoBody = ({ className }) => {
   return (
     <div className={className}>

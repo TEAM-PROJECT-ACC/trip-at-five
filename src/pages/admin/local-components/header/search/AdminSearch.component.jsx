@@ -1,16 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import './AdminSearch.style.scss';
 import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
+import './AdminSearch.style.scss';
 
 const AdminSearch = ({ className, placeholder, children }) => {
-  const navigate = useNavigate();
-
-  // 등록 페이지 이동 핸들러
-  const registerPageHandler = () => {
-    navigate('/admin/accommodations/new');
-  };
-
   // 검색 핸들러
   const searchHandler = () => {};
 

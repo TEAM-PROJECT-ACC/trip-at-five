@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './RoomRegForm.style.scss';
+import { useEffect, useRef, useState } from 'react';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
+import './RoomRegForm.style.scss';
 
 const timeArray = [
   '00:00',
@@ -92,10 +92,6 @@ const RoomRegForm = ({ accomId, roomId }) => {
 
     setCheckTime(false);
   };
-
-  useEffect(() => {
-    console.log('객실 아이디 : ' + roomId);
-  }, []);
 
   return (
     <form

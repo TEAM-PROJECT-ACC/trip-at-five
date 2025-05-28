@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import './Room.style.scss';
 import { useAccomSearchStore } from '../../../states';
 import { GoCheckCircle, GoCheckCircleFill } from '../../../assets/icons/index';
+import './Room.style.scss';
 
 const Room = ({ className, checkArea, value, checkHandler, isChecked }) => {
   const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
@@ -9,10 +8,6 @@ const Room = ({ className, checkArea, value, checkHandler, isChecked }) => {
   const checkRoomHandler = () => {
     checkHandler(value);
   };
-
-  useEffect(() => {
-    console.log(value);
-  }, []);
 
   return (
     <div className={className}>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoCart } from '../../../assets/icons/index';
 import './CartHeader.style.scss';
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const AdminTableHead = ({ columnList }) => {
   return (
     <thead className='admin-table-header'>

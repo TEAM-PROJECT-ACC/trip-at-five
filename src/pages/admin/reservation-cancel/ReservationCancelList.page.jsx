@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AdminHeader from '../local-components/header/AdminHeader.component';
 import AdminSearch from '../local-components/header/search/AdminSearch.component';
-import './ReservationCancelList.style.scss';
-import { cancelData } from '../../../assets/sample-data/cancelReservationSampleData';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
-import { useModal } from '../../../hooks';
 import { Modal } from '../../../components';
+import { useModal } from '../../../hooks';
+import { cancelData } from '../../../assets/sample-data/cancelReservationSampleData';
+import './ReservationCancelList.style.scss';
 const dataList = cancelData;
 
 const cancelReservationColumnList = [

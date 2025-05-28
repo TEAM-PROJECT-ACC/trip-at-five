@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { FaUser } from '../../../assets/icons/index';
-import './NumberOfPeople.style.scss';
 import { useAccomSearchStore } from '../../../states/accom-search/accomSearchStore';
+import './NumberOfPeople.style.scss';
 
 const NumberOfPeople = ({ ...props }) => {
   const state = useAccomSearchStore((state) => state);

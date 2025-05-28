@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ButtonPrimary } from '../buttons';
 import './PayInfo.style.scss';
-import { ButtonPrimary } from '..';
 
 const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
   const [totalPrice, setTotalPrice] = useState(0);
