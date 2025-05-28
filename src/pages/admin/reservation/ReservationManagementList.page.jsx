@@ -4,6 +4,7 @@ import './ReservationManagementList.style.scss';
 import { accomData } from '../../../assets/sample-data/accomSampleData';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { sampleReservations } from '../../../assets/sample-data/reservation';
+import { useNavigate } from 'react-router-dom';
 const dataList = sampleReservations;
 
 const reservationColumnList = [
@@ -16,8 +17,11 @@ const reservationColumnList = [
 ];
 
 const ReservationManagementList = () => {
-  const detailPageHandler = () => {
+  const navigate = useNavigate();
+  const detailPageHandler = (resCode) => {
     console.log('예약상세페이지로 이동!');
+    console.log(resCode);
+    navigate(`/admin/reservations/${resCode}/detail`);
   };
   return (
     <div className='reservation-management__container'>

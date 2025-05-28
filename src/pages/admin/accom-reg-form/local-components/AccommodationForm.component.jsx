@@ -194,9 +194,14 @@ const AccommodationForm = () => {
       </FormItem>
 
       {id ? (
-        <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
-          수정
-        </AdminPrimaryButton>
+        <div className='accom-reg-button-group'>
+          <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+            수정
+          </AdminPrimaryButton>
+          <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+            삭제
+          </AdminPrimaryButton>
+        </div>
       ) : (
         <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
           등록
