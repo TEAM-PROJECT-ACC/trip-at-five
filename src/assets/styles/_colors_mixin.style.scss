@@ -37,6 +37,12 @@
   }
 }
 
+@mixin color-f6f6f6 {
+  & {
+    color: $color-f6f6f6;
+  }
+}
+
 @mixin color-e6e6e6 {
   & {
     color: $color-e6e6e6;

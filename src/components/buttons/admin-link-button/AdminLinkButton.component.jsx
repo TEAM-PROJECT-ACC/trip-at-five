@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { classNames } from '../../../utils';
-import './linkButton.style.scss';
+import './adminLinkButton.style.scss';
 
-export const LinkButton = ({ className, children, to, ...props }) => {
+export const AdminLinkButton = ({ className, children, to, ...props }) => {
   return (
-    // div style
     <Link
-      className={classNames('global-link__button', className)}
+      className={classNames('admin-link__button', className)}
       to={to}
       {...props}
     >
