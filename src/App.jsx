@@ -21,6 +21,7 @@ import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 import ChatRoom from './pages/chat/room/Chat.room.conponent';
+import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
 
 function App() {
   return (
@@ -70,7 +71,10 @@ function App() {
             {/* 객실등록/수정페이지 */}
             <Route path=':id/rooms' element={<RoomMain />} />
           </Route>
-          <Route path='reservations' element={<ReservationManagementList />} />
+          <Route path='reservations'>
+            <Route index element={<ReservationManagementList />} />
+            <Route path=':id/detail' element={<ReservationManagementDetail />} />
+          </Route>
           <Route path='cancel-reservations' />
         </Route>
         <Route path='/chat/room' element={<ChatRoom />} />
