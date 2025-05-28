@@ -5,6 +5,8 @@ import { accomData } from '../../../assets/sample-data/accomSampleData';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { sampleReservations } from '../../../assets/sample-data/reservation';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { AdminPagination } from '../../../components/admin-pagination/AdminPagination.component';
 const dataList = sampleReservations;
 
 const reservationColumnList = [
@@ -23,6 +25,7 @@ const ReservationManagementList = () => {
     console.log(resCode);
     navigate(`/admin/reservations/${resCode}/detail`);
   };
+
   return (
     <div className='reservation-management__container'>
       <AdminHeader
@@ -39,7 +42,6 @@ const ReservationManagementList = () => {
         dataList={dataList}
         onClickRow={detailPageHandler}
       />
-      {/* 관리자 페이지 네이션 */}
     </div>
   );
 };

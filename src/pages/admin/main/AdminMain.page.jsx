@@ -6,6 +6,8 @@ import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { listSampleData } from '../../../assets/sample-data/listSampleData';
+import { AdminPagination } from '../../../components/admin-pagination/AdminPagination.component';
+import { useEffect, useState } from 'react';
 const dataList = listSampleData.accommodation_tb;
 
 const accomColumnList = [
@@ -51,8 +53,6 @@ const AdminMain = () => {
         dataList={dataList}
         onClickRow={detailPageHandler}
       />
-
-      {/* 관리자 페이지 네이션 */}
     </div>
   );
 };
