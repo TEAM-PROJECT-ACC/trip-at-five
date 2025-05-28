@@ -80,7 +80,7 @@
 
   .accom-info__review {
     display: flex;
-    font-size: 0.9rem;
+    font-size: 7px;
     padding: 50px;
     line-height: 1.4;
     flex-direction: column;
@@ -97,7 +97,7 @@
       }
 
       .stars {
-        font-size: 1rem;
+        font-size: 8px;
         color: #ffaa00;
         vertical-align: middle;
         display: flex;
@@ -111,7 +111,7 @@
   border-bottom: 2px solid #5500ff;
 }
 .review-section {
-  margin: 3rem 0;
+  margin: 24px 0;
 
   .review-section__header {
     display: flex;
@@ -247,7 +247,7 @@ button.global-button.global-button__primary.accom-modal-btn-inner {
 }
 
 .accom-modal-img-icon {
-  color: #baabfa;
+  @include color-baabfa;
 }
 
 .custom-overlay-bubble {

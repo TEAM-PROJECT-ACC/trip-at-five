@@ -36,10 +36,16 @@ function App() {
       {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
       {!isAdmin && <AppHeader />}
       <Routes>
-        <Route path='/test' element={<TestPage />} />
+        <Route
+          path='/test'
+          element={<TestPage />}
+        />
         {/* path member로 변경 */}
         {/* 복수형으로  */}
-        <Route path='/user' element={<UserPage />}>
+        <Route
+          path='/user'
+          element={<UserPage />}
+        >
           {USER_ROUTE.map((route, idx) => {
             return (
               <Route
@@ -51,45 +57,102 @@ function App() {
             );
           })}
         </Route>
-        <Route path='/diary' element={<DiaryPage />} />
+        <Route
+          path='/diary'
+          element={<DiaryPage />}
+        />
         {/* 로그인 부분 */}
-        <Route path='/login' element={<LoginPage />}></Route>
+        <Route
+          path='/login'
+          element={<LoginPage />}
+        ></Route>
 
         {/* 회원가입 */}
-        <Route path='/signUp' element={<SignUp />} />
+        <Route
+          path='/signUp'
+          element={<SignUp />}
+        />
 
         {/* 비밀번호 재설정 */}
-        <Route path='/resetting' element={<PwdRestting />} />
+        <Route
+          path='/resetting'
+          element={<PwdRestting />}
+        />
 
         {/* 채팅 */}
-        <Route path='/chat' element={<Chat />} />
+        <Route
+          path='/chat'
+          element={<Chat />}
+        />
 
-        <Route index element={<Main />} />
-        <Route path='/carts' element={<CartMain />} />
-        <Route path='/guest/reservations' element={<NonMemberReservation />} />
+        <Route
+          index
+          element={<Main />}
+        />
+        <Route
+          path='/carts'
+          element={<CartMain />}
+        />
+        <Route
+          path='/guest/reservations'
+          element={<NonMemberReservation />}
+        />
         <Route path='/accommodations'>
           {/* 숙박 목록 페이지 */}
-          <Route index element={<AccommodationList />} />
+          <Route
+            index
+            element={<AccommodationList />}
+          />
           {/* 숙박 상세 페이지 */}
-          <Route path='/accommodations/:id' element={<AccommodationDetail />} />
+          <Route
+            path='/accommodations/:id'
+            element={<AccommodationDetail />}
+          />
         </Route>
-        <Route path='/reservations' element={<Reservation />} />
-        <Route path='/payments' element={<Receipt />} />
+        <Route
+          path='/reservations'
+          element={<Reservation />}
+        />
+        <Route
+          path='/payments'
+          element={<Receipt />}
+        />
 
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
-        <Route path='/admin' element={<AdminLayout />}>
+        <Route
+          path='/admin'
+          element={<AdminLayout />}
+        >
           {/* 사용자 문의 */}
-          <Route path='contact' element={<AdminContactPage />} />
+          <Route
+            path='contact'
+            element={<AdminContactPage />}
+          />
           <Route path='accommodations'>
-            <Route index element={<AdminMain />} />
+            <Route
+              index
+              element={<AdminMain />}
+            />
             {/* 숙박등록/수정페이지 */}
-            <Route path='new' element={<AccommodationFormContainer />} />
-            <Route path=':id/edit' element={<AccommodationFormContainer />} />
+            <Route
+              path='new'
+              element={<AccommodationFormContainer />}
+            />
+            <Route
+              path=':id/edit'
+              element={<AccommodationFormContainer />}
+            />
             {/* 객실등록/수정페이지 */}
-            <Route path=':id/rooms' element={<RoomMain />} />
+            <Route
+              path=':id/rooms'
+              element={<RoomMain />}
+            />
           </Route>
           <Route path='reservations'>
-            <Route index element={<ReservationManagementList />} />
+            <Route
+              index
+              element={<ReservationManagementList />}
+            />
             <Route
               path=':id/detail'
               element={<ReservationManagementDetail />}
@@ -100,7 +163,10 @@ function App() {
             element={<ReservationCancelList />}
           />
         </Route>
-        <Route path='/chat/room' element={<ChatRoom />} />
+        <Route
+          path='/chat/room'
+          element={<ChatRoom />}
+        />
       </Routes>
       {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
       {!isAdmin && <AppFooter />}
