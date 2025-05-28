@@ -98,12 +98,14 @@ function App() {
           element={<NonMemberReservation />}
         />
         <Route path='/accommodations'>
+          {/* 숙박 목록 페이지 */}
           <Route
             index
             element={<AccommodationList />}
           />
+          {/* 숙박 상세 페이지 */}
           <Route
-            path='/accommodations/detail'
+            path='/accommodations/:id'
             element={<AccommodationDetail />}
           />
         </Route>

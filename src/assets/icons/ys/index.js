@@ -23,6 +23,7 @@ import {
   FaSmoking,
   FaBurn,
   FaBath,
+  FaMapMarkerAlt,
 } from 'react-icons/fa';
 
 export {
@@ -47,6 +48,7 @@ export {
   FaSmoking,
   FaBurn,
   FaBath,
+  FaMapMarkerAlt,
 };
 
 import { BiCabinet } from 'react-icons/bi';
@@ -66,6 +68,7 @@ import {
   MdLuggage,
   MdHouse,
   MdOutlineFoodBank,
+  MdAddPhotoAlternate,
 } from 'react-icons/md';
 
 export {
@@ -79,4 +82,8 @@ export {
   MdLuggage,
   MdHouse,
   MdOutlineFoodBank,
+  MdAddPhotoAlternate,
 };
+
+import { GrCart } from 'react-icons/gr';
+export { GrCart };

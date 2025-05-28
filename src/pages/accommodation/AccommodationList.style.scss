@@ -8,11 +8,14 @@
 .main-section {
   width: 100%;
   display: flex;
-  gap: 200px;
+  gap: 100px;
   margin-top: 20px;
 
   .filter-section {
     width: 268px;
+  }
+  .filter-section.accom-filter-section {
+    width: 350px;
   }
 
   .list-section {
@@ -28,9 +31,8 @@
     }
     .item-line {
       border-top: 3px solid #baabfa;
-      margin-bottom: 25px;
-      margin-right: 30px;
-      width: 780px;
+      margin-bottom: 20px;
+      width: 814px;
     }
   }
 }

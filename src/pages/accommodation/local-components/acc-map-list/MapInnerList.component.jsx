@@ -1,7 +1,7 @@
 import React from 'react';
 import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import MapInnerCard from './card/MapInnerCard.component';
-import './MapInnerList.style.scss';
+import './mapInnerList.style.scss';
 
 export const MapInnerList = () => {
   const markedData = accomData.accommodation_tb.map((accom) => ({
@@ -17,7 +17,10 @@ export const MapInnerList = () => {
   return (
     <ul className='acc-inner-list'>
       {markedData.map((accom) => (
-        <MapInnerCard key={accom.id} accom={accom} />
+        <MapInnerCard
+          key={accom.id}
+          accom={accom}
+        />
       ))}
     </ul>
   );

@@ -5,13 +5,9 @@ import {
   FaCampground,
   FaHouseUser,
 } from '../../../../../assets/icons/ys/index';
-import useFilterStore from '../../store/useFilterStore';
-import './Filter.style.scss';
+import './filter.style.scss';
 
-const CategoryFilter = () => {
-  const selectedCategory = useFilterStore((state) => state.selectedCategory);
-  const setCategory = useFilterStore((state) => state.setCategory);
-
+const CategoryFilter = ({ selectedCategory, setCategory }) => {
   const categoryIcons = [
     { icon: <FaBed />, value: '모텔', title: '모텔' },
     { icon: <FaHotel />, value: '호텔', title: '호텔' },

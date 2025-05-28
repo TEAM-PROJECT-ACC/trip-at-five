@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FaBed,
   FaHotel,
@@ -7,7 +8,7 @@ import {
   MdHouse,
   MdVilla,
 } from '../../../../../assets/icons/ys/index';
-import './AccommodationCard.style.scss';
+import './accommodationCard.style.scss';
 
 const typeIconMap = {
   모텔: FaBed,
@@ -19,10 +20,17 @@ const typeIconMap = {
 };
 
 const AccommodationCard = ({ accom }) => {
+  const nav = useNavigate();
   const TypeIcon = typeIconMap[accom.type];
 
+  const handleNav = () => {
+    nav(`/accommodations/${accom.id}`);
+  };
   return (
-    <li className='accommodation-item'>
+    <li
+      className='accommodation-item'
+      onClick={handleNav}
+    >
       <div className='image'>
         <img
           src='/src/assets/images/acc-list-page/hotel-img.png'
@@ -32,7 +40,10 @@ const AccommodationCard = ({ accom }) => {
       <div className='accom-info'>
         <div className='level-one'>
           <div className='accom-name'>{accom.name}</div>
-          <div className='accom-info-icon' title={accom.type}>
+          <div
+            className='accom-info-icon'
+            title={accom.type}
+          >
             <TypeIcon />
           </div>
         </div>

@@ -1,17 +1,19 @@
 import { useEffect, useRef } from 'react';
-import './KakaoMap.style.scss';
+import './kakaoMap.style.scss';
 import FilterPanel from '../filter/FilterPanel.component';
 import { MapInnerList } from '../acc-map-list/MapInnerList.component';
 import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
-import useFilterStore from '../store/useFilterStore';
+import { useFilterState } from '../../hooks/useFilterState.hook';
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
 
-  const priceRange = useFilterStore((state) => state.priceRange);
+  const filterHook = useFilterState();
+  const { filter } = filterHook;
+  const { priceRange } = filter;
 
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
@@ -98,15 +100,7 @@ export const KakaoMap = ({ onClose }) => {
         });
 
         document.querySelectorAll('.price-bubble').forEach((el) => {
-          if (el === bubble) {
-            el.style.opacity = '1';
-            el.style.visibility = 'visible';
-            el.style.pointerEvents = 'none';
-          } else {
-            el.style.opacity = '0';
-            el.style.visibility = 'hidden';
-            el.style.pointerEvents = 'none';
-          }
+          el.style.zIndex = '101';
         });
         if (openOverlayId === accom.id) {
           openOverlayId = null;
@@ -166,23 +160,36 @@ export const KakaoMap = ({ onClose }) => {
         }}
       />
 
-      <button className='btn-exit' type='button' onClick={onClose}>
+      <button
+        className='btn-exit'
+        type='button'
+        onClick={onClose}
+      >
         <TiDelete />
       </button>
       <div className='filter-map'>
-        <FilterPanel />
+        <FilterPanel filterHook={filterHook} />
       </div>
       <div className='acc-list-map'>
         <MapInnerList />
-        <div className='map' ref={mapRef}></div>
+        <div
+          className='map'
+          ref={mapRef}
+        ></div>
         <div className='custom_zoomcontrol'>
-          <div className='level__btn--plus' onClick={zoomIn}>
+          <div
+            className='level__btn--plus'
+            onClick={zoomIn}
+          >
             <img
               src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png'
               alt='확대'
             />
           </div>
-          <div className='level__btn--minus' onClick={zoomOut}>
+          <div
+            className='level__btn--minus'
+            onClick={zoomOut}
+          >
             <img
               src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png'
               alt='축소'
