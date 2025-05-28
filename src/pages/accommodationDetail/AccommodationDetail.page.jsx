@@ -1,22 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
 //import AccommodationHeader from './components/AccommodationHeader.component';
 import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
-import { Modal, Pagination } from '../../components';
-import { FaMapMarkerAlt } from '../../assets/icons/ys/index';
+import {
+  ButtonPrimary,
+  Modal,
+  Pagination,
+  StarRating,
+  Textarea,
+} from '../../components';
+import { MdAddPhotoAlternate } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
 import { accomData } from '../../assets/sample-data/accomSampleData';
+import { Star } from '../../components/star-rating/components/star/Star.component';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
   const accom = accomData.accommodation_tb.find(
     (item) => String(item.accom_sq) === String(id)
   );
-  const [modalOpen, setModalOpen] = useState(false);
+
+  const [starRateScore, setStarRateScore] = useState(() => 2.6);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleRatingStar = (score) => {
+    setStarRateScore(() => score);
+  };
 
   const mapRef = useRef(null);
 
@@ -25,9 +38,9 @@ const AccommodationDetail = () => {
       /* 해당 숙박업체의 위도경도에 따라 지도에 마커 위치가 변경*/
       const lat = accom.accom_lat;
       const lon = accom.accom_lon;
-
+      const markPosition = new window.kakao.maps.LatLng(lat, lon);
       const map = new window.kakao.maps.Map(mapRef.current, {
-        center: new window.kakao.maps.LatLng(lat, lon),
+        center: markPosition,
         level: 3,
       });
 
@@ -41,10 +54,22 @@ const AccommodationDetail = () => {
       );
 
       new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(lat, lon),
+        position: markPosition,
         map,
         image: markerImage,
       });
+
+      const overlayContent = `
+        <div class="custom-overlay-bubble">
+          <div class="custom-overlay-label">${accom.accom_name}</div>
+        </div>
+      `;
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        position: markPosition,
+        content: overlayContent,
+        yAnchor: 2.15,
+      });
+      customOverlay.setMap(map);
     }
   };
 
@@ -55,6 +80,10 @@ const AccommodationDetail = () => {
       });
     }
   }, [accom]);
+
+  const modalHandler = () => {
+    setModalOpen(true);
+  };
 
   return (
     <PageContainer>
@@ -76,11 +105,17 @@ const AccommodationDetail = () => {
       {/* 숙소 정보 카드 */}
       <section className='accom-info-detail'>
         <div className='accom-info__map'>
-          <a href='#ancher-map' className='accom-location-btn'>
+          <a
+            href='#ancher-map'
+            className='accom-location-btn'
+          >
             위치정보
           </a>
         </div>
-        <a href='#ancher-review' className='accom-info__review'>
+        <a
+          href='#ancher-review'
+          className='accom-info__review'
+        >
           <div className='review-header'>
             <p className='nickname'>닉네임</p>
             <div className='stars'>⭐⭐⭐⭐⭐</div>
@@ -100,23 +135,61 @@ const AccommodationDetail = () => {
       <RoomList />
 
       {/* 앵커 태그가 헤더 영역에 가려져서 빈 태그 추가 */}
-      <div className='empty_blank' id='ancher-review'></div>
+      <div
+        className='empty_blank'
+        id='ancher-review'
+      ></div>
       {/* 후기 섹션 */}
       <section className='review-section'>
         <div className='review-section__header'>
           <div className='acc-detail-section__title'>이용 후기</div>
-          <div className='review-stars'>⭐3.0</div>
+          <div className='review-star'>
+            <Star className='review-star-style' />
+            3.0
+          </div>
           <button
-            onClick={() => {
-              setModalOpen(true);
-            }}
+            onClick={modalHandler}
             className='accom-modal-btn'
           >
             후기 등록
           </button>
-          {modalOpen && (
-            <Modal>
-              <>모달 테스트</>
+          {isModalOpen && (
+            <Modal
+              className='accom-modal__inner'
+              useCloseIcon={true}
+              modalHandler={() => {
+                setModalOpen(false);
+              }}
+            >
+              <div className='accom-modal-container'>
+                <div className='accom-modal-title'>
+                  이번 여행은 어떠쎴나요?
+                  <br />
+                  여행에 대한 짫은 후기를 편하게 남겨주세요
+                </div>
+                <StarRating
+                  score={starRateScore}
+                  onClick={handleRatingStar}
+                  className='accom-modal-stars'
+                />
+                <div className='accom-modal-body'>
+                  <Textarea
+                    placeholder={'후기를 작성해주세요'}
+                    className='accom-modal-textbox'
+                  />
+                  <div className='accom-modal-img'>
+                    <MdAddPhotoAlternate className='accom-modal-img-icon' />
+                  </div>
+                </div>
+                <ButtonPrimary
+                  className='accom-modal-btn-inner'
+                  onClick={() => {
+                    setModalOpen(false);
+                  }}
+                >
+                  등록하기
+                </ButtonPrimary>
+              </div>
             </Modal>
           )}
         </div>
@@ -230,14 +303,24 @@ const AccommodationDetail = () => {
             <div className='see-more-comment'>더보기</div>
           </div>
         </div>
-        <Pagination />
+        <Pagination
+          className='accom-review-pagination'
+          totalCount={100}
+          pageLength={5}
+          currentPage={1}
+          numOfRows={10}
+          useMoveToEnd={true}
+        />
       </section>
 
       {/* 상세 정보 */}
 
       <RoomDetailText />
 
-      <section id='ancher-map' className='accom__map-container'>
+      <section
+        id='ancher-map'
+        className='accom__map-container'
+      >
         <div className='acc-detail-section__title'>위치</div>
         <div className='accom-info-mapContainer'>
           <Script
@@ -253,7 +336,10 @@ const AccommodationDetail = () => {
               }
             }}
           />
-          <div ref={mapRef} className='mapStyle' />
+          <div
+            ref={mapRef}
+            className='mapStyle'
+          />
         </div>
       </section>
     </PageContainer>

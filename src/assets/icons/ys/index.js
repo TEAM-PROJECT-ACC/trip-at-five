@@ -68,6 +68,7 @@ import {
   MdLuggage,
   MdHouse,
   MdOutlineFoodBank,
+  MdAddPhotoAlternate,
 } from 'react-icons/md';
 
 export {
@@ -81,6 +82,7 @@ export {
   MdLuggage,
   MdHouse,
   MdOutlineFoodBank,
+  MdAddPhotoAlternate,
 };
 
 import { GrCart } from 'react-icons/gr';

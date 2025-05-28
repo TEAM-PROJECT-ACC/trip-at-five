@@ -8,9 +8,9 @@ import {
 import useFilterStore from '../../store/useFilterStore';
 import './filter.style.scss';
 
-const CategoryFilter = () => {
-  const selectedCategory = useFilterStore((state) => state.selectedCategory);
-  const setCategory = useFilterStore((state) => state.setCategory);
+const CategoryFilter = ({ selectedCategory, setCategory }) => {
+  // const selectedCategory = useFilterStore((state) => state.selectedCategory);
+  // const setCategory = useFilterStore((state) => state.setCategory);
 
   const categoryIcons = [
     { icon: <FaBed />, value: '모텔', title: '모텔' },

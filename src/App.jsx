@@ -67,11 +67,10 @@ function App() {
         <Route path='/carts' element={<CartMain />} />
         <Route path='/guest/reservations' element={<NonMemberReservation />} />
         <Route path='/accommodations'>
+          {/* 숙박 목록 페이지 */}
           <Route index element={<AccommodationList />} />
-          <Route
-            path='/accommodations/detail'
-            element={<AccommodationDetail />}
-          />
+          {/* 숙박 상세 페이지 */}
+          <Route path='/accommodations/:id' element={<AccommodationDetail />} />
         </Route>
         <Route path='/reservations' element={<Reservation />} />
         <Route path='/payments' element={<Receipt />} />

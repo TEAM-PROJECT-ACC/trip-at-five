@@ -158,7 +158,11 @@ export const KakaoMap = ({ onClose }) => {
         }}
       />
 
-      <button className='btn-exit' type='button' onClick={onClose}>
+      <button
+        className='btn-exit'
+        type='button'
+        onClick={onClose}
+      >
         <TiDelete />
       </button>
       <div className='filter-map'>
@@ -166,15 +170,24 @@ export const KakaoMap = ({ onClose }) => {
       </div>
       <div className='acc-list-map'>
         <MapInnerList />
-        <div className='map' ref={mapRef}></div>
+        <div
+          className='map'
+          ref={mapRef}
+        ></div>
         <div className='custom_zoomcontrol'>
-          <div className='level__btn--plus' onClick={zoomIn}>
+          <div
+            className='level__btn--plus'
+            onClick={zoomIn}
+          >
             <img
               src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png'
               alt='확대'
             />
           </div>
-          <div className='level__btn--minus' onClick={zoomOut}>
+          <div
+            className='level__btn--minus'
+            onClick={zoomOut}
+          >
             <img
               src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png'
               alt='축소'

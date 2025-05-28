@@ -4,6 +4,7 @@ import 'rc-slider/assets/index.css';
 import useFilterStore from '../../store/useFilterStore';
 import './filter.style.scss';
 
+//const PriceFilter = ({ priceRange, setPriceRange }) => {
 const PriceFilter = () => {
   const priceRange = useFilterStore((state) => state.priceRange);
   const setPriceRange = useFilterStore((state) => state.setPriceRange);

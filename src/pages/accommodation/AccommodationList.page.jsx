@@ -8,8 +8,11 @@ import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
 import { accomData } from '../../assets/sample-data/accomSampleData';
 import useFilterStore from './local-components/store/useFilterStore';
+import { useFilterState } from './hooks/useFilterState.hook';
 
 const AccommodationList = () => {
+  const filterHook = useFilterState();
+
   const currentPage = useFilterStore((state) => state.currentPage);
   const setCurrentPage = useFilterStore((state) => state.setCurrentPage);
   const pageSize = 5;
@@ -48,7 +51,10 @@ const AccommodationList = () => {
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>
           <MapButton accommodations={accommodations} />
-          <FilterPanel className={'accom-filter-panel'} />
+          <FilterPanel
+            className={'accom-filter-panel'}
+            filterHook={filterHook}
+          />
         </aside>
         <div className='list-section'>
           <AccommodationListBox
