@@ -1,7 +1,6 @@
-import React from 'react';
 import MainTop from './top/MainTop.component';
-import './MainArea.style.scss';
 import MainBottom from './bottom/MainBottom.component';
+import './MainArea.style.scss';
 
 const MainArea = () => {
   return (

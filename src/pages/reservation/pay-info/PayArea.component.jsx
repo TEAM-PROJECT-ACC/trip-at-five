@@ -1,9 +1,8 @@
-import React from 'react';
-import './PayArea.style.scss';
+import Bootpay from '@bootpay/client-js';
 import PayInfo from '../../../components/pay/PayInfo.component';
 import Room from '../../../components/room-list/room/Room.component';
 import { usePaymentInfoStore } from '../../../states';
-import Bootpay from '@bootpay/client-js';
+import './PayArea.style.scss';
 
 const PayArea = ({ className, roomInfo }) => {
   const { setResCode } = usePaymentInfoStore((state) => state.actions);

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import UserInfo from './user-info/UserInfo.component';
-import './Reservation.style.scss';
 import PayArea from './pay-info/PayArea.component';
-import { useAccomSearchStore, usePaymentInfoStore } from '../../states';
 import { PageContainer } from '../../components';
+import { useAccomSearchStore, usePaymentInfoStore } from '../../states';
+import './Reservation.style.scss';
 
 const Reservation = () => {
   const checkIn = useAccomSearchStore((state) => state.checkIn);
@@ -17,9 +17,6 @@ const Reservation = () => {
   );
 
   useEffect(() => {
-    console.log(checkIn);
-    console.log(checkOut);
-    console.log(numberOfPeople);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
     setNumberOfPeople(numberOfPeople);

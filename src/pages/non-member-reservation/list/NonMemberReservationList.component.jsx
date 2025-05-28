@@ -1,4 +1,3 @@
-import React from 'react';
 import { accomData } from '../../../assets/sample-data/accomSampleData';
 import { ButtonPrimary, Label } from '../../../components';
 import './NonMemberReservationList.style.scss';

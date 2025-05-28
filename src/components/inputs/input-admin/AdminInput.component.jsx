@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input } from '../input/Input.component';
 import { classNames } from '../../../utils';
 import './AdminInput.style.scss';

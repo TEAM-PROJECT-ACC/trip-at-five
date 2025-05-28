@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import './AccommodationForm.style.scss';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import FormItem from './form/FormItem.component';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
+import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
+import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import {
   FaSpa,
   FaSwimmer,
@@ -31,9 +33,7 @@ import {
   BiCabinet,
   FaHotTub,
 } from '../../../../assets/icons/ys/index';
-import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
-import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-import { useParams } from 'react-router-dom';
+import './AccommodationForm.style.scss';
 
 const accomType = [
   '모텔',

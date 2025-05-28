@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import AccomCalendar from '../../../../../components/accom-search/calendar/AccomCalendar.component';
-import './SearchArea.style.scss';
 import NumberOfPeople from '../../../../../components/accom-search/number-of-people/NumberOfPeople.component';
-import { useAccomSearchStore } from '../../../../../states';
 import { ButtonSecondary, InputSecondary } from '../../../../../components';
+import { useAccomSearchStore } from '../../../../../states';
+import './SearchArea.style.scss';
+
 const SearchArea = () => {
   const state = useAccomSearchStore.getState();
   const { setKeywordState } = useAccomSearchStore();
@@ -11,7 +12,6 @@ const SearchArea = () => {
   const [inputValue, setInputValue] = useState('');
 
   const searchHandler = async () => {
-    console.log(inputValue);
     setKeywordState(inputValue);
     // 필요한 상태만 추출
     const searchData = {

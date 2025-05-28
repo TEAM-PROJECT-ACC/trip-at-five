@@ -1,6 +1,5 @@
-import React from 'react';
-import './AdminPrimaryButton.style.scss';
 import { classNames } from '../../../utils';
+import './AdminPrimaryButton.style.scss';
 
 const AdminPrimaryButton = ({ className, onClick, children, ...props }) => {
   return (

@@ -18,6 +18,8 @@ import {
   FaCalendarAlt,
   FaCalendarTimes,
   FaHotel,
+  FaRegCalendarCheck,
+  FaTimesCircle,
 } from 'react-icons/fa';
 import {
   MdOutlineArrowDropDown,
@@ -26,6 +28,7 @@ import {
   MdDocumentScanner,
   MdClose,
   MdContactSupport,
+  MdHourglassTop,
 } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { IoCart } from 'react-icons/io5';
@@ -71,4 +74,7 @@ export {
   MdDocumentScanner,
   MdClose,
   MdContactSupport,
+  FaRegCalendarCheck,
+  FaTimesCircle,
+  MdHourglassTop,
 };

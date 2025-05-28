@@ -1,13 +1,12 @@
-import './AdminMain.style.scss';
+import { useNavigate } from 'react-router-dom';
 import AdminHeader from '../local-components/header/AdminHeader.component';
 import AdminSearch from '../local-components/header/search/AdminSearch.component';
-import { useNavigate } from 'react-router-dom';
-import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
+import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import { listSampleData } from '../../../assets/sample-data/listSampleData';
-import { AdminPagination } from '../../../components/admin-pagination/AdminPagination.component';
-import { useEffect, useState } from 'react';
+import './AdminMain.style.scss';
+
 const dataList = listSampleData.accommodation_tb;
 
 const accomColumnList = [

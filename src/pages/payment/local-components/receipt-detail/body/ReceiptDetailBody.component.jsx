@@ -1,6 +1,5 @@
-import React from 'react';
-import './ReceiptDetailBody.style.scss';
 import { FaInfoCircle } from '../../../../../assets/icons/index';
+import './ReceiptDetailBody.style.scss';
 
 const ReceiptDetailBody = ({ className }) => {
   return (

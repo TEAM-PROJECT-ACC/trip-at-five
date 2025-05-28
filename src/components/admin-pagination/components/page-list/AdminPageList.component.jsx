@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import './AdminPageList.style.scss';
 import { AdminPageButton } from '../page-button/AdminPageButton.component';
+import './AdminPageList.style.scss';
 
 export const AdminPageList = ({
   pageLength,

@@ -1,4 +1,3 @@
-import React from 'react';
 import Banner from './banner/Banner.component';
 import SearchArea from './search/SearchArea.component';
 import './MainTop.style.scss';

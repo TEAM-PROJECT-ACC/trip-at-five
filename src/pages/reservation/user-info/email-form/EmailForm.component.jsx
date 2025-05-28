@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   ButtonPrimary,
   ButtonSecondary,
   InputShrink,
 } from '../../../../components';
-import './EmailForm.style.scss';
 import { usePaymentInfoStore } from '../../../../states';
+import './EmailForm.style.scss';
 
 /**
  * email input 의 기본값은 ''

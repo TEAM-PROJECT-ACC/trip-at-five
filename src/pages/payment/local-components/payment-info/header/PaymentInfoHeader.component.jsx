@@ -1,6 +1,6 @@
-import React from 'react';
-import './PaymentInfoHeader.style.scss';
 import { RiMoneyDollarCircleLine } from '../../../../../assets/icons/index';
+import './PaymentInfoHeader.style.scss';
+
 const PaymentInfoHeader = ({ className }) => {
   return (
     <div className={className}>

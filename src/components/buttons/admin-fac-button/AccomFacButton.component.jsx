@@ -1,4 +1,3 @@
-import React from 'react';
 import './AccomFacButton.style.scss';
 
 const AccomFacButton = ({ type, icon, title, ...props }) => {

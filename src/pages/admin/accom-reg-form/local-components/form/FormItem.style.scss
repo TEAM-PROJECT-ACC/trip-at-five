@@ -45,10 +45,11 @@
 
     .accom-desc {
       width: 100%;
-      min-height: 300px;
+      min-height: 330px;
       padding: 16px;
       border-radius: 10px;
       font-size: 20px;
+      resize: none;
       @include color-1e2022;
       @include admin-input-shadow;
     }

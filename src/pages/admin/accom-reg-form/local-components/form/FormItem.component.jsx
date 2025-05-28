@@ -1,6 +1,5 @@
-import React from 'react';
-import './FormItem.style.scss';
 import { classNames } from '../../../../../utils';
+import './FormItem.style.scss';
 
 const FormItem = ({ title, children, className }) => {
   return (
