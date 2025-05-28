@@ -22,6 +22,7 @@ import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
+import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
 function App() {
@@ -155,7 +156,10 @@ function App() {
               element={<ReservationManagementDetail />}
             />
           </Route>
-          <Route path='cancel-reservations' />
+          <Route
+            path='cancel-reservations'
+            element={<ReservationCancelList />}
+          />
         </Route>
         <Route
           path='/chat/room'

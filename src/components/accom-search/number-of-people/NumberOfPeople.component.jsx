@@ -17,7 +17,10 @@ const NumberOfPeople = ({ ...props }) => {
 
     for (let i = 0; i < 8; i++) {
       result.push(
-        <span key={i + 1} onClick={() => setNumberOfPeopleHandler(i + 1)}>
+        <span
+          key={i + 1}
+          onClick={() => setNumberOfPeopleHandler(i + 1)}
+        >
           {i + 1 <= state.numberOfPeople || state.numberOfPeople === '8+' ? (
             <FaUser className='number-of-people-icon active' />
           ) : (

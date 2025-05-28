@@ -17,7 +17,11 @@ const Room = ({ className, checkArea, value, checkHandler, isChecked }) => {
   return (
     <div className={className}>
       <div className='accom-name'>
-        {checkArea && <span onClick={checkRoomHandler}>{isChecked ? <GoCheckCircleFill /> : <GoCheckCircle />}</span>}
+        {checkArea && (
+          <span onClick={checkRoomHandler}>
+            {isChecked ? <GoCheckCircleFill /> : <GoCheckCircle />}
+          </span>
+        )}
         <h1>{value?.accom_name}</h1>
       </div>
       <div className='room-body'>

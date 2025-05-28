@@ -8,7 +8,10 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
     <div className='admin-main-body'>
       <table className='admin-table'>
         <AdminTableHead columnList={columnList} />
-        <AdminTableBody dataList={dataList} onClickRow={onClickRow} />
+        <AdminTableBody
+          dataList={dataList}
+          onClickRow={onClickRow}
+        />
       </table>
     </div>
   );

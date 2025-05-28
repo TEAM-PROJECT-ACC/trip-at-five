@@ -35,7 +35,14 @@ import AccomFacButton from '../../../../components/buttons/admin-fac-button/Acco
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import { useParams } from 'react-router-dom';
 
-const accomType = ['모텔', '호텔/리조트', '펜션', '홈/빌라', '캠핑', '게하/한옥'];
+const accomType = [
+  '모텔',
+  '호텔/리조트',
+  '펜션',
+  '홈/빌라',
+  '캠핑',
+  '게하/한옥',
+];
 const publicFac = [
   { icon: <FaSpa />, title: '사우나' },
   { icon: <FaSwimmer />, title: '수영장' },
@@ -128,25 +135,52 @@ const AccommodationForm = () => {
     data.currentTarget.classList.add('active');
   };
   return (
-    <form className='accom-form' encType='multipart/form-data'>
+    <form
+      className='accom-form'
+      encType='multipart/form-data'
+    >
       {/* 숙박업소 정보 등록 */}
       <FormItem title='숙박업소 정보 등록'>
-        <select className='accom-type-select' name='accomTypeNo'>
+        <select
+          className='accom-type-select'
+          name='accomTypeNo'
+        >
           {accomType.map((value, idx) => (
-            <option key={idx} value={value}>
+            <option
+              key={idx}
+              value={value}
+            >
               {value}
             </option>
           ))}
         </select>
-        <AdminInput type='text' name='accomName' className='accom-name' placeholder={'숙박업소명을 입력해주세요'} />
-        <AdminInput type='tel' name='accomPhone' className='accom-phone' placeholder={"'-'없이 입력해주세요"} />
+        <AdminInput
+          type='text'
+          name='accomName'
+          className='accom-name'
+          placeholder={'숙박업소명을 입력해주세요'}
+        />
+        <AdminInput
+          type='tel'
+          name='accomPhone'
+          className='accom-phone'
+          placeholder={"'-'없이 입력해주세요"}
+        />
       </FormItem>
       {/* 숙박업소 이미지 등록 */}
       <FormItem title='숙박업소 이미지 등록'>
-        <AdminInput type='file' multiple name='accomImageList' className='accom-image' />
+        <AdminInput
+          type='file'
+          multiple
+          name='accomImageList'
+          className='accom-image'
+        />
       </FormItem>
       {/* 숙박업소 설명 */}
-      <FormItem title='숙박업소 설명' className='accom-desc__container'>
+      <FormItem
+        title='숙박업소 설명'
+        className='accom-desc__container'
+      >
         <textarea
           className='accom-desc'
           name='accomDesc'
@@ -155,55 +189,106 @@ const AccommodationForm = () => {
           onChange={checkWordCountHandler}
         />
         <span className='accom-desc-count'>
-          {wordCount >= 1330 && <span className='accom-desc-warning'>최대 1330자입니다!</span>}
+          {wordCount >= 1330 && (
+            <span className='accom-desc-warning'>최대 1330자입니다!</span>
+          )}
           <span>{wordCount}</span> / 1330자
         </span>
       </FormItem>
       {/* 숙박업소 주소 */}
-      <FormItem title='숙박업소 설명' className='content__container'>
+      <FormItem
+        title='숙박업소 설명'
+        className='content__container'
+      >
         <div className='map-area'>
           <div>{/* 맵 영역 */}</div>
         </div>
         <div className='map-input'>
           {/* 경도 */}
-          <input type='hidden' name='accomLon' />
+          <input
+            type='hidden'
+            name='accomLon'
+          />
           {/* 위도 */}
-          <input type='hidden' name='accomLat' />
+          <input
+            type='hidden'
+            name='accomLat'
+          />
 
-          <AdminInput type='text' name='accomZipCode' className='accom-zip-code' placeholder={'우편번호'} />
-          <AdminInput type='text' name='accomAddr' className='accom-addr' placeholder={'주소지'} />
+          <AdminInput
+            type='text'
+            name='accomZipCode'
+            className='accom-zip-code'
+            placeholder={'우편번호'}
+          />
+          <AdminInput
+            type='text'
+            name='accomAddr'
+            className='accom-addr'
+            placeholder={'주소지'}
+          />
         </div>
       </FormItem>
       {/* 숙박업소 시설 정보 */}
       <FormItem title='숙박업소 시설 정보'>
         <div className='fac-content__container'>
           {publicFac.map((value, idx) => (
-            <AccomFacButton key={idx} type='button' data-category='pub' title={value.title} icon={value.icon} onClick={addFacHandler} />
+            <AccomFacButton
+              key={idx}
+              type='button'
+              data-category='pub'
+              title={value.title}
+              icon={value.icon}
+              onClick={addFacHandler}
+            />
           ))}
         </div>
         <div className='fac-content__container'>
           {inRoomFac.map((value, idx) => (
-            <AccomFacButton key={idx} type='button' data-category='room' title={value.title} icon={value.icon} onClick={addFacHandler} />
+            <AccomFacButton
+              key={idx}
+              type='button'
+              data-category='room'
+              title={value.title}
+              icon={value.icon}
+              onClick={addFacHandler}
+            />
           ))}
         </div>
         <div className='fac-content__container'>
           {etcFac.map((value, idx) => (
-            <AccomFacButton key={idx} type='button' data-category='etc' title={value.title} icon={value.icon} onClick={addFacHandler} />
+            <AccomFacButton
+              key={idx}
+              type='button'
+              data-category='etc'
+              title={value.title}
+              icon={value.icon}
+              onClick={addFacHandler}
+            />
           ))}
         </div>
       </FormItem>
 
       {id ? (
         <div className='accom-reg-button-group'>
-          <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+          <AdminPrimaryButton
+            type={'submit'}
+            className={'accom-reg-button'}
+          >
             수정
           </AdminPrimaryButton>
-          <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+          <AdminPrimaryButton
+            type={'submit'}
+            className={'accom-reg-button'}
+          >
             삭제
           </AdminPrimaryButton>
         </div>
       ) : (
-        <AdminPrimaryButton type={'submit'} className={'accom-reg-button'}>
+        <AdminPrimaryButton
+          type={'submit'}
+          className={'accom-reg-button'}
+        >
           등록
         </AdminPrimaryButton>
       )}

@@ -3,7 +3,14 @@ import { Input } from '../input/Input.component';
 import { classNames } from '../../../utils';
 import './AdminInput.style.scss';
 
-const AdminInput = ({ className, defaultValue, placeholder, onChange, type, ...props }) => {
+const AdminInput = ({
+  className,
+  defaultValue,
+  placeholder,
+  onChange,
+  type,
+  ...props
+}) => {
   return (
     <Input
       className={classNames('admin-input', className)}

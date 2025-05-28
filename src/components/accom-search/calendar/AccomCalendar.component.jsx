@@ -10,7 +10,8 @@ import { formatDate } from '../../../utils/formatDate/formatDate';
 
 const AccomCalendar = ({ ...props }) => {
   const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
-  const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state);
+  const { setCheckInState, setCheckOutState, setTripDayState, resetState } =
+    useAccomSearchStore((state) => state);
 
   const [calendarFlag, setCalendarFlag] = useState(false);
 
@@ -46,7 +47,10 @@ const AccomCalendar = ({ ...props }) => {
 
   return (
     <div {...props}>
-      <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
+      <div
+        className='calendar-text'
+        onClick={() => setCalendarFlag(!calendarFlag)}
+      >
         <FaCalendar className='calendar-icon' />
         <span>
           {checkIn?.substring(5)} ~ {checkOut?.substring(5)} ({tripDay}박)

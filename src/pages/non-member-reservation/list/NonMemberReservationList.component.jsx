@@ -18,7 +18,10 @@ const NonMemberReservationList = ({ className }) => {
             <span>조회된 내역이 없습니다.</span>
           </li>
           {dataList.accommodation_tb?.map((value, idx) => (
-            <li key={idx} className='non-m-reservation-item__container'>
+            <li
+              key={idx}
+              className='non-m-reservation-item__container'
+            >
               <img src='/assets/images/room-page/sample.png' />
               <div className='non-m-reservation-item'>
                 <div className='non-m-reservation-info'>
@@ -34,7 +37,10 @@ const NonMemberReservationList = ({ className }) => {
                 </div>
                 <div className='button-area'>
                   {/* 예약 문의 버튼 : 추후 채팅 문의 페이지로 이동 */}
-                  <ButtonPrimary className='inquiry-button' children={'예약문의'} />
+                  <ButtonPrimary
+                    className='inquiry-button'
+                    children={'예약문의'}
+                  />
                 </div>
               </div>
             </li>

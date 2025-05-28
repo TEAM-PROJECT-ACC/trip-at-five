@@ -23,7 +23,10 @@ const RoomMain = () => {
         {/* 임시로 숙박업소 ID값 출력 서버 연동 후 숙박업소명으로 출력 예정 */}
         <h1>{accomNo}</h1>
       </div>
-      <RoomRegForm accomId={accomNo} roomId={no} />
+      <RoomRegForm
+        accomId={accomNo}
+        roomId={no}
+      />
     </div>
   );
 };

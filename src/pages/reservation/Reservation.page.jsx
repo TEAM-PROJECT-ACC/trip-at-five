@@ -12,7 +12,9 @@ const Reservation = () => {
 
   const { roomInfo } = usePaymentInfoStore((state) => state);
 
-  const { setCheckIn, setCheckOut, setNumberOfPeople } = usePaymentInfoStore((state) => state.actions);
+  const { setCheckIn, setCheckOut, setNumberOfPeople } = usePaymentInfoStore(
+    (state) => state.actions
+  );
 
   useEffect(() => {
     console.log(checkIn);
@@ -26,7 +28,10 @@ const Reservation = () => {
   return (
     <PageContainer className='reservation__container'>
       <UserInfo className='user-info__container' />
-      <PayArea className='pay-info__container' roomInfo={roomInfo} />
+      <PayArea
+        className='pay-info__container'
+        roomInfo={roomInfo}
+      />
     </PageContainer>
   );
 };
