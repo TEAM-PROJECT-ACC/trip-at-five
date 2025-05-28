@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export const useSignUpStore = create(
+export const useRegisterStore = create(
 	persist(
 		(set) => ({
 			step: 1,
@@ -14,12 +14,12 @@ export const useSignUpStore = create(
 			setIsFalse: () => set({ isTrue: false }),
 		}),
 		{
-			name: 'SignUp-step',
+			name: 'register-step',
 		}
 	)
 );
 
-export const SignUpInfoStore = create(
+export const RegisterInfoStore = create(
 	persist(
 		(set) => ({
 			email: null,
@@ -38,7 +38,7 @@ export const SignUpInfoStore = create(
 			setTel: (text) => set({ tel: text }),
 		}),
 		{
-			name: 'signInfo',
+			name: 'register-Info',
 		}
 	)
 );

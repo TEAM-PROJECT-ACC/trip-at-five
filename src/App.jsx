@@ -3,9 +3,9 @@ import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import './App.css';
-import SignUp from './pages/sign/SignUp';
 import LoginPage from './pages/login/LoginPage';
-import PwdRestting from './pages/login/pwd-resetting/Login.password.resetting.conponent';
+import Register from './pages/login/register/RegisterPage';
+import PwdRestting from './pages/login/pwd-resetting/Password.resetting.component';
 import { Chat } from './pages/chat/ChatMainPage';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
@@ -62,8 +62,8 @@ function App() {
 
         {/* 회원가입 */}
         <Route
-          path='/signUp'
-          element={<SignUp />}
+          path='/register'
+          element={<Register />}
         />
 
         {/* 비밀번호 재설정 */}

@@ -1,41 +1,42 @@
-import './SignUp.address.conponent.scss';
+import './address.component.scss';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
-} from '../../../components';
-import { useSignUpStore } from '../SignUpStore';
+} from '../../../../components';
+import { useRegisterStore } from '../RegisterStore';
 
-export default function SignUpAdress() {
-	const { step, setAddStep } = useSignUpStore();
+
+export default function RegisterAdress() {
+	const { step, setAddStep } = useRegisterStore();
 
 	const addressOk = () => {
 		setAddStep();
 	};
 
 	return (
-		<div className='sign-address-wrap'>
-			<p className='sign-address-text bold'>우편번호</p>
+		<div className='register-address-wrap'>
+			<p className='register-address-text bold'>우편번호</p>
 
-			<div className='sign-address-Postal'>
+			<div className='register-address-Postal'>
 				<InputPrimary
-					className={'sign-address-input '}
+					className={'register-address-input '}
 					placeholder={' '}
 				/>
-				<ButtonPrimary className={'sign-address-serch '}>
+				<ButtonPrimary className={'register-address-serch '}>
 					우편 번호 검색
 				</ButtonPrimary>
 			</div>
 
-			<p className='sign-address-text bold'>기본 주소</p>
+			<p className='register-address-text bold'>기본 주소</p>
 			<div>
 				<InputPrimary placeholder={' '} />
 			</div>
 
-			<p className='sign-address-text'>상세 주소</p>
+			<p className='register-address-text'>상세 주소</p>
 			<InputPrimary placeholder={' '} />
 
-			<div className='sign-address-btn'>
+			<div className='register-address-btn'>
 				<ButtonSecondary onClick={addressOk}>나중에 입력</ButtonSecondary>
 				<ButtonPrimary>회원가입</ButtonPrimary>
 			</div>

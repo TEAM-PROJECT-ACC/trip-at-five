@@ -1,14 +1,14 @@
-import './signUp.nickName.conponent.scss';
-import { ButtonPrimary, ButtonSecondary, InputPrimary } from "../../../components";
-import {MdOutlineRefresh} from '../../../assets/icons/logo/kkh/index'
-import { SignUpInfoStore, useSignUpStore } from '../SignUpStore';
-import { nickNameMaker } from './signUp-nickName-sample/NickName.sample';
+import './nickName.component.scss';
+import { ButtonPrimary, ButtonSecondary, InputPrimary } from "../../../../components";
+import {MdOutlineRefresh} from '../../../../assets/icons/logo/kkh/index'
+import { RegisterInfoStore, useRegisterStore } from '../RegisterStore';
+import { nickNameMaker } from './NickName-sample/NickName.sample';
 
 
-export default function SignUpNickName() {
+export default function RegisterNickName() {
 
-    const {step, setAddStep} = useSignUpStore();
-    const {nickName, setnickName, nickCheck, setnickNameCheck} = SignUpInfoStore();
+    const {step, setAddStep} = useRegisterStore();
+    const {nickName, setnickName, nickCheck, setnickNameCheck} = RegisterInfoStore();
    
     /* 닉네임 추천 및 초기화 */
     const resetNickName = () => {
@@ -34,15 +34,15 @@ export default function SignUpNickName() {
 
 
       return(
-      <div className='sign-nickName-wrap'>
-          <div className='sign-nickName-overlap'>
-          <p className='sign-nickName-text'>닉네임</p>
+      <div className='register-nickName-wrap'>
+          <div className='register-nickName-overlap'>
+          <p className='register-nickName-text'>닉네임</p>
           <InputPrimary  placeholder={'닉네임 입력해주세요'} onChange={(e) => {setnickName(e.target.value)}} value={nickName}/>
           <MdOutlineRefresh className='overlap-icon' onClick={resetNickName}/>
           <p className={`nickName-duplicate-check ${nickCheck == true ?'nickName-duplicate-check-ok':'nickName-duplicate-check-fail' }`} >   </p>
           </div>
 
-          <div className='sign-nickname-btn'>         
+          <div className='register-nickname-btn'>         
           <ButtonPrimary onClick={nickNameDuplicateCheck} >중복 검사</ButtonPrimary>
           <ButtonSecondary onClick={nickNameOk}>확인</ButtonSecondary>
 

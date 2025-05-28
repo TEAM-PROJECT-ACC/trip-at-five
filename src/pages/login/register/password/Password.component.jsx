@@ -1,10 +1,10 @@
-import { ButtonPrimary, InputPrimary } from '../../../components';
-import { SignUpInfoStore, useSignUpStore } from '../SignUpStore';
-import './signUp.password.conponent.scss';
+import { ButtonPrimary, InputPrimary } from '../../../../components';
+import { useRegisterStore, RegisterInfoStore } from '../RegisterStore';
+import './password.component.scss';
 
-export default function SignUpPassword() {
-	const { step, setAddStep } = useSignUpStore();
-	const { pwd, setPwd, pwdCheck, setPwdCheck } = SignUpInfoStore();
+export default function RegisterPassword() {
+	const { step, setAddStep } = useRegisterStore();
+	const { pwd, setPwd, pwdCheck, setPwdCheck } = RegisterInfoStore();
 
 	const passwordCheckOK = () => {
 		console.log(pwd === pwdCheck && 'Ok');
@@ -14,20 +14,20 @@ export default function SignUpPassword() {
 	const passwordCheckFail = pwd !== pwdCheck && '비밀번호가 일치하지 않습니다';
 
 	return (
-		<div className='sign-password-wrap'>
-			<p className='sign-password-text'>비밀번호 *</p>
+		<div className='register-password-wrap'>
+			<p className='register-password-text'>비밀번호 *</p>
 			<InputPrimary
 				type={'password'}
-				className='sign-pwd'
+				className='register-pwd'
 				placeholder={'비밀번호를 입력해주세요'}
 				onChange={(e) => {
 					setPwd(e.target.value);
 				}}
 			/>
-			<p className='sign-password-text'>비밀번호 확인*</p>
+			<p className='register-password-text'>비밀번호 확인*</p>
 			<InputPrimary
 				type={'password'}
-				className='sign-pwd-check'
+				className='register-pwd-check'
 				placeholder={'비밀번호를 재입력해주세요'}
 				onChange={(e) => {
 					setPwdCheck(e.target.value);

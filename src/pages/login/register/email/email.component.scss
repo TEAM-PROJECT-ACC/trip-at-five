@@ -1,9 +1,9 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
-.sign-password-wrap {
+.register-email-wrap {
 	padding: 0px 85px;
 
-	.sign-password-text {
+	.register-email-text {
 		font-size: 16px;
 		margin-bottom: 8px;
 	}
@@ -11,19 +11,7 @@
 	input {
 		width: 340px;
 		height: 36x;
-	}
-
-	.sign-pwd {
 		margin-bottom: 20px;
-	}
-
-	.sign-pwd-check {
-		margin-bottom: 10px;
-	}
-
-	.pwd-unconsistent {
-		font-size: 12px;
-		color: #ff0f0f;
 	}
 
 	button {

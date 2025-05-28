@@ -1,11 +1,11 @@
-import { ButtonPrimary, InputPrimary } from '../../../components';
-import { useSignUpStore, SignUpInfoStore } from '../SignUpStore';
-import './signUp.email.conponent.scss';
+import { ButtonPrimary, InputPrimary } from '../../../../components';
+import { useRegisterStore, RegisterInfoStore } from '../RegisterStore';
+import './email.component.scss';
 
-export default function SignInputEmail() {
+export default function RegisterEmail() {
 	const { isTrue, setIsTrue, step, setAddStep, setMinusStep, resetStep } =
-		useSignUpStore();
-	const { email, emailCode, setEmail, setEmailCode } = SignUpInfoStore();
+		useRegisterStore();
+	const { email, emailCode, setEmail, setEmailCode } = RegisterInfoStore();
 
 	/*이메일인증 코드 전송 및 인증코드 입력칸 표시*/
 	const sendEmailCode = () => {
@@ -26,8 +26,8 @@ export default function SignInputEmail() {
 	};
 
 	return (
-		<div className='sign-email-wrap'>
-			<p className='sign-email-text'>이메일 *</p>
+		<div className='register-email-wrap'>
+			<p className='register-email-text'>이메일 *</p>
 			<InputPrimary
 				placeholder={'이메일을 입력해주세요'}
 				onChange={(e) => {
@@ -37,7 +37,7 @@ export default function SignInputEmail() {
 
 			{isTrue && (
 				<div>
-					<p className='sign-email-text'>인증 코드</p>
+					<p className='register-email-text'>인증 코드</p>
 					<InputPrimary
 						placeholder={'인증코드를 입력해주세요'}
 						onChange={(e) => {

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './resetting.email.auth.conponent.scss';
 import { ButtonPrimary } from '../../../../components';
-import { ResettingInput } from '../resetting-input/resetting.input.conponent';
-import { ResttingTitle } from '../resetting-title/resetting.title.conponent';
 import { useIsResetting } from '../state/resetting.state';
+import { ResettingInput } from '../resetting-input/resetting.input.conponent';
+import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
 
 export function EmailAuth() {
 	const [email, setEmail] = useState(null);
@@ -27,8 +27,10 @@ export function EmailAuth() {
 
 	return (
 		<div className='pwd-resetting-content-wrap'>
+
 			<ResettingInput
-				className={'pwd-resetting-text'}
+				text_className={'pwd-resetting-text'}
+				input_className={'pwd-resetting-input'}
 				text={'이메일'}
 				placeholder={'이메일을 입력해주세요'}
 				onChange={(e) => {
@@ -53,7 +55,7 @@ export function EmailAuth() {
 				</>
 			)}
 
-			<ButtonPrimary onClick={isSend ? codeCheck : sendCode}>
+			<ButtonPrimary className={'email-auth'} onClick={isSend ? codeCheck : sendCode}>
 				이메일 인증
 			</ButtonPrimary>
 		</div>

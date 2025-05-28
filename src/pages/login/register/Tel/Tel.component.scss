@@ -1,9 +1,9 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
-.sign-tel-wrap {
+.register-tel-wrap {
 	padding: 0px 85px;
 
-	.sign-tel-text {
+	.register-tel-text {
 		font-size: 16px;
 		margin-bottom: 8px;
 	}
@@ -14,7 +14,7 @@
 		margin-bottom: 40px;
 	}
 
-	.sign-tel-btn {
+	.register-tel-btn {
 		width: 340px;
 		display: flex;
 		justify-content: space-between;

@@ -1,4 +1,4 @@
-import { classNames } from '../../../utils';
+import { classNames } from '../../../../utils';
 import './titleText.component.scss';
 
 export default function TitleText({ className, text }) {
