@@ -44,44 +44,46 @@ const ReservationCancelList = () => {
       />
 
       {isModalOpen && (
-        <Modal modalHandler={handleModalOpen}>
-          <div className='reservation-cancel-modal'>
-            <div className='reservation-cancel-header'>
-              <h1 className='res-code'>{modalResCode}</h1>
-              <span>상세</span>
-            </div>
-            <hr />
-            <div className='reservation-cancel-body'>
-              <section className='reservation-cancel-item '>
-                <h3>사용자이메일</h3>
-                <h3>예약자명</h3>
-                <h3>전화번호</h3>
-                <h3>인원수</h3>
-                <h3>CheckIn</h3>
-                <h3>CheckOut</h3>
-                <h3>예약일</h3>
-                <h3>숙박업소번호</h3>
-                <h3>객실번호</h3>
-              </section>
-              <section className='reservation-cancel-item'>
-                <h3>asd@asd.com</h3>
-                <h3>임성준</h3>
-                <h3>010-1234-1234</h3>
-                <h3>2</h3>
-                <h3>2025년 05월 28일</h3>
-                <h3>2025년 05월 30일</h3>
-                <h3>2025년 05월 10일</h3>
-                <h3>1</h3>
-                <h3>2</h3>
-              </section>
-            </div>
-            <button
-              className='reservation-cancel-button'
-              onClick={cancelResHandler}
-            >
-              예약취소
-            </button>
+        <Modal
+          modalHandler={handleModalOpen}
+          className='reservation-cancel-modal'
+          useCloseIcon={true}
+        >
+          <div className='reservation-cancel-header'>
+            <h1 className='res-code'>{modalResCode}</h1>
+            <span>상세</span>
           </div>
+          <hr />
+          <div className='reservation-cancel-body'>
+            <section className='reservation-cancel-item '>
+              <h3>사용자이메일</h3>
+              <h3>예약자명</h3>
+              <h3>전화번호</h3>
+              <h3>인원수</h3>
+              <h3>CheckIn</h3>
+              <h3>CheckOut</h3>
+              <h3>예약일</h3>
+              <h3>숙박업소번호</h3>
+              <h3>객실번호</h3>
+            </section>
+            <section className='reservation-cancel-item'>
+              <h3>asd@asd.com</h3>
+              <h3>임성준</h3>
+              <h3>010-1234-1234</h3>
+              <h3>2</h3>
+              <h3>2025년 05월 28일</h3>
+              <h3>2025년 05월 30일</h3>
+              <h3>2025년 05월 10일</h3>
+              <h3>1</h3>
+              <h3>2</h3>
+            </section>
+          </div>
+          <button
+            className='reservation-cancel-button'
+            onClick={cancelResHandler}
+          >
+            예약취소
+          </button>
         </Modal>
       )}
     </div>
