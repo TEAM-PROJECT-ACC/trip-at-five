@@ -69,7 +69,10 @@ export const DiaryItem = ({ diary }) => {
         <div className='diary-item__date diary-text'>2025/05/26</div>
       </article>
       {isModalOpen && (
-        <Modal modalHandler={handleModalOpen}>
+        <Modal
+          modalHandler={handleModalOpen}
+          useCloseIcon
+        >
           <DiaryModal
             diary={diary}
             isReadOnly

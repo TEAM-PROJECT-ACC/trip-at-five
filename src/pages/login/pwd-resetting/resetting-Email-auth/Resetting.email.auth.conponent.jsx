@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './resetting.email.auth.conponent.scss';
 import { ButtonPrimary } from '../../../../components';
-import { ResettingInput } from '../resetting-input/resetting.input.conponent';
-import { ResttingTitle } from '../resetting-title/resetting.title.conponent';
 import { useIsResetting } from '../state/resetting.state';
+import { ResettingInput } from '../resetting-input/resetting.input.conponent';
+import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
 
 export function EmailAuth() {
 	const [email, setEmail] = useState(null);
@@ -27,8 +27,10 @@ export function EmailAuth() {
 
 	return (
 		<div className='pwd-resetting-content-wrap'>
+
 			<ResettingInput
-				className={'pwd-resetting-text'}
+				TclassName={'pwd-resetting-email-text'}
+				IclassName={'pwd-resetting-email-input'}
 				text={'이메일'}
 				placeholder={'이메일을 입력해주세요'}
 				onChange={(e) => {
@@ -38,7 +40,8 @@ export function EmailAuth() {
 			{isSend && (
 				<>
 					<ResettingInput
-						className={'pwd-resetting-code-input'}
+						TclassName={'pwd-resetting-email-code-text'}
+				    IclassName={'pwd-resetting-email-code-input'}
 						type={'email'}
 						text={'인증코드'}
 						placeholder={'인증코드를 입력해주세요'}
@@ -53,7 +56,7 @@ export function EmailAuth() {
 				</>
 			)}
 
-			<ButtonPrimary onClick={isSend ? codeCheck : sendCode}>
+			<ButtonPrimary className={'email-auth'} onClick={isSend ? codeCheck : sendCode}>
 				이메일 인증
 			</ButtonPrimary>
 		</div>

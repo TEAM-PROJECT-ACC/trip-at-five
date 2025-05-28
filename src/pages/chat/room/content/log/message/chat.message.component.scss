@@ -1,0 +1,52 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.chat-Transparent-wrap {
+	width: 100%;
+	margin: 0px 8px;
+}
+
+.chat-user-messgae-wrap {
+	width: 372px;
+	margin-top: 27px;
+	margin-left: 51.3%;
+}
+
+.chat-user-nickName {
+	font-size: 20px;
+	text-align: right;
+	margin-bottom: 5px;
+}
+
+.chat-user-message-wrap {
+	
+	padding: 5px 0px;
+	background-color: #baabfa;
+	border-radius: 8px;
+}
+
+.chat-user-message {
+	font-size: 20px;
+	margin: 10px;
+}
+
+.chat-admin-messgae-wrap {
+	width: 372px;
+	height: auto;
+	margin-top: 27px;
+}
+
+.chat-admin-nickName {
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.chat-admin-message-wrap {
+	padding: 5px 0px;
+	border-radius: 8px;
+	@include background-e6e6e6;
+}
+
+.chat-admin-message {
+	font-size: 20px;
+	margin: 10px;
+}

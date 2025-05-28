@@ -23,7 +23,10 @@ export const DiaryPage = () => {
           새 일지 작성
         </Button>
         {isModalOpen && (
-          <Modal modalHandler={handleModalOpen}>
+          <Modal
+            modalHandler={handleModalOpen}
+            useCloseIcon={true}
+          >
             <DiaryModal isReadOnly={false} />
           </Modal>
         )}
