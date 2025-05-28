@@ -1,23 +1,59 @@
+import { useState } from 'react';
 import { diaryCover } from '../../../../assets/images/index';
-import { Modal } from '../../../../components';
+import { Button, Modal } from '../../../../components';
 import { useModal } from '../../../../hooks';
 import { DiaryModal } from '../modal/DiaryModal.component';
+import { DiaryAnimation } from '../diary-animation/DiaryAnimaition.component';
+import { classNames } from '../../../../utils';
 import './diaryItem.style.scss';
 
 export const DiaryItem = ({ diary }) => {
+  const [isStartAnimation, setIsStartAnimation] = useState(() => false);
+  const [isMouseOver, setIsMouseOver] = useState(() => false);
   const { isModalOpen, handleModalOpen } = useModal();
 
-  const handleClick = () => {
-    // item click 시 애니메이션 적용 후 모달 열기
-    // setIsOpen((prev) => !prev);
+  const onClickRead = () => {
+    setIsStartAnimation(() => true);
+  };
+
+  const onClickModify = () => {
+    handleModalOpen();
+  };
+
+  const handleMouseOver = () => {
+    setIsMouseOver(() => true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsMouseOver(() => false);
   };
 
   return (
     <>
       <article
-        className='diary-item__container'
-        onClick={handleModalOpen}
+        className={classNames(
+          'diary-item__container',
+          isMouseOver ? 'rotate' : ''
+        )}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
       >
+        {isMouseOver && (
+          <div className='diary-item__btn-container'>
+            <Button
+              className='diary-item__button'
+              onClick={onClickModify}
+            >
+              수정
+            </Button>
+            <Button
+              className='diary-item__button'
+              onClick={onClickRead}
+            >
+              조회
+            </Button>
+          </div>
+        )}
         <img
           className='diary-item__cover-img'
           src={diaryCover}
@@ -39,6 +75,9 @@ export const DiaryItem = ({ diary }) => {
             isReadOnly
           />
         </Modal>
+      )}
+      {isStartAnimation && (
+        <DiaryAnimation onClose={() => setIsStartAnimation(false)} />
       )}
     </>
   );

@@ -49,11 +49,24 @@
   }
 }
 
+@mixin color-1c0900 {
+  & {
+    color: $color-1c0900;
+  }
+}
+
+@mixin border-a9813d {
+  & {
+    border-color: $color-a9813d;
+  }
+}
+
 @mixin color-a9813d {
   & {
     color: $color-a9813d;
   }
 }
+
 @mixin border-b8b8b8 {
   & {
     border-color: $color-b8b8b8;
@@ -148,6 +161,13 @@
     background: $color-e6e6e6;
   }
 }
+
+@mixin background-a9813d {
+  & {
+    background: $color-a9813d;
+  }
+}
+
 // @mixin receipt-border-bottom {
 //   & {
 //     border-bottom: 0.3rem dashed $color-c8adff;
