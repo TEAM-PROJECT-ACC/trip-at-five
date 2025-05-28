@@ -13,11 +13,14 @@
 
   .modal__inner {
     position: relative;
-    padding: 56px 34px 30px;
     border-radius: 8px;
     box-shadow: 1px 1px 10px 4px $color-1e2022;
     animation: modal-open 200ms;
     @include background-fafafa;
+
+    &.pad-top {
+      padding-top: 56px;
+    }
 
     .modal__close-icon {
       position: absolute;
