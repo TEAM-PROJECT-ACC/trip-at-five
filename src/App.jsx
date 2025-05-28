@@ -9,25 +9,28 @@ import PwdRestting from './pages/login/pwd-resetting/Password.resetting.componen
 import { Chat } from './pages/chat/ChatMainPage';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
 import NonMemberReservation from './pages/non-member-reservation/NonMemberReservation.page';
 import AccommodationFormContainer from './pages/admin/accom-reg-form/AccommodationFormContainer.page';
+import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
+import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
+import ChatRoom from './pages/chat/room/Chat.room.conponent';
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
-import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
-import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
-import ChatRoom from './pages/chat/room/Chat.room.conponent';
+import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
 function App() {
+  // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
+  const [isAdmin, setIsAdmin] = useState(() => false);
+
   return (
     <>
-      {/* 관리자인 경우 삭제 */}
-      <AppHeader />
-
+      {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
+      {!isAdmin && <AppHeader />}
       <Routes>
         <Route
           path='/test'
@@ -114,6 +117,11 @@ function App() {
           path='/admin'
           element={<AdminLayout />}
         >
+          {/* 사용자 문의 */}
+          <Route
+            path='contact'
+            element={<AdminContactPage />}
+          />
           <Route path='accommodations'>
             <Route
               index
@@ -145,8 +153,8 @@ function App() {
           element={<ChatRoom />}
         />
       </Routes>
-      {/* 관리자인 경우 삭제 */}
-      <AppFooter />
+      {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
+      {!isAdmin && <AppFooter />}
     </>
   );
 }
