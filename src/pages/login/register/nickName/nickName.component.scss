@@ -1,68 +1,63 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
+.register-nickName-wrap {
+	.register-nickName-overlap {
+		width: 100%;
+		position: relative;
+		display: inline-block;
+		margin-bottom: 20px;
+	}
 
-.register-nickName-wrap{
+	.overlap-icon {
+		width: 24px;
+		height: 24px;
+		position: absolute;
+		left: 90%;
+		top: 30px;
+		cursor: pointer;
+		@include color-5500ff;
+	}
 
-    padding: 0px 85px;
+	.register-nickName-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+		z-index: 1;
+	}
 
+	.register-nickName-input {
+		width: 100%;
+	}
 
+	.nickName-duplicate-check {
+		font-size: 12px;
+		padding-top: 10px;
+	}
 
-    .register-nickName-overlap {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 40px;
-    }
+	.nickName-duplicate-check-ok {
+		color: #6fff00;
+	}
 
-    .overlap-icon {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    left: 90%;
-    top: 30px;
-    cursor: pointer;
-    @include color-5500ff;
-    }
+	.nickName-duplicate-check-fail {
+		color: #ff0f0f;
+	}
 
-    .register-nickName-text {
-        font-size: 16px;    
-        margin-bottom: 8px;
-        z-index: 1;
-    }
+	.register-nickname-btn {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
 
-    .nickName-duplicate-check{
-        font-size: 12px;
-        padding-top: 10px;
-    }
+	.nickname-btn-duplicate {
+		width: 176px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
 
-    .nickName-duplicate-check-ok{
-        color: #6FFF00;
-    }
-
-     .nickName-duplicate-check-fail{
-        color: #FF0F0F;
-    }
-
-
- 
-
-    input {      
-    width: 340px;
-    height: 36x;
-    
-    }
-
-    .register-nickname-btn {
-        width: 340px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    button {        
-    width: 166px;
-    height: 36px;
-    font-size: 14px;
-    font-weight: normal;
-    }
-
+	.nickName-btn-check {
+		width: 176px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
 }
-

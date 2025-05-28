@@ -1,20 +1,19 @@
-import './compelte.component.scss';
+import './comple.component.scss';
 import { Link } from 'react-router-dom';
 import { ButtonPrimary } from '../../../../components';
 import { RegisterInfoStore } from '../RegisterStore';
 
-export default function RegisterCompelet() {
-	const { nickName } = RegisterInfoStore();
+export default function RegisterComple() {
+	const { nickName, reset } = RegisterInfoStore();
 
 	const clearLocalStorage = () => {
-		window.localStorage.removeItem('register-step');
-		window.localStorage.removeItem('register-Info');
+		window.localStorage.clear();
 	};
 
 	return (
-		<div className='register-comlet-wrap'>
-			<p className='t1'>
-				<span>{nickName}</span>님의 회원가입이
+		<div className='register-comple-wrap'>
+			<p className='register-comple-text'>
+				<span className='register-nickName'>{nickName}</span>님의 회원가입이
 				완료되었습니다.
 			</p>
 			<Link to='/login'>

@@ -46,7 +46,7 @@ const test = () =>{
 			<div className='register-resetting'>
 				<TextLinkButton
 					className={'login__font'}
-					to='/signUp'
+					to='/register'
 				>
 					회원가입
 				</TextLinkButton>

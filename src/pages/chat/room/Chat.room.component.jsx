@@ -1,6 +1,6 @@
 import { ButtonPrimary, PageContainer, Textarea } from '../../../components';
 import './chat.room.component.scss';
-import { FaArrowAltCircleLeft } from '../../../assets/icons/logo/kkh/index';
+import { FaArrowAltCircleLeft } from '../../../assets/icons/kkh/index';
 import ChatLog from './content/log/Chat.room.log.component';
 
 export default function ChatRoom() {

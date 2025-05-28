@@ -1,31 +1,28 @@
 import { create } from 'zustand';
 
-
-const initialState  = {
-  id: null,
-  pwd: null,
-  isLogin: false
-}
+const initialState = {
+	id: null,
+	pwd: null,
+	isLogin: false,
+};
 
 const LoginStateStore = create((set) => ({
-  
-setId: (text) => 
-    set({
-      id : text  
-    }),
+	setId: (text) =>
+		set({
+			id: text,
+		}),
 
-setPwd: (text) => 
-    set({
-      pwd : text  
-    }),
+	setPwd: (text) =>
+		set({
+			pwd: text,
+		}),
 
+	setIslogin: (text) =>
+		set({
+			isLogin: text,
+		}),
 
-  setIslogin: (text) => 
-    set({
-      isLogin : text  
-    }),
-
-  reset: () => set(() => ({...initialState})),
+	reset: () => set(() => ({ ...initialState })),
 }));
 
 export default LoginStateStore;

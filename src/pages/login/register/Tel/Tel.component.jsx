@@ -22,14 +22,15 @@ export default function RegisterTel() {
 		<div className='register-tel-wrap'>
 			<p className='register-tel-text'>전화번호</p>
 			<InputPrimary
+			className={'register-tel-input'}
 				placeholder={'연락처를 입력해주세요'}
 				onChange={(e) => {
 					setTel(e.target.value);
 				}}
 			/>
 			<div className='register-tel-btn'>
-				<ButtonSecondary onClick={telSkip}>나중에 입력</ButtonSecondary>
-				<ButtonPrimary onClick={telOk}>확인</ButtonPrimary>
+				<ButtonSecondary className={'tel-btn-later'} onClick={telSkip}>나중에 입력</ButtonSecondary>
+				<ButtonPrimary className={'tel-btn-check'}onClick={telOk}>확인</ButtonPrimary>
 			</div>
 		</div>
 	);
