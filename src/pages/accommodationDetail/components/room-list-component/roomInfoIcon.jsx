@@ -26,7 +26,7 @@ import {
   WiFire,
   FaBurn,
   MdOutlineFoodBank,
-  GrCart
+  GrCart,
 } from '../../../../assets/icons/ys/index';
 
 export const publicFacilities = [

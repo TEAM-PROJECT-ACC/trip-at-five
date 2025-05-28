@@ -73,7 +73,7 @@
     display: flex;
     align-items: center;
 
-    .btn-cart{
+    .btn-cart {
       font-size: 25px;
       padding: 10px 10px;
       border-radius: 5px;
@@ -82,7 +82,7 @@
       @include background-5500ff;
       @include color-fafafa;
     }
-    .btn-cart:hover{
+    .btn-cart:hover {
       @include background-baabfa;
       @include color-5500ff;
     }
@@ -99,7 +99,7 @@
       box-shadow: 1px 1px 3px #888888;
       @include background-baabfa;
       @include color-5500ff;
-      
+
       &:hover {
         @include background-5500ff;
         @include color-ffaf45;
@@ -107,19 +107,23 @@
     }
   }
 }
-.room-info_bottom{
+.room-info_bottom {
   margin-top: 110px;
 }
 
 .room-icon {
   display: inline;
-  padding: 5px 10px;
+  padding: 5px 15px;
   border-radius: 8px;
   font-size: 20px;
+  box-shadow: 2px 2px 2px #888888;
   @include background-5500ff;
   @include color-baabfa;
 }
 
+div .room-icon {
+  margin-right: 4px;
+}
 button.accom-modal-btn {
   font-size: 16px;
   font-weight: 700;
@@ -131,7 +135,7 @@ button.accom-modal-btn {
   @include background-5500ff;
 }
 
-button.accom-modal-btn:hover{
+button.accom-modal-btn:hover {
   @include color-5500ff;
   @include background-baabfa;
 }

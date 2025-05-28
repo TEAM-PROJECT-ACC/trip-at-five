@@ -23,6 +23,7 @@ import {
   FaSmoking,
   FaBurn,
   FaBath,
+  FaMapMarkerAlt,
 } from 'react-icons/fa';
 
 export {
@@ -47,6 +48,7 @@ export {
   FaSmoking,
   FaBurn,
   FaBath,
+  FaMapMarkerAlt,
 };
 
 import { BiCabinet } from 'react-icons/bi';

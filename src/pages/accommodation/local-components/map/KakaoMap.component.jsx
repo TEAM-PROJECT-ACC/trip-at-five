@@ -98,15 +98,7 @@ export const KakaoMap = ({ onClose }) => {
         });
 
         document.querySelectorAll('.price-bubble').forEach((el) => {
-          if (el === bubble) {
-            el.style.opacity = '1';
-            el.style.visibility = 'visible';
-            el.style.pointerEvents = 'none';
-          } else {
-            el.style.opacity = '0';
-            el.style.visibility = 'hidden';
-            el.style.pointerEvents = 'none';
-          }
+          el.style.zIndex = '101';
         });
         if (openOverlayId === accom.id) {
           openOverlayId = null;

@@ -16,7 +16,7 @@ export const getIconsFromRoomInfo = (info = '') => {
   allFacilities.forEach(({ label, icon }) => {
     if (info?.toLowerCase().includes(label.toLowerCase())) {
       icons.push(
-        <span key={label} className='room-icon' title={label}>
+        <span key={label} className='room-icon-svg' title={label}>
           {icon}
         </span>
       );

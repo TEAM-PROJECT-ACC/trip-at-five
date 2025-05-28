@@ -6,25 +6,44 @@ import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
 import { Modal, Pagination } from '../../components';
+import { FaMapMarkerAlt } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
-const AccommodationDetail = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const mapRef = useRef(null);
+import { accomData } from '../../assets/sample-data/accomSampleData';
 
-  const lat = 37.559945;
-  const lon = 126.994601;
+const AccommodationDetail = () => {
+  const { id } = useParams();
+  const accom = accomData.accommodation_tb.find(
+    (item) => String(item.accom_sq) === String(id)
+  );
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const mapRef = useRef(null);
 
   const init = () => {
     if (window.kakao && window.kakao.maps && mapRef.current) {
+      /* 해당 숙박업체의 위도경도에 따라 지도에 마커 위치가 변경*/
+      const lat = accom.accom_lat;
+      const lon = accom.accom_lon;
+
       const map = new window.kakao.maps.Map(mapRef.current, {
         center: new window.kakao.maps.LatLng(lat, lon),
         level: 3,
       });
 
+      /* 마커의 색상 변경을 위해 커스텀 이지미 사용 */
+      const markerImageUrl = '/assets/images/map-marker/FaMapMarkerAlt.svg';
+
+      const markerImage = new window.kakao.maps.MarkerImage(
+        markerImageUrl,
+        new window.kakao.maps.Size(40, 40),
+        { offset: new window.kakao.maps.Point(20, 40) }
+      );
+
       new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(lat, lon),
         map,
+        image: markerImage,
       });
     }
   };
@@ -35,19 +54,23 @@ const AccommodationDetail = () => {
         init();
       });
     }
-  }, []);
+  }, [accom]);
 
   return (
     <PageContainer>
       <section className='accom-header'>
         <img className='accom-header__image' />
         <div className='accom-header__text'>
-          서울신라호텔
+          {accom?.accom_name}
           <div className='accom-header__price'>
-            150,000원 / <p>1박</p>
+            {accom &&
+              Math.min(
+                ...accom.rooms.map((room) => room.room_price)
+              ).toLocaleString()}
+            원~ / <p className='accom-room-sub__price'>1박</p>
           </div>
         </div>
-        <p className='accom-location'>서울 중구 장충동2가 202</p>
+        <p className='accom-location'>{accom?.accom_location}</p>
       </section>
 
       {/* 숙소 정보 카드 */}
@@ -68,32 +91,34 @@ const AccommodationDetail = () => {
           </p>
         </a>
         <div className='accom-info__facility'>
-          <FacilityFilterView />    
+          <FacilityFilterView />
         </div>
       </section>
 
       {/* 객실 목록 */}
 
       <RoomList />
-      
+
+      {/* 앵커 태그가 헤더 영역에 가려져서 빈 태그 추가 */}
+      <div className='empty_blank' id='ancher-review'></div>
       {/* 후기 섹션 */}
-      <section id='ancher-review' className='review-section'>
-        <div className="review-section__header">
+      <section className='review-section'>
+        <div className='review-section__header'>
           <div className='acc-detail-section__title'>이용 후기</div>
-            <div className='review-stars'>⭐3.0</div>
-            <button
-              onClick={() => {
-                setModalOpen(true);
-              }}
-              className='accom-modal-btn'
-            >
-              후기 등록
-            </button>
-            {modalOpen && (
-              <Modal>
-                <>모달 테스트</>
-              </Modal>
-            )}
+          <div className='review-stars'>⭐3.0</div>
+          <button
+            onClick={() => {
+              setModalOpen(true);
+            }}
+            className='accom-modal-btn'
+          >
+            후기 등록
+          </button>
+          {modalOpen && (
+            <Modal>
+              <>모달 테스트</>
+            </Modal>
+          )}
         </div>
         <div className='review-card'>
           <div className='images'>
@@ -104,39 +129,17 @@ const AccommodationDetail = () => {
             <div className='img'></div>
           </div>
           <br />
-          <div className="review-text-box">
+          <div className='review-text-box'>
             <span className='nickname'>코알라잉</span>
             <span className='stars'>⭐⭐⭐⭐⭐</span>
             <div className='inner-card-comment'>
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
               있었습니다. 직원도 매우 친절했어요!
             </div>
-            <div className="see-more-comment">더보기</div>
-          </div>
-        </div>
-        <div className='review-card'>
-          <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-          </div>
-          <br />
-          <div className="review-text-box">
-            <span className='nickname'>코알라잉</span>
-            <span className='stars'>⭐⭐⭐⭐⭐</span>
-            <div className='inner-card-comment'>
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-            </div>
-            <div className="see-more-comment">더보기</div>
+            <div className='see-more-comment'>더보기</div>
           </div>
         </div>
         <div className='review-card'>
@@ -148,17 +151,17 @@ const AccommodationDetail = () => {
             <div className='img'></div>
           </div>
           <br />
-          <div className="review-text-box">
+          <div className='review-text-box'>
             <span className='nickname'>코알라잉</span>
             <span className='stars'>⭐⭐⭐⭐⭐</span>
             <div className='inner-card-comment'>
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
               있었습니다. 직원도 매우 친절했어요!
             </div>
-            <div className="see-more-comment">더보기</div>
+            <div className='see-more-comment'>더보기</div>
           </div>
         </div>
         <div className='review-card'>
@@ -170,17 +173,17 @@ const AccommodationDetail = () => {
             <div className='img'></div>
           </div>
           <br />
-          <div className="review-text-box">
+          <div className='review-text-box'>
             <span className='nickname'>코알라잉</span>
             <span className='stars'>⭐⭐⭐⭐⭐</span>
             <div className='inner-card-comment'>
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
               있었습니다. 직원도 매우 친절했어요!
             </div>
-            <div className="see-more-comment">더보기</div>
+            <div className='see-more-comment'>더보기</div>
           </div>
         </div>
         <div className='review-card'>
@@ -192,24 +195,46 @@ const AccommodationDetail = () => {
             <div className='img'></div>
           </div>
           <br />
-          <div className="review-text-box">
+          <div className='review-text-box'>
             <span className='nickname'>코알라잉</span>
             <span className='stars'>⭐⭐⭐⭐⭐</span>
             <div className='inner-card-comment'>
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
               리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
               있었습니다. 직원도 매우 친절했어요!
             </div>
-            <div className="see-more-comment">더보기</div>
+            <div className='see-more-comment'>더보기</div>
+          </div>
+        </div>
+        <div className='review-card'>
+          <div className='images'>
+            <div className='img'></div>
+            <div className='img'></div>
+            <div className='img'></div>
+            <div className='img'></div>
+            <div className='img'></div>
+          </div>
+          <br />
+          <div className='review-text-box'>
+            <span className='nickname'>코알라잉</span>
+            <span className='stars'>⭐⭐⭐⭐⭐</span>
+            <div className='inner-card-comment'>
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!
+            </div>
+            <div className='see-more-comment'>더보기</div>
           </div>
         </div>
         <Pagination />
       </section>
 
       {/* 상세 정보 */}
-      
+
       <RoomDetailText />
 
       <section id='ancher-map' className='accom__map-container'>

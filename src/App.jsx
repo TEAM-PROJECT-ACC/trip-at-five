@@ -63,10 +63,7 @@ function App() {
         <Route path='/guest/reservations' element={<NonMemberReservation />} />
         <Route path='/accommodations'>
           <Route index element={<AccommodationList />} />
-          <Route
-            path='/accommodations/detail'
-            element={<AccommodationDetail />}
-          />
+          <Route path='/accommodations/:id' element={<AccommodationDetail />} />
         </Route>
         <Route path='/reservations' element={<Reservation />} />
         <Route path='/payments' element={<Receipt />} />
