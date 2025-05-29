@@ -3,6 +3,10 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import './filter.style.scss';
 
+/**
+ * 최대 가격은 500,000원 이상 으로 표기
+ */
+
 const PriceFilter = ({ priceRange, setPriceRange }) => {
   const handleChange = (value) => {
     setPriceRange(value);

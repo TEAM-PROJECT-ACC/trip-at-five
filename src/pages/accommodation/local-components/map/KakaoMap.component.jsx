@@ -24,8 +24,35 @@ export const KakaoMap = ({ onClose }) => {
 
     if (!kakaoMap.current) {
       kakaoMap.current = new window.kakao.maps.Map(mapContainer, {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3,
+        /**
+         * level 범위 1 ~ 14
+         *
+         * 단순 지역명일 경우
+         * center : 중심지(시청, 도청) 위도, 경도 값으로 설정
+         * level : 8
+         *
+         * 아닐 경우
+         * center : 위도의 평균, 경도의 평균으로 설정
+         *
+         * 각 지역 기반 Group으로 묶고 평균 경도/위도 값을 각각 구한다.
+         *
+         * 평균을 기반으로 해서 평균의 평균 => 중심 좌표를 구한다.
+         *
+         * 중심좌표에서 각 지역의 중심좌표(각지역평균좌표) 까지의 거리를 측정한다. (지역 갯수만큼)
+         *
+         * 총 거리를 구하고 총거리 / 지역 갯수 => 최종 거리(km)
+         *
+         * 100km 이상 시 level은 11
+         * 200km 이상 시 level은 12
+         * 300km 이상 시 level은 13
+         *
+         * 처음 모든 숙박업소 정보가 로드가 되어야 함
+         * 만약 마우스 클릭으로 이동했을 때 새로 로드된 데이터가 있다면
+         * => 해당 km level은 증가
+         *
+         */
+        center: new kakao.maps.LatLng(37.888862916, 127.3564676189),
+        level: 8,
       });
     }
     const map = kakaoMap.current;

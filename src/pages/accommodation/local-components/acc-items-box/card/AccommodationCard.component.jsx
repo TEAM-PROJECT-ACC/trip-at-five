@@ -50,11 +50,17 @@ const AccommodationCard = ({ accom }) => {
             {accom.rating}명 평가
           </div>
           <div className='accom-info-time-price'>
-            <div className='v-line'></div>
-            <p className='accom-time'>{accom.checkIn} 체크인</p>
-            <p className='accom-time'>{accom.checkOut} 체크아웃</p>
+            {/* <div className='v-line'></div> */}
+            <span>
+              <p className='accom-time'>{accom.checkIn} 체크인</p>
+              <p className='accom-time'>{accom.checkOut} 체크아웃</p>
+            </span>
             <p className='accom-price'>
-              최저가 <strong>{accom.price.toLocaleString()}</strong>원
+              <span className='accom-price-text'>최저가</span>
+              <span className='accom-price-value'>
+                <strong>{accom.price.toLocaleString()}</strong>
+                <span>원</span>
+              </span>
             </p>
           </div>
         </div>
