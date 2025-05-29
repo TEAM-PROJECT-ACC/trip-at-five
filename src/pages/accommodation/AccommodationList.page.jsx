@@ -9,6 +9,11 @@ import { PageContainer } from '../../components';
 import { accomData } from '../../assets/sample-data/accomSampleData';
 import { useFilterState } from './hooks/useFilterState.hook';
 
+/**
+ * 바뀔수 있는 정렬 조건 => 가격높은/낮은순, 평점높은순
+ * 필수 정렬 조건 => 숙박업소명
+ */
+
 const AccommodationList = () => {
   const filterHook = useFilterState();
   const { setCurrentPage, filter } = filterHook;

@@ -56,35 +56,50 @@
     }
     .accom-info-time-price {
       margin-top: 30px;
+      position: relative;
+      border-left: 3px solid #baabfa;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 8px;
 
-      .v-line {
-        border-left: 3px solid #baabfa;
-        height: 60px;
-        float: left;
+      p:nth-child(1) {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
       }
 
       .accom-price {
-        font-size: 16px;
-        vertical-align: middle;
+        width: 100%;
+        // vertical-align: middle;
+        display: flex;
+        justify-content: flex-end;
+        align-items: baseline;
+        gap: 16px;
+
+        .accom-price-value {
+          display: flex;
+          align-items: baseline;
+          strong {
+            font-size: 26px;
+            font-weight: 900;
+            // margin-left: 7px;
+            @include color-5500ff;
+          }
+        }
       }
 
-      .accom-price strong {
-        font-size: 25px;
-        font-weight: 900;
-        margin-left: 7px;
-        @include color-5500ff;
-      }
-
-      p.accom-price {
-        margin-left: 240px;
-        display: inline-flex;
-        align-items: center;
-        font-weight: 600;
-        font-size: 18px;
-      }
+      // p.accom-price {
+      //   margin-left: 240px;
+      //   display: inline-flex;
+      //   align-items: center;
+      //   font-weight: 600;
+      //   font-size: 18px;
+      // }
 
       .accom-time {
-        margin-left: 15px;
+        // margin-left: 15px;
       }
     }
   }
