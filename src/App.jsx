@@ -3,10 +3,10 @@ import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import './App.css';
-import SignUp from './pages/sign/SignUp';
-import LoginPage from './pages/login/Login';
-import PwdRestting from './pages/login/pwd-resetting/Login.password.resetting.conponent';
-import { Chat } from './pages/chat/Chat.main.conponent';
+import LoginPage from './pages/login/LoginPage';
+import Register from './pages/login/register/RegisterPage';
+import PwdRestting from './pages/login/pwd-resetting/Password.resetting.component';
+import { Chat } from './pages/chat/ChatMainPage';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
 import { useEffect, useState } from 'react';
@@ -17,19 +17,17 @@ import NonMemberReservation from './pages/non-member-reservation/NonMemberReserv
 import AccommodationFormContainer from './pages/admin/accom-reg-form/AccommodationFormContainer.page';
 import AccommodationDetail from './pages/accommodationDetail/AccommodationDetail.page';
 import ReservationManagementList from './pages/admin/reservation/ReservationManagementList.page';
-import ChatRoom from './pages/chat/room/Chat.room.conponent';
 import AdminLayout from './pages/admin/layout/AdminLayout.layout';
 import RoomMain from './pages/admin/room/RoomMain.component';
 import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
 import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
+import ChatRoom from './pages/chat/chat-ui/Chat.room';
 
 function App() {
-  // TODO: 로그인 정보 확인 후 사용자/관리자 처리 용 상태
+  // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
   const [isAdmin, setIsAdmin] = useState(() => false);
-
-  // TODO: admin인 경우 /admin으로 redirect
 
   return (
     <>
@@ -69,8 +67,8 @@ function App() {
 
         {/* 회원가입 */}
         <Route
-          path='/signUp'
-          element={<SignUp />}
+          path='/register'
+          element={<Register />}
         />
 
         {/* 비밀번호 재설정 */}
@@ -80,10 +78,16 @@ function App() {
         />
 
         {/* 채팅 */}
-        <Route
-          path='/chat'
-          element={<Chat />}
-        />
+        <Route path='/chat'>
+          <Route
+            index
+            element={<Chat />}
+          />
+          <Route
+            path='/chat/room'
+            element={<ChatRoom />}
+          />
+        </Route>
 
         <Route
           index

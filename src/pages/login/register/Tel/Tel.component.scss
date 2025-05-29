@@ -1,0 +1,41 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.register-tel-wrap {
+	.register-tel-input-wrap {
+		margin-bottom: 20px;
+	}
+	.register-tel-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+	}
+
+	.register-tel-input {
+		width: 100%;
+		margin-bottom: 8px;
+	}
+
+	.validatePhone-step4-text {
+		font-size: 12px;
+		@include color-5500ff;
+	}
+
+	.register-tel-btn {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.tel-btn-later {
+		width: 196px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+
+	.tel-btn-check {
+		width: 196px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+}

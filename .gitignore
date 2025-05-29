@@ -28,4 +28,4 @@ dist-ssr
 .env.development
 .env.production
 
-serverSaseURL.js
+serverBaseURL.js

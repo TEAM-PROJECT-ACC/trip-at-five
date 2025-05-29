@@ -1,44 +1,64 @@
 import { useState } from 'react';
 import './resetting.email.auth.conponent.scss';
 import { ButtonPrimary } from '../../../../components';
-import { ResettingInput } from '../resetting-input/resetting.input.conponent';
-import { ResttingTitle } from '../resetting-title/resetting.title.conponent';
 import { useIsResetting } from '../state/resetting.state';
+import { ResettingInput } from '../resetting-input/resetting.input.conponent';
+import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
+import { validateEmail } from '../../util/validateEmail';
 
 export function EmailAuth() {
 	const [email, setEmail] = useState(null);
+	const [validationCheck, setValidationCheck] = useState(false);
 	const [isSend, setIsSend] = useState(false);
 	const [emailCode, setEmailCode] = useState();
-  const {isTrue, setIsTrue, setIsFalse} = useIsResetting();
+	const { isTrue, setIsTrue, setIsFalse } = useIsResetting();
+	const [error, setError] = useState(false);
 
 	const testCode = '1234';
 
+	/*이메일 인증코드 보내기  */
 	const sendCode = () => {
 		{
-			email != null && setIsSend(true);
+			validationCheck != false && setIsSend(true);
 		}
 	};
 
+	/* 이메일 형식 체크  */
+	validateEmail(email);
+
+	const validateEmailCheck = (e) => {
+		const value = e.target.value;
+		setEmail(value);
+		if (!validateEmail(value)) {
+			setError('올바른 이메일 형식이 아닙니다.');
+			setValidationCheck(false);
+		} else {
+			setError(false);
+			setValidationCheck(true);
+		}
+	};
+
+	/* 인증코드 유효성 체크 부분 */
 	const codeCheck = () => {
-		const test = emailCode == testCode ? 'ok' : 'fail';
-		console.log(test);
-		test == 'ok' && setIsTrue();
+		const result = emailCode == testCode ? 'ok' : 'fail';
+		result == 'ok' && setIsTrue();
 	};
 
 	return (
 		<div className='pwd-resetting-content-wrap'>
 			<ResettingInput
-				className={'pwd-resetting-text'}
+				TclassName={'pwd-resetting-email-text'}
+				IclassName={'pwd-resetting-email-input'}
 				text={'이메일'}
 				placeholder={'이메일을 입력해주세요'}
-				onChange={(e) => {
-					setEmail(e.target.value);
-				}}
+				onChange={validateEmailCheck}
 			/>
+			{error && <p className='pwd-resetting-validateEmail-text'>{error}</p>}
 			{isSend && (
 				<>
 					<ResettingInput
-						className={'pwd-resetting-code-input'}
+						TclassName={'pwd-resetting-email-code-text'}
+						IclassName={'pwd-resetting-email-code-input'}
 						type={'email'}
 						text={'인증코드'}
 						placeholder={'인증코드를 입력해주세요'}
@@ -53,7 +73,10 @@ export function EmailAuth() {
 				</>
 			)}
 
-			<ButtonPrimary onClick={isSend ? codeCheck : sendCode}>
+			<ButtonPrimary
+				className={'email-auth'}
+				onClick={isSend ? codeCheck : sendCode}
+			>
 				이메일 인증
 			</ButtonPrimary>
 		</div>

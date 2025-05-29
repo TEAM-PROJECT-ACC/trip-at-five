@@ -7,6 +7,9 @@ export const useIsResetting = create(
 			isTrue: false,
 			setIsTrue: () => set({ isTrue: true }),
 			setIsFalse: () => set({ isTrue: false }),
-		})
+		}),
+		{
+			name: 'pwd-resetting',
+		}
 	)
 );

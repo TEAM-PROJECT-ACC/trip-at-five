@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { serverSaseURL } from '../serverSaseURL';
-const baseURL = serverSaseURL;
+import { serverBaseURL } from '../serverBaseURL';
+const baseURL = serverBaseURL;
 
 const apiAxios = axios.create({
   baseURL: baseURL,
