@@ -12,13 +12,7 @@ import RegisterAdress from './address/Address.component';
 import RegisterComple from './comple/Comple.component';
 
 export default function Register() {
-	const { isTrue, setIsTrue, step, setAddStep, setMinusStep, resetStep } =
-		useRegisterStore();
-
-	/* 로컬저장소 초기화*/
-	useEffect(() => {
-		resetStep();
-	}, []);
+	const { step } = useRegisterStore();
 
 	return (
 		<PageContainer className='register-container'>

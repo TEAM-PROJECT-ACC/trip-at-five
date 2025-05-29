@@ -1,14 +1,15 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
 .chat-container {
-	padding: 10% 0%;
+	padding: 6% 0%;
 }
 
 .chat-main-wrap {
 	border: 1px solid rgba(255, 255, 255);
 	width: 352px;
 	padding: 2% 0%;
-	margin: auto;
+	margin-top: 10%;
+	margin-left: 35%;
 	box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
 }
 

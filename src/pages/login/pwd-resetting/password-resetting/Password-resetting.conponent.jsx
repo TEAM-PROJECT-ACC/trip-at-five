@@ -9,13 +9,16 @@ import { Link } from 'react-router-dom';
 export function PasswordResetting({ className }) {
 	const [pwd, setPwd] = useState(null);
 	const [pwdCheck, setPwdCheck] = useState('');
-	const {isTrue, setIsFalse} = useIsResetting();
+	const { setIsFalse } = useIsResetting();
 
+	const pCheck = pwd == pwdCheck ? 'ok' : 'fail';
 
+	/* 로컬저장소 초기화*/
+
+	/* 비밀번호 재설정 */
 	const updatePwd = () => {
-		const test = pwd == pwdCheck ? 'ok' : 'fail';
-		console.log(test);
 		setIsFalse();
+		window.localStorage.removeItem('pwd-resetting');
 	};
 
 	return (
@@ -42,18 +45,23 @@ export function PasswordResetting({ className }) {
 				}}
 			/>
 			<ResttingTitle
-				className={'pwd-resetting-receive color'}
+				className={`pwd-resetting-receive ${
+					pCheck != 'ok' ? 'pwd-fail-color' : ''
+				} `}
 				text={
 					pwd == pwdCheck
 						? '비밀번호가 일치합니다.'
 						: '비밀번호가 일치하지 않습니다.'
 				}
 			/>
-		  
+
 			<Link to='/login'>
-			<ButtonPrimary className={'pwd-update'} onClick={updatePwd}>
-				비밀번호 재설정
-			</ButtonPrimary>
+				<ButtonPrimary
+					className={'pwd-update'}
+					onClick={updatePwd}
+				>
+					비밀번호 재설정
+				</ButtonPrimary>
 			</Link>
 		</div>
 	);

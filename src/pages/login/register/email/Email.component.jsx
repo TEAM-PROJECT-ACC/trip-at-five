@@ -1,16 +1,31 @@
 import { ButtonPrimary, InputPrimary } from '../../../../components';
-import { useRegisterStore, RegisterInfoStore } from '../RegisterStore';
+import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
 import './email.component.scss';
+import { validateEmail } from '../../util/validateEmail';
+import { useState } from 'react';
 
 export default function RegisterEmail() {
-	const { isTrue, setIsTrue, step, setAddStep, setMinusStep, resetStep } =
-		useRegisterStore();
-	const { email, emailCode, setEmail, setEmailCode } = RegisterInfoStore();
+	const { isTrue, setIsTrue, step, setAddStep } = useRegisterStore();
+	const { email, emailCode, setEmail, setEmailCode } = RegisterInfostore();
+	const [error, setError] = useState();
 
 	/*이메일인증 코드 전송 및 인증코드 입력칸 표시*/
 	const sendEmailCode = () => {
 		{
 			email != null ? setIsTrue() : '';
+		}
+	};
+
+	/*이메일 형식 체크 */
+	validateEmail(email);
+
+	const validateEmailCheck = (e) => {
+		const value = e.target.value;
+		setEmail(value);
+		if (!validateEmail(value)) {
+			setError('올바른 이메일 형식이 아닙니다.');
+		} else {
+			setError('');
 		}
 	};
 
@@ -27,18 +42,21 @@ export default function RegisterEmail() {
 
 	return (
 		<div className='register-email-wrap'>
-			<p className='register-email-text'>이메일 *</p>
-			<InputPrimary
-				placeholder={'이메일을 입력해주세요'}
-				onChange={(e) => {
-					setEmail(e.target.value);
-				}}
-			/>
+			<div className='register-email-input-wrap'>
+				<p className='register-email-text'>이메일 *</p>
+				<InputPrimary
+					className={'register-email-input'}
+					placeholder={'이메일을 입력해주세요'}
+					onChange={validateEmailCheck}
+				/>
+				{error && <p className='validateEmail-step1-text'>{error}</p>}
+			</div>
 
 			{isTrue && (
 				<div>
 					<p className='register-email-text'>인증 코드</p>
 					<InputPrimary
+						className={'register-email-code-input'}
 						placeholder={'인증코드를 입력해주세요'}
 						onChange={(e) => {
 							setEmailCode(e.target.value);
@@ -47,7 +65,12 @@ export default function RegisterEmail() {
 				</div>
 			)}
 
-			<ButtonPrimary onClick={emailEvent}>이메일 인증</ButtonPrimary>
+			<ButtonPrimary
+				className={'send-email-btn'}
+				onClick={emailEvent}
+			>
+				이메일 인증
+			</ButtonPrimary>
 		</div>
 	);
 }

@@ -34,7 +34,8 @@
 	}
 
 	.nickName-duplicate-check-ok {
-		color: #6fff00;
+		margin-left: 2px;
+		@include color-5500ff;
 	}
 
 	.nickName-duplicate-check-fail {

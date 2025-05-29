@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
@@ -7,8 +8,10 @@ import {
 } from '../../components';
 import { ChatTitle } from './chat-title/Chat.title.conponent';
 import './chatMainPage.scss';
+import ChatStateStore from './chatStore';
 
 export function Chat() {
+	const { setMessage } = ChatStateStore();
 	return (
 		<PageContainer className={'chat-container'}>
 			<div className='chat-main-wrap'>
@@ -17,7 +20,12 @@ export function Chat() {
 					text={'문의하기'}
 				/>
 
-				<InputPrimary className={'chat-main-content-input'} />
+				<InputPrimary
+					className={'chat-main-content-input'}
+					onChange={(e) => {
+						setMessage(e.target.value);
+					}}
+				/>
 				<Select
 					className={'chat-main-content-select'}
 					optionList={[
@@ -28,7 +36,9 @@ export function Chat() {
 
 				<div className='chat-main-button'>
 					<ButtonSecondary className={'chat-send'}>취소</ButtonSecondary>
-					<ButtonPrimary className={'chat-cancle'}>문의하기</ButtonPrimary>
+					<Link to='room/'>
+						<ButtonPrimary className={'chat-cancle'}>문의하기</ButtonPrimary>
+					</Link>
 				</div>
 			</div>
 		</PageContainer>

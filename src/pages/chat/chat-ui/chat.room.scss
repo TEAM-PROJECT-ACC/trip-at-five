@@ -1,0 +1,84 @@
+.chat-room-container {
+	padding: 6% 0%;
+}
+
+.chat-main-room-wrap {
+	border: 1px solid rgba(255, 255, 255);
+	width: 848px;
+	padding: 2% 5%;
+	margin: auto;
+	position: relative;
+	box-shadow: 0px 0.5px 8px rgba(0, 0, 0, 0.4);
+}
+
+.chat-room-close-icon {
+	width: 24px;
+	height: 24px;
+	margin-left: 0.5%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+	@include color-5500ff;
+}
+
+.chat-main-container {
+	border-radius: 8px;
+	background: none;
+	display: flex;
+	@include border-5500ff;
+}
+
+.chat-container-wrap {
+	margin-top: 5%;
+	height: 400px;
+	background: none;
+}
+
+.chat-mesggae-list {
+	background: none;
+}
+
+.chat-input-container {
+	margin: auto;
+	margin-top: 12px;
+	font-size: 20px;
+	border: 1px solid;
+	border-radius: 8px;
+	box-sizing: border-box;
+	background: none;
+	position: relative;
+	@include border-5500ff;
+}
+
+.cs-message--outgoing {
+	@include color-5500ff;
+}
+.cs-message__content {
+	@include color-5500ff;
+}
+
+/*기초 설정 */
+
+div .cs-message-list__typing-indicator-container div {
+	color: #6d4700;
+}
+
+div .cs-message--incoming .cs-message__content,
+div .ps__thumb-y,
+div .ps__rail-y:hover .ps__thumb-y,
+div .ps__rail-y:active .ps__thumb-y {
+	background-color: #e6e6e6;
+}
+
+div .cs-message-input__content-editor,
+div .cs-message-input__content-editor-wrapper {
+	background-color: #baabfa;
+}
+
+div .cs-message--outgoing .cs-message__content {
+	background-color: #baabfa;
+}
+
+.svg-inline--fa fa-paper-plane {
+	background: #baabfa;
+}
