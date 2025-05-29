@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { FaUser } from '../../../assets/icons/index';
-import './NumberOfPeople.style.scss';
 import { useAccomSearchStore } from '../../../states/accom-search/accomSearchStore';
+import './NumberOfPeople.style.scss';
 
 const NumberOfPeople = ({ ...props }) => {
   const state = useAccomSearchStore((state) => state);
@@ -17,7 +16,10 @@ const NumberOfPeople = ({ ...props }) => {
 
     for (let i = 0; i < 8; i++) {
       result.push(
-        <span key={i + 1} onClick={() => setNumberOfPeopleHandler(i + 1)}>
+        <span
+          key={i + 1}
+          onClick={() => setNumberOfPeopleHandler(i + 1)}
+        >
           {i + 1 <= state.numberOfPeople || state.numberOfPeople === '8+' ? (
             <FaUser className='number-of-people-icon active' />
           ) : (

@@ -1,4 +1,3 @@
-import React from 'react';
 import './AdminHeaderTitle.style.scss';
 
 const AdminHeaderTitle = ({ title }) => {

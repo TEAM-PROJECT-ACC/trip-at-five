@@ -1,7 +1,6 @@
-import React from 'react';
 import ReservationPerson from './reservation-person/ReservationPerson.component';
-import './UserInfo.style.scss';
 import EmailForm from './email-form/EmailForm.component';
+import './UserInfo.style.scss';
 
 const UserInfo = ({ className }) => {
   return (

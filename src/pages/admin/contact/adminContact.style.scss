@@ -1,0 +1,21 @@
+.admin-contact__container {
+  width: 1280px;
+  margin: 0 auto;
+  .admin-contact__page-header {
+    .admin-contact__select-box-container {
+      .accom-type-select {
+        width: 160px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 16px 0;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        text-align: center;
+
+        appearance: none;
+        @include admin-input-shadow;
+      }
+    }
+  }
+}

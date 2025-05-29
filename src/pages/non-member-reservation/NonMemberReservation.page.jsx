@@ -1,8 +1,7 @@
-import React from 'react';
 import { PageContainer } from '../../components';
-import './NonMemberReservation.style.scss';
 import NonMemberReservationBox from './box/NonMemberReservationBox.component';
 import NonMemberReservationList from './list/NonMemberReservationList.component';
+import './NonMemberReservation.style.scss';
 
 const NonMemberReservation = () => {
   const selectReservationHandler = async () => {
@@ -13,7 +12,10 @@ const NonMemberReservation = () => {
   return (
     <PageContainer>
       <div className='non-m-reservation__container'>
-        <NonMemberReservationBox className='non-m-reservation-box__container' onClick={selectReservationHandler} />
+        <NonMemberReservationBox
+          className='non-m-reservation-box__container'
+          onClick={selectReservationHandler}
+        />
         <NonMemberReservationList className='non-m-reservation-list__container' />
       </div>
     </PageContainer>

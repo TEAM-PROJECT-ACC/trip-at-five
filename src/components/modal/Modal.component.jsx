@@ -22,6 +22,7 @@ export const Modal = ({ className, children, modalHandler, useCloseIcon }) => {
     document.body.addEventListener('wheel', preventBodyScroll, {
       passive: false,
     });
+
     return () => {
       document.body.removeEventListener('wheel', preventBodyScroll, {
         passive: false,

@@ -1,4 +1,3 @@
-import React from 'react';
 import Room from './room/Room.component';
 import './RoomList.style.scss';
 

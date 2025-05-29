@@ -16,8 +16,8 @@ import {
   Modal,
 } from '../../components';
 import { ClassNamesTest } from '../../utils';
-import './test.style.scss';
 import { useModal } from '../../hooks';
+import './test.style.scss';
 
 const PAGINATION_PROPS = {
   className: '',

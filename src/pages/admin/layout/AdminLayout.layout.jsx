@@ -6,12 +6,10 @@ import './AdminLayout.style.scss';
 const AdminLayout = () => {
   return (
     <>
-      {/* 헤더 */}
       <AdminHeader />
       <div className='admin-main__container'>
         <Outlet />
       </div>
-      {/* 푸터 */}
     </>
   );
 };

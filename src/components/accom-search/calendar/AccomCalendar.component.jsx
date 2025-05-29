@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
+import { useAccomSearchStore } from '../../../states';
+import { formatDate } from '../../../utils/formatDate/formatDate';
+import { FaCalendar } from '../../../assets/icons/index';
 import './AccomCalendar.style.scss';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { FaCalendar } from '../../../assets/icons/index';
-import { useAccomSearchStore } from '../../../states';
-import { formatDate } from '../../../utils/formatDate/formatDate';
 
 const AccomCalendar = ({ ...props }) => {
   const { checkIn, checkOut, tripDay } = useAccomSearchStore((state) => state);
-  const { setCheckInState, setCheckOutState, setTripDayState, resetState } = useAccomSearchStore((state) => state);
+  const { setCheckInState, setCheckOutState, setTripDayState, resetState } =
+    useAccomSearchStore((state) => state);
 
   const [calendarFlag, setCalendarFlag] = useState(false);
 
@@ -46,7 +47,10 @@ const AccomCalendar = ({ ...props }) => {
 
   return (
     <div {...props}>
-      <div className='calendar-text' onClick={() => setCalendarFlag(!calendarFlag)}>
+      <div
+        className='calendar-text'
+        onClick={() => setCalendarFlag(!calendarFlag)}
+      >
         <FaCalendar className='calendar-icon' />
         <span>
           {checkIn?.substring(5)} ~ {checkOut?.substring(5)} ({tripDay}박)

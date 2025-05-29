@@ -1,25 +1,30 @@
 .filter-group {
-  margin-left: 30px;
-
   .title {
-    margin-bottom: 10px;
-    margin-top: 20px;
+    margin: 10px 0;
   }
-  .slider-style-length {
-    margin-right: 35px;
-    margin-bottom: 10px;
-  }
+
   .sub-title {
-    margin-bottom: 10px;
-    margin-top: 5px;
+    margin: 10px 0;
   }
+
+  .filter-options {
+    margin: 10px 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .slider-style-length {
+    margin-bottom: 10px;
+  }
+
   .filter-btn {
     border: 1px solid #5500ff;
     padding: 5px 15px;
     border-radius: 8px;
     font-size: 16px;
-    margin-right: 5px;
-    margin-bottom: 10px;
     @include color-5500ff;
 
     &:hover {

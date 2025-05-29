@@ -1,17 +1,19 @@
 import { useEffect, useRef } from 'react';
-import './KakaoMap.style.scss';
+import './kakaoMap.style.scss';
 import FilterPanel from '../filter/FilterPanel.component';
 import { MapInnerList } from '../acc-map-list/MapInnerList.component';
 import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
-import useFilterStore from '../store/useFilterStore';
+import { useFilterState } from '../../hooks/useFilterState.hook';
 
 export const KakaoMap = ({ onClose }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
 
-  const priceRange = useFilterStore((state) => state.priceRange);
+  const filterHook = useFilterState();
+  const { filter } = filterHook;
+  const { priceRange } = filter;
 
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
@@ -22,8 +24,35 @@ export const KakaoMap = ({ onClose }) => {
 
     if (!kakaoMap.current) {
       kakaoMap.current = new window.kakao.maps.Map(mapContainer, {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3,
+        /**
+         * level 범위 1 ~ 14
+         *
+         * 단순 지역명일 경우
+         * center : 중심지(시청, 도청) 위도, 경도 값으로 설정
+         * level : 8
+         *
+         * 아닐 경우
+         * center : 위도의 평균, 경도의 평균으로 설정
+         *
+         * 각 지역 기반 Group으로 묶고 평균 경도/위도 값을 각각 구한다.
+         *
+         * 평균을 기반으로 해서 평균의 평균 => 중심 좌표를 구한다.
+         *
+         * 중심좌표에서 각 지역의 중심좌표(각지역평균좌표) 까지의 거리를 측정한다. (지역 갯수만큼)
+         *
+         * 총 거리를 구하고 총거리 / 지역 갯수 => 최종 거리(km)
+         *
+         * 100km 이상 시 level은 11
+         * 200km 이상 시 level은 12
+         * 300km 이상 시 level은 13
+         *
+         * 처음 모든 숙박업소 정보가 로드가 되어야 함
+         * 만약 마우스 클릭으로 이동했을 때 새로 로드된 데이터가 있다면
+         * => 해당 km level은 증가
+         *
+         */
+        center: new kakao.maps.LatLng(37.888862916, 127.3564676189),
+        level: 8,
       });
     }
     const map = kakaoMap.current;
@@ -64,6 +93,7 @@ export const KakaoMap = ({ onClose }) => {
 
       const container = document.createElement('div');
       container.className = 'customoverlay-wrapper';
+      // container.style.zIndex = `${1000 + idx}`;
 
       container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
@@ -84,7 +114,7 @@ export const KakaoMap = ({ onClose }) => {
         position,
         content: container,
         yAnchor: 0.3,
-        zIndex: 3 + idx,
+        // zIndex: 1000 + idx,
       });
 
       overlay.setMap(map);
@@ -93,33 +123,30 @@ export const KakaoMap = ({ onClose }) => {
 
       bubble.addEventListener('click', () => {
         document.querySelectorAll('.text__box').forEach((el) => {
+          container.parentElement.style.zIndex = 0;
+
           el.style.opacity = '0';
           el.style.visibility = 'hidden';
         });
 
-        document.querySelectorAll('.price-bubble').forEach((el) => {
-          if (el === bubble) {
-            el.style.opacity = '1';
-            el.style.visibility = 'visible';
-            el.style.pointerEvents = 'none';
-          } else {
-            el.style.opacity = '0';
-            el.style.visibility = 'hidden';
-            el.style.pointerEvents = 'none';
-          }
-        });
+        // document.querySelectorAll('.price-bubble').forEach((el) => {
+        //   el.style.zIndex = '101';
+        // });
         if (openOverlayId === accom.id) {
           openOverlayId = null;
         } else {
           box.style.opacity = '1';
           box.style.visibility = 'visible';
           openOverlayId = accom.id;
+
+          container.parentElement.style.zIndex = 1000;
         }
       });
 
       const button = container.querySelector('.btn-close');
       button.addEventListener('click', (e) => {
         e.stopPropagation();
+        container.parentElement.style.zIndex = 0;
         box.style.opacity = '0';
         box.style.visibility = 'hidden';
         openOverlayId = null;
@@ -166,23 +193,36 @@ export const KakaoMap = ({ onClose }) => {
         }}
       />
 
-      <button className='btn-exit' type='button' onClick={onClose}>
+      <button
+        className='btn-exit'
+        type='button'
+        onClick={onClose}
+      >
         <TiDelete />
       </button>
       <div className='filter-map'>
-        <FilterPanel />
+        <FilterPanel filterHook={filterHook} />
       </div>
       <div className='acc-list-map'>
         <MapInnerList />
-        <div className='map' ref={mapRef}></div>
+        <div
+          className='map'
+          ref={mapRef}
+        ></div>
         <div className='custom_zoomcontrol'>
-          <div className='level__btn--plus' onClick={zoomIn}>
+          <div
+            className='level__btn--plus'
+            onClick={zoomIn}
+          >
             <img
               src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png'
               alt='확대'
             />
           </div>
-          <div className='level__btn--minus' onClick={zoomOut}>
+          <div
+            className='level__btn--minus'
+            onClick={zoomOut}
+          >
             <img
               src='https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png'
               alt='축소'

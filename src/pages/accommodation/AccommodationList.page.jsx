@@ -4,19 +4,23 @@ import { Pagination } from '../../components/pagination/Pagination.component';
 import FilterPanel from './local-components/filter/FilterPanel.component';
 import MapButton from './local-components/map/MapButton.component';
 import AccommodationListBox from './local-components/acc-items-box/AccommodationListBox.component';
-import './AccommodationList.style.scss';
+import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
 import { accomData } from '../../assets/sample-data/accomSampleData';
-import useFilterStore from './local-components/store/useFilterStore';
+import { useFilterState } from './hooks/useFilterState.hook';
+
+/**
+ * 바뀔수 있는 정렬 조건 => 가격높은/낮은순, 평점높은순
+ * 필수 정렬 조건 => 숙박업소명
+ */
 
 const AccommodationList = () => {
-  const currentPage = useFilterStore((state) => state.currentPage);
-  const setCurrentPage = useFilterStore((state) => state.setCurrentPage);
+  const filterHook = useFilterState();
+  const { setCurrentPage, filter } = filterHook;
   const pageSize = 5;
 
-  const priceRange = useFilterStore((state) => state.priceRange);
-
-  const [minPrice, maxPrice] = priceRange;
+  const [minPrice, maxPrice] = filter.priceRange;
+  const currentPage = filter.currentPage;
 
   const accommodations = accomData.accommodation_tb
     .map((item) => {
@@ -46,14 +50,18 @@ const AccommodationList = () => {
     <PageContainer>
       <div className='search-bar'></div>
       <div className='main-section'>
-        <aside className='filter-section'>
+        <aside className='filter-section accom-filter-section'>
           <MapButton accommodations={accommodations} />
-          <FilterPanel />
+          <FilterPanel
+            className={'accom-filter-panel'}
+            filterHook={filterHook}
+          />
         </aside>
         <div className='list-section'>
           <AccommodationListBox
             data={currentPageData}
             accommodations={accommodations}
+            filterHook={filterHook}
           />
           <Pagination
             className='accom-pagination'
@@ -69,5 +77,4 @@ const AccommodationList = () => {
     </PageContainer>
   );
 };
-
 export default AccommodationList;

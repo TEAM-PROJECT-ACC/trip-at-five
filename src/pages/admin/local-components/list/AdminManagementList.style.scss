@@ -1,0 +1,47 @@
+.admin-main-body {
+  margin-bottom: 36px;
+  @include admin-body;
+  // admin-table
+  .admin-table {
+    width: 100%;
+
+    .admin-table-header {
+      width: 100%;
+      border-bottom: 0.1rem solid #ccc;
+
+      .t-head-item-col {
+        padding: 1rem;
+        font-size: 1.3rem;
+        @include color-1e2022;
+      }
+    }
+
+    .admin-table-body {
+      .t-body-item {
+        font-size: 1.2rem;
+        transition: color 300ms ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          @include color-888888;
+        }
+
+        .t-body-item-col {
+          text-align: center;
+          vertical-align: baseline;
+          padding: 1rem;
+        }
+      }
+    }
+    // 테이블 항목 넓이
+    .col-w-10 {
+      width: 10%;
+    }
+    .col-w-20 {
+      width: 20%;
+    }
+    .col-w-30 {
+      width: 30%;
+    }
+  }
+}

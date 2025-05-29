@@ -1,9 +1,11 @@
-import React from 'react';
 import './AdminIconButton.style.scss';
 
 const AdminIconButton = ({ onClick, children }) => {
   return (
-    <button className='icon-button' onClick={onClick}>
+    <button
+      className='icon-button'
+      onClick={() => onClick()}
+    >
       {children}
     </button>
   );

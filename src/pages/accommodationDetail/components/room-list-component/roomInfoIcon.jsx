@@ -26,7 +26,8 @@ import {
   WiFire,
   FaBurn,
   MdOutlineFoodBank,
-} from '../../../assets/icons/ys/index';
+  GrCart,
+} from '../../../../assets/icons/ys/index';
 
 export const publicFacilities = [
   { icon: <FaSpa />, label: '사우나' },
@@ -63,3 +64,5 @@ export const etcFacilities = [
   { icon: <FaBurn />, label: '찜질방' },
   { icon: <MdOutlineFoodBank />, label: '객실내취사' },
 ];
+
+export { GrCart };

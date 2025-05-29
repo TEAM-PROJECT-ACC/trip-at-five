@@ -1,13 +1,13 @@
 import React from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import useFilterStore from '../../store/useFilterStore';
-import './Filter.style.scss';
+import './filter.style.scss';
 
-const PriceFilter = () => {
-  const priceRange = useFilterStore((state) => state.priceRange);
-  const setPriceRange = useFilterStore((state) => state.setPriceRange);
+/**
+ * 최대 가격은 500,000원 이상 으로 표기
+ */
 
+const PriceFilter = ({ priceRange, setPriceRange }) => {
   const handleChange = (value) => {
     setPriceRange(value);
     console.log('Selected price range:', value);

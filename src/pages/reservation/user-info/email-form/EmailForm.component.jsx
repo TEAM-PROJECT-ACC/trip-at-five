@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react';
-import { ButtonPrimary, ButtonSecondary, InputShrink } from '../../../../components';
-import './EmailForm.style.scss';
+import { useEffect } from 'react';
+import {
+  ButtonPrimary,
+  ButtonSecondary,
+  InputShrink,
+} from '../../../../components';
 import { usePaymentInfoStore } from '../../../../states';
+import './EmailForm.style.scss';
 
 /**
  * email input 의 기본값은 ''
@@ -39,11 +43,26 @@ const EmailForm = ({ className }) => {
             labelText='이메일을 입력해주세요'
             onChange={(e) => setResEmail(e.target.value)}
           />
-          <ButtonPrimary type='button' className='check-email-button' children='이메일 인증' onClick={checkEmailHandler} />
+          <ButtonPrimary
+            type='button'
+            className='check-email-button'
+            children='이메일 인증'
+            onClick={checkEmailHandler}
+          />
         </div>
         <div className='email-form-item'>
-          <InputShrink id='email-code' type='text' className='email-input' labelText='인증코드를 입력해주세요' />
-          <ButtonSecondary type='button' className='check-email-button' children='확인' onClick={checkEmailCodeHandler} />
+          <InputShrink
+            id='email-code'
+            type='text'
+            className='email-input'
+            labelText='인증코드를 입력해주세요'
+          />
+          <ButtonSecondary
+            type='button'
+            className='check-email-button'
+            children='확인'
+            onClick={checkEmailCodeHandler}
+          />
         </div>
       </form>
     </div>

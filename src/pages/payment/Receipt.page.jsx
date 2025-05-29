@@ -1,7 +1,6 @@
-import React from 'react';
 import ReceiptArea from './local-components/ReceiptArea.component';
-import './Receipt.style.scss';
 import { PageContainer } from '../../components';
+import './Receipt.style.scss';
 
 const Receipt = () => {
   return (

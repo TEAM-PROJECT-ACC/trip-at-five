@@ -1,57 +1,56 @@
-import React from 'react';
-import './RoomList.style.scss';
-import { accomData } from '../../../../../assets/sample-data/accomSampleData';
-import { BsFillHouseAddFill, FaEdit, MdDelete } from '../../../../../assets/icons/index';
+import { useNavigate, useParams } from 'react-router-dom';
+import { BsFillHouseAddFill } from '../../../../../assets/icons/index';
 import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
-import { useNavigate } from 'react-router-dom';
+import AdminHeader from '../../../local-components/header/AdminHeader.component';
+import AdminSearch from '../../../local-components/header/search/AdminSearch.component';
+import AdminManagementList from '../../../local-components/list/AdminManagementList.component';
+import { roomData } from '../../../../../assets/sample-data/roomSampleData';
+import './RoomList.style.scss';
 
-const roomList = accomData.accommodation_tb[0].rooms;
+const roomList = roomData;
 
-const RoomList = ({ accomNo }) => {
+const roomColumnList = [
+  { name: '객실번호', className: 'col-w-10' },
+  { name: '객실명', className: 'col-w-30' },
+  { name: '객실수', className: 'col-w-30' },
+  { name: '객실가격', className: 'col-w-30' },
+];
+
+const RoomList = () => {
+  const params = useParams();
   const navigate = useNavigate();
+  const accomNo = params.id;
 
-  // 객실 등록/수정 페이지 이동 핸들러
-  const registerRoomPageHandler = (accomNo) => {
+  // 객실 등록 페이지 이동 핸들러
+  const roomFormPageHandler = (no) => {
+    console.log(no);
     console.log(accomNo);
-    navigate(`/admin/accommodations/${accomNo}/rooms`);
+    navigate(`/admin/accommodations/${accomNo}/rooms`, { state: { no } });
   };
+
   return (
     <>
       {/* 숙박업소 객실관리(목록) */}
       <div className='room-list__container'>
-        <div className='room-list-header'>
-          <h2>객실 관리</h2>
-          <AdminIconButton onClick={() => registerRoomPageHandler(accomNo)} children={<BsFillHouseAddFill />} />
-        </div>
-        <div className='room-list'>
-          <table className='admin-table'>
-            <thead className='admin-table-header'>
-              <tr className='t-head-item'>
-                <th className='t-head-item-col col-w-10'>객실명</th>
-                <th className='t-head-item-col col-w-30'>객실수</th>
-                <th className='t-head-item-col col-w-30'>객실가격</th>
-                <th className='t-head-item-col col-w-20'>편집</th>
-                <th className='t-head-item-col col-w-10'>제거</th>
-              </tr>
-            </thead>
-            <tbody className='admin-table-body'>
-              {roomList.map((value, idx) => (
-                <tr key={idx} className='t-body-item' onClick={() => registerRoomPageHandler(value.room_sq)}>
-                  <td className='t-body-item-col'>{value.room_name}</td>
-                  <td className='t-body-item-col'>{value.room_count}</td>
-                  <td className='t-body-item-col'>{value.room_price.toLocaleString('ko-kr')}원</td>
-                  <td className='t-body-item-col edit-button'>
-                    <FaEdit />
-                  </td>
-                  {/* 추후 삭제 여부 확인 모달창으로 변경 */}
-                  <td className='t-body-item-col delete-button'>
-                    <MdDelete />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <AdminHeader
+          className='admin-main-header'
+          title='객실관리'
+        >
+          <AdminSearch
+            className='admin-search-area__container'
+            placeholder={'객실명을 입력해주세요'}
+          >
+            <AdminIconButton
+              onClick={roomFormPageHandler}
+              children={<BsFillHouseAddFill />}
+            />
+          </AdminSearch>
+          <AdminManagementList
+            columnList={roomColumnList}
+            dataList={roomList}
+            onClickRow={roomFormPageHandler}
+          />
+        </AdminHeader>
       </div>
     </>
   );

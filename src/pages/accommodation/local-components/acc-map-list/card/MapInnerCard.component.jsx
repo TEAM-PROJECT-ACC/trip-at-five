@@ -1,12 +1,15 @@
 import React from 'react';
-import './MapInnerCard.style.scss';
+import './mapInnerCard.style.scss';
 
 const MapInnerCard = ({ accom }) => {
   return (
     <>
       <li className='acc-list__box'>
         <div className='acc-list-img'>
-          <img src={accom.thumbnail} alt={accom.name} />
+          <img
+            src={accom.thumbnail}
+            alt={accom.name}
+          />
         </div>
         <div className='acc-list-info'>
           <div className='acc-list-title'>{accom.name}</div>
@@ -19,5 +22,4 @@ const MapInnerCard = ({ accom }) => {
     </>
   );
 };
-
 export default MapInnerCard;

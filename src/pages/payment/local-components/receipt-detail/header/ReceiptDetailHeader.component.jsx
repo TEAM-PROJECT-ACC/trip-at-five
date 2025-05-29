@@ -1,6 +1,9 @@
-import React from 'react';
+import {
+  BsFillTelephoneFill,
+  FaUser,
+  IoReceipt,
+} from '../../../../../assets/icons/index';
 import './ReceiptDetailHeader.style.scss';
-import { BsFillTelephoneFill, FaUser, IoReceipt } from '../../../../../assets/icons/index';
 
 const ReceiptDetailHeader = ({ className }) => {
   return (

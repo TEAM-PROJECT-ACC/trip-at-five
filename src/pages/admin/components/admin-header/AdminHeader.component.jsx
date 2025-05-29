@@ -25,7 +25,10 @@ export const AdminHeader = () => {
       <div className='admin-header__inner'>
         <div className='admin-header__logo-container'>
           <MainLogoKr className='admin-header__logo' />
-          <div className='admin-header__page-title'>관리자</div>
+          <span className='admin-header__page-title admin-input'>
+            {/* TODO: 관리자 계정의 이메일 아이디 값 */}
+            {'Admin-email-id'}
+          </span>
         </div>
         <div className='admin-header__link-container'>
           {ADMIN_ROUTE.map((route, idx) => {

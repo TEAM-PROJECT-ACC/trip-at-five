@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import UserInfo from './user-info/UserInfo.component';
-import './Reservation.style.scss';
 import PayArea from './pay-info/PayArea.component';
-import { useAccomSearchStore, usePaymentInfoStore } from '../../states';
 import { PageContainer } from '../../components';
+import { useAccomSearchStore, usePaymentInfoStore } from '../../states';
+import './Reservation.style.scss';
 
 const Reservation = () => {
   const checkIn = useAccomSearchStore((state) => state.checkIn);
@@ -12,12 +12,11 @@ const Reservation = () => {
 
   const { roomInfo } = usePaymentInfoStore((state) => state);
 
-  const { setCheckIn, setCheckOut, setNumberOfPeople } = usePaymentInfoStore((state) => state.actions);
+  const { setCheckIn, setCheckOut, setNumberOfPeople } = usePaymentInfoStore(
+    (state) => state.actions
+  );
 
   useEffect(() => {
-    console.log(checkIn);
-    console.log(checkOut);
-    console.log(numberOfPeople);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
     setNumberOfPeople(numberOfPeople);
@@ -26,7 +25,10 @@ const Reservation = () => {
   return (
     <PageContainer className='reservation__container'>
       <UserInfo className='user-info__container' />
-      <PayArea className='pay-info__container' roomInfo={roomInfo} />
+      <PayArea
+        className='pay-info__container'
+        roomInfo={roomInfo}
+      />
     </PageContainer>
   );
 };

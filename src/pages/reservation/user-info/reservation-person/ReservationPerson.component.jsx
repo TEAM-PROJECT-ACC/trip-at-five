@@ -1,15 +1,19 @@
-import './ReservationPerson.style.scss';
+import { useEffect } from 'react';
 import { InputShrink, Select } from '../../../../components';
 import { usePaymentInfoStore } from '../../../../states';
-import { useEffect } from 'react';
+import './ReservationPerson.style.scss';
 
 /**
  * 예약자 정보를 입력받고 해당 값을 예약 상태관리 정보에 저장
  */
 const ReservationPerson = ({ className }) => {
   // 상태 정보
-  const { resName, resPhone, userCoupon } = usePaymentInfoStore((state) => state);
-  const { setResName, setResPhone, setUserCoupon } = usePaymentInfoStore((state) => state.actions);
+  const { resName, resPhone, userCoupon } = usePaymentInfoStore(
+    (state) => state
+  );
+  const { setResName, setResPhone, setUserCoupon } = usePaymentInfoStore(
+    (state) => state.actions
+  );
 
   /**
    * coupon은 추후 데이터 서버에서 불러와서 출력할 예정

@@ -1,29 +1,187 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
-import AccommodationHeader from './components/AccommodationHeader.component';
-import './AccommodationDetail.style.scss';
+import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
-import { Button } from '../../components';
-import RoomList from './components/RoomList.component';
+import RoomList from './components/room-list-component/RoomList.component';
+import {
+  ButtonPrimary,
+  Modal,
+  Pagination,
+  StarRating,
+  Textarea,
+} from '../../components';
+import { MdAddPhotoAlternate } from '../../assets/icons/ys/index';
+import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
+import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
+import { accomData } from '../../assets/sample-data/accomSampleData';
+import { Star } from '../../components/star-rating/components/star/Star.component';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
 
 const AccommodationDetail = () => {
-  const mapRef = useRef(null);
+  const { id } = useParams();
+  const accom = accomData.accommodation_tb.find(
+    (item) => String(item.accom_sq) === String(id)
+  );
 
-  const lat = 37.559945;
-  const lon = 126.994601;
+  const imageList = [
+    '/assets/images/room-page/sampleImg2.png',
+    '/assets/images/room-page/bedroom.png',
+    '/assets/images/room-page/sample1.png',
+    '/assets/images/room-page/waterpark.png',
+    '/assets/images/room-page/pool.png',
+    '/assets/images/room-page/bedroom.png',
+    '/assets/images/room-page/sample1.png',
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: 'flex',
+          backgroundColor: '#5500ff',
+          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          top: '75px',
+          left: '5px',
+          zIndex: 100,
+        }}
+        onClick={onClick}
+      />
+    );
+  }
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: 'flex',
+          backgroundColor: '#5500ff',
+          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: '1195px',
+          zIndex: 100,
+        }}
+        onClick={onClick}
+      ></div>
+    );
+  }
+  const [starRateScore, setStarRateScore] = useState(() => 2.6);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState(imageList[0]);
+  const [showImageList, setShowImageList] = useState(false);
+
+  const toggleImageList = () => setShowImageList((prev) => !prev);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = () => {
+    setCurrentPage(pageNo);
+  };
+  const handleImageSelect = (imgUrl) => {
+    setSelectedImage(imgUrl);
+    setShowImageList(false);
+  };
+
+  const handleRatingStar = (score) => {
+    setStarRateScore(() => score);
+  };
+
+  const mapRef = useRef(null);
 
   const init = () => {
     if (window.kakao && window.kakao.maps && mapRef.current) {
+      /* 해당 숙박업체의 위도경도에 따라 지도에 마커 위치가 변경*/
+      const lat = accom.accom_lat;
+      const lon = accom.accom_lon;
+      const markPosition = new window.kakao.maps.LatLng(lat, lon);
       const map = new window.kakao.maps.Map(mapRef.current, {
-        center: new window.kakao.maps.LatLng(lat, lon),
+        center: markPosition,
         level: 3,
       });
 
+      /* 마커의 색상 변경을 위해 커스텀 이지미 사용 */
+      const markerImageUrl = '/assets/images/map-marker/FaMapMarkerAlt.svg';
+
+      const markerImage = new window.kakao.maps.MarkerImage(
+        markerImageUrl,
+        new window.kakao.maps.Size(40, 40),
+        { offset: new window.kakao.maps.Point(20, 40) }
+      );
+
       new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(lat, lon),
+        position: markPosition,
         map,
+        image: markerImage,
       });
+
+      const overlayContent = `
+        <div class="custom-overlay-bubble">
+          <div class="custom-overlay-label">${accom.accom_name}</div>
+        </div>
+      `;
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        position: markPosition,
+        content: overlayContent,
+        yAnchor: 2.15,
+      });
+      customOverlay.setMap(map);
+    }
+  };
+  const scrollRef = useRef(null);
+  let scrollInterval = null;
+
+  const startScroll = (direction) => {
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
+
+    scrollInterval = setInterval(() => {
+      scrollElement.scrollLeft += direction === 'left' ? -10 : 10;
+    }, 10);
+  };
+
+  const stopScroll = () => {
+    clearInterval(scrollInterval);
+  };
+
+  const modalHandler = () => {
+    setModalOpen(true);
+  };
+
+  const handleScrollToReview = () => {
+    const target = document.getElementById('ancher-review');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToMap = () => {
+    const target = document.getElementById('ancher-map');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -33,138 +191,352 @@ const AccommodationDetail = () => {
         init();
       });
     }
-  }, []);
+  }, [accom]);
 
   return (
     <PageContainer>
       <section className='accom-header'>
-        <img src='' className='accom-header__image' />
+        <div className='image-wrapper'>
+          <img
+            className='accom-header__image'
+            src={selectedImage}
+          />
+          <button
+            className='accom-header-img-change-btn'
+            onClick={toggleImageList}
+          ></button>
+        </div>
+
+        {showImageList && (
+          <div className='slick-container'>
+            <Slider {...settings}>
+              {imageList.map((img, idx) => (
+                <div key={idx}>
+                  <img
+                    src={img}
+                    className='image-box'
+                    onClick={() => handleImageSelect(img)}
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        )}
         <div className='accom-header__text'>
-          서울신라호텔
+          {accom?.accom_name}
           <div className='accom-header__price'>
-            150,000원 / <p>1박</p>
+            {accom &&
+              Math.min(
+                ...accom.rooms.map((room) => room.room_price)
+              ).toLocaleString()}
+            원~ / <p className='accom-room-sub__price'>1박</p>
           </div>
         </div>
-        <p className='accom-location'>서울 중구 장충동2가 202</p>
+        <p className='accom-location'>{accom?.accom_location}</p>
       </section>
 
       {/* 숙소 정보 카드 */}
       <section className='accom-info-detail'>
         <div className='accom-info__map'>
-          <Button className='accom-location-btn'>위치정보</Button>
+          <button
+            onClick={handleScrollToMap}
+            className='accom-location-btn'
+          >
+            위치정보
+          </button>
         </div>
-        <div className='accom-info__review'>
+        <button
+          onClick={handleScrollToReview}
+          className='accom-info__review'
+        >
           <div className='review-header'>
             <p className='nickname'>닉네임</p>
             <div className='stars'>⭐⭐⭐⭐⭐</div>
           </div>
-          <p className='comment'>
+          <p className='info-comment'>
             편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
             좋고 청결해서 다시 방문하고 싶어요.
           </p>
-        </div>
+        </button>
         <div className='accom-info__facility'>
-          <h4>기본 제공 시설</h4>
-          <ul>
-            <li>WiFi</li>
-            <li>욕조</li>
-            <li>조식</li>
-            <li>헬스장</li>
-          </ul>
+          <FacilityFilterView />
         </div>
       </section>
 
       {/* 객실 목록 */}
+
       <RoomList />
 
+      {/* 앵커 태그가 헤더 영역에 가려져서 빈 태그 추가 */}
+      <div
+        className='empty_blank'
+        id='ancher-review'
+      ></div>
       {/* 후기 섹션 */}
+
       <section className='review-section'>
-        <h2>이용 후기</h2>
-
+        <div className='review-section__header'>
+          <div className='acc-detail-section__title'>이용 후기</div>
+          <div className='review-star'>
+            <Star className='review-star-style' />
+            3.0
+          </div>
+          <button
+            onClick={modalHandler}
+            className='accom-modal-btn'
+          >
+            후기 등록
+          </button>
+          {isModalOpen && (
+            <Modal
+              className='accom-modal__inner'
+              useCloseIcon={true}
+              modalHandler={() => {
+                setModalOpen(false);
+              }}
+            >
+              <div className='accom-modal-container'>
+                <div className='accom-modal-title'>
+                  이번 여행은 어떠쎴나요?
+                  <br />
+                  여행에 대한 짫은 후기를 편하게 남겨주세요
+                </div>
+                <StarRating
+                  score={starRateScore}
+                  onClick={handleRatingStar}
+                  className='accom-modal-stars'
+                />
+                <div className='accom-modal-body'>
+                  <Textarea
+                    placeholder={'후기를 작성해주세요'}
+                    className='accom-modal-textbox'
+                  />
+                  <div
+                    type='file'
+                    className='accom-modal-img'
+                  >
+                    <MdAddPhotoAlternate className='accom-modal-img-icon' />
+                  </div>
+                </div>
+                <ButtonPrimary
+                  className='accom-modal-btn-inner'
+                  onClick={() => {
+                    setModalOpen(false);
+                  }}
+                >
+                  등록하기
+                </ButtonPrimary>
+              </div>
+            </Modal>
+          )}
+        </div>
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
           </div>
           <br />
-          <p className='nickname'>코알라잉</p>
-          <div className='stars'>⭐⭐⭐⭐⭐</div>
-          <p className='comment'>
-            리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-            있었습니다. 직원도 매우 친절했어요!
-          </p>
+          <div className='review-text-box'>
+            <span className='nickname'>코알라잉</span>
+            <span className='stars'>⭐⭐⭐⭐⭐</span>
+            <div className='inner-card-comment'>
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!
+            </div>
+            <div className='see-more-comment'>더보기</div>
+          </div>
         </div>
-
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
           </div>
           <br />
-          <p className='nickname'>코알라잉</p>
-          <div className='stars'>⭐⭐⭐⭐⭐</div>
-          <p className='comment'>
-            리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-            있었습니다. 직원도 매우 친절했어요!
-          </p>
+          <div className='review-text-box'>
+            <span className='nickname'>코알라잉</span>
+            <span className='stars'>⭐⭐⭐⭐⭐</span>
+            <div className='inner-card-comment'>
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!
+            </div>
+            <div className='see-more-comment'>더보기</div>
+          </div>
         </div>
-
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
           </div>
           <br />
-          <p className='nickname'>코알라잉</p>
-          <div className='stars'>⭐⭐⭐⭐⭐</div>
-          <p className='comment'>
-            리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-            있었습니다. 직원도 매우 친절했어요!
-          </p>
+          <div className='review-text-box'>
+            <span className='nickname'>코알라잉</span>
+            <span className='stars'>⭐⭐⭐⭐⭐</span>
+            <div className='inner-card-comment'>
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!
+            </div>
+            <div className='see-more-comment'>더보기</div>
+          </div>
         </div>
+        <div className='review-card'>
+          <div className='images'>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+          </div>
+          <br />
+          <div className='review-text-box'>
+            <span className='nickname'>코알라잉</span>
+            <span className='stars'>⭐⭐⭐⭐⭐</span>
+            <div className='inner-card-comment'>
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!
+            </div>
+            <div className='see-more-comment'>더보기</div>
+          </div>
+        </div>
+        <div className='review-card'>
+          <div className='images'>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+          </div>
+          <br />
+          <div className='review-text-box'>
+            <span className='nickname'>코알라잉</span>
+            <span className='stars'>⭐⭐⭐⭐⭐</span>
+            <div className='inner-card-comment'>
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
+              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
+              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
+              있었습니다. 직원도 매우 친절했어요!
+            </div>
+            <div className='see-more-comment'>더보기</div>
+          </div>
+        </div>
+
+        <Pagination
+          className='accom-review-pagination'
+          totalCount={100}
+          pageLength={5}
+          currentPage={currentPage}
+          numOfRows={10}
+          useMoveToEnd={true}
+          onChangePage={handlePageChange}
+        />
       </section>
 
       {/* 상세 정보 */}
-      <section className='detail-info'>
-        <h2>상세정보</h2>
-        <p>
-          [사계절 온수풀 해온 HE:ON 정기 점검 안내]
-          <br />
-          항상 롯데호텔 제주에 보내주시는 고객님의 성원에 진심으로 감사드립니다
-          <br />
-          고객님께 쾌적하고 안락한 여가 공간을 제공해 드리기 위해 해온 수질 관리
-          및 정기 점검을 시행합니다
-          <br />
-          이로 인해 아래 기간 동안 사계절 온수풀 해온 이용이 제한되오니, 이 점
-          고객님들의 깊은 양해 부탁드립니다
-          <br />
-          언제나 최상의 환경에서 고객님을 모실 수 있도록 최선의 노력을
-          다하겠습니다
-          <br />
-          해온 정기 점검 일자 : 2025년 7월 12
-          <br />
-          <br />
-          패밀리트윈 (더블+싱글) 마감 시 트윈(싱글+싱글)+엑스트라베드로 제공 될
-          수 있습니다
-          <br />
-          더블 혹은 트윈 객실은 체크인 시 배정되며, 지정이 불가합니다
-          <br />
-          자세한 내용은 호텔로 문의바랍니다
-          <br />
-        </p>
-      </section>
-      <section className='accom-info-detail'>
-        <h2>위치</h2>
-        <div className='accom-info__map'>
+
+      <RoomDetailText />
+
+      <section
+        id='ancher-map'
+        className='accom__map-container'
+      >
+        <div className='acc-detail-section__title'>위치</div>
+        <div className='accom-info-mapContainer'>
           <Script
             async
             src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
@@ -178,7 +550,10 @@ const AccommodationDetail = () => {
               }
             }}
           />
-          <div ref={mapRef} style={{ width: '100%', height: '380px' }} />
+          <div
+            ref={mapRef}
+            className='mapStyle'
+          />
         </div>
       </section>
     </PageContainer>

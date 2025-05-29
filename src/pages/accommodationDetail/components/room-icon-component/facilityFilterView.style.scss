@@ -1,0 +1,33 @@
+.facility-view-wrapper {
+  margin-top: 10px;
+}
+
+.facility-group {
+  margin-bottom: 20px;
+}
+
+.facility-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.facility-view-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.fac-icon {
+  display: flex;
+  font-size: 20px;
+  gap: 4px;
+  @include color-5500ff;
+}
+.fac-icon__text {
+  @include color-baabfa;
+}
+
+.blank {
+  margin-bottom: 5px;
+}

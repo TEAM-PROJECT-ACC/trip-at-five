@@ -1,4 +1,3 @@
-import React from 'react';
 import PaymentInfoBody from './body/PaymentInfoBody.component';
 import PaymentInfoHeader from './header/PaymentInfoHeader.component';
 import './PaymentInfo.style.scss';

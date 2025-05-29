@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
-import './RoomRegForm.style.scss';
+import { useEffect, useRef, useState } from 'react';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-import { Select } from '../../../../components';
+import './RoomRegForm.style.scss';
 
 const timeArray = [
   '00:00',
@@ -31,7 +30,7 @@ const timeArray = [
   '23:00',
 ];
 
-const RoomRegForm = () => {
+const RoomRegForm = ({ accomId, roomId }) => {
   const [word, setWord] = useState('');
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
@@ -95,21 +94,50 @@ const RoomRegForm = () => {
   };
 
   return (
-    <form className='room-main-form__container' encType='multiple/form-data'>
-      <input type='hidden' name='accomNo' value={''} />
+    <form
+      className='room-main-form__container'
+      encType='multiple/form-data'
+    >
+      <input
+        type='hidden'
+        name='accomNo'
+        value={accomId}
+      />
+      <input
+        type='hidden'
+        name='roomSq'
+        value={roomId}
+      />
       <div className='room-main-form-left'>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실명</label>
-          <AdminInput type={'text'} name='roomName' value={word} onChange={roomNameWordCountHandler} />
-          {roomNameWordCount >= 18 && <span className='check-warning'>글자 수는 최대 18자 입니다. (현재 18자)</span>}
+          <AdminInput
+            type={'text'}
+            name='roomName'
+            value={word}
+            onChange={roomNameWordCountHandler}
+          />
+          {roomNameWordCount >= 18 && (
+            <span className='check-warning'>
+              글자 수는 최대 18자 입니다. (현재 18자)
+            </span>
+          )}
         </div>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>가격 설정</label>
-          <AdminInput type={'number'} name='roomPrice' placeholder={'객실 가격을 입력해주세요'} />
+          <AdminInput
+            type={'number'}
+            name='roomPrice'
+            placeholder={'객실 가격을 입력해주세요'}
+          />
         </div>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실 수</label>
-          <AdminInput type={'number'} name='roomCnt' placeholder={'객실 수를 입력해주세요'} />
+          <AdminInput
+            type={'number'}
+            name='roomCnt'
+            placeholder={'객실 수를 입력해주세요'}
+          />
         </div>
         <div className='room-main-form-item'>
           <p className='admin-form-label'>인원 설정</p>
@@ -117,11 +145,21 @@ const RoomRegForm = () => {
           <div className='input-group'>
             <div className='group-item'>
               <label className='group-item-label'>기준인원</label>
-              <AdminInput type={'number'} name='roomMaxPpl' placeholder={'기준인원을 입력해주세요'} defaultValue={0} />
+              <AdminInput
+                type={'number'}
+                name='roomMaxPpl'
+                placeholder={'기준인원을 입력해주세요'}
+                defaultValue={0}
+              />
             </div>
             <div className='group-item'>
               <label className='group-item-label'>최대인원</label>
-              <AdminInput type={'number'} name='roomStdPpl' placeholder={'최대인원을 입력해주세요'} defaultValue={0} />
+              <AdminInput
+                type={'number'}
+                name='roomStdPpl'
+                placeholder={'최대인원을 입력해주세요'}
+                defaultValue={0}
+              />
             </div>
           </div>
         </div>
@@ -132,9 +170,17 @@ const RoomRegForm = () => {
           <div className='input-group'>
             <div className='group-item'>
               <label className='group-item-label'>입실시간</label>
-              <select className='chk-select' name='roomChkIn' ref={checkInRef} onChange={checkTimeHandler}>
+              <select
+                className='chk-select'
+                name='roomChkIn'
+                ref={checkInRef}
+                onChange={checkTimeHandler}
+              >
                 {timeArray.map((value, idx) => (
-                  <option key={idx} value={value}>
+                  <option
+                    key={idx}
+                    value={value}
+                  >
                     {value}
                   </option>
                 ))}
@@ -142,9 +188,17 @@ const RoomRegForm = () => {
             </div>
             <div className='group-item'>
               <label className='group-item-label'>퇴실시간</label>
-              <select className='chk-select' name='roomChkOut' ref={checkOutRef} onChange={checkTimeHandler}>
+              <select
+                className='chk-select'
+                name='roomChkOut'
+                ref={checkOutRef}
+                onChange={checkTimeHandler}
+              >
                 {timeArray.map((value, idx) => (
-                  <option key={idx} value={value}>
+                  <option
+                    key={idx}
+                    value={value}
+                  >
                     {value}
                   </option>
                 ))}
@@ -152,13 +206,37 @@ const RoomRegForm = () => {
             </div>
           </div>
 
-          {checkTime && <span className='check-warning'>입/퇴실 시간을 다시 설정해주세요</span>}
+          {checkTime && (
+            <span className='check-warning'>
+              입/퇴실 시간을 다시 설정해주세요
+            </span>
+          )}
         </div>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실 이미지 등록</label>
-          <AdminInput type={'file'} multiple name='imageList' />
+          <AdminInput
+            type={'file'}
+            multiple
+            name='imageList'
+          />
         </div>
-        <AdminPrimaryButton className='room-reg-button'>등록하기</AdminPrimaryButton>
+        {/* 각 버튼에 따라 다른 메서드 호출 */}
+        <div className='room-reg-button-group'>
+          {roomId ? (
+            <>
+              <AdminPrimaryButton className='room-reg-button'>
+                수정
+              </AdminPrimaryButton>
+              <AdminPrimaryButton className='room-reg-button'>
+                삭제
+              </AdminPrimaryButton>
+            </>
+          ) : (
+            <AdminPrimaryButton className='room-reg-button'>
+              등록
+            </AdminPrimaryButton>
+          )}
+        </div>
       </div>
     </form>
   );
