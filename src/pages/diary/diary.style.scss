@@ -10,11 +10,24 @@
     .diary-page__title {
       font-size: 36px;
       font-weight: 600;
+      font-family: EF_jejudoldam, SUIT-Regular;
+      @include color-1c0900;
     }
     .diary-page__button {
       position: absolute;
       right: 0;
       padding: 10px 12px;
+      border-radius: 8px;
+      border: 3px solid;
+      font-size: 14px;
+      font-family: EF_jejudoldam, SUIT-Regular;
+      @include color-a9813d;
+      @include border-a9813d;
+
+      &:hover {
+        @include color-fafafa;
+        @include background-a9813d;
+      }
     }
   }
   .diary-page__diary-list-container {

@@ -1,37 +1,45 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
 .pwd-resetting-content-wrap {
-	width: 340px;
-	height: 232px;
-	margin-top: 40px;
-	margin-left: 80px;
+	padding-bottom: 10%;
 
-	.pwd-resetting-text {
+	.pwd-resetting-email-text {
 		font-size: 16px;
 		margin-bottom: 8px;
 	}
 
-	.pwd-resetting-code-input {
+	.pwd-resetting-email-input {
+		width: 340px;
+		margin-bottom: 8px;
+	}
+
+	.pwd-resetting-email-code-text {
 		font-size: 16px;
 		margin-bottom: 8px;
-		margin-top: 20px;
 	}
 
-	input {
+	.pwd-resetting-email-code-input {
 		width: 340px;
-		height: 36px;
-	}
-
-	button {
-		width: 340px;
-		height: 36px;
-		font-size: 14px;
-		font-weight: lighter;
-		margin-top: 20px;
 	}
 
 	.pwd-resetting-receive {
 		font-size: 10px;
 		margin-top: 8px;
+		cursor: pointer;
+		@include color-5500ff;
+	}
+
+	.email-auth {
+		width: 340px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: lighter;
+		margin-top: 20px;
+	}
+
+	.pwd-resetting-validateEmail-text {
+		margin-bottom: 20px;
+		font-size: 12px;
+		color: red;
 	}
 }
