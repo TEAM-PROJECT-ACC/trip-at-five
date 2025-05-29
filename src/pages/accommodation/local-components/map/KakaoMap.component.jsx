@@ -66,6 +66,7 @@ export const KakaoMap = ({ onClose }) => {
 
       const container = document.createElement('div');
       container.className = 'customoverlay-wrapper';
+      // container.style.zIndex = `${1000 + idx}`;
 
       container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
@@ -86,7 +87,7 @@ export const KakaoMap = ({ onClose }) => {
         position,
         content: container,
         yAnchor: 0.3,
-        zIndex: 3 + idx,
+        // zIndex: 1000 + idx,
       });
 
       overlay.setMap(map);
@@ -95,25 +96,30 @@ export const KakaoMap = ({ onClose }) => {
 
       bubble.addEventListener('click', () => {
         document.querySelectorAll('.text__box').forEach((el) => {
+          container.parentElement.style.zIndex = 0;
+
           el.style.opacity = '0';
           el.style.visibility = 'hidden';
         });
 
-        document.querySelectorAll('.price-bubble').forEach((el) => {
-          el.style.zIndex = '101';
-        });
+        // document.querySelectorAll('.price-bubble').forEach((el) => {
+        //   el.style.zIndex = '101';
+        // });
         if (openOverlayId === accom.id) {
           openOverlayId = null;
         } else {
           box.style.opacity = '1';
           box.style.visibility = 'visible';
           openOverlayId = accom.id;
+
+          container.parentElement.style.zIndex = 1000;
         }
       });
 
       const button = container.querySelector('.btn-close');
       button.addEventListener('click', (e) => {
         e.stopPropagation();
+        container.parentElement.style.zIndex = 0;
         box.style.opacity = '0';
         box.style.visibility = 'hidden';
         openOverlayId = null;

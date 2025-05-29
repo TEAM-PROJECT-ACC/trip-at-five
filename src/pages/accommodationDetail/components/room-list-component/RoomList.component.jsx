@@ -21,7 +21,10 @@ const RoomList = () => {
           className='room-card'
           key={room.room_sq}
         >
-          <div className='room-img' />
+          <img
+            className='room-img'
+            src='/assets/images/room-page/sample1.png'
+          />
           <div className='room-info-container'>
             <div className='room-info-line'></div>
             <div className='room-info_top'>

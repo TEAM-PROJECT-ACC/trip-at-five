@@ -72,5 +72,4 @@ const AccommodationList = () => {
     </PageContainer>
   );
 };
-
 export default AccommodationList;
