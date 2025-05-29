@@ -1,6 +1,9 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
 .register-tel-wrap {
+	.register-tel-input-wrap {
+		margin-bottom: 20px;
+	}
 	.register-tel-text {
 		font-size: 16px;
 		margin-bottom: 8px;
@@ -8,13 +11,12 @@
 
 	.register-tel-input {
 		width: 100%;
-		margin-bottom: 40px;
+		margin-bottom: 8px;
 	}
 
-	.register-tel-btn {
-		width: 340px;
-		display: flex;
-		justify-content: space-between;
+	.validatePhone-step4-text {
+		font-size: 12px;
+		@include color-5500ff;
 	}
 
 	.register-tel-btn {
@@ -24,14 +26,14 @@
 	}
 
 	.tel-btn-later {
-		width: 176px;
+		width: 196px;
 		padding: 13px;
 		font-size: 14px;
 		font-weight: normal;
 	}
 
 	.tel-btn-check {
-		width: 176px;
+		width: 196px;
 		padding: 13px;
 		font-size: 14px;
 		font-weight: normal;

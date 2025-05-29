@@ -13,6 +13,7 @@ export default function ChatRoom() {
 					<Textarea
 						className={'chat-room-textarea'}
 						placeholder={'채팅을 입력하세요...'}
+						cols={'50'}
 					/>
 				</div>
 				<ButtonPrimary className={'chat-room-send-btn '}>전송</ButtonPrimary>

@@ -5,13 +5,14 @@ import {
 	InputPrimary,
 } from '../../../../components';
 import { MdOutlineRefresh } from '../../../../assets/icons/kkh/index';
-import { RegisterInfoStore, useRegisterStore } from '../RegisterStore';
+
 import { nickNameMaker } from './NickName-sample/NickName.sample';
+import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
 
 export default function RegisterNickName() {
-	const { step, setAddStep } = useRegisterStore();
+	const { setAddStep } = useRegisterStore();
 	const { nickName, setnickName, nickCheck, setnickNameCheck } =
-		RegisterInfoStore();
+		RegisterInfostore();
 
 	/* 닉네임 추천 및 초기화 */
 	const resetNickName = () => {

@@ -10,6 +10,7 @@ import SnsButton from './sns/sns-buttion/Login.Sns.Button.component';
 
 export default function Login() {
 	
+	
 
 	const sendLogin = () => {
 		// console.log(KAKAO_AUTH_URL);

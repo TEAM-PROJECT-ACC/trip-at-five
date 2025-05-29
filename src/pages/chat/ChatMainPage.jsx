@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
@@ -28,7 +29,9 @@ export function Chat() {
 
 				<div className='chat-main-button'>
 					<ButtonSecondary className={'chat-send'}>취소</ButtonSecondary>
-					<ButtonPrimary className={'chat-cancle'}>문의하기</ButtonPrimary>
+					<Link to='room'>
+						<ButtonPrimary className={'chat-cancle'}>문의하기</ButtonPrimary>
+					</Link>
 				</div>
 			</div>
 		</PageContainer>

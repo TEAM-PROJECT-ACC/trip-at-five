@@ -1,7 +1,7 @@
 @use '@scss/_colors_variable.style.scss' as *;
 
 .chat-container {
-	padding: 10% 0%;
+	padding: 2% 0%;
 }
 
 .chat-room-wrap {
@@ -15,7 +15,7 @@
 .chat-room-close-icon {
 	width: 24px;
 	height: 24px;
-	margin-left: 1%;
+	margin-left: 0.5%;
 	margin-top: 20px;
 	cursor: pointer;
 	@include color-5500ff;
@@ -37,6 +37,8 @@
 	position: absolute;
 	bottom: 70%;
 	border: none;
+	
+	
 }
 
 .chat-room-send-btn {

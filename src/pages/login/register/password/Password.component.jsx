@@ -1,10 +1,10 @@
 import { ButtonPrimary, InputPrimary } from '../../../../components';
-import { useRegisterStore, RegisterInfoStore } from '../RegisterStore';
+import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
 import './password.component.scss';
 
 export default function RegisterPassword() {
 	const { step, setAddStep } = useRegisterStore();
-	const { pwd, setPwd, pwdCheck, setPwdCheck } = RegisterInfoStore();
+	const { pwd, setPwd, pwdCheck, setPwdCheck } = RegisterInfostore();
 
 	const passwordCheckOK = () => {
 		console.log(pwd === pwdCheck && 'Ok');
