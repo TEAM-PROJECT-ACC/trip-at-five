@@ -4,19 +4,16 @@
   .admin-contact__page-header {
     .admin-contact__select-box-container {
       .accom-type-select {
+        width: 160px;
         font-size: 16px;
         font-weight: 600;
-        padding: 16px;
+        padding: 16px 0;
         border: none;
         outline: none;
         border-radius: 10px;
         text-align: center;
 
-        -o-appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
         appearance: none;
-
         @include admin-input-shadow;
       }
     }
