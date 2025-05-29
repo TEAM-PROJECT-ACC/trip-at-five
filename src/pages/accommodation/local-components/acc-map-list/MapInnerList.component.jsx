@@ -3,6 +3,10 @@ import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import MapInnerCard from './card/MapInnerCard.component';
 import './mapInnerList.style.scss';
 
+/**
+ * 지도 모달창 카드 목록은 숙박업소명 순 정렬 (기본)
+ */
+
 export const MapInnerList = () => {
   const markedData = accomData.accommodation_tb.map((accom) => ({
     id: accom.accom_sq,

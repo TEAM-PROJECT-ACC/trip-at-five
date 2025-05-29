@@ -7,6 +7,10 @@ import {
 } from '../../../../../assets/icons/ys/index';
 import './filter.style.scss';
 
+/**
+ * 모텔, 호텔, 리조트, 펜션, 캠핑, 게스트하우스/한옥
+ */
+
 const CategoryFilter = ({ selectedCategory, setCategory }) => {
   const categoryIcons = [
     { icon: <FaBed />, value: '모텔', title: '모텔' },
