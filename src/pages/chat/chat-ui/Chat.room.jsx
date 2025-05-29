@@ -43,7 +43,6 @@ const getMessageComponent = (data) => {
 const ChatRoom = () => {
 	const [messages, setMessages] = useState(defaultMessage);
 
-
 	const handleSend = (input) => {
 		let newMessage = {
 			model: {
@@ -58,7 +57,7 @@ const ChatRoom = () => {
 	return (
 		<PageContainer className={'chat-room-container'}>
 			<div className='chat-main-room-wrap'>
-				<FaArrowAltCircleLeft className='chat-room-close-icon1' />
+				<FaArrowAltCircleLeft className='chat-room-close-icon' />
 				<MainContainer className='chat-main-container'>
 					<ChatContainer className='chat-container-wrap'>
 						<MessageList className='chat-mesggae-list'>

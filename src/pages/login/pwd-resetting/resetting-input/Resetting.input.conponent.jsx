@@ -16,7 +16,7 @@ export function ResettingInput({
 				text={text}
 			/>
 			<InputPrimary
-			  className={IclassName}
+				className={IclassName}
 				type={type}
 				placeholder={placeholder}
 				onChange={onChange}

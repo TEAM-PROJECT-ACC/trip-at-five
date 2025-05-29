@@ -16,7 +16,6 @@ export function EmailAuth() {
 
 	const testCode = '1234';
 
-
 	/*이메일 인증코드 보내기  */
 	const sendCode = () => {
 		{
@@ -24,7 +23,6 @@ export function EmailAuth() {
 		}
 	};
 
-		 
 	/* 이메일 형식 체크  */
 	validateEmail(email);
 
@@ -39,7 +37,6 @@ export function EmailAuth() {
 			setValidationCheck(true);
 		}
 	};
-
 
 	/* 인증코드 유효성 체크 부분 */
 	const codeCheck = () => {

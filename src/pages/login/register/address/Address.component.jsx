@@ -25,7 +25,7 @@ export default function RegisterAdress() {
 	const sendAddress = () => {
 		setAddress(totalAddress);
 		setAddStep();
-	}
+	};
 
 	return (
 		<div className='register-address-wrap'>

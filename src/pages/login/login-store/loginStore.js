@@ -4,7 +4,7 @@ const initialState = {
 	id: null,
 	pwd: null,
 	isLogin: false,
-	error: ''
+	error: '',
 };
 
 const LoginStateStore = create((set) => ({
@@ -23,7 +23,7 @@ const LoginStateStore = create((set) => ({
 			isLogin: text,
 		}),
 
-		setError: (text) =>
+	setError: (text) =>
 		set({
 			error: text,
 		}),

@@ -18,9 +18,8 @@ export default function LoginInputBox() {
 		console.log(t);
 	};
 
-
 	/*이메일 형식 체크 */
-	 validateEmail(id);
+	validateEmail(id);
 
 	const validateEmailCheck = (e) => {
 		const value = e.target.value;
@@ -41,8 +40,7 @@ export default function LoginInputBox() {
 				labelText={'이메일'}
 				onChange={validateEmailCheck}
 			/>
-			 {error && <p className='validateEmail-text'>{error}</p>}
-
+			{error && <p className='validateEmail-text'>{error}</p>}
 
 			<InputShrink
 				className={'login-pwd-input'}

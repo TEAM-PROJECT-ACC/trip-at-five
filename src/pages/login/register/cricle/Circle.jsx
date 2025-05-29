@@ -8,19 +8,29 @@ export default function Circle() {
 		<>
 			<div className='register-circle-wrap'>
 				<div
-					className={`${step == 1 ? 'register-circle-max' : 'register-circle-min'}`}
+					className={`${
+						step == 1 ? 'register-circle-max' : 'register-circle-min'
+					}`}
 				/>
 				<div
-					className={`${step == 2 ? 'register-circle-max' : 'register-circle-min'}`}
+					className={`${
+						step == 2 ? 'register-circle-max' : 'register-circle-min'
+					}`}
 				/>
 				<div
-					className={`${step == 3 ? 'register-circle-max' : 'register-circle-min'}`}
+					className={`${
+						step == 3 ? 'register-circle-max' : 'register-circle-min'
+					}`}
 				/>
 				<div
-					className={`${step == 4 ? 'register-circle-max' : 'register-circle-min'}`}
+					className={`${
+						step == 4 ? 'register-circle-max' : 'register-circle-min'
+					}`}
 				/>
 				<div
-					className={`${step == 5 ? 'register-circle-max' : 'register-circle-min'}`}
+					className={`${
+						step == 5 ? 'register-circle-max' : 'register-circle-min'
+					}`}
 				/>
 			</div>
 		</>

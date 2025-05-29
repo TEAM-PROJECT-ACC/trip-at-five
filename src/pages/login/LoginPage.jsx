@@ -9,9 +9,6 @@ import LoginInputBox from './login-input/Email.Pwd.Input.component';
 import SnsButton from './sns/sns-buttion/Login.Sns.Button.component';
 
 export default function Login() {
-	
-	
-
 	const sendLogin = () => {
 		// console.log(KAKAO_AUTH_URL);
 		window.location.href = KAKAO_AUTH_URL;

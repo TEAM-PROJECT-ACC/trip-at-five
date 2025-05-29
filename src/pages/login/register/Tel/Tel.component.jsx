@@ -37,13 +37,13 @@ export default function RegisterTel() {
 	return (
 		<div className='register-tel-wrap'>
 			<div className='register-tel-input-wrap'>
-			<p className='register-tel-text'>전화번호</p>
-			<InputPrimary
-				className={'register-tel-input'}
-				placeholder={'연락처를 입력해주세요'}
-				onChange={validatePhoneNumberCheck}
-			/>
-			{error && <p className='validatePhone-step4-text'>{error}</p>}
+				<p className='register-tel-text'>전화번호</p>
+				<InputPrimary
+					className={'register-tel-input'}
+					placeholder={'연락처를 입력해주세요'}
+					onChange={validatePhoneNumberCheck}
+				/>
+				{error && <p className='validatePhone-step4-text'>{error}</p>}
 			</div>
 
 			<div className='register-tel-btn'>

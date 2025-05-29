@@ -1,12 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-
 const RegisterStepInitialState = {
-			step: 1,
-			isTrue: false
+	step: 1,
+	isTrue: false,
 };
-
 
 export const useRegisterStore = create(
 	persist(
@@ -32,7 +30,7 @@ const RegisterInfoInitialState = {
 	pwdCheck: '',
 	nickName: '',
 	tel: null,
-	address: ''
+	address: '',
 };
 
 export const RegisterInfostore = create(

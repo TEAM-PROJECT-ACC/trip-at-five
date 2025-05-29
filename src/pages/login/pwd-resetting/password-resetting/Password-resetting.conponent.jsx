@@ -15,7 +15,7 @@ export function PasswordResetting({ className }) {
 
 	/* 로컬저장소 초기화*/
 
-	/* 비밀번호 재설정 */ 
+	/* 비밀번호 재설정 */
 	const updatePwd = () => {
 		setIsFalse();
 		window.localStorage.removeItem('pwd-resetting');
@@ -45,18 +45,23 @@ export function PasswordResetting({ className }) {
 				}}
 			/>
 			<ResttingTitle
-				className={`pwd-resetting-receive ${ pCheck != 'ok' ? 'pwd-fail-color' : ''} `}
+				className={`pwd-resetting-receive ${
+					pCheck != 'ok' ? 'pwd-fail-color' : ''
+				} `}
 				text={
 					pwd == pwdCheck
 						? '비밀번호가 일치합니다.'
 						: '비밀번호가 일치하지 않습니다.'
 				}
 			/>
-		  
+
 			<Link to='/login'>
-			<ButtonPrimary className={'pwd-update'} onClick={updatePwd}>
-				비밀번호 재설정
-			</ButtonPrimary>
+				<ButtonPrimary
+					className={'pwd-update'}
+					onClick={updatePwd}
+				>
+					비밀번호 재설정
+				</ButtonPrimary>
 			</Link>
 		</div>
 	);

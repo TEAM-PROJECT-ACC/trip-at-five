@@ -43,13 +43,13 @@ export default function RegisterEmail() {
 	return (
 		<div className='register-email-wrap'>
 			<div className='register-email-input-wrap'>
-			<p className='register-email-text'>이메일 *</p>
-			<InputPrimary
-				className={'register-email-input'}
-				placeholder={'이메일을 입력해주세요'}
-				onChange={validateEmailCheck}
-			/>
-			{error && <p className='validateEmail-step1-text'>{error}</p>}
+				<p className='register-email-text'>이메일 *</p>
+				<InputPrimary
+					className={'register-email-input'}
+					placeholder={'이메일을 입력해주세요'}
+					onChange={validateEmailCheck}
+				/>
+				{error && <p className='validateEmail-step1-text'>{error}</p>}
 			</div>
 
 			{isTrue && (
