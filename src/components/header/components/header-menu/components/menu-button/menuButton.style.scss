@@ -1,0 +1,7 @@
+.global-header__menu-button {
+	@include color-5500ff;
+	.global-header__menu-button__icon {
+		width: 32px;
+		height: 32px;
+	}
+}

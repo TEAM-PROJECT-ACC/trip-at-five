@@ -1,0 +1,31 @@
+.receipt-area__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.card__container {
+  width: 100%;
+  border-radius: 1rem;
+  border: 0.1rem solid $color-c8adff;
+  padding: 1rem;
+
+  & * {
+    @include color-5500ff;
+  }
+}
+
+.link-button--move {
+  border-radius: 0.7rem;
+  padding: 1.5rem 3rem;
+  align-self: flex-end;
+  @include background-5500ff;
+  @include color-ffffff;
+
+  a {
+    font-size: 1rem;
+  }
+}

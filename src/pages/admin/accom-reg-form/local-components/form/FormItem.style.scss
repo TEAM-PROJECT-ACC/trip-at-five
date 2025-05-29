@@ -1,0 +1,111 @@
+// 등록 폼 항목
+.accom-form-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  // 등록 폼 항목 헤더
+  .accom-form-item-header {
+    @include color-1e2022;
+    @include border-bottom-aaaab3;
+  }
+
+  // 등록 폼 항목 내용
+  .accom-form-item-content {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    &.accom-desc__container {
+      flex-direction: column;
+    }
+
+    .accom-type-select {
+      position: relative;
+      width: 30%;
+      font-size: 16px;
+      padding: 8px;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      text-align: center;
+
+      -o-appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      @include admin-input-shadow;
+    }
+
+    .accom-image {
+      width: 30%;
+    }
+
+    .accom-desc {
+      width: 100%;
+      min-height: 330px;
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 20px;
+      resize: none;
+      @include color-1e2022;
+      @include admin-input-shadow;
+    }
+
+    .accom-desc-count {
+      width: 100%;
+      text-align: right;
+
+      // 글자 수 세기 경고텍스트
+      .accom-desc-warning {
+        color: $color-ff4545;
+        font-weight: 900;
+        margin-right: 20px;
+        animation-name: word-warning;
+        animation-duration: 1000ms;
+        animation-timing-function: ease-in-out;
+      }
+    }
+
+    .map-area {
+    }
+    .map-input {
+      display: flex;
+      gap: 32px;
+    }
+
+    // 우편번호
+    .accom-zip-code {
+      width: 20%;
+    }
+
+    // 주소지
+    .accom-addr {
+      width: 80%;
+    }
+  }
+
+  .content__container,
+  .fac-content__container {
+    width: 100%;
+    border-radius: 10px;
+    padding: 32px;
+    display: flex;
+    @include admin-input-shadow;
+  }
+
+  .content__container {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .fac-content__container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,8 @@
+.global-input__secondary {
+  border-bottom: 1px solid;
+  @include border-1e2022;
+
+  &:focus {
+    @include border-5500ff;
+  }
+}

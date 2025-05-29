@@ -1,0 +1,106 @@
+.accommodation-item {
+  width: 815px;
+  height: 260px;
+  display: flex;
+
+  img {
+    width: 360px;
+    height: 240px;
+    border-radius: 10px;
+    object-fit: cover;
+    background-size: cover;
+  }
+  .accom-info:hover {
+    background-color: #eeeeee;
+  }
+  .accom-info {
+    width: 453px;
+    height: 240px;
+    margin-left: 366px;
+    margin-top: -240px;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
+    cursor: pointer;
+    @include background-f6f6f6;
+
+    .level-one {
+      display: flex;
+      justify-content: space-between;
+
+      .accom-name {
+        font-family: 'KCC-Ganpan';
+        font-size: 24px;
+        @include color-5500ff;
+      }
+
+      .accom-info-icon {
+        width: 35px;
+        height: 25px;
+        border-radius: 0px 10px 0px 10px;
+        box-shadow: inset 2px 2px 2px 0px rgb(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5px;
+        @include color-5500ff;
+        @include background-baabfa;
+      }
+    }
+    p.accom-address {
+      @include color-888888;
+    }
+    .star {
+      font-size: 13px;
+      @include color-c8adff;
+    }
+    .accom-info-time-price {
+      margin-top: 30px;
+      position: relative;
+      border-left: 3px solid #baabfa;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 8px;
+
+      p:nth-child(1) {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .accom-price {
+        width: 100%;
+        // vertical-align: middle;
+        display: flex;
+        justify-content: flex-end;
+        align-items: baseline;
+        gap: 16px;
+
+        .accom-price-value {
+          display: flex;
+          align-items: baseline;
+          strong {
+            font-size: 26px;
+            font-weight: 900;
+            // margin-left: 7px;
+            @include color-5500ff;
+          }
+        }
+      }
+
+      // p.accom-price {
+      //   margin-left: 240px;
+      //   display: inline-flex;
+      //   align-items: center;
+      //   font-weight: 600;
+      //   font-size: 18px;
+      // }
+
+      .accom-time {
+        // margin-left: 15px;
+      }
+    }
+  }
+}

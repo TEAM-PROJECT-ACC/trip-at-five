@@ -1,0 +1,26 @@
+.global-footer__container {
+  .global-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 40px 40px 48px;
+
+    .global-footer__info {
+      display: flex;
+
+      .global-footer__team-github {
+        &:not(:last-child) {
+          margin-right: 60px;
+        }
+        .global-footer__team-github-title {
+          font-weight: 600;
+          margin-bottom: 12px;
+        }
+        .global-footer__team-github-container {
+          padding: 0 16px;
+        }
+      }
+    }
+  }
+}

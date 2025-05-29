@@ -1,0 +1,30 @@
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.3rem;
+  padding: 0.5em 1.5em;
+  color: white;
+  background: linear-gradient(0deg, rgb(0, 150, 60), rgb(100, 250, 150));
+  border: none;
+  outline: none;
+  border-bottom: 3px solid rgb(0, 130, 40);
+  box-shadow: 0 0.5em 0.5em -0.4em rgb(0, 0, 0, 0.5);
+  letter-spacing: 0.08em;
+  border-radius: 20em;
+  cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    filter: brightness(1.2);
+    color: rgb(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    transition: 0s;
+    transform: rotate(-10deg);
+  }
+}

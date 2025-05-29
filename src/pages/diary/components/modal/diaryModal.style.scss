@@ -1,0 +1,23 @@
+.diary-modal__container {
+  width: 531px;
+  padding: 0 34px 30px;
+  .diary-modal__title {
+    width: 100%;
+    margin-bottom: 24px;
+    @include border-c8adff;
+  }
+
+  .diary-modal__contents {
+    height: 300px;
+    margin-bottom: 20px;
+    @include border-c8adff;
+  }
+  .diary-modal__btn-container {
+    display: flex;
+    justify-content: flex-end;
+    .diary-modal__button {
+      padding: 8px 12px;
+      margin-left: 8px;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.reservation-management__container {
+  width: 1280px;
+  margin: 0 auto;
+  @include color-aaaab3;
+  @include background-f6f6f6;
+
+  .admin-main-header {
+    margin-bottom: 1rem;
+  }
+}

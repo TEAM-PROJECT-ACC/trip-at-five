@@ -1,0 +1,15 @@
+.global-button__primary {
+  border-radius: 8px;
+  @include background-5500ff;
+  @include color-fafafa;
+
+  &:hover {
+    @include color-5500ff;
+    @include background-c8adff;
+  }
+  &.disabled {
+    cursor: not-allowed;
+    @include color-b8b8b8;
+    @include background-e6e6e6;
+  }
+}

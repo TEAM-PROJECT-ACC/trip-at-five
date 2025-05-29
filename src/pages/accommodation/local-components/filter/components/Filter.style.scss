@@ -1,0 +1,44 @@
+.filter-group {
+  .title {
+    margin: 10px 0;
+  }
+
+  .sub-title {
+    margin: 10px 0;
+  }
+
+  .filter-options {
+    margin: 10px 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .slider-style-length {
+    margin-bottom: 10px;
+  }
+
+  .filter-btn {
+    border: 1px solid #5500ff;
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    @include color-5500ff;
+
+    &:hover {
+      @include color-fafafa;
+      @include background-c8adff;
+    }
+
+    &.selected {
+      box-shadow: 2px 2px 3px 0px #555555;
+      @include background-5500ff;
+      @include color-ffffff;
+    }
+  }
+  p.price-range {
+    @include color-888888;
+  }
+}
