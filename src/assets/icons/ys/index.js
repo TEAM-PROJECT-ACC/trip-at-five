@@ -24,6 +24,8 @@ import {
   FaBurn,
   FaBath,
   FaMapMarkerAlt,
+  FaAngleRight,
+  FaAngleLeft,
 } from 'react-icons/fa';
 
 export {
@@ -49,6 +51,8 @@ export {
   FaBurn,
   FaBath,
   FaMapMarkerAlt,
+  FaAngleRight,
+  FaAngleLeft,
 };
 
 import { BiCabinet } from 'react-icons/bi';

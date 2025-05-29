@@ -24,5 +24,4 @@ const AccommodationListBox = ({ data }) => {
     </ul>
   );
 };
-
 export default AccommodationListBox;

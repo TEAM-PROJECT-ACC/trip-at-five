@@ -1,7 +1,7 @@
 .accom-header {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
   position: relative;
 
   &__image {
@@ -12,21 +12,21 @@
     background-size: cover;
     background-image: url(./img/sampleImg2.png);
   }
-  .accom-header-img-change-btn{
-  width: 50px;
-  height: 50px;
-  background-color: #22222254;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 50px;       
-  left: 50%;        
-  transform: translateX(-50%); 
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
+  .accom-header-img-change-btn {
+    width: 50px;
+    height: 50px;
+    background-color: #22222254;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
   }
 
   &__text {
@@ -276,30 +276,52 @@ button.global-button.global-button__primary.accom-modal-btn-inner {
   box-shadow: 1px 1px 3px #888888;
   @include background-fafafa;
 }
-.info-comment{
+.info-comment {
   font-size: 16px;
-      text-align: left;
+  text-align: left;
+}
+.slick-container {
+  padding: 0px 20px;
+}
+.image-box {
+  width: 210px;
+  height: 150px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: 0.3s ease;
+  margin: 0px 20px;
+  @include background-f6f6f6;
+  &:hover {
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+.slick-prev,
+.slick-next {
+  z-index: 100;
 }
 
-.image-boxs {
-  display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: -15px;
+.slick-container {
+  padding: 0px 20px;
+}
 
-    .image-box {
-      width: 160px;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: 0.3s ease;
-      @include background-f6f6f6;
-      &:hover {
-        @include background-fafafa;
-      }
-    }
-  }
+.slick-slider {
+  overflow: hidden;
+}
+.slick-slide > div {
+  display: flex;
+  justify-content: center;
+}
 .image-wrapper {
   position: relative;
+}
+
+.image-box-btn {
+  padding: 20px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #222222;
+  z-index: 10;
+  @include color-5500ff;
 }

@@ -22,5 +22,4 @@ const MapInnerCard = ({ accom }) => {
     </>
   );
 };
-
 export default MapInnerCard;

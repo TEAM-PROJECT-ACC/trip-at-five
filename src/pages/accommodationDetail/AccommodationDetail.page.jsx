@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, use } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
 import './accommodationDetail.style.scss';
@@ -16,21 +16,79 @@ import FacilityFilterView from './components/room-icon-component/FacilityFilterV
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
 import { accomData } from '../../assets/sample-data/accomSampleData';
 import { Star } from '../../components/star-rating/components/star/Star.component';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
   const accom = accomData.accommodation_tb.find(
     (item) => String(item.accom_sq) === String(id)
   );
-  //const [reviewImages, setReviewImages] = useState([]);
+
   const imageList = [
-    '/img/bedroom.png',
-    '/img/bedroom.png',
-    '/img/bedroom.png',
-    '/img/bedroom.png',
-    '/img/bedroom.png',
+    '/assets/images/room-page/sampleImg2.png',
+    '/assets/images/room-page/bedroom.png',
+    '/assets/images/room-page/sample1.png',
+    '/assets/images/room-page/waterpark.png',
+    '/assets/images/room-page/pool.png',
+    '/assets/images/room-page/bedroom.png',
+    '/assets/images/room-page/sample1.png',
   ];
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: 'flex',
+          backgroundColor: '#5500ff',
+          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          top: '75px',
+          left: '5px',
+          zIndex: 100,
+        }}
+        onClick={onClick}
+      />
+    );
+  }
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: 'flex',
+          backgroundColor: '#5500ff',
+          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: '1195px',
+          zIndex: 100,
+        }}
+        onClick={onClick}
+      ></div>
+    );
+  }
   const [starRateScore, setStarRateScore] = useState(() => 2.6);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -38,6 +96,11 @@ const AccommodationDetail = () => {
   const [showImageList, setShowImageList] = useState(false);
 
   const toggleImageList = () => setShowImageList((prev) => !prev);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = () => {
+    setCurrentPage(pageNo);
+  };
   const handleImageSelect = (imgUrl) => {
     setSelectedImage(imgUrl);
     setShowImageList(false);
@@ -88,11 +151,26 @@ const AccommodationDetail = () => {
       customOverlay.setMap(map);
     }
   };
+  const scrollRef = useRef(null);
+  let scrollInterval = null;
 
-   const modalHandler = () => {
+  const startScroll = (direction) => {
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
+
+    scrollInterval = setInterval(() => {
+      scrollElement.scrollLeft += direction === 'left' ? -10 : 10;
+    }, 10);
+  };
+
+  const stopScroll = () => {
+    clearInterval(scrollInterval);
+  };
+
+  const modalHandler = () => {
     setModalOpen(true);
   };
-  
+
   const handleScrollToReview = () => {
     const target = document.getElementById('ancher-review');
     if (target) {
@@ -106,18 +184,7 @@ const AccommodationDetail = () => {
       target.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  /*
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
 
-    const newImages = files.map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-    }));
-
-    setReviewImages((prev) => [...prev, ...newImages]);
-  };
-  */
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(() => {
@@ -129,24 +196,32 @@ const AccommodationDetail = () => {
   return (
     <PageContainer>
       <section className='accom-header'>
-        <div className="image-wrapper">
-          <img className='accom-header__image' src={selectedImage} />
-          <button className="accom-header-img-change-btn" onClick={toggleImageList}></button>
+        <div className='image-wrapper'>
+          <img
+            className='accom-header__image'
+            src={selectedImage}
+          />
+          <button
+            className='accom-header-img-change-btn'
+            onClick={toggleImageList}
+          ></button>
         </div>
-        
+
         {showImageList && (
-          <div className="image-boxs">
-            {imageList.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                className="image-box"
-                onClick={() => handleImageSelect(img)}
-              />
-            ))}
+          <div className='slick-container'>
+            <Slider {...settings}>
+              {imageList.map((img, idx) => (
+                <div key={idx}>
+                  <img
+                    src={img}
+                    className='image-box'
+                    onClick={() => handleImageSelect(img)}
+                  />
+                </div>
+              ))}
+            </Slider>
           </div>
         )}
-
         <div className='accom-header__text'>
           {accom?.accom_name}
           <div className='accom-header__price'>
@@ -163,13 +238,15 @@ const AccommodationDetail = () => {
       {/* 숙소 정보 카드 */}
       <section className='accom-info-detail'>
         <div className='accom-info__map'>
-          <button onClick={handleScrollToMap}
+          <button
+            onClick={handleScrollToMap}
             className='accom-location-btn'
           >
             위치정보
           </button>
         </div>
-        <button onClick={handleScrollToReview}
+        <button
+          onClick={handleScrollToReview}
           className='accom-info__review'
         >
           <div className='review-header'>
@@ -196,6 +273,7 @@ const AccommodationDetail = () => {
         id='ancher-review'
       ></div>
       {/* 후기 섹션 */}
+
       <section className='review-section'>
         <div className='review-section__header'>
           <div className='acc-detail-section__title'>이용 후기</div>
@@ -233,7 +311,10 @@ const AccommodationDetail = () => {
                     placeholder={'후기를 작성해주세요'}
                     className='accom-modal-textbox'
                   />
-                  <div type="file" className='accom-modal-img' >
+                  <div
+                    type='file'
+                    className='accom-modal-img'
+                  >
                     <MdAddPhotoAlternate className='accom-modal-img-icon' />
                   </div>
                 </div>
@@ -251,11 +332,26 @@ const AccommodationDetail = () => {
         </div>
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/office.png'
+              className='img'
+            ></img>
           </div>
           <br />
           <div className='review-text-box'>
@@ -273,11 +369,26 @@ const AccommodationDetail = () => {
         </div>
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/waterpark.png'
+              className='img'
+            ></img>
           </div>
           <br />
           <div className='review-text-box'>
@@ -295,11 +406,26 @@ const AccommodationDetail = () => {
         </div>
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample1.png'
+              className='img'
+            ></img>
           </div>
           <br />
           <div className='review-text-box'>
@@ -317,11 +443,26 @@ const AccommodationDetail = () => {
         </div>
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/sample.png'
+              className='img'
+            ></img>
           </div>
           <br />
           <div className='review-text-box'>
@@ -339,11 +480,26 @@ const AccommodationDetail = () => {
         </div>
         <div className='review-card'>
           <div className='images'>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
-            <div className='img'></div>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
+            <img
+              src='/assets/images/room-page/pool.png'
+              className='img'
+            ></img>
           </div>
           <br />
           <div className='review-text-box'>
@@ -359,13 +515,15 @@ const AccommodationDetail = () => {
             <div className='see-more-comment'>더보기</div>
           </div>
         </div>
+
         <Pagination
           className='accom-review-pagination'
           totalCount={100}
           pageLength={5}
-          currentPage={1}
+          currentPage={currentPage}
           numOfRows={10}
           useMoveToEnd={true}
+          onChangePage={handlePageChange}
         />
       </section>
 
