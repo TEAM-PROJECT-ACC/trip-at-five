@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './RoomRegForm.style.scss';
+import { roomInsertAPI } from '../../../../services/room/roomService.api';
 
 const timeArray = [
   '00:00',
