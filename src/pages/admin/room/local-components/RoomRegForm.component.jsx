@@ -30,7 +30,26 @@ const timeArray = [
   '23:00',
 ];
 
+/**
+ *
+ * @param {accomId} 숙박업소 PK값. 필수 값이다.
+ * @param {roomId} 객실 PK값. 없을 경우 정보 수정이다.
+ * @returns
+ */
 const RoomRegForm = ({ accomId, roomId }) => {
+  const [roomData, setRoomData] = useState({
+    roomSq: roomId ? roomId : 0,
+    roomName: '',
+    roomPrice: 0,
+    roomChkIn: '',
+    roomChkOut: '',
+    roomStdPpl: 0,
+    roomMaxPpl: 0,
+    roomCnt: 0,
+    // accomNo: accomId,
+    accomNo: 2757748, // 현재는 숙박 기능이 마무리가 안되었기 때문에 임시로 '더마루' 숙박업소번호 값으로 대체
+  });
+
   const [word, setWord] = useState('');
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
@@ -39,7 +58,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
   const checkOutRef = useRef();
 
   // 객실 명 글자 수 유효성 검사 핸들러
-  const roomNameWordCountHandler = (e) => {
+  const handleWordCount = (e) => {
     let value = e.target.value;
 
     if (value.length <= 18) {
@@ -68,7 +87,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
   };
 
   // 체크인/아웃 시간차 21시간 이하 유효성 검사 핸들러
-  const checkTimeHandler = () => {
+  const handleCheckTime = () => {
     const checkIn = checkInRef.current.value;
     const checkOut = checkOutRef.current.value;
 
@@ -93,21 +112,35 @@ const RoomRegForm = ({ accomId, roomId }) => {
     setCheckTime(false);
   };
 
+  // 데이터 상태 핸들러
+  const handleDataState = (e) => {
+    const name = e.target.name;
+    const value = name === 'price' ? Number(e.target.value) : e.target.value;
+
+    setRoomData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // 객실 등록 API 핸들러
+  const handleSubmit = async () => {
+    console.log(roomData);
+
+    // roomName값 업데이트
+    roomData.roomName = word;
+    // checkIn/Out 값 업데이트
+    roomData.roomChkIn = checkInRef.current.value;
+    roomData.roomChkOut = checkOutRef.current.value;
+
+    console.log(roomData);
+
+    const result = await roomInsertAPI(roomData);
+    console.log(result);
+  };
+
   return (
-    <form
-      className='room-main-form__container'
-      encType='multiple/form-data'
-    >
-      <input
-        type='hidden'
-        name='accomNo'
-        value={accomId}
-      />
-      <input
-        type='hidden'
-        name='roomSq'
-        value={roomId}
-      />
+    <div className='room-main-form__container'>
       <div className='room-main-form-left'>
         <div className='room-main-form-item'>
           <label className='admin-form-label'>객실명</label>
@@ -115,11 +148,12 @@ const RoomRegForm = ({ accomId, roomId }) => {
             type={'text'}
             name='roomName'
             value={word}
-            onChange={roomNameWordCountHandler}
+            onChange={handleWordCount}
           />
-          {roomNameWordCount >= 18 && (
+          {word.length >= 18 && (
             <span className='check-warning'>
-              글자 수는 최대 18자 입니다. (현재 18자)
+              글자 수는 최대 <strong>18</strong>자 입니다. (현재 {word.length}
+              자)
             </span>
           )}
         </div>
@@ -129,6 +163,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
             type={'number'}
             name='roomPrice'
             placeholder={'객실 가격을 입력해주세요'}
+            onChange={handleDataState}
           />
         </div>
         <div className='room-main-form-item'>
@@ -137,6 +172,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
             type={'number'}
             name='roomCnt'
             placeholder={'객실 수를 입력해주세요'}
+            onChange={handleDataState}
           />
         </div>
         <div className='room-main-form-item'>
@@ -150,6 +186,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                 name='roomMaxPpl'
                 placeholder={'기준인원을 입력해주세요'}
                 defaultValue={0}
+                onChange={handleDataState}
               />
             </div>
             <div className='group-item'>
@@ -159,6 +196,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                 name='roomStdPpl'
                 placeholder={'최대인원을 입력해주세요'}
                 defaultValue={0}
+                onChange={handleDataState}
               />
             </div>
           </div>
@@ -174,7 +212,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                 className='chk-select'
                 name='roomChkIn'
                 ref={checkInRef}
-                onChange={checkTimeHandler}
+                onChange={handleCheckTime}
               >
                 {timeArray.map((value, idx) => (
                   <option
@@ -192,7 +230,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                 className='chk-select'
                 name='roomChkOut'
                 ref={checkOutRef}
-                onChange={checkTimeHandler}
+                onChange={handleCheckTime}
               >
                 {timeArray.map((value, idx) => (
                   <option
@@ -232,13 +270,16 @@ const RoomRegForm = ({ accomId, roomId }) => {
               </AdminPrimaryButton>
             </>
           ) : (
-            <AdminPrimaryButton className='room-reg-button'>
+            <AdminPrimaryButton
+              className='room-reg-button'
+              onClick={handleSubmit}
+            >
               등록
             </AdminPrimaryButton>
           )}
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 
