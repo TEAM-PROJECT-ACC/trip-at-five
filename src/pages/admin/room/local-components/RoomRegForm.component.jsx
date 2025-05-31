@@ -38,6 +38,7 @@ const timeArray = [
  * @returns
  */
 const RoomRegForm = ({ accomId, roomId }) => {
+  // 객실데이터 상태
   const [roomData, setRoomData] = useState({
     roomSq: roomId ? roomId : 0,
     roomName: '',
@@ -54,6 +55,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
   const [word, setWord] = useState('');
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
+  const [imageFileData, setImageFileData] = useState([]);
 
   const checkInRef = useRef();
   const checkOutRef = useRef();
@@ -124,19 +126,46 @@ const RoomRegForm = ({ accomId, roomId }) => {
     }));
   };
 
+  // 이미지 처리 핸들러
+  const handleRoomImage = (e) => {
+    const files = Array.from(e.target.files);
+    setImageFileData(files);
+  };
+
   // 객실 등록 API 핸들러
   const handleSubmit = async () => {
-    console.log(roomData);
+    const formData = new FormData();
+    // console.log(roomData);
+    const updatedRoomData = {
+      ...roomData,
+      // roomName값 업데이트
+      roomName: word,
+      // checkIn/Out 값 업데이트
+      roomChkIn: checkInRef.current.value,
+      roomChkOut: checkOutRef.current.value,
+    };
 
-    // roomName값 업데이트
-    roomData.roomName = word;
-    // checkIn/Out 값 업데이트
-    roomData.roomChkIn = checkInRef.current.value;
-    roomData.roomChkOut = checkOutRef.current.value;
+    formData.append('roomSq', updatedRoomData.roomSq);
+    formData.append('roomName', updatedRoomData.roomName);
+    formData.append('roomPrice', updatedRoomData.roomPrice);
+    formData.append('roomChkIn', updatedRoomData.roomChkIn);
+    formData.append('roomChkOut', updatedRoomData.roomChkOut);
+    formData.append('roomStdPpl', updatedRoomData.roomStdPpl);
+    formData.append('roomMaxPpl', updatedRoomData.roomMaxPpl);
+    formData.append('roomCnt', updatedRoomData.roomCnt);
+    formData.append('accomNo', updatedRoomData.accomNo);
+    // formData에는 배열을 append 하면 NO!!
+    imageFileData.forEach((file) => {
+      formData.append('images', file); // 파일 객체 그대로 append
+    });
 
-    console.log(roomData);
+    // 디버깅용
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}:`, value);
+    // });
 
-    const result = await roomInsertAPI(roomData);
+    // 객실 등록 API 호출
+    const result = await roomInsertAPI(formData);
     console.log(result);
   };
 
@@ -257,6 +286,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
             type={'file'}
             multiple
             name='imageList'
+            onChange={handleRoomImage}
           />
         </div>
         {/* 각 버튼에 따라 다른 메서드 호출 */}
