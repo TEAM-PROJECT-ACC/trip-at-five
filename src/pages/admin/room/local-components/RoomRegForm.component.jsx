@@ -3,6 +3,10 @@ import AdminInput from '../../../../components/inputs/input-admin/AdminInput.com
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './RoomRegForm.style.scss';
 import { roomInsertAPI } from '../../../../services/room/roomService.api';
+import { HttpStatusCode } from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { imageToFile } from './utils/alternativeImage.util';
 
 const timeArray = [
   '00:00',
@@ -38,6 +42,7 @@ const timeArray = [
  * @returns
  */
 const RoomRegForm = ({ accomId, roomId }) => {
+  const navigate = useNavigate();
   // 객실데이터 상태
   const [roomData, setRoomData] = useState({
     roomSq: roomId ? roomId : 0,
@@ -155,18 +160,35 @@ const RoomRegForm = ({ accomId, roomId }) => {
     formData.append('roomCnt', updatedRoomData.roomCnt);
     formData.append('accomNo', updatedRoomData.accomNo);
     // formData에는 배열을 append 하면 NO!!
-    imageFileData.forEach((file) => {
-      formData.append('images', file); // 파일 객체 그대로 append
-    });
+    if (imageFileData.length > 0) {
+      imageFileData.forEach((file) => {
+        formData.append('images', file); // 파일 객체 그대로 append
+      });
+    } else {
+      // 입력받은 이미지가 없을 경우 대체 이미지로 저장
+      // const alternativeImagePath =
+      //   '/assets/images/alternative-images/alternative-image.png';
+      // const fileName = 'alternative-image.png';
+
+      // const file = await imageToFile(alternativeImagePath, fileName);
+
+      // formData.append('images', file);
+      formData.append('images', null);
+    }
 
     // 디버깅용
-    // formData.forEach((value, key) => {
-    //   console.log(`${key}:`, value);
-    // });
+    formData.forEach((value, key) => {
+      console.log(`${key}:`, value);
+    });
 
     // 객실 등록 API 호출
-    const result = await roomInsertAPI(formData);
-    console.log(result);
+    await roomInsertAPI(formData).then((res) => {
+      console.log(res);
+      if (res === HttpStatusCode.Ok) {
+        toast.success('객실 등록 성공!');
+        navigate(`/admin/accommodations/${accomId}/edit`);
+      }
+    });
   };
 
   return (
