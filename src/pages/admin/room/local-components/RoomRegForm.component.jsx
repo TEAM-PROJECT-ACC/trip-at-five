@@ -4,7 +4,7 @@ import AdminPrimaryButton from '../../../../components/buttons/admin-primary-but
 import './RoomRegForm.style.scss';
 import { roomInsertAPI } from '../../../../services/room/roomService.api';
 import { HttpStatusCode } from 'axios';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { imageToFile } from './utils/alternativeImage.util';
 
@@ -139,8 +139,16 @@ const RoomRegForm = ({ accomId, roomId }) => {
 
   // 객실 등록 API 핸들러
   const handleSubmit = async () => {
+    // roomData 값 체크
+    const checkRoomData = Object.entries(roomData);
+
+    checkRoomData.map((value, idx) => {
+      if (value[0] !== 'roomSq' && (value[1] === 0 || value[1] === '')) {
+        errorToastAlterFunc('비어 있는 항목이 있습니다!');
+      }
+    });
+
     const formData = new FormData();
-    // console.log(roomData);
     const updatedRoomData = {
       ...roomData,
       // roomName값 업데이트
@@ -177,18 +185,42 @@ const RoomRegForm = ({ accomId, roomId }) => {
     }
 
     // 디버깅용
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}:`, value);
+    // });
 
     // 객실 등록 API 호출
-    await roomInsertAPI(formData).then((res) => {
-      console.log(res);
-      if (res === HttpStatusCode.Ok) {
-        toast.success('객실 등록 성공!');
-        navigate(`/admin/accommodations/${accomId}/edit`);
-      }
-    });
+    await roomInsertAPI(formData)
+      .then((res) => {
+        // console.log(res);
+        if (res === HttpStatusCode.Ok) {
+          successToastAlterFunc();
+          setTimeout(() => {
+            navigate(`/admin/accommodations/${accomId}/edit`);
+          }, 3000);
+        }
+      })
+      .catch((error) => {
+        errorToastAlterFunc(error);
+      });
+  };
+
+  const toastInfo = {
+    position: 'top-right',
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  };
+
+  const successToastAlterFunc = () => {
+    toast.success('객실 등록 성공!', toastInfo);
+  };
+
+  const errorToastAlterFunc = (error) => {
+    toast.error(error, toastInfo);
   };
 
   return (
@@ -199,6 +231,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
           <AdminInput
             type={'text'}
             name='roomName'
+            required
             value={word}
             onChange={handleWordCount}
           />
@@ -332,6 +365,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

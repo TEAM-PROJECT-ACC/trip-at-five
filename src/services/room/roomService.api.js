@@ -21,6 +21,6 @@ export const roomInsertAPI = async (formData) => {
       },
     }
   );
-  console.log(response);
+  // console.log(response);
   return response.status;
 };
