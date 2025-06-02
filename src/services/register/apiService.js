@@ -27,10 +27,20 @@ export const EmailCodeCheck = async (email, code) => {
 	return response.data;
 };
 
-
-export const nickNameDuplicationCheck = async (nick) => {
+export const nickNameDuplicationCheck = async (nickName) => {
 	const response = await apiAxios.post('/register/nickNameDuplicationCheck', {
-		nick: nick
+		nickName: nickName,
+	});
+	return response.data;
+};
+
+export const sendRegister = async (email, pwd, nickName, tel, address) => {
+	const response = await apiAxios.post('/register/send', {
+		email: email,
+		pwd: pwd,
+		nickName: nickName,
+		tel: tel,
+		address: address,
 	});
 	return response.data;
 };
