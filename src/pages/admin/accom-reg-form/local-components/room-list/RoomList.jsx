@@ -1,4 +1,9 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { BsFillHouseAddFill } from '../../../../../assets/icons/index';
 import AdminIconButton from '../../../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminHeader from '../../../local-components/header/AdminHeader.component';
@@ -6,8 +11,12 @@ import AdminSearch from '../../../local-components/header/search/AdminSearch.com
 import AdminManagementList from '../../../local-components/list/AdminManagementList.component';
 import { roomData } from '../../../../../assets/sample-data/roomSampleData';
 import './RoomList.style.scss';
+import { useEffect } from 'react';
+import { selectRoomListAPI } from '../../../../../services/room/roomService.api';
+import { useQuery } from '@tanstack/react-query';
 
 const roomList = roomData;
+console.log(roomList);
 
 const roomColumnList = [
   { name: '객실번호', className: 'col-w-10' },
@@ -17,15 +26,37 @@ const roomColumnList = [
 ];
 
 const RoomList = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const params = useParams();
   const navigate = useNavigate();
   const accomNo = params.id;
+
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    /**
+     * 쿼리 함수에서 사용하는 변수는 기본적으로 queryKey에 포함되어야 함
+     */
+    queryKey: ['roomList', accomNo, searchParams.get('currentPage')],
+    queryFn: async () => {
+      const { data } = await selectRoomListAPI(
+        accomNo,
+        searchParams.get('currentPage')
+      );
+      console.log(data, isLoading, isError, error, refetch);
+      return data ?? [];
+    },
+    staleTime: 1000 * 5,
+  });
 
   // 객실 등록 페이지 이동 핸들러
   const roomFormPageHandler = (no) => {
     console.log(no);
     console.log(accomNo);
-    navigate(`/admin/accommodations/${accomNo}/rooms`, { state: { no } });
+    // navigate(`/admin/accommodations/${accomNo}/rooms`, { state: { no } });
+
+    // navigate(`/admin/accommodations/${accomNo}/rooms/${no}`);
+    let roomNo = `${no !== undefined ? no : ''}`;
+    console.log(roomNo);
+    navigate(`/admin/accommodations/2757748/rooms/` + roomNo);
   };
 
   return (
@@ -47,7 +78,7 @@ const RoomList = () => {
           </AdminSearch>
           <AdminManagementList
             columnList={roomColumnList}
-            dataList={roomList}
+            dataList={!isLoading ? data : []}
             onClickRow={roomFormPageHandler}
           />
         </AdminHeader>

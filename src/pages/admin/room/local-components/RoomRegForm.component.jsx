@@ -2,11 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './RoomRegForm.style.scss';
-import { roomInsertAPI } from '../../../../services/room/roomService.api';
+import {
+  findRoomByAccomNoAndRoomSq,
+  insertRoomAPI,
+} from '../../../../services/room/roomService.api';
 import { HttpStatusCode } from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { imageToFile } from './utils/alternativeImage.util';
+import { useQuery } from '@tanstack/react-query';
 
 const timeArray = [
   '00:00',
@@ -43,9 +47,10 @@ const timeArray = [
  */
 const RoomRegForm = ({ accomId, roomId }) => {
   const navigate = useNavigate();
+
   // 객실데이터 상태
   const [roomData, setRoomData] = useState({
-    roomSq: roomId ? roomId : 0,
+    roomSq: roomId,
     roomName: '',
     roomPrice: 0,
     roomChkIn: '',
@@ -53,8 +58,19 @@ const RoomRegForm = ({ accomId, roomId }) => {
     roomStdPpl: 0,
     roomMaxPpl: 0,
     roomCnt: 0,
-    // accomNo: accomId,
-    accomNo: 2757748, // 현재는 숙박 기능이 마무리가 안되었기 때문에 임시로 '더마루' 숙박업소번호 값으로 대체
+    accomNo: accomId,
+  });
+
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ['roomInfo', accomId, roomId, roomData],
+    queryFn: async () => {
+      const { data } =
+        roomId && (await findRoomByAccomNoAndRoomSq(accomId, roomId));
+      // console.log(data);
+      setRoomData(data);
+      return data ?? [];
+    },
+    staleTime: 1000 * 1,
   });
 
   const [word, setWord] = useState('');
@@ -192,7 +208,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
     // });
 
     // 객실 등록 API 호출
-    await roomInsertAPI(formData)
+    await insertRoomAPI(formData)
       .then((res) => {
         // console.log(res);
         if (res === HttpStatusCode.Ok) {
@@ -226,149 +242,158 @@ const RoomRegForm = ({ accomId, roomId }) => {
   };
 
   return (
-    <div className='room-main-form__container'>
-      <div className='room-main-form-left'>
-        <div className='room-main-form-item'>
-          <label className='admin-form-label'>객실명</label>
-          <AdminInput
-            type={'text'}
-            name='roomName'
-            required
-            value={word}
-            onChange={handleWordCount}
-          />
-          {word.length >= 18 && (
-            <span className='check-warning'>
-              글자 수는 최대 <strong>18</strong>자 입니다. (현재 {word.length}
-              자)
-            </span>
-          )}
-        </div>
-        <div className='room-main-form-item'>
-          <label className='admin-form-label'>가격 설정</label>
-          <AdminInput
-            type={'number'}
-            name='roomPrice'
-            placeholder={'객실 가격을 입력해주세요'}
-            onChange={handleDataState}
-          />
-        </div>
-        <div className='room-main-form-item'>
-          <label className='admin-form-label'>객실 수</label>
-          <AdminInput
-            type={'number'}
-            name='roomCnt'
-            placeholder={'객실 수를 입력해주세요'}
-            onChange={handleDataState}
-          />
-        </div>
-        <div className='room-main-form-item'>
-          <p className='admin-form-label'>인원 설정</p>
-
-          <div className='input-group'>
-            <div className='group-item'>
-              <label className='group-item-label'>기준인원</label>
+    <>
+      {!isLoading && (
+        <div className='room-main-form__container'>
+          <div className='room-main-form-left'>
+            <div className='room-main-form-item'>
+              <label className='admin-form-label'>객실명</label>
+              <AdminInput
+                type={'text'}
+                name='roomName'
+                required
+                value={word ? word : roomData?.roomName}
+                onChange={handleWordCount}
+              />
+              {word.length >= 18 && (
+                <span className='check-warning'>
+                  글자 수는 최대 <strong>18</strong>자 입니다. (현재{' '}
+                  {word.length}
+                  자)
+                </span>
+              )}
+            </div>
+            <div className='room-main-form-item'>
+              <label className='admin-form-label'>가격 설정</label>
               <AdminInput
                 type={'number'}
-                name='roomMaxPpl'
-                placeholder={'기준인원을 입력해주세요'}
-                defaultValue={0}
+                name='roomPrice'
+                defaultValue={roomData?.roomPrice}
+                placeholder={'객실 가격을 입력해주세요'}
                 onChange={handleDataState}
               />
             </div>
-            <div className='group-item'>
-              <label className='group-item-label'>최대인원</label>
+            <div className='room-main-form-item'>
+              <label className='admin-form-label'>객실 수</label>
               <AdminInput
                 type={'number'}
-                name='roomStdPpl'
-                placeholder={'최대인원을 입력해주세요'}
-                defaultValue={0}
+                name='roomCnt'
+                defaultValue={roomData?.roomCnt}
+                placeholder={'객실 수를 입력해주세요'}
                 onChange={handleDataState}
               />
             </div>
-          </div>
-        </div>
-      </div>
-      <div className='room-main-form-right'>
-        <div className='room-main-form-item'>
-          <p className='admin-form-label'>입/퇴실 시간 설정</p>
-          <div className='input-group'>
-            <div className='group-item'>
-              <label className='group-item-label'>입실시간</label>
-              <select
-                className='chk-select'
-                name='roomChkIn'
-                ref={checkInRef}
-                onChange={handleCheckTime}
-              >
-                {timeArray.map((value, idx) => (
-                  <option
-                    key={idx}
-                    value={value}
-                  >
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className='group-item'>
-              <label className='group-item-label'>퇴실시간</label>
-              <select
-                className='chk-select'
-                name='roomChkOut'
-                ref={checkOutRef}
-                onChange={handleCheckTime}
-              >
-                {timeArray.map((value, idx) => (
-                  <option
-                    key={idx}
-                    value={value}
-                  >
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+            <div className='room-main-form-item'>
+              <p className='admin-form-label'>인원 설정</p>
 
-          {checkTime && (
-            <span className='check-warning'>
-              입/퇴실 시간을 다시 설정해주세요
-            </span>
-          )}
+              <div className='input-group'>
+                <div className='group-item'>
+                  <label className='group-item-label'>기준인원</label>
+                  <AdminInput
+                    type={'number'}
+                    name='roomMaxPpl'
+                    placeholder={'기준인원을 입력해주세요'}
+                    defaultValue={roomData?.roomStdPpl}
+                    onChange={handleDataState}
+                  />
+                </div>
+                <div className='group-item'>
+                  <label className='group-item-label'>최대인원</label>
+                  <AdminInput
+                    type={'number'}
+                    name='roomStdPpl'
+                    defaultValue={roomData?.roomMaxPpl}
+                    placeholder={'최대인원을 입력해주세요'}
+                    onChange={handleDataState}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='room-main-form-right'>
+            <div className='room-main-form-item'>
+              <p className='admin-form-label'>입/퇴실 시간 설정</p>
+              <div className='input-group'>
+                <div className='group-item'>
+                  <label className='group-item-label'>입실시간</label>
+                  <select
+                    className='chk-select'
+                    name='roomChkIn'
+                    ref={checkInRef}
+                    defaultValue={roomData?.roomChkIn}
+                    onChange={handleCheckTime}
+                  >
+                    {timeArray.map((value, idx) => (
+                      <option
+                        key={idx}
+                        value={value}
+                      >
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className='group-item'>
+                  <label className='group-item-label'>퇴실시간</label>
+                  <select
+                    className='chk-select'
+                    name='roomChkOut'
+                    ref={checkOutRef}
+                    defaultValue={roomData?.roomChkOut}
+                    onChange={handleCheckTime}
+                  >
+                    {timeArray.map((value, idx) => (
+                      <option
+                        key={idx}
+                        value={value}
+                      >
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {checkTime && (
+                <span className='check-warning'>
+                  입/퇴실 시간을 다시 설정해주세요
+                </span>
+              )}
+            </div>
+            <div className='room-main-form-item'>
+              <label className='admin-form-label'>객실 이미지 등록</label>
+              <AdminInput
+                type={'file'}
+                multiple
+                name='imageList'
+                onChange={handleRoomImage}
+              />
+            </div>
+            {/* 각 버튼에 따라 다른 메서드 호출 */}
+            <div className='room-reg-button-group'>
+              {roomId ? (
+                <>
+                  <AdminPrimaryButton className='room-reg-button'>
+                    수정
+                  </AdminPrimaryButton>
+                  <AdminPrimaryButton className='room-reg-button'>
+                    삭제
+                  </AdminPrimaryButton>
+                </>
+              ) : (
+                <AdminPrimaryButton
+                  className='room-reg-button'
+                  onClick={handleSubmit}
+                >
+                  등록
+                </AdminPrimaryButton>
+              )}
+            </div>
+          </div>
+          <ToastContainer />
         </div>
-        <div className='room-main-form-item'>
-          <label className='admin-form-label'>객실 이미지 등록</label>
-          <AdminInput
-            type={'file'}
-            multiple
-            name='imageList'
-            onChange={handleRoomImage}
-          />
-        </div>
-        {/* 각 버튼에 따라 다른 메서드 호출 */}
-        <div className='room-reg-button-group'>
-          {roomId ? (
-            <>
-              <AdminPrimaryButton className='room-reg-button'>
-                수정
-              </AdminPrimaryButton>
-              <AdminPrimaryButton className='room-reg-button'>
-                삭제
-              </AdminPrimaryButton>
-            </>
-          ) : (
-            <AdminPrimaryButton
-              className='room-reg-button'
-              onClick={handleSubmit}
-            >
-              등록
-            </AdminPrimaryButton>
-          )}
-        </div>
-      </div>
-      <ToastContainer />
-    </div>
+      )}
+    </>
   );
 };
 
