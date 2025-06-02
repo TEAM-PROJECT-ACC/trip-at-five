@@ -14,7 +14,7 @@ const getRoomPath = (accomNo, currentPage) => {
  * @returns
  */
 export const selectRoomListAPI = async (accomNo, currentPage) => {
-  console.log('selectRoomListAPI : ' + accomNo + ' : ' + currentPage);
+  // console.log('selectRoomListAPI : ' + accomNo + ' : ' + currentPage);
   // const response = await apiAxios.get(getRoomPath(accomNo)); // 숙박업소 기능 구현 완료 후 주석 코드로 변경
 
   currentPage = currentPage === null ? 1 : currentPage;
