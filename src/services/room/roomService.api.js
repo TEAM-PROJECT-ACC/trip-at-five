@@ -1,10 +1,5 @@
 import axios from 'axios';
-import { serverBaseURL } from '../serverBaseURL';
-
-const apiAxios = axios.create({
-  baseURL: serverBaseURL,
-  withCredentials: true,
-});
+import { apiAxios } from '../service';
 
 /**
  * 객실 등록 API

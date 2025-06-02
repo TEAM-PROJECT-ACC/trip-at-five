@@ -139,16 +139,8 @@ const RoomRegForm = ({ accomId, roomId }) => {
 
   // 객실 등록 API 핸들러
   const handleSubmit = async () => {
-    // roomData 값 체크
-    const checkRoomData = Object.entries(roomData);
-
-    checkRoomData.map((value, idx) => {
-      if (value[0] !== 'roomSq' && (value[1] === 0 || value[1] === '')) {
-        errorToastAlterFunc('비어 있는 항목이 있습니다!');
-      }
-    });
-
     const formData = new FormData();
+
     const updatedRoomData = {
       ...roomData,
       // roomName값 업데이트
@@ -157,6 +149,16 @@ const RoomRegForm = ({ accomId, roomId }) => {
       roomChkIn: checkInRef.current.value,
       roomChkOut: checkOutRef.current.value,
     };
+
+    // updatedRoomData 값 체크
+    const checkUpdatedRoomData = Object.entries(updatedRoomData);
+
+    checkUpdatedRoomData.map((value, idx) => {
+      if (value[0] !== 'roomSq' && (value[1] === 0 || value[1] === '')) {
+        errorToastAlterFunc('비어 있는 항목이 있습니다!');
+        return;
+      }
+    });
 
     formData.append('roomSq', updatedRoomData.roomSq);
     formData.append('roomName', updatedRoomData.roomName);
