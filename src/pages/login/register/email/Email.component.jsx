@@ -1,16 +1,20 @@
 import { ButtonPrimary, InputPrimary } from '../../../../components';
 import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
 import './email.component.scss';
-import { validateEmail } from '../../util/validateEmail';
-import { useEffect, useState } from 'react';
-import { emailDuplicationCheck } from '../../../../services/register/apiService';
+import { validateEmail } from '../../util/validate';
+import { useState } from 'react';
+import {
+	EmailCodeCheck,
+	emailDuplicationCheck,
+	sendEmailCode,
+} from '../../../../services/register/apiService';
 
 export default function RegisterEmail() {
-	const { step, setAddStep } = useRegisterStore();
+	const { setAddStep } = useRegisterStore();
 	const { isTrue, setIsTrue, setIsFalse } = useRegisterStore();
-	const { type, setTypeTrue, setTypeFalse } = useRegisterStore();
 	const { email, emailCode, setEmail, setEmailCode } = RegisterInfostore();
 	const [error, setError] = useState();
+	const [text, setText] = useState();
 
 	const validateEmailCheck = (e) => {
 		const value = e.target.value;
@@ -31,21 +35,33 @@ export default function RegisterEmail() {
 			return;
 		}
 		const response = await emailDuplicationCheck(email);
-
 		if (response == 1) {
 			setError('이메일이 중복됩니다.');
 			setIsFalse();
 		} else {
 			/*인증코드 보내기*/
 			setIsTrue();
+			sendmailCode(email);
+			setError('인증코드를 발송했습니다.');
 		}
 	};
 
+	const sendmailCode = async () => {
+		const result = await sendEmailCode(email);
+	};
+
 	/* 이메일인증 코드 검사 및 확인후 넘기기 */
-	const sendEmailCode = () => {
+	const sendEmailCodeCheck = async () => {
 		{
 			console.log('sendEmailCode 부분');
-			email != null ? setIsTrue() : '';
+			const result = await EmailCodeCheck(email, emailCode);
+			if (result == 'sussess') {
+				console.log(result);
+				setAddStep();
+			} else {
+				console.log(result);
+				setText('다시 인증하시겠습니까?');
+			}
 		}
 	};
 
@@ -71,12 +87,20 @@ export default function RegisterEmail() {
 							setEmailCode(e.target.value);
 						}}
 					/>
+					{text && (
+						<p
+							className='validateEmailcode-step1-text'
+							onClick={sendmailCode}
+						>
+							{text}
+						</p>
+					)}
 				</div>
 			)}
 
 			<ButtonPrimary
 				className={'send-email-btn'}
-				onClick={isTrue == true ? sendEmailCode : emailCheck}
+				onClick={isTrue == true ? sendEmailCodeCheck : emailCheck}
 			>
 				이메일 인증
 			</ButtonPrimary>

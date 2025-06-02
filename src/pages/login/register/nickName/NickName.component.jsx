@@ -8,31 +8,47 @@ import { MdOutlineRefresh } from '../../../../assets/icons/kkh/index';
 
 import { nickNameMaker } from './NickName-sample/NickName.sample';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
+import { nickNameDuplicationCheck } from '../../../../services/register/apiService';
 
 export default function RegisterNickName() {
 	const { setAddStep } = useRegisterStore();
 	const { nickName, setnickName, nickCheck, setnickNameCheck } =
 		RegisterInfostore();
 
-	/* 닉네임 추천 및 초기화 */
-	const resetNickName = () => {
-		const nick = nickNameMaker();
+	let text = '';
+	const result = document.querySelector('.nickName-duplicate-check');
+
+	const resetNickName = async () => {
+		let nick = nickNameMaker();
 		setnickName(nick);
-		setnickNameCheck(true);
+
+		const respone = await nickNameDuplicationCheck(nick);
+		console.log(respone);
+		if (respone == 1) {
+			return resetNickName();
+		}
+		if (respone == 0) {
+			text = '사용 가능한 닉네임입니다.';
+			setnickNameCheck(true);
+			result.innerText = text;
+		}
 	};
 
-	const nickNameDuplicateCheck = () => {
-		const result = document.querySelector('.nickName-duplicate-check');
-		const text =
-			nickName == nickName && nickCheck == true
-				? '사용 가능한 닉네임입니다.'
-				: '이미 사용중인 닉네임입니다.';
+	const nickNameDuplicateCheck = async () => {
+		const respone = await nickNameDuplicationCheck(nickName);
 
+		if (respone == 0) {
+			text = '사용 가능한 닉네임입니다.';
+			setnickNameCheck(true);
+		} else {
+			text = '이미 사용중인 닉네임입니다.';
+			setnickNameCheck(false);
+		}
 		result.innerText = text;
 	};
 
 	const nickNameOk = () => {
-		setAddStep();
+		nickCheck && true && setAddStep();
 	};
 
 	return (

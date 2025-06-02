@@ -3,6 +3,7 @@ import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
+	Modal,
 } from '../../../../components';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
 
@@ -27,8 +28,13 @@ export default function RegisterAdress() {
 		setAddStep();
 	};
 
+
+
+
+
 	return (
 		<div className='register-address-wrap'>
+			
 			<p className='register-address-text bold'>우편번호</p>
 
 			<div className='register-address-Postal'>
@@ -37,7 +43,7 @@ export default function RegisterAdress() {
 					placeholder={'우편번호 입력'}
 				/>
 				<ButtonPrimary
-					onClick={addressAdd}
+					onClick={``}
 					className={'register-address-serch '}
 				>
 					우편 번호 검색

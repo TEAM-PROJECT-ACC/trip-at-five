@@ -6,6 +6,7 @@ import {
 } from '../../../../components';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
 import { useState } from 'react';
+import { validatePhoneNumber } from '../../util/validate';
 
 export default function RegisterTel() {
 	const { setAddStep } = useRegisterStore();
@@ -16,19 +17,22 @@ export default function RegisterTel() {
 		setAddStep();
 	};
 
-	const validatePhoneNumber = (tel) => {
-		return /^01[0-9]-\d{3,4}-\d{4}$/.test(tel);
-	};
 
 	const validatePhoneNumberCheck = (e) => {
-		const value = e.target.value;
-		setTel(value);
-		if (!validatePhoneNumber(value)) {
-			setError(" '-'를 제외하고 입력해주세요 ");
-		} else {
-			setError('');
-		}
-	};
+    const value = e.target.value;
+    setTel(value);
+
+    if (value.length === 0) {
+        setError('');
+    } else if (value.includes('-')) { 
+        setError(" '-'를 제외하고 입력해주세요 "); 
+    } else if (!validatePhoneNumber(value)) {			  
+        setError('올바른 전화번호 형식이 아닙니다.');
+    } else {
+        setError('');
+    }
+};
+
 
 	const telOk = () => {
 		tel != null ? setAddStep() : console.log('t');
