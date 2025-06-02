@@ -4,6 +4,8 @@ import { persist } from 'zustand/middleware';
 const RegisterStepInitialState = {
 	step: 1,
 	isTrue: false,
+	emailDuplication: false,
+	type: false
 };
 
 export const useRegisterStore = create(
@@ -15,6 +17,13 @@ export const useRegisterStore = create(
 
 			setIsTrue: () => set({ isTrue: true }),
 			setIsFalse: () => set({ isTrue: false }),
+	
+			setEmailDuplicationTrue: () => set({ emailDuplication: true }),
+			setEmailDuplicationFalse: () => set({ emailDuplication: false }),
+
+			setTypeTrue: () => set({ type: true }),
+			setTypeFalse: () => set({ type: false }),
+
 			reset: () => set(() => ({ ...RegisterStepInitialState })),
 		}),
 		{

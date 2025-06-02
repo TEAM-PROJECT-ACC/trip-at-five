@@ -2,42 +2,51 @@ import { ButtonPrimary, InputPrimary } from '../../../../components';
 import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
 import './email.component.scss';
 import { validateEmail } from '../../util/validateEmail';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { emailDuplicationCheck } from '../../../../services/register/apiService';
 
 export default function RegisterEmail() {
-	const { isTrue, setIsTrue, step, setAddStep } = useRegisterStore();
+	const { step, setAddStep } = useRegisterStore();
+	const { isTrue, setIsTrue, setIsFalse } = useRegisterStore();
+	const { type, setTypeTrue, setTypeFalse } = useRegisterStore();
 	const { email, emailCode, setEmail, setEmailCode } = RegisterInfostore();
 	const [error, setError] = useState();
-
-	/*이메일인증 코드 전송 및 인증코드 입력칸 표시*/
-	const sendEmailCode = () => {
-		{
-			email != null ? setIsTrue() : '';
-		}
-	};
-
-	/*이메일 형식 체크 */
-	validateEmail(email);
 
 	const validateEmailCheck = (e) => {
 		const value = e.target.value;
 		setEmail(value);
-		if (!validateEmail(value)) {
+
+		if (value.length === 0) {
+			setError('');
+		} else if (!validateEmail(value)) {
 			setError('올바른 이메일 형식이 아닙니다.');
 		} else {
 			setError('');
 		}
 	};
 
-	/* 인증코드 체크 부분*/
-	const emailCodeCheck = () => {
-		console.log(email === emailCode ? 'ok' : 'fail');
-		step === 1 ? setAddStep() : '';
+	/* 이메일 인증 중복 체크 */
+	const emailCheck = async () => {
+		if (!validateEmail(email) || email.length === 0) {
+			return;
+		}
+		const response = await emailDuplicationCheck(email);
+
+		if (response == 1) {
+			setError('이메일이 중복됩니다.');
+			setIsFalse();
+		} else {
+			/*인증코드 보내기*/
+			setIsTrue();
+		}
 	};
 
-	/* step상태에 따라  sendEmailCode, emailCodeCheck 선택 실행*/
-	const emailEvent = () => {
-		step === 1 && isTrue === false ? sendEmailCode() : emailCodeCheck();
+	/* 이메일인증 코드 검사 및 확인후 넘기기 */
+	const sendEmailCode = () => {
+		{
+			console.log('sendEmailCode 부분');
+			email != null ? setIsTrue() : '';
+		}
 	};
 
 	return (
@@ -67,7 +76,7 @@ export default function RegisterEmail() {
 
 			<ButtonPrimary
 				className={'send-email-btn'}
-				onClick={emailEvent}
+				onClick={isTrue == true ? sendEmailCode : emailCheck}
 			>
 				이메일 인증
 			</ButtonPrimary>
