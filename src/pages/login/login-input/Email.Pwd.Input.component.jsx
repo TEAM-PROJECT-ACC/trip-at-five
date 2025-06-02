@@ -6,7 +6,7 @@ import {
 } from '../../../components';
 import LoginStateStore from '../login-store/loginStore';
 import './email.pwd.input.component.scss';
-import { validateEmail } from '../util/validate';
+import { validateEmail } from '../../register/util/validate';
 
 export default function LoginInputBox() {
 	const { id, pwd, setId, setPwd } = LoginStateStore();

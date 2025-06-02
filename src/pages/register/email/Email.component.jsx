@@ -1,13 +1,13 @@
-import { ButtonPrimary, InputPrimary } from '../../../../components';
-import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
 import './email.component.scss';
-import { validateEmail } from '../../util/validate';
+import { ButtonPrimary, InputPrimary } from '../../../components';
+import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
+import { validateEmail } from '../util/validate';
 import { useState } from 'react';
 import {
 	EmailCodeCheck,
 	emailDuplicationCheck,
 	sendEmailCode,
-} from '../../../../services/register/apiService';
+} from '../../../services/register/apiService';
 
 export default function RegisterEmail() {
 	const { setAddStep } = useRegisterStore();

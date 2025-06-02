@@ -1,8 +1,7 @@
-import { PageContainer } from '../../../components';
+import { PageContainer } from '../../components';
 import './registerPage.scss';
 import Circle from './cricle/Circle';
 import TitleText from './title-text/TitleText.component';
-import { useEffect } from 'react';
 import { useRegisterStore } from './RegisterStore';
 import RegisterEmail from './email/Email.component';
 import RegisterPassword from './password/Password.component';

@@ -3,11 +3,11 @@ import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
-} from '../../../../components';
+} from '../../../components';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useState } from 'react';
-import { sendRegister } from '../../../../services/register/apiService';
+import { sendRegister } from '../../../services/register/apiService';
 
 let scriptUrl =
 	'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';

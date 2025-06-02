@@ -3,12 +3,12 @@ import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
-} from '../../../../components';
-import { MdOutlineRefresh } from '../../../../assets/icons/kkh/index';
+} from '../../../components';
+import { MdOutlineRefresh } from '../../../assets/icons/kkh/index';
 
 import { nickNameMaker } from './NickName-sample/NickName.sample';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
-import { nickNameDuplicationCheck } from '../../../../services/register/apiService';
+import { nickNameDuplicationCheck } from '../../../services/register/apiService';
 
 export default function RegisterNickName() {
 	const { setAddStep } = useRegisterStore();

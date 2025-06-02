@@ -1,5 +1,5 @@
 import './password.resetting.component.scss';
-import { PageContainer } from '../../../components';
+import { PageContainer } from '../../components';
 import { ResttingTitle } from './resetting-title/Resetting.title.conponent';
 import { EmailAuth } from './resetting-Email-auth/Resetting.email.auth.conponent';
 import { PasswordResetting } from './password-resetting/Password-resetting.conponent';

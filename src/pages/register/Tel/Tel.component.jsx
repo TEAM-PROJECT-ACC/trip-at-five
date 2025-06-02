@@ -3,10 +3,10 @@ import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
-} from '../../../../components';
+} from '../../../components';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
 import { useState } from 'react';
-import { validatePhoneNumber } from '../../util/validate';
+import { validatePhoneNumber } from '../util/validate';
 
 export default function RegisterTel() {
 	const { setAddStep } = useRegisterStore();

@@ -1,4 +1,4 @@
-import { InputPrimary } from '../../../../components';
+import { InputPrimary } from '../../../components';
 import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
 
 export function ResettingInput({

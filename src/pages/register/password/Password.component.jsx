@@ -1,4 +1,4 @@
-import { ButtonPrimary, InputPrimary } from '../../../../components';
+import { ButtonPrimary, InputPrimary } from '../../../components';
 import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
 import './password.component.scss';
 
