@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { HttpStatusCode } from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
@@ -9,39 +12,9 @@ import {
   insertRoomAPI,
   updateRoomAPI,
 } from '../../../../services/room/roomService.api';
-import { HttpStatusCode } from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
-
-const IMAGE_BASE_URL = VITE_SERVER_BASE_URL;
-
-const timeArray = [
-  '00:00',
-  '01:00',
-  '02:00',
-  '03:00',
-  '04:00',
-  '05:00',
-  '06:00',
-  '07:00',
-  '08:00',
-  '09:00',
-  '10:00',
-  '11:00',
-  '12:00',
-  '13:00',
-  '14:00',
-  '15:00',
-  '16:00',
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-  '23:00',
-];
+import { diffHoursFunc } from './utils/checkInOut.util';
+import { timeArray, toastInfo } from './data/roomRegFrom.constant';
 
 /**
  *
@@ -53,7 +26,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // 객실데이터 상태
+  // 객실데이터 초기 상태
   const [roomData, setRoomData] = useState({
     roomSq: roomId,
     roomName: '',
@@ -67,17 +40,17 @@ const RoomRegForm = ({ accomId, roomId }) => {
   });
 
   const [word, setWord] = useState('');
-  const [roomNameWordCount, setRoomNameWordCount] = useState(0);
+  const [setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
   const [imageFileData, setImageFileData] = useState([]);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['roomInfo', accomId, roomId],
     queryFn: async () => {
-      console.log(accomId, roomId);
+      // console.log(accomId, roomId);
       const { data } =
         roomId && (await findRoomByAccomNoAndRoomSq(accomId, roomId));
-      console.log(data);
+      // console.log(data);
       // setRoomData(data);
       return data ?? [];
     },
@@ -86,6 +59,80 @@ const RoomRegForm = ({ accomId, roomId }) => {
 
   const checkInRef = useRef();
   const checkOutRef = useRef();
+
+  // tanstack query 적용
+  const { mutate } = useMutation({
+    mutationKey: ['roomInfo'],
+    // mutationFn은 유연성 때문에 오직 단 하나의 매개변수만 받는다.
+    mutationFn: async ({ type, updatedRoomData }) => {
+      // console.log(type);
+      // console.log(updatedRoomData); // 정상출력 확인
+      if (type === 3) {
+        const { status } = await deleteRoomAPI({ accomId, roomId });
+        // console.log(status);
+        if (status !== 200) throw new Error('에러발생');
+        return status;
+      } else {
+        // console.log(formData); // 정상출력 확인
+
+        const formData = new FormData();
+
+        for (const [key, val] of Object.entries(updatedRoomData)) {
+          if (key !== 'roomSq' && (val === 0 || val === '')) {
+            errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
+            return;
+          }
+          // console.log(key + ' : ' + val);
+          formData.append(key, val);
+        }
+
+        if (imageFileData.length > 0) {
+          imageFileData.forEach((file) => formData.append('images', file));
+        }
+
+        // console.log(Array.from(formData));
+        const { status } =
+          type === 1
+            ? await insertRoomAPI(formData)
+            : await updateRoomAPI(formData);
+
+        // console.log(status);
+        // console.log(data);
+        if (status !== 200) throw new Error('에러발생');
+        return status;
+      }
+    },
+    onMutate: async () => {
+      // MutationFn이 실행 전에 실행 되는 곳
+    },
+    onSuccess: (status, variables, context) => {
+      // MutationFn이 성공 시 실행 되는 곳
+      console.log('onSuccess', status, variables, context);
+      // 변이 성공 시 캐시 무효화로 객실 폼 데이터 갱신!
+      queryClient.invalidateQueries({ queryKey: ['roomInfo'] });
+
+      if (status === HttpStatusCode.Ok) {
+        successToastAlterFunc(
+          variables.type === 1 ? '등록' : variables.type === 2 ? '수정' : '삭제'
+        );
+        setTimeout(
+          () => navigate(`/admin/accommodations/${accomId}/edit`),
+          3000
+        );
+      }
+    },
+    onError: (error, formData, context) => {
+      // MutationFn이 실패 시 실행 되는 곳
+      console.log('onError', error, formData, context);
+      // 변이 실패 시, 낙관적 업데이트 결과를 이전 데이터로 되돌리기!
+      if (context) {
+        queryClient.setQueryData(['roomInfo'], context.previousUsers);
+      }
+      errorToastAlterFunc(error);
+    },
+    retry: 3, // 변이 실패 시 3번 재시도
+    retryDelay: 500, // 0.5초 간격으로 재시도
+  });
 
   // 객실 명 글자 수 유효성 검사 핸들러
   const handleWordCount = (e) => {
@@ -97,48 +144,21 @@ const RoomRegForm = ({ accomId, roomId }) => {
     }
   };
 
-  // 시간 값을 분 단위로 변환
-  const timeChangeMinute = (timeStr) => {
-    const hours = timeStr.split(':').map(Number);
-    return hours;
-  };
-
-  // 체크인/아웃 시간 설정
-  const setTimeFunc = (checkTime) => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1); // 내일 날짜
-
-    const [checkHour, checkMin] = timeChangeMinute(checkTime);
-    const checkDate = new Date(today);
-    checkDate.setHours(checkHour, checkMin, 0, 0);
-
-    return checkDate;
-  };
-
-  // 체크인/아웃 시간차 21시간 이하 유효성 검사 핸들러
+  // 체크인/아웃 시간차 유효성 검사 핸들러
   const handleCheckTime = () => {
     const checkIn = checkInRef.current.value;
     const checkOut = checkOutRef.current.value;
 
-    // 오늘날짜와 내일 날짜를 구한다.
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1); // 내일 날짜
+    diffHoursFunc(checkIn, checkOut);
 
-    const checkInDate = setTimeFunc(checkIn);
-    const checkOutDate = setTimeFunc(checkOut);
+    const diffHours = diffHoursFunc(checkIn, checkOut);
 
-    // 두 시간 차이 계산 (밀리초 → 시간으로 변환)
-    const diffMs = checkOutDate - checkInDate;
-    const diffHours = diffMs / (1000 * 60 * 60);
-
-    // 유효성 검사
-    if (diffHours > 21) {
+    // 8시간 이상 21시간 이하
+    if (diffHours < 8 || diffHours > 21) {
       setCheckTime(true); // 오류 상태
-      return;
+    } else {
+      setCheckTime(false); // 정상 상태
     }
-    setCheckTime(false); // 정상 상태
   };
 
   // 데이터 상태 핸들러
@@ -162,87 +182,9 @@ const RoomRegForm = ({ accomId, roomId }) => {
     setImageFileData(files);
   };
 
-  // tanstack query 적용
-  const { mutate, error, isPending, isError } = useMutation({
-    mutationKey: ['roomInfo'],
-    // mutationFn은 유연성 때문에 오직 단 하나의 매개변수만 받는다.
-    mutationFn: async ({ isUpdate, updatedRoomData }) => {
-      console.log(isUpdate);
-      console.log(updatedRoomData); // 정상출력 확인
-      if (isUpdate === 3) {
-        const { status } = await deleteRoomAPI({ accomId, roomId });
-        // console.log(status);
-        if (status !== 200) throw new Error('변이 중 에러발생');
-        return status;
-      } else {
-        // console.log(formData); // 정상출력 확인
-
-        const formData = new FormData();
-
-        for (const [key, val] of Object.entries(updatedRoomData)) {
-          if (key !== 'roomSq' && (val === 0 || val === '')) {
-            errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
-            return;
-          }
-          // console.log(key + ' : ' + val);
-          formData.append(key, val);
-        }
-
-        if (imageFileData.length > 0) {
-          imageFileData.forEach((file) => formData.append('images', file));
-        }
-
-        // console.log(Array.from(formData));
-        const { status, data } =
-          isUpdate === 1
-            ? await insertRoomAPI(formData)
-            : await updateRoomAPI(formData);
-
-        // console.log(status);
-        // console.log(data);
-        if (status !== 200) throw new Error('변이 중 에러발생');
-        return status;
-      }
-    },
-    onMutate: async () => {
-      // MutationFn이 실행 전에 실행 되는 곳
-    },
-    onSuccess: (status, variables, context) => {
-      // MutationFn이 성공 시 실행 되는 곳
-      console.log('onSuccess', status, variables, context);
-      // 변이 성공 시 캐시 무효화로 객실 폼 데이터 갱신!
-      queryClient.invalidateQueries({ queryKey: ['roomInfo'] });
-
-      if (status === HttpStatusCode.Ok) {
-        successToastAlterFunc(
-          variables.isUpdate === 1
-            ? '등록'
-            : variables.isUpdate === 2
-            ? '수정'
-            : '삭제'
-        );
-        setTimeout(
-          () => navigate(`/admin/accommodations/${accomId}/edit`),
-          3000
-        );
-      }
-    },
-    onError: (error, formData, context) => {
-      // MutationFn이 실패 시 실행 되는 곳
-      console.log('onError', error, formData, context);
-      // 변이 실패 시, 낙관적 업데이트 결과를 이전 데이터로 되돌리기!
-      if (context) {
-        queryClient.setQueryData(['roomInfo'], context.previousUsers);
-      }
-      errorToastAlterFunc(error);
-    },
-    retry: 3, // 변이 실패 시 3번 재시도
-    retryDelay: 500, // 0.5초 간격으로 재시도
-  });
-
-  const handleSubmitRoom = async (isUpdate = 1) => {
+  const handleSubmitRoom = async (type = 1) => {
     mutate({
-      isUpdate,
+      type,
       updatedRoomData: {
         ...roomData,
         roomName: word,
@@ -250,17 +192,6 @@ const RoomRegForm = ({ accomId, roomId }) => {
         roomChkOut: checkOutRef.current.value,
       },
     });
-  };
-
-  // toast 출력 정보
-  const toastInfo = {
-    position: 'top-right',
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
   };
 
   /**
@@ -454,7 +385,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                       className='room-preview-img'
                     >
                       <img
-                        src={`${IMAGE_BASE_URL}${value}`}
+                        src={`${VITE_SERVER_BASE_URL}${value}`}
                         alt={`객실 이미지 ${idx + 1}`}
                       />
                     </div>
