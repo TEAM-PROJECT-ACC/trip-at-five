@@ -379,7 +379,6 @@ const RoomRegForm = ({ accomId, roomId }) => {
             <div className='room-image-list__container'>
               {data.imageList && data.imageList.length > 0 ? (
                 data.imageList.map((value, idx) => {
-                  console.log(value);
                   return (
                     <div
                       key={idx}
