@@ -7,7 +7,10 @@ import { apiAxios } from '../service';
  * @returns
  */
 export const selectRoomListAPI = async (accomNo, currentPage) => {
+  console.log(accomNo);
+  console.log(currentPage);
   currentPage = currentPage === null ? 1 : currentPage;
+  console.log(currentPage);
   const response = await apiAxios.get(
     `admin/accommodations/${accomNo}/rooms?currentPage=${currentPage}`
   );
@@ -65,5 +68,16 @@ export const updateRoomAPI = async (formData) => {
       },
     }
   );
+  return response;
+};
+
+export const deleteRoomAPI = async (roomIdentify) => {
+  console.log(roomIdentify);
+  const response = await apiAxios.delete(
+    `admin/accommodations/${roomIdentify.accomId}/rooms`,
+    { data: roomIdentify }
+  );
+
+  console.log(response);
   return response;
 };

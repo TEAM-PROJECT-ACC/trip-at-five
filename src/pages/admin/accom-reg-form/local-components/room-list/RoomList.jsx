@@ -15,9 +15,6 @@ import { useEffect } from 'react';
 import { selectRoomListAPI } from '../../../../../services/room/roomService.api';
 import { useQuery } from '@tanstack/react-query';
 
-const roomList = roomData;
-console.log(roomList);
-
 const roomColumnList = [
   { name: '객실번호', className: 'col-w-10' },
   { name: '객실명', className: 'col-w-30' },
@@ -41,7 +38,7 @@ const RoomList = () => {
         accomNo,
         searchParams.get('currentPage')
       );
-      console.log(data, isLoading, isError, error, refetch);
+      // console.log(data, isLoading, isError, error, refetch);
       return data ?? [];
     },
     staleTime: 1000 * 5,
@@ -49,13 +46,13 @@ const RoomList = () => {
 
   // 객실 등록 페이지 이동 핸들러
   const roomFormPageHandler = (no) => {
-    console.log(no);
-    console.log(accomNo);
+    // console.log(no);
+    // console.log(accomNo);
     // navigate(`/admin/accommodations/${accomNo}/rooms`, { state: { no } });
 
     // navigate(`/admin/accommodations/${accomNo}/rooms/${no}`);
     let roomNo = `${no !== undefined ? no : ''}`;
-    console.log(roomNo);
+    // console.log(roomNo);
     navigate(`/admin/accommodations/2757748/rooms/` + roomNo);
   };
 

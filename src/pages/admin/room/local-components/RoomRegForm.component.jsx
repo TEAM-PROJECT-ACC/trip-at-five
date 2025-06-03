@@ -4,6 +4,7 @@ import AdminInput from '../../../../components/inputs/input-admin/AdminInput.com
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './RoomRegForm.style.scss';
 import {
+  deleteRoomAPI,
   findRoomByAccomNoAndRoomSq,
   insertRoomAPI,
   updateRoomAPI,
@@ -168,31 +169,40 @@ const RoomRegForm = ({ accomId, roomId }) => {
     mutationFn: async ({ isUpdate, updatedRoomData }) => {
       console.log(isUpdate);
       console.log(updatedRoomData); // 정상출력 확인
-      // console.log(formData); // 정상출력 확인
+      if (isUpdate === 3) {
+        const { status } = await deleteRoomAPI({ accomId, roomId });
+        // console.log(status);
+        if (status !== 200) throw new Error('변이 중 에러발생');
+        return status;
+      } else {
+        // console.log(formData); // 정상출력 확인
 
-      const formData = new FormData();
+        const formData = new FormData();
 
-      for (const [key, val] of Object.entries(updatedRoomData)) {
-        if (key !== 'roomSq' && (val === 0 || val === '')) {
-          errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
-          return;
+        for (const [key, val] of Object.entries(updatedRoomData)) {
+          if (key !== 'roomSq' && (val === 0 || val === '')) {
+            errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
+            return;
+          }
+          // console.log(key + ' : ' + val);
+          formData.append(key, val);
         }
-        // console.log(key + ' : ' + val);
-        formData.append(key, val);
-      }
 
-      if (imageFileData.length > 0) {
-        imageFileData.forEach((file) => formData.append('images', file));
-      }
+        if (imageFileData.length > 0) {
+          imageFileData.forEach((file) => formData.append('images', file));
+        }
 
-      // console.log(Array.from(formData));
-      const { status, data } = isUpdate
-        ? await updateRoomAPI(formData)
-        : await insertRoomAPI(formData);
-      // console.log(status);
-      // console.log(data);
-      if (status !== 200) throw new Error('변이 중 에러발생');
-      return status;
+        // console.log(Array.from(formData));
+        const { status, data } =
+          isUpdate === 1
+            ? await insertRoomAPI(formData)
+            : await updateRoomAPI(formData);
+
+        // console.log(status);
+        // console.log(data);
+        if (status !== 200) throw new Error('변이 중 에러발생');
+        return status;
+      }
     },
     onMutate: async () => {
       // MutationFn이 실행 전에 실행 되는 곳
@@ -204,7 +214,13 @@ const RoomRegForm = ({ accomId, roomId }) => {
       queryClient.invalidateQueries({ queryKey: ['roomInfo'] });
 
       if (status === HttpStatusCode.Ok) {
-        successToastAlterFunc(variables.isUpdate ? '수정' : '등록');
+        successToastAlterFunc(
+          variables.isUpdate === 1
+            ? '등록'
+            : variables.isUpdate === 2
+            ? '수정'
+            : '삭제'
+        );
         setTimeout(
           () => navigate(`/admin/accommodations/${accomId}/edit`),
           3000
@@ -224,7 +240,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
     retryDelay: 500, // 0.5초 간격으로 재시도
   });
 
-  const handleSubmitRoom = async (isUpdate = false) => {
+  const handleSubmitRoom = async (isUpdate = 1) => {
     mutate({
       isUpdate,
       updatedRoomData: {
@@ -406,18 +422,21 @@ const RoomRegForm = ({ accomId, roomId }) => {
                     <>
                       <AdminPrimaryButton
                         className='room-reg-button'
-                        onClick={() => handleSubmitRoom(true)}
+                        onClick={() => handleSubmitRoom(2)}
                       >
                         수정
                       </AdminPrimaryButton>
-                      <AdminPrimaryButton className='room-reg-button'>
+                      <AdminPrimaryButton
+                        className='room-reg-button'
+                        onClick={() => handleSubmitRoom(3)}
+                      >
                         삭제
                       </AdminPrimaryButton>
                     </>
                   ) : (
                     <AdminPrimaryButton
                       className='room-reg-button'
-                      onClick={() => handleSubmitRoom(false)}
+                      onClick={() => handleSubmitRoom(1)}
                     >
                       등록
                     </AdminPrimaryButton>
@@ -435,7 +454,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                       className='room-preview-img'
                     >
                       <img
-                        src={`${IMAGE_BASE_URL}/${value}`}
+                        src={`${IMAGE_BASE_URL}${value}`}
                         alt={`객실 이미지 ${idx + 1}`}
                       />
                     </div>
