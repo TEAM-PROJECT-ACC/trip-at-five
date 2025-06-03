@@ -15,7 +15,7 @@ export const Textarea = ({
     const targetValue = event.target.value;
     setValue(() => targetValue);
     if (onChange) {
-      onChange(targetValue);
+      onChange(event);
     }
   };
 
