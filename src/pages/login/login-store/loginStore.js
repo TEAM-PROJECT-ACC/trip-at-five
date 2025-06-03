@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 const initialState = {
 	id: null,
@@ -7,7 +8,7 @@ const initialState = {
 	error: '',
 };
 
-const LoginStateStore = create((set) => ({
+export const LoginStateStore = create((set) => ({
 	setId: (text) =>
 		set({
 			id: text,
@@ -31,4 +32,16 @@ const LoginStateStore = create((set) => ({
 	reset: () => set(() => ({ ...initialState })),
 }));
 
-export default LoginStateStore;
+const snsInitialState = {
+	code: null,
+};
+
+export const LoginSnsStateStore = create((set) => ({
+	...snsInitialState,
+	setCode: (text) =>
+		set({
+			code: text,
+		}),
+
+	reset: () => set(() => ({ ...snsInitialState })),
+}));

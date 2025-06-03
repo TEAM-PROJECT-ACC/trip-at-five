@@ -55,7 +55,7 @@ export default function RegisterAdress() {
 		setAddress(postNum + ',' + basicAddress + ',' + otherAddress);
 		const result = await sendRegister( email, pwd, nickName, tel, address);
 		console.log(result);
-		// setAddStep();
+		setAddStep();
 	};
 
 	return (

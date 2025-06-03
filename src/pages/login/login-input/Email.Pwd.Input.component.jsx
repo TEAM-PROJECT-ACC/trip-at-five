@@ -4,13 +4,14 @@ import {
 	InputShrink,
 	TextLinkButton,
 } from '../../../components';
-import LoginStateStore from '../login-store/loginStore';
+import {LoginStateStore} from '../login-store/loginStore';
 import './email.pwd.input.component.scss';
 import { validateEmail } from '../../register/util/validate';
 
 export default function LoginInputBox() {
 	const { id, pwd, setId, setPwd } = LoginStateStore();
 	const [error, setError] = useState();
+
 
 	/* 추후 유효성 체크 */
 	const test = () => {

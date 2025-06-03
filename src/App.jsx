@@ -24,6 +24,7 @@ import ReservationManagementDetail from './pages/admin/reservation-detail/Reserv
 import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 import ChatRoom from './pages/chat/chat-ui/Chat.room';
+import MainTest from './pages/main/Main.page copy';
 
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
@@ -65,6 +66,11 @@ function App() {
           element={<LoginPage />}
         ></Route>
 
+         <Route
+          path='/auth/callback/'
+          element={<MainTest />}
+        ></Route>
+
         {/* 회원가입 */}
         <Route
           path='/register'
@@ -91,7 +97,7 @@ function App() {
 
         <Route
           index
-          element={<Main />}
+          element={<MainTest />}
         />
         <Route
           path='/carts'
