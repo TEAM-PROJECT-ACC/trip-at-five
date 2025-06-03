@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AdminTableHead from './table/thead/AdminTableHead.component';
 import AdminTableBody from './table/tbody/AdminTableBody.component';
 import { AdminPagination } from '../../../../components/admin-pagination/AdminPagination.component';
 import './AdminManagementList.style.scss';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryString = location.search;
   const [pageNationProps, setPageNationProps] = useState(() => {
     return {
       className: '',
@@ -23,7 +27,9 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
         currentPage: pageNo,
       };
     });
+    navigate(location.pathname + '?currentPage=' + pageNo);
   };
+
   return (
     <>
       <div className='admin-main-body'>

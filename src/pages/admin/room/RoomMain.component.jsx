@@ -7,14 +7,16 @@ const RoomMain = () => {
    * useParams로 숙박업소 Id 값 받아오기
    * useLocation으로 객실 Id 값 받아오기
    */
-  const location = useLocation();
+  // const location = useLocation();
   const id = useParams();
   const accomNo = id.id;
-  const { no } = location.state;
+  const roomNo = id.roomSq;
+  // const { no } = location.state;
 
   useEffect(() => {
     console.log('accomNo : ' + accomNo);
-    console.log('no : ' + no);
+    // console.log('no : ' + no);
+    console.log('roomNo : ' + roomNo);
   }, []);
 
   return (
@@ -25,7 +27,7 @@ const RoomMain = () => {
       </div>
       <RoomRegForm
         accomId={accomNo}
-        roomId={no}
+        roomId={roomNo !== undefined ? roomNo : 0}
       />
     </div>
   );
