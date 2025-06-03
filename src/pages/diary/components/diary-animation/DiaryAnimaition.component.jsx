@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { classNames } from '../../../../utils';
 import { createPortal } from 'react-dom';
+import { classNames } from '../../../../utils';
 import { diaryCover } from '../../../../assets/images';
 import { MdClose } from '../../../../assets/icons/index';
+import { useDiaryState } from '../../hooks/useDiaryState.hook';
 import './diaryAnimation.style.scss';
 
 export const DiaryAnimation = ({ onClose }) => {
+  const { diary } = useDiaryState();
   const [startFirstAnimation, setStartFirstAnimation] = useState(() => false);
   const [startSecondsAnimation, setStartSecondsAnimation] = useState(
     () => false
@@ -64,7 +66,9 @@ export const DiaryAnimation = ({ onClose }) => {
             </div>
           </div>
           <div className={classNames('diary-animation__page seconds')}>
-            <div className='diary-animation__contents-page'>일지 내용</div>
+            <div className='diary-animation__contents-page'>
+              {diary.diaryCont}
+            </div>
           </div>
         </div>
         <div className='diary-animation__background'></div>
