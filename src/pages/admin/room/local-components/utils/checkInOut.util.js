@@ -12,7 +12,7 @@ const setTimeFunc = (baseDate, checkTime) => {
   return date;
 };
 
-export const diffHoursFunc = () => {
+export const diffHoursFunc = (checkIn, checkOut) => {
   const today = new Date();
   let checkInDate = setTimeFunc(today, checkIn);
   let checkOutDate = setTimeFunc(today, checkOut);

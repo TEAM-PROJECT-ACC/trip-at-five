@@ -40,7 +40,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
   });
 
   const [word, setWord] = useState('');
-  const [setRoomNameWordCount] = useState(0);
+  const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
   const [imageFileData, setImageFileData] = useState([]);
 
@@ -379,6 +379,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
             <div className='room-image-list__container'>
               {data.imageList && data.imageList.length > 0 ? (
                 data.imageList.map((value, idx) => {
+                  console.log(value);
                   return (
                     <div
                       key={idx}
