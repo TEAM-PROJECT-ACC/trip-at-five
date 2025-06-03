@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './RoomRegForm.style.scss';
 import {
   findRoomByAccomNoAndRoomSq,
   insertRoomAPI,
+  updateRoomAPI,
 } from '../../../../services/room/roomService.api';
 import { HttpStatusCode } from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { imageToFile } from './utils/alternativeImage.util';
-import { useQuery } from '@tanstack/react-query';
 import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 
 const IMAGE_BASE_URL = VITE_SERVER_BASE_URL;
@@ -49,8 +49,8 @@ const timeArray = [
  * @returns
  */
 const RoomRegForm = ({ accomId, roomId }) => {
-  const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // 객실데이터 상태
   const [roomData, setRoomData] = useState({
@@ -70,17 +70,17 @@ const RoomRegForm = ({ accomId, roomId }) => {
   const [checkTime, setCheckTime] = useState(false);
   const [imageFileData, setImageFileData] = useState([]);
 
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['roomInfo', accomId, roomId],
     queryFn: async () => {
+      console.log(accomId, roomId);
       const { data } =
         roomId && (await findRoomByAccomNoAndRoomSq(accomId, roomId));
-      // console.log(data);
+      console.log(data);
       // setRoomData(data);
-
       return data ?? [];
     },
-    staleTime: 1000 * 1,
+    staleTime: 1000 * 20,
   });
 
   const checkInRef = useRef();
@@ -133,12 +133,11 @@ const RoomRegForm = ({ accomId, roomId }) => {
     const diffHours = diffMs / (1000 * 60 * 60);
 
     // 유효성 검사
-    if (diffHours > 21 || diffHours < 8) {
-      setCheckTime(!checkTime);
+    if (diffHours > 21) {
+      setCheckTime(true); // 오류 상태
       return;
     }
-
-    setCheckTime(false);
+    setCheckTime(false); // 정상 상태
   };
 
   // 데이터 상태 핸들러
@@ -162,79 +161,82 @@ const RoomRegForm = ({ accomId, roomId }) => {
     setImageFileData(files);
   };
 
-  // 객실 등록 API 핸들러
-  const handleSubmit = async () => {
-    const formData = new FormData();
+  // tanstack query 적용
+  const { mutate, error, isPending, isError } = useMutation({
+    mutationKey: ['roomInfo'],
+    // mutationFn은 유연성 때문에 오직 단 하나의 매개변수만 받는다.
+    mutationFn: async ({ isUpdate, updatedRoomData }) => {
+      console.log(isUpdate);
+      console.log(updatedRoomData); // 정상출력 확인
+      // console.log(formData); // 정상출력 확인
 
-    const updatedRoomData = {
-      ...roomData,
-      // roomName값 업데이트
-      roomName: word,
-      // checkIn/Out 값 업데이트
-      roomChkIn: checkInRef.current.value,
-      roomChkOut: checkOutRef.current.value,
-    };
+      const formData = new FormData();
 
-    // updatedRoomData 값 체크
-    const checkUpdatedRoomData = Object.entries(updatedRoomData);
-
-    for (const [key, val] of checkUpdatedRoomData) {
-      if (key !== 'roomSq' && (val === 0 || val === '')) {
-        errorToastAlterFunc('비어 있는 항목이 있습니다!');
-        return;
-      }
-    }
-
-    formData.append('roomSq', updatedRoomData.roomSq);
-    formData.append('roomName', updatedRoomData.roomName);
-    formData.append('roomPrice', updatedRoomData.roomPrice);
-    formData.append('roomChkIn', updatedRoomData.roomChkIn);
-    formData.append('roomChkOut', updatedRoomData.roomChkOut);
-    formData.append('roomStdPpl', updatedRoomData.roomStdPpl);
-    formData.append('roomMaxPpl', updatedRoomData.roomMaxPpl);
-    formData.append('roomCnt', updatedRoomData.roomCnt);
-    formData.append('accomNo', updatedRoomData.accomNo);
-    // formData에는 배열을 append 하면 NO!!
-    // if (imageFileData.length > 0) {
-    //   imageFileData.forEach((file) => {
-    //     formData.append('images', file); // 파일 객체 그대로 append
-    //   });
-    // } else {
-    //   // 입력받은 이미지가 없을 경우 대체 이미지로 저장
-    //   // const alternativeImagePath =
-    //   //   '/assets/images/alternative-images/alternative-image.png';
-    //   // const fileName = 'alternative-image.png';
-
-    //   // const file = await imageToFile(alternativeImagePath, fileName);
-
-    //   // formData.append('images', file);
-    //   formData.append('images', null);
-    // }
-    if (imageFileData.length > 0) {
-      imageFileData.forEach((file) => formData.append('images', file));
-    }
-
-    // 디버깅용
-    // formData.forEach((value, key) => {
-    //   console.log(`${key}:`, value);
-    // });
-
-    // 객실 등록 API 호출
-    await insertRoomAPI(formData)
-      .then((res) => {
-        // console.log(res);
-        if (res === HttpStatusCode.Ok) {
-          successToastAlterFunc();
-          setTimeout(() => {
-            navigate(`/admin/accommodations/${accomId}/edit`);
-          }, 3000);
+      for (const [key, val] of Object.entries(updatedRoomData)) {
+        if (key !== 'roomSq' && (val === 0 || val === '')) {
+          errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
+          return;
         }
-      })
-      .catch((error) => {
-        errorToastAlterFunc(error);
-      });
+        // console.log(key + ' : ' + val);
+        formData.append(key, val);
+      }
+
+      if (imageFileData.length > 0) {
+        imageFileData.forEach((file) => formData.append('images', file));
+      }
+
+      // console.log(Array.from(formData));
+      const { status, data } = isUpdate
+        ? await updateRoomAPI(formData)
+        : await insertRoomAPI(formData);
+      // console.log(status);
+      // console.log(data);
+      if (status !== 200) throw new Error('변이 중 에러발생');
+      return status;
+    },
+    onMutate: async () => {
+      // MutationFn이 실행 전에 실행 되는 곳
+    },
+    onSuccess: (status, variables, context) => {
+      // MutationFn이 성공 시 실행 되는 곳
+      console.log('onSuccess', status, variables, context);
+      // 변이 성공 시 캐시 무효화로 객실 폼 데이터 갱신!
+      queryClient.invalidateQueries({ queryKey: ['roomInfo'] });
+
+      if (status === HttpStatusCode.Ok) {
+        successToastAlterFunc(variables.isUpdate ? '수정' : '등록');
+        setTimeout(
+          () => navigate(`/admin/accommodations/${accomId}/edit`),
+          3000
+        );
+      }
+    },
+    onError: (error, formData, context) => {
+      // MutationFn이 실패 시 실행 되는 곳
+      console.log('onError', error, formData, context);
+      // 변이 실패 시, 낙관적 업데이트 결과를 이전 데이터로 되돌리기!
+      if (context) {
+        queryClient.setQueryData(['roomInfo'], context.previousUsers);
+      }
+      errorToastAlterFunc(error);
+    },
+    retry: 3, // 변이 실패 시 3번 재시도
+    retryDelay: 500, // 0.5초 간격으로 재시도
+  });
+
+  const handleSubmitRoom = async (isUpdate = false) => {
+    mutate({
+      isUpdate,
+      updatedRoomData: {
+        ...roomData,
+        roomName: word,
+        roomChkIn: checkInRef.current.value,
+        roomChkOut: checkOutRef.current.value,
+      },
+    });
   };
 
+  // toast 출력 정보
   const toastInfo = {
     position: 'top-right',
     autoClose: 3000,
@@ -245,10 +247,18 @@ const RoomRegForm = ({ accomId, roomId }) => {
     progress: undefined,
   };
 
-  const successToastAlterFunc = () => {
-    toast.success('객실 등록 성공!', toastInfo);
+  /**
+   * 성공 시 toast 함수
+   * @param {*} message
+   */
+  const successToastAlterFunc = (message) => {
+    toast.success(`객실 ${message} 성공!`, toastInfo);
   };
 
+  /**
+   * 실패 시 toast 함수
+   * @param {*} error
+   */
   const errorToastAlterFunc = (error) => {
     toast.error(error, toastInfo);
   };
@@ -394,7 +404,10 @@ const RoomRegForm = ({ accomId, roomId }) => {
                 <div className='room-reg-button-group'>
                   {roomId ? (
                     <>
-                      <AdminPrimaryButton className='room-reg-button'>
+                      <AdminPrimaryButton
+                        className='room-reg-button'
+                        onClick={() => handleSubmitRoom(true)}
+                      >
                         수정
                       </AdminPrimaryButton>
                       <AdminPrimaryButton className='room-reg-button'>
@@ -404,7 +417,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                   ) : (
                     <AdminPrimaryButton
                       className='room-reg-button'
-                      onClick={handleSubmit}
+                      onClick={() => handleSubmitRoom(false)}
                     >
                       등록
                     </AdminPrimaryButton>

@@ -25,6 +25,7 @@ import ReservationCancelList from './pages/admin/reservation-cancel/ReservationC
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 import ChatRoom from './pages/chat/chat-ui/Chat.room';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -187,6 +188,7 @@ function App() {
       </Routes>
       {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
       {!isAdmin && <AppFooter />}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
