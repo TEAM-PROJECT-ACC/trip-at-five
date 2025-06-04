@@ -11,3 +11,8 @@ export const AccommodationDetailByAccomSq = async (accomSq) => {
   console.log(response);
   return response.data;
 };
+
+export const AdminAccomSelectList = async () => {
+  const response = await apiAxios.get('/admin/accommodations');
+  return response.data;
+};
