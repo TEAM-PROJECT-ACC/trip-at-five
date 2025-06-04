@@ -9,10 +9,12 @@ export const DiaryModal = ({
   onChangeInput,
   onChangeTextarea,
 }) => {
+  // TODO: 입력 값 제한 (글자 수)
   const [diaryTitle, setDiaryTitle] = useState(() => diary?.diaryTitle);
   const [diaryCont, setDiaryCont] = useState(() => diary?.diaryCont);
 
   const handleChangeInput = (event) => {
+    event.stopPropagation();
     const targetValue = event.target.value;
     setDiaryTitle(() => targetValue);
     if (onChangeInput) {

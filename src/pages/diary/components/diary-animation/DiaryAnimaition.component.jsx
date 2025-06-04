@@ -3,11 +3,11 @@ import { createPortal } from 'react-dom';
 import { classNames } from '../../../../utils';
 import { diaryCover } from '../../../../assets/images';
 import { MdClose } from '../../../../assets/icons/index';
-import { useDiaryState } from '../../hooks/useDiaryState.hook';
+import { useDiaryStore } from '../../stores';
 import './diaryAnimation.style.scss';
 
 export const DiaryAnimation = ({ onClose }) => {
-  const { diary } = useDiaryState();
+  const { diary } = useDiaryStore();
   const [startFirstAnimation, setStartFirstAnimation] = useState(() => false);
   const [startSecondsAnimation, setStartSecondsAnimation] = useState(
     () => false
