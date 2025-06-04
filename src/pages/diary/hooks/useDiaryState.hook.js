@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import { modifyDiary, selectDiary } from '../../../services/diary/api';
 import { useDiaryStore } from '../stores/diary-store/useDiaryStore';
 
+// NOTI: 사용하지 않는 컴포넌트
+
+// TODO: store -> custom hook 단계로 상태 관리 시 다시 정리
+
 /**
  *
  * @param {

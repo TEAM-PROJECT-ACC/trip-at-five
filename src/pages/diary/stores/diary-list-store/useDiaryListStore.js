@@ -5,19 +5,28 @@ import {
   selectAllList,
 } from '../../../../services/diary/api';
 
+const initialState = {
+  pageInfo: {
+    totalCount: 0,
+    pageNo: 1,
+    numOfRows: 10,
+  },
+  dataList: [],
+};
+
 export const useDiaryListStore = create((set) => ({
-  diaryList: [],
-  initDiaryList: async ({ memNo, pageNo, numOfRows }) => {
-    const initList = await selectAllList({ memNo, pageNo, numOfRows });
-    set({ diaryList: initList });
+  ...initialState,
+  selectAllList: async ({ memNo, pageNo, numOfRows }) => {
+    const data = await selectAllList({ memNo, pageNo, numOfRows });
+    set({ pageInfo: data.pageInfo, diaryList: data.diaryList });
   },
   deleteDiary: async ({ diary, pageNo, numOfRows }) => {
-    const deletedList = await deleteDiary({ diary, pageNo, numOfRows });
-    set({ diaryList: deletedList });
+    const data = await deleteDiary({ diary, pageNo, numOfRows });
+    set({ pageInfo: data.pageInfo, diaryList: data.diaryList });
   },
   insertDiary: async ({ diary, pageNo, numOfRows }) => {
-    const insertList = await insertDiary({ diary, pageNo, numOfRows });
-    set({ diaryList: insertList });
+    const data = await insertDiary({ diary, pageNo, numOfRows });
+    set({ pageInfo: data.pageInfo, diaryList: data.diaryList });
   },
-  resetDiaryList: () => set({ diaryList: [] }),
+  resetDiaryList: () => set(initialState),
 }));
