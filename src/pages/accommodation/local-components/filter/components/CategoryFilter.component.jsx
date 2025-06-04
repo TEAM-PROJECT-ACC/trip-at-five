@@ -13,12 +13,12 @@ import './filter.style.scss';
 
 const CategoryFilter = ({ selectedCategory, setCategory }) => {
   const categoryIcons = [
-    { icon: <FaBed />, value: '모텔', title: '모텔' },
-    { icon: <FaHotel />, value: '호텔', title: '호텔' },
-    { icon: <MdHouse />, value: '펜션', title: '펜션' },
-    { icon: <MdVilla />, value: '홈&빌라', title: '홈&빌라' },
-    { icon: <FaCampground />, value: '캠핑', title: '캠핑' },
-    { icon: <FaHouseUser />, value: '게하/한옥', title: '게하/한옥' },
+    { icon: <FaBed />, value: 21, title: '모텔' },
+    { icon: <FaHotel />, value: 22, title: '호텔' },
+    { icon: <MdHouse />, value: 23, title: '펜션' },
+    { icon: <MdVilla />, value: 24, title: '홈&빌라' },
+    { icon: <FaCampground />, value: 25, title: '캠핑' },
+    { icon: <FaHouseUser />, value: 26, title: '게하/한옥' },
   ];
 
   const handleClick = (category) => {
