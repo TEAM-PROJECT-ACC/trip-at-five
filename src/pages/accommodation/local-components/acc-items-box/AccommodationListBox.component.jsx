@@ -2,18 +2,13 @@ import React from 'react';
 import AccommodationCard from './card/AccommodationCard.component';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 
-const AccommodationListBox = ({ data }) => {
-  const filterHook = useFilterState();
+const AccommodationListBox = ({ accommodations, filterHook }) => {
   const { filter } = filterHook;
-
-  const filteredData = filter.selectedCategory
-    ? data.filter((accom) => accom.type === filter.selectedCategory)
-    : data;
 
   return (
     <ul className='accom-list-ul'>
-      {filteredData.map((accom, idx) => (
-        <React.Fragment key={accom.id || idx}>
+      {accommodations.map((accom, idx) => (
+        <React.Fragment key={accom.accomSq || idx}>
           <AccommodationCard
             accom={accom}
             filterHook={filterHook}

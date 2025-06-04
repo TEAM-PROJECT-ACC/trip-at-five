@@ -14,17 +14,16 @@ import {
 import { MdAddPhotoAlternate } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
-import { accomData } from '../../assets/sample-data/accomSampleData';
 import { Star } from '../../components/star-rating/components/star/Star.component';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import { AccommodationDetailByAccomSq } from '../../services/accom/apiService';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
-  const accom = accomData.accommodation_tb.find(
-    (item) => String(item.accom_sq) === String(id)
-  );
+
+  const [accom, setAccom] = useState([]);
 
   const imageList = [
     '/assets/images/room-page/sampleImg2.png',
@@ -89,6 +88,7 @@ const AccommodationDetail = () => {
       ></div>
     );
   }
+
   const [starRateScore, setStarRateScore] = useState(() => 2.6);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -115,8 +115,8 @@ const AccommodationDetail = () => {
   const init = () => {
     if (window.kakao && window.kakao.maps && mapRef.current) {
       /* 해당 숙박업체의 위도경도에 따라 지도에 마커 위치가 변경*/
-      const lat = accom.accom_lat;
-      const lon = accom.accom_lon;
+      const lat = accom.accomLat;
+      const lon = accom.accomLon;
       const markPosition = new window.kakao.maps.LatLng(lat, lon);
       const map = new window.kakao.maps.Map(mapRef.current, {
         center: markPosition,
@@ -140,7 +140,7 @@ const AccommodationDetail = () => {
 
       const overlayContent = `
         <div class="custom-overlay-bubble">
-          <div class="custom-overlay-label">${accom.accom_name}</div>
+          <div class="custom-overlay-label">${accom.accomName}</div>
         </div>
       `;
       const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -185,6 +185,11 @@ const AccommodationDetail = () => {
     }
   };
 
+  // 페이지 넘어올때 항상 상단으로 오게 설정
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(() => {
@@ -192,6 +197,27 @@ const AccommodationDetail = () => {
       });
     }
   }, [accom]);
+
+  useEffect(() => {
+    const fetchAccomDetail = async () => {
+      try {
+        const data = await AccommodationDetailByAccomSq(id);
+        setAccom(data);
+        console.log('객실 리스트:', data.roomList);
+        if (data && data.images && data.images.length > 0) {
+          setSelectedImage(data.images[0]);
+        }
+      } catch (error) {
+        console.error('숙소 상세 데이터 불러오기 실패:', error);
+      }
+    };
+
+    fetchAccomDetail();
+  }, [id]);
+
+  if (!accom) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <PageContainer>
@@ -223,16 +249,12 @@ const AccommodationDetail = () => {
           </div>
         )}
         <div className='accom-header__text'>
-          {accom?.accom_name}
+          {accom.accomName}
           <div className='accom-header__price'>
-            {accom &&
-              Math.min(
-                ...accom.rooms.map((room) => room.room_price)
-              ).toLocaleString()}
-            원~ / <p className='accom-room-sub__price'>1박</p>
+            {accom.roomPrice}원~ / <p className='accom-room-sub__price'>1박</p>
           </div>
         </div>
-        <p className='accom-location'>{accom?.accom_location}</p>
+        <p className='accom-location'>{accom.accomAddr}</p>
       </section>
 
       {/* 숙소 정보 카드 */}
@@ -259,13 +281,29 @@ const AccommodationDetail = () => {
           </p>
         </button>
         <div className='accom-info__facility'>
-          <FacilityFilterView />
+          <FacilityFilterView
+            selectedFacilities={[
+              ...(accom.pubFacInfo
+                ? accom.pubFacInfo.split(',').map((f) => f.trim())
+                : []),
+              ...(accom.etcFacInfo
+                ? accom.etcFacInfo.split(',').map((f) => f.trim())
+                : []),
+            ]}
+          />
         </div>
       </section>
 
       {/* 객실 목록 */}
 
-      <RoomList />
+      <RoomList
+        rooms={accom.roomList || []}
+        selectedFacilities={[
+          ...(accom.inRoomFacInfo
+            ? accom.inRoomFacInfo.split(',').map((f) => f.trim())
+            : []),
+        ]}
+      />
 
       {/* 앵커 태그가 헤더 영역에 가려져서 빈 태그 추가 */}
       <div

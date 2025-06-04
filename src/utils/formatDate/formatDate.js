@@ -24,3 +24,13 @@ const dayHandler = (day) => {
       return '';
   }
 };
+
+export const formatDateForApi = (dateString) => {
+  if (!dateString) return '';
+  const regex = /^(\d{4})\.(\d{2})\.(\d{2})/;
+  const match = dateString.match(regex);
+  if (match) {
+    return `${match[1]}-${match[2]}-${match[3]}`;
+  }
+  return '';
+};
