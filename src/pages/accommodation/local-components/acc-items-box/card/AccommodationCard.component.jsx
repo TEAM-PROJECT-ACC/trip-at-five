@@ -3,25 +3,37 @@ import { Link } from 'react-router-dom';
 import {
   FaBed,
   FaHotel,
+  TbBeach,
+  MdHouse,
   FaCampground,
   FaHouseUser,
-  MdHouse,
-  MdVilla,
+  FaBuilding,
 } from '../../../../../assets/icons/ys/index';
 import './accommodationCard.style.scss';
 
-const AccommodationCard = ({ accom }) => {
-  const typeNameMap = {
-    21: '모텔',
-    22: '호텔',
-    23: '펜션',
-    24: '홈&빌라',
-    25: '캠핑',
-    26: '게하/한옥',
-  };
+const typeNameMap = {
+  21: '모텔',
+  22: '호텔',
+  23: '리조트',
+  24: '펜션',
+  25: '캠핑',
+  26: '게하/한옥',
+  999: '미지정',
+};
 
-  //const TypeIcon = typeIconMap[accom.type];
-  const typeName = typeNameMap[accom.accomTypeNo] || '기타';
+const typeIconMap = {
+  모텔: <FaBuilding />,
+  호텔: <FaHotel />,
+  리조트: <TbBeach />,
+  펜션: <MdHouse />,
+  캠핑: <FaCampground />,
+  '게하/한옥': <FaHouseUser />,
+  미지정: <FaBed />,
+};
+
+const AccommodationCard = ({ accom }) => {
+  const typeName = typeNameMap[accom.accomTypeNo] || '미지정';
+  const typeIcon = typeIconMap[typeName] || typeIconMap['미지정'];
 
   return (
     <li className='accommodation-item'>
@@ -40,24 +52,26 @@ const AccommodationCard = ({ accom }) => {
             <div className='accom-name'>{accom.accomName}</div>
             <div
               className='accom-info-icon'
-              title={accom.type}
-            ></div>
+              title={typeName}
+            >
+              {typeIcon}
+            </div>
           </div>
           <p className='accom-address'>{accom.accomAddr}</p>
           <div className='star'>
             <span className='star-icon'></span>
-            {accom.rating}명 평가
+            1000 명 평가
           </div>
           <div className='accom-info-time-price'>
             {/* <div className='v-line'></div> */}
             <span>
-              <p className='accom-time'>15:00 체크인</p>
-              <p className='accom-time'>11:00 체크아웃</p>
+              <p className='accom-time'>{accom.roomChkIn} 체크인</p>
+              <p className='accom-time'>{accom.roomChkOut} 체크아웃</p>
             </span>
             <p className='accom-price'>
               <span className='accom-price-text'>최저가</span>
               <span className='accom-price-value'>
-                <strong>{accom.roomPrice.toLocaleString()}</strong>
+                <strong>{accom.roomPrice}</strong>
                 <span>원</span>
               </span>
             </p>

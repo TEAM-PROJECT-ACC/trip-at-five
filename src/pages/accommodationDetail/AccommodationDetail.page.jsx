@@ -14,7 +14,6 @@ import {
 import { MdAddPhotoAlternate } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
-//import { accomData } from '../../assets/sample-data/accomSampleData';
 import { Star } from '../../components/star-rating/components/star/Star.component';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -23,6 +22,7 @@ import { AccommodationDetailByAccomSq } from '../../services/accom/apiService';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
+
   const [accom, setAccom] = useState([]);
 
   const imageList = [
@@ -88,6 +88,7 @@ const AccommodationDetail = () => {
       ></div>
     );
   }
+
   const [starRateScore, setStarRateScore] = useState(() => 2.6);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -184,6 +185,11 @@ const AccommodationDetail = () => {
     }
   };
 
+  // 페이지 넘어올때 항상 상단으로 오게 설정
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(() => {
@@ -197,7 +203,7 @@ const AccommodationDetail = () => {
       try {
         const data = await AccommodationDetailByAccomSq(id);
         setAccom(data);
-
+        console.log('객실 리스트:', data.roomList);
         if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0]);
         }
@@ -245,8 +251,7 @@ const AccommodationDetail = () => {
         <div className='accom-header__text'>
           {accom.accomName}
           <div className='accom-header__price'>
-            {accom.roomPrice?.toLocaleString()} 원~ /
-            <p className='accom-room-sub__price'>1박</p>
+            {accom.roomPrice}원~ / <p className='accom-room-sub__price'>1박</p>
           </div>
         </div>
         <p className='accom-location'>{accom.accomAddr}</p>
@@ -276,13 +281,29 @@ const AccommodationDetail = () => {
           </p>
         </button>
         <div className='accom-info__facility'>
-          <FacilityFilterView />
+          <FacilityFilterView
+            selectedFacilities={[
+              ...(accom.pubFacInfo
+                ? accom.pubFacInfo.split(',').map((f) => f.trim())
+                : []),
+              ...(accom.etcFacInfo
+                ? accom.etcFacInfo.split(',').map((f) => f.trim())
+                : []),
+            ]}
+          />
         </div>
       </section>
 
       {/* 객실 목록 */}
 
-      <RoomList />
+      <RoomList
+        rooms={accom.roomList || []}
+        selectedFacilities={[
+          ...(accom.inRoomFacInfo
+            ? accom.inRoomFacInfo.split(',').map((f) => f.trim())
+            : []),
+        ]}
+      />
 
       {/* 앵커 태그가 헤더 영역에 가려져서 빈 태그 추가 */}
       <div

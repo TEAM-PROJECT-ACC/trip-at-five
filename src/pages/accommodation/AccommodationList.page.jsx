@@ -20,15 +20,14 @@ import { searchAccommodationByKeyword } from '../../services/accom/apiService';
 const AccommodationList = () => {
   const filterHook = useFilterState();
   const { setCurrentPage, filter } = filterHook;
+
   const pageSize = 10;
 
   const [accommodations, setAccommodations] = useState([]);
 
-  const [minPrice, maxPrice] = filter.priceRange;
   const { currentPage } = filter;
 
-  //filter((item) => item.price >= minPrice && item.price <= maxPrice);
-  //const startIndex = (currentPage - 1) * pageSize;
+  const [minPrice, maxPrice] = filter.priceRange;
 
   useEffect(() => {
     const fetchData = async () => {
