@@ -9,7 +9,7 @@ import {
 	VITE_KAKAO_REST_KEY,
 	VITE_KAKAO_REDIRECT_URI,
 } from '../../../env.config';
-import { sendSnsCode } from '../login/loginUtil';
+import { KeyTest, sendSnsCode } from '../login/loginUtil';
 
 const MainTest = () => {
 	const state = useAccomSearchStore((state) => state);
@@ -33,6 +33,11 @@ useEffect(() => {
       const result = await sendSnsCode(code);
    }
 
+	 const TestKey = () => {
+		       KeyTest();
+	 }
+
+
 
 	const serverConnectionTest = async () => {
 		// Server 연동 테스트
@@ -51,6 +56,7 @@ useEffect(() => {
 
 	return (
 		<div className='main-page__container'>
+			<button onClick={TestKey}>test</button>
 			<MainArea />
 		</div>
 	);

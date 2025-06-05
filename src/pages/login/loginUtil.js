@@ -57,3 +57,8 @@ export const sendSnsCode = (code) => {
 		});
 	return respone;
 };
+
+export const KeyTest = async() => {
+	const respone = await baseServrAxios.post('/login/test');
+	console.log(respone);
+};
