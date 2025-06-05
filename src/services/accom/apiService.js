@@ -6,13 +6,21 @@ export const searchAccommodationByKeyword = async (params) => {
   return response.data;
 };
 
-export const AccommodationDetailByAccomSq = async (accomSq) => {
+export const accommodationDetailByAccomSq = async (accomSq) => {
   const response = await apiAxios.get(`/accommodations/${accomSq}`);
   console.log(response);
   return response.data;
 };
 
-export const AdminAccomSelectList = async () => {
-  const response = await apiAxios.get('/admin/accommodations');
+export const selectAdminAccomList = async (keyword = '') => {
+  const response = await apiAxios.get('/admin/accommodations', {
+    params: { keyword },
+  });
+  return response.data;
+};
+
+export const selectAdminAcommDetail = async (accomSq) => {
+  const response = await apiAxios.get(`/admin/accommodations/${accomSq}/edit`);
+  console.log(response.data);
   return response.data;
 };

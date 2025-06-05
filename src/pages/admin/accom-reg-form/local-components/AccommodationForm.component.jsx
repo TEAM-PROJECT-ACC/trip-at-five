@@ -4,6 +4,7 @@ import FormItem from './form/FormItem.component';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
+import { selectAdminAcommDetail } from '../../../../services/accom/apiService';
 import {
   FaSpa,
   FaSwimmer,
@@ -35,14 +36,7 @@ import {
 } from '../../../../assets/icons/ys/index';
 import './AccommodationForm.style.scss';
 
-const accomType = [
-  '모텔',
-  '호텔/리조트',
-  '펜션',
-  '홈/빌라',
-  '캠핑',
-  '게하/한옥',
-];
+const accomType = ['모텔', '호텔', '리조트', '펜션', '캠핑', '게하/한옥'];
 const publicFac = [
   { icon: <FaSpa />, title: '사우나' },
   { icon: <FaSwimmer />, title: '수영장' },
@@ -77,10 +71,11 @@ const etcFac = [
   { icon: <MdOutlineFoodBank />, title: '객실내취사' },
 ];
 
-const AccommodationForm = () => {
+const AccommodationForm = ({ accomDetail }) => {
   const { id } = useParams();
   const [word, setWord] = useState('');
   const [wordCount, setWordCount] = useState(0);
+  const [formData, setFormData] = useState();
 
   // 글자 수 세기
   const checkWordCountHandler = (e) => {

@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import AdminHeader from '../local-components/header/AdminHeader.component';
 import AdminSearch from '../local-components/header/search/AdminSearch.component';
 import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { BsFillHouseAddFill } from '../../../assets/icons/index';
-import { listSampleData } from '../../../assets/sample-data/listSampleData';
+import { selectAdminAccomList } from '../../../services/accom/apiService';
 import './AdminMain.style.scss';
-
-const dataList = listSampleData.accommodation_tb;
 
 const accomColumnList = [
   { name: '숙소번호', className: 'col-w-5' },
@@ -19,7 +18,17 @@ const accomColumnList = [
 ];
 
 const AdminMain = () => {
+  const [dataList, setDataList] = useState([]);
   const navigate = useNavigate();
+
+  const handleSearch = async (keyword) => {
+    try {
+      const data = await selectAdminAccomList(keyword);
+      setDataList(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // 등록 페이지 이동 핸들러
   const registerPageHandler = () => {
@@ -31,6 +40,10 @@ const AdminMain = () => {
     navigate(`/admin/accommodations/${accomNo}/edit`);
   };
 
+  useEffect(() => {
+    handleSearch('');
+  }, []);
+
   return (
     <div className='accom-list__container'>
       <AdminHeader
@@ -40,6 +53,7 @@ const AdminMain = () => {
         <AdminSearch
           className='admin-search-area__container'
           placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
+          onSearch={handleSearch}
         >
           <AdminIconButton
             onClick={registerPageHandler}

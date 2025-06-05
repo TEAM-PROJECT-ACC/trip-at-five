@@ -18,7 +18,7 @@ import { Star } from '../../components/star-rating/components/star/Star.componen
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import { AccommodationDetailByAccomSq } from '../../services/accom/apiService';
+import { accommodationDetailByAccomSq } from '../../services/accom/apiService';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
@@ -201,7 +201,7 @@ const AccommodationDetail = () => {
   useEffect(() => {
     const fetchAccomDetail = async () => {
       try {
-        const data = await AccommodationDetailByAccomSq(id);
+        const data = await accommodationDetailByAccomSq(id);
         setAccom(data);
         console.log('객실 리스트:', data.roomList);
         if (data && data.images && data.images.length > 0) {
