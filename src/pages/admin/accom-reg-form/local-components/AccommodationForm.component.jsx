@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FormItem from './form/FormItem.component';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
@@ -35,8 +35,17 @@ import {
   FaHotTub,
 } from '../../../../assets/icons/ys/index';
 import './AccommodationForm.style.scss';
+import Script from '../../../accommodation/local-components/map/Script';
 
-const accomType = ['모텔', '호텔', '리조트', '펜션', '캠핑', '게하/한옥'];
+const accomTypeMap = {
+  21: '모텔',
+  22: '호텔',
+  23: '리조트',
+  24: '펜션',
+  25: '캠핑',
+  26: '게하/한옥',
+};
+
 const publicFac = [
   { icon: <FaSpa />, title: '사우나' },
   { icon: <FaSwimmer />, title: '수영장' },
@@ -73,9 +82,26 @@ const etcFac = [
 
 const AccommodationForm = ({ accomDetail }) => {
   const { id } = useParams();
+  const mapRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    accomName: '',
+    accomPhone: '',
+    accomDesc: '',
+    accomZipCode: '',
+    accomAddr: '',
+    accomTypeNo: '',
+    accomLon: '',
+    accomLat: '',
+  });
+
   const [word, setWord] = useState('');
   const [wordCount, setWordCount] = useState(0);
-  const [formData, setFormData] = useState();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   // 글자 수 세기
   const checkWordCountHandler = (e) => {
@@ -83,10 +109,11 @@ const AccommodationForm = ({ accomDetail }) => {
     let value = e.target.value;
 
     if (value.length <= 1330) {
-      setWord(value);
+      setFormData((prev) => ({ ...prev, accomDesc: value }));
       setWordCount(value.length);
     }
   };
+
   const [facList, setFacList] = useState({
     pub: [],
     room: [],
@@ -129,6 +156,65 @@ const AccommodationForm = ({ accomDetail }) => {
 
     data.currentTarget.classList.add('active');
   };
+
+  useEffect(() => {
+    if (accomDetail) {
+      setFormData({
+        ...formData,
+        accomName: accomDetail.accomName || '',
+        accomPhone: accomDetail.accomPhone || '',
+        accomDesc: accomDetail.accomDesc || '',
+        accomZipCode: accomDetail.accomZipCode || '',
+        accomAddr: accomDetail.accomAddr || '',
+        accomTypeNo: accomDetail.accomTypeNo || '',
+        accomLon: accomDetail.accomLon || '',
+        accomLat: accomDetail.accomLat || '',
+      });
+      setWord(accomDetail.accomDesc || '');
+      setWordCount(accomDetail.accomDesc ? accomDetail.accomDesc.length : 0);
+
+      setFacList({
+        pub: accomDetail.pubFacInfo ? accomDetail.pubFacInfo.split(',') : [],
+        room: accomDetail.inRoomFacInfo
+          ? accomDetail.inRoomFacInfo.split(',')
+          : [],
+        etc: accomDetail.etcFacInfo ? accomDetail.etcFacInfo.split(',') : [],
+      });
+    }
+  }, [accomDetail]);
+
+  const initKakaoMap = () => {
+    if (window.kakao && window.kakao.maps && formData.accomAddr) {
+      const container = mapRef.current;
+      const mapOption = {
+        center: new window.kakao.maps.LatLng(
+          formData.accomLat || 33.450701,
+          formData.accomLon || 126.570667
+        ),
+        level: 5,
+      };
+      const map = new window.kakao.maps.Map(container, mapOption);
+
+      if (formData.accomLat && formData.accomLon) {
+        const markerPosition = new window.kakao.maps.LatLng(
+          formData.accomLat,
+          formData.accomLon
+        );
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position: markerPosition,
+        });
+        map.setCenter(marker);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      initKakaoMap();
+    }
+  }, [formData.accomAddr]);
+
   return (
     <form
       className='accom-form'
@@ -139,11 +225,13 @@ const AccommodationForm = ({ accomDetail }) => {
         <select
           className='accom-type-select'
           name='accomTypeNo'
+          value={formData.accomTypeNo}
+          onChange={handleChange}
         >
-          {accomType.map((value, idx) => (
+          {Object.entries(accomTypeMap).map(([key, value]) => (
             <option
-              key={idx}
-              value={value}
+              key={key}
+              value={key}
             >
               {value}
             </option>
@@ -154,12 +242,16 @@ const AccommodationForm = ({ accomDetail }) => {
           name='accomName'
           className='accom-name'
           placeholder={'숙박업소명을 입력해주세요'}
+          value={formData.accomName}
+          onChange={handleChange}
         />
         <AdminInput
           type='tel'
           name='accomPhone'
           className='accom-phone'
           placeholder={"'-'없이 입력해주세요"}
+          value={formData.accomPhone}
+          onChange={handleChange}
         />
       </FormItem>
       {/* 숙박업소 이미지 등록 */}
@@ -180,7 +272,7 @@ const AccommodationForm = ({ accomDetail }) => {
           className='accom-desc'
           name='accomDesc'
           placeholder='숙박업소 설명을 작성해주세요...'
-          value={word}
+          value={formData.accomDesc}
           onChange={checkWordCountHandler}
         />
         <span className='accom-desc-count'>
@@ -195,9 +287,28 @@ const AccommodationForm = ({ accomDetail }) => {
         title='숙박업소 설명'
         className='content__container'
       >
-        <div className='map-area'>
-          <div>{/* 맵 영역 */}</div>
-        </div>
+        <Script
+          async
+          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
+            import.meta.env.VITE_KAKAO_JAVA_API
+          }&autoload=false`}
+          onLoad={() => {
+            if (window.kakao && window.kakao.maps) {
+              window.kakao.maps.load(() => {
+                initKakaoMap();
+              });
+            }
+          }}
+        />
+        <div
+          className='map-area'
+          ref={mapRef}
+          style={{
+            width: '100%',
+            height: '500px',
+            borderRadius: '8px',
+          }}
+        ></div>
         <div className='map-input'>
           {/* 경도 */}
           <input
@@ -215,12 +326,16 @@ const AccommodationForm = ({ accomDetail }) => {
             name='accomZipCode'
             className='accom-zip-code'
             placeholder={'우편번호'}
+            value={formData.accomZipCode}
+            onChange={handleChange}
           />
           <AdminInput
             type='text'
             name='accomAddr'
             className='accom-addr'
             placeholder={'주소지'}
+            value={formData.accomAddr}
+            onChange={handleChange}
           />
         </div>
       </FormItem>
