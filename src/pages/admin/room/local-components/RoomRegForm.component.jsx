@@ -14,7 +14,16 @@ import {
 } from '../../../../services/room/roomService.api';
 import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 import { diffHoursFunc } from './utils/checkInOut.util';
-import { timeArray, toastInfo } from './data/roomRegFrom.constant';
+import {
+  DELETE_ROOM,
+  INSERT_ROOM,
+  timeArray,
+  toastInfo,
+  UPDATE_ROOM,
+} from './data/roomRegFrom.constant';
+import { FaTrashAlt } from '../../../../assets/icons/index';
+import { useModal } from '../../../../hooks';
+import { Modal } from '../../../../components';
 
 /**
  *
@@ -40,6 +49,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
   });
 
   const [word, setWord] = useState('');
+  const { isModalOpen, handleModalOpen } = useModal();
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
   const [imageFileData, setImageFileData] = useState([]);
@@ -51,7 +61,6 @@ const RoomRegForm = ({ accomId, roomId }) => {
       const { data } =
         roomId && (await findRoomByAccomNoAndRoomSq(accomId, roomId));
       // console.log(data);
-      // setRoomData(data);
       return data ?? [];
     },
     staleTime: 1000 * 20,
@@ -67,7 +76,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
     mutationFn: async ({ type, updatedRoomData }) => {
       // console.log(type);
       // console.log(updatedRoomData); // 정상출력 확인
-      if (type === 3) {
+      if (type === DELETE_ROOM) {
         const { status } = await deleteRoomAPI({ accomId, roomId });
         // console.log(status);
         if (status !== 200) throw new Error('에러발생');
@@ -113,11 +122,15 @@ const RoomRegForm = ({ accomId, roomId }) => {
 
       if (status === HttpStatusCode.Ok) {
         successToastAlterFunc(
-          variables.type === 1 ? '등록' : variables.type === 2 ? '수정' : '삭제'
+          variables.type === INSERT_ROOM
+            ? '등록'
+            : variables.type === UPDATE_ROOM
+            ? '수정'
+            : '삭제'
         );
         setTimeout(
           () => navigate(`/admin/accommodations/${accomId}/edit`),
-          3000
+          2000
         );
       }
     },
@@ -182,7 +195,13 @@ const RoomRegForm = ({ accomId, roomId }) => {
     setImageFileData(files);
   };
 
-  const handleSubmitRoom = async (type = 1) => {
+  // Modal
+  const handleModal = () => {
+    handleModalOpen(true);
+  };
+
+  // Submit
+  const handleSubmitRoom = async (type) => {
     mutate({
       type,
       updatedRoomData: {
@@ -214,8 +233,15 @@ const RoomRegForm = ({ accomId, roomId }) => {
     if (data?.roomName) {
       setWord(data.roomName);
       setRoomNameWordCount(data.roomName.length);
+
+      setRoomData(data);
     }
   }, [data]);
+
+  // 디버깅
+  // useEffect(() => {
+  //   console.log(roomData);
+  // }, [roomData]);
 
   return (
     <>
@@ -353,13 +379,14 @@ const RoomRegForm = ({ accomId, roomId }) => {
                     <>
                       <AdminPrimaryButton
                         className='room-reg-button'
-                        onClick={() => handleSubmitRoom(2)}
+                        onClick={() => handleSubmitRoom(UPDATE_ROOM)}
                       >
                         수정
                       </AdminPrimaryButton>
                       <AdminPrimaryButton
                         className='room-reg-button'
-                        onClick={() => handleSubmitRoom(3)}
+                        // onClick={() => handleSubmitRoom(DELETE_ROOM)}
+                        onClick={() => handleModal()}
                       >
                         삭제
                       </AdminPrimaryButton>
@@ -367,7 +394,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
                   ) : (
                     <AdminPrimaryButton
                       className='room-reg-button'
-                      onClick={() => handleSubmitRoom(1)}
+                      onClick={() => handleSubmitRoom(INSERT_ROOM)}
                     >
                       등록
                     </AdminPrimaryButton>
@@ -377,8 +404,8 @@ const RoomRegForm = ({ accomId, roomId }) => {
             </div>
 
             <div className='room-image-list__container'>
-              {data.imageList && data.imageList.length > 0 ? (
-                data.imageList.map((value, idx) => {
+              {data?.imageList && data?.imageList.length > 0 ? (
+                data?.imageList.map((value, idx) => {
                   return (
                     <div
                       key={idx}
@@ -398,6 +425,26 @@ const RoomRegForm = ({ accomId, roomId }) => {
             <ToastContainer />
           </div>
         </>
+      )}
+
+      {isModalOpen && (
+        <Modal
+          modalHandler={handleModalOpen}
+          className='delete-room-image-modal'
+          useCloseIcon={true}
+        >
+          <div className='delete-room-image-modal-message__container'>
+            <span className='delete-room-image-modal-message'>
+              객실을 <strong>삭제</strong>하시겠습니까?
+            </span>
+          </div>
+          <button
+            className='delete-room-image-modal-button'
+            onClick={() => handleSubmitRoom(DELETE_ROOM)}
+          >
+            <FaTrashAlt />
+          </button>
+        </Modal>
       )}
     </>
   );
