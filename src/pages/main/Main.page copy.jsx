@@ -20,23 +20,17 @@ const MainTest = () => {
 	const queryParams = new URLSearchParams(location.search);
 	const searchTerm = queryParams.get('code');
 
-  const data = {
-     code: code
-  };
-
 useEffect(() => {
   if (searchTerm !== null) {
     setCode(searchTerm);
-    console.log('code 1'+code)
     if(code !=null) {
-    Test();
+    sendCode();
     }
   }
 }, [code]);
 
-   const Test = async() => {
-      const result = await sendSnsCode(data);
-      console.log('result test '+result);
+   const sendCode  = async() => {
+      const result = await sendSnsCode(code);
    }
 
 
@@ -57,7 +51,6 @@ useEffect(() => {
 
 	return (
 		<div className='main-page__container'>
-      <button onClick={Test}>test</button>
 			<MainArea />
 		</div>
 	);
