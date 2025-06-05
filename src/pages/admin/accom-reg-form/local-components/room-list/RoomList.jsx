@@ -14,6 +14,10 @@ import './RoomList.style.scss';
 import { useEffect } from 'react';
 import { selectRoomListAPI } from '../../../../../services/room/roomService.api';
 import { useQuery } from '@tanstack/react-query';
+import { useAdminSearchStore } from '../../../../../states/admin-search/adminSearchStore';
+import { useEffect } from 'react';
+
+const roomList = roomData;
 
 const roomColumnList = [
   { name: '객실번호', className: 'col-w-10' },
@@ -24,6 +28,7 @@ const roomColumnList = [
 
 const RoomList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { keyword } = useAdminSearchStore((state) => state);
   const params = useParams();
   const navigate = useNavigate();
   const accomNo = params.id;
@@ -55,6 +60,10 @@ const RoomList = () => {
     // console.log(roomNo);
     navigate(`/admin/accommodations/2757748/rooms/` + roomNo);
   };
+
+  useEffect(() => {
+    console.log(keyword);
+  }, [keyword]);
 
   return (
     <>
