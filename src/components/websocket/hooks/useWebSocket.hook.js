@@ -2,6 +2,8 @@ import { useContext, useEffect } from 'react';
 import { WebSocketContext } from '../contexts/webSocket.context';
 import { useStore } from 'zustand';
 
+const { VITE_ENV } = import.meta.env;
+
 const useWebSocketStore = () => {
   const store = useContext(WebSocketContext);
   return useStore(store);
@@ -13,61 +15,28 @@ export const useWebSocket = ({ requestURL, certKey }) => {
     readyState,
     socketEvent,
     createWebSocket,
-    onOpenWebSocket,
-    onCloseWebSocket,
-    onMessageWebSocket,
     sendMessageWebSocket,
+    closeWebSocket,
   } = useWebSocketStore();
 
-  // WebSocket event
-  // - `open` : 커넥션이 정상적으로 생성되었을 때
-  const openWebSocket = (callback) => {
-    onOpenWebSocket();
-
-    if (callback) {
-      callback();
-    }
-  };
-
-  // - `close` : 커넥션이 종료되었을 때
-  const closeWebSocket = (callback) => {
-    onCloseWebSocket();
-
-    if (callback) {
-      callback();
-    }
-  };
-
-  // - `message` : 데이터를 수신했을 때
-
-  const receivedMessage = (callback) => {
-    onMessageWebSocket(callback);
-  };
-
-  const sendMessage = (data) => {
-    sendMessageWebSocket(data);
-  };
-  // - `error` : 오류가 발생했을 때
-
   useEffect(() => {
+    // TODO: 종료 시 다시 연결 다시 연결되는 현상 막아야 함
     if (!webSocket) {
       createWebSocket({ requestURL, certKey });
     }
-
     return () => {
-      if (webSocket) {
-        onCloseWebSocket();
+      if (webSocket && VITE_ENV === 'PRODUCTION') {
+        closeWebSocket();
       }
     };
-  }, [requestURL, certKey, createWebSocket, onCloseWebSocket, webSocket]);
+  }, [certKey, requestURL, closeWebSocket, createWebSocket, webSocket]);
 
   return {
     webSocket,
     readyState,
     socketEvent,
-    openWebSocket,
+    createWebSocket,
+    sendMessageWebSocket,
     closeWebSocket,
-    receivedMessage,
-    sendMessage,
   };
 };

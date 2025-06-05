@@ -12,12 +12,8 @@ import {
   Message,
   MessageInput,
 } from '@chatscope/chat-ui-kit-react';
-import {
-  PageContainer,
-  useWebSocket,
-  WebSocketProvider,
-} from '../../../components';
-import { serverBaseURL } from '../../../services/serverBaseURL';
+import { PageContainer, useWebSocket } from '../../../components';
+import { serverWebSocketURL } from '../../../services/serverBaseURL';
 
 const defaultMessage = [
   {
@@ -29,12 +25,12 @@ const defaultMessage = [
   },
 ];
 
-const getMessageComponent = (data) => {
-  return data.map((item, index) => {
+const getMessageComponent = (messages) => {
+  return messages.map((message, index) => {
     return (
       <Message
         key={index}
-        model={item.model}
+        model={message.model}
       ></Message>
     );
   });
@@ -42,28 +38,35 @@ const getMessageComponent = (data) => {
 
 const ChatRoom = () => {
   const [messages, setMessages] = useState(defaultMessage);
-  const { webSocket } = useWebSocket({
-    requestURL: `ws://${serverBaseURL}/chat`,
+  const { sendMessageWebSocket, closeWebSocket } = useWebSocket({
+    requestURL: `${serverWebSocketURL}/chat`,
   });
 
-  const handleSend = (input) => {
+  const handleSend = (message) => {
     let newMessage = {
       model: {
-        message: input,
+        message,
         direction: 'outgoing',
       },
     };
+    sendMessageWebSocket(newMessage);
+    // setMessages([...messages, newMessage]);
+  };
 
-    setMessages([...messages, newMessage]);
+  const handleCloseWebSocket = () => {
+    closeWebSocket();
   };
 
   return (
     <PageContainer className={'chat-room-container'}>
       <div className='chat-main-room-wrap'>
-        <FaArrowAltCircleLeft className='chat-room-close-icon' />
+        <FaArrowAltCircleLeft
+          className='chat-room-close-icon'
+          onClick={handleCloseWebSocket}
+        />
         <MainContainer className='chat-main-container'>
           <ChatContainer className='chat-container-wrap'>
-            <MessageList className='chat-mesggae-list'>
+            <MessageList className='chat-message-list'>
               {getMessageComponent(messages)}
             </MessageList>
           </ChatContainer>
@@ -72,7 +75,7 @@ const ChatRoom = () => {
         <MainContainer className='chat-input-container'>
           <ChatContainer>
             <MessageInput
-              className='chat-mesggae-list  '
+              className='chat-message-list  '
               placeholder='Type message here'
               onSend={handleSend}
               attachButton={false}
