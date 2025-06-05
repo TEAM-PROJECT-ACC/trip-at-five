@@ -98,6 +98,32 @@
   }
 }
 
+.delete-room-image-modal {
+  width: 500px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  &-message__container {
+    width: 100%;
+    padding: 16px;
+    text-align: center;
+    .delete-room-image-modal-message {
+      font-size: 24px;
+      strong {
+        font-weight: 900;
+        color: $color-ff4545;
+      }
+    }
+  }
+  &-button {
+    text-align: right;
+    font-size: 24px;
+    transition: 300ms ease-in-out;
+    &:hover {
+      color: $color-ff4545;
+    }
+  }
+}
 .check-warning {
   color: $color-ff4545;
   font-weight: 900;
