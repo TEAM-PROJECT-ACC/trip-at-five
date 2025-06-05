@@ -56,6 +56,8 @@ const RoomList = () => {
     navigate(`/admin/accommodations/2757748/rooms/` + roomNo);
   };
 
+  const handleSearchRoom = () => {};
+
   return (
     <>
       {/* 숙박업소 객실관리(목록) */}
@@ -67,6 +69,7 @@ const RoomList = () => {
           <AdminSearch
             className='admin-search-area__container'
             placeholder={'객실명을 입력해주세요'}
+            onClick={handleSearchRoom}
           >
             <AdminIconButton
               onClick={roomFormPageHandler}
