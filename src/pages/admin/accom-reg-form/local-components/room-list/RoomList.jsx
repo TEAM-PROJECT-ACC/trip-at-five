@@ -6,6 +6,8 @@ import AdminSearch from '../../../local-components/header/search/AdminSearch.com
 import AdminManagementList from '../../../local-components/list/AdminManagementList.component';
 import { roomData } from '../../../../../assets/sample-data/roomSampleData';
 import './RoomList.style.scss';
+import { useAdminSearchStore } from '../../../../../states/admin-search/adminSearchStore';
+import { useEffect } from 'react';
 
 const roomList = roomData;
 
@@ -17,6 +19,7 @@ const roomColumnList = [
 ];
 
 const RoomList = () => {
+  const { keyword } = useAdminSearchStore((state) => state);
   const params = useParams();
   const navigate = useNavigate();
   const accomNo = params.id;
@@ -27,6 +30,10 @@ const RoomList = () => {
     console.log(accomNo);
     navigate(`/admin/accommodations/${accomNo}/rooms`, { state: { no } });
   };
+
+  useEffect(() => {
+    console.log(keyword);
+  }, [keyword]);
 
   return (
     <>
