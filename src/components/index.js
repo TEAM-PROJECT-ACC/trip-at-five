@@ -17,6 +17,7 @@ import { StarRating } from './star-rating/StarRating.component';
 import { PageContainer } from './page-container/PageContainer.component';
 import { Modal } from './modal/Modal.component';
 import { Textarea } from './textarea/Textarea.component';
+import { useWebSocket, WebSocketProvider } from './websocket/index';
 
 export {
   AppHeader,
@@ -38,4 +39,6 @@ export {
   PageContainer,
   Modal,
   Textarea,
+  useWebSocket,
+  WebSocketProvider,
 };

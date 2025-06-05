@@ -12,7 +12,12 @@ import {
   Message,
   MessageInput,
 } from '@chatscope/chat-ui-kit-react';
-import { PageContainer } from '../../../components';
+import {
+  PageContainer,
+  useWebSocket,
+  WebSocketProvider,
+} from '../../../components';
+import { serverBaseURL } from '../../../services/serverBaseURL';
 
 const defaultMessage = [
   {
@@ -37,6 +42,9 @@ const getMessageComponent = (data) => {
 
 const ChatRoom = () => {
   const [messages, setMessages] = useState(defaultMessage);
+  const { webSocket } = useWebSocket({
+    requestURL: `ws://${serverBaseURL}/chat`,
+  });
 
   const handleSend = (input) => {
     let newMessage = {

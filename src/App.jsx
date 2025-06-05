@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { DiaryPage, TestPage, UserPage } from './pages';
-import { AppFooter, AppHeader } from './components';
+import { AppFooter, AppHeader, WebSocketProvider } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import './App.css';
 import LoginPage from './pages/login/LoginPage';
@@ -9,7 +9,7 @@ import PwdRestting from './pages/login/pwd-resetting/Password.resetting.componen
 import { Chat } from './pages/chat/ChatMainPage';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
@@ -85,7 +85,11 @@ function App() {
           />
           <Route
             path='/chat/room'
-            element={<ChatRoom />}
+            element={
+              <WebSocketProvider>
+                <ChatRoom />
+              </WebSocketProvider>
+            }
           />
         </Route>
 
