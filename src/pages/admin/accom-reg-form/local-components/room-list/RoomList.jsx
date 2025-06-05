@@ -15,7 +15,6 @@ import { useEffect } from 'react';
 import { selectRoomListAPI } from '../../../../../services/room/roomService.api';
 import { useQuery } from '@tanstack/react-query';
 import { useAdminSearchStore } from '../../../../../states/admin-search/adminSearchStore';
-import { useEffect } from 'react';
 
 const roomList = roomData;
 
