@@ -1,6 +1,8 @@
 import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './AdminSearch.style.scss';
+import { useAdminSearchStore } from '../../../../../states/admin-search/adminSearchStore';
+import { useEffect } from 'react';
 
 /**
  * 검색창 공통 컴포넌트
@@ -12,12 +14,27 @@ import './AdminSearch.style.scss';
  * @returns
  */
 const AdminSearch = ({ className, placeholder, children, onClick }) => {
+  const { keyword, setKeywordState, resetStore } = useAdminSearchStore(
+    (state) => state
+  );
+
+  const handleSetKeyword = (e) => {
+    // console.log(e.target.value);
+    setKeywordState(e.target.value);
+  };
+
+  useEffect(() => {
+    resetStore(); // 검색 상태 초기화
+  }, []);
+
   return (
     <div className={className}>
       <div className='admin-search-area'>
         <AdminInput
           className='admin-search'
+          value={keyword}
           placeholder={placeholder}
+          onChange={(e) => handleSetKeyword(e)}
         />
         <AdminPrimaryButton onClick={onClick}>검색</AdminPrimaryButton>
       </div>
