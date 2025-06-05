@@ -81,7 +81,9 @@
         width: 50%;
         padding: 24px;
         .diary-animation__contents-page {
+          width: 100%;
           font-family: EF_jejudoldam, SUIT-Regular;
+          word-break: break-all;
         }
         @include background-a9813d;
       }

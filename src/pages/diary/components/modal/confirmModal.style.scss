@@ -1,0 +1,17 @@
+.confirm-modal__container {
+  padding: 24px;
+  .confirm-modal__question {
+    font-weight: 600;
+    margin-bottom: 36px;
+  }
+
+  .confirm-modal__btn-container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    .confirm-modal__button {
+      padding: 8px;
+    }
+  }
+}
