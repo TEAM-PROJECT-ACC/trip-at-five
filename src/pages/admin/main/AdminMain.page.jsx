@@ -7,6 +7,7 @@ import AdminManagementList from '../local-components/list/AdminManagementList.co
 import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import { selectAdminAccomList } from '../../../services/accom/apiService';
 import './AdminMain.style.scss';
+import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
 
 const accomColumnList = [
   { name: '숙소번호', className: 'col-w-5' },
@@ -18,6 +19,7 @@ const accomColumnList = [
 ];
 
 const AdminMain = () => {
+  const { keyword } = useAdminSearchStore((state) => state);
   const [dataList, setDataList] = useState([]);
   const navigate = useNavigate();
 
@@ -44,6 +46,10 @@ const AdminMain = () => {
     handleSearch('');
   }, []);
 
+  useEffect(() => {
+    console.log(keyword);
+  }, [keyword]);
+
   return (
     <div className='accom-list__container'>
       <AdminHeader
@@ -53,7 +59,7 @@ const AdminMain = () => {
         <AdminSearch
           className='admin-search-area__container'
           placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
-          onSearch={handleSearch}
+          onClick={handleSearch}
         >
           <AdminIconButton
             onClick={registerPageHandler}

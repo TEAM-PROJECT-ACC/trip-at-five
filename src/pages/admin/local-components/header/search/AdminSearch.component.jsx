@@ -2,39 +2,41 @@ import { useState, useEffect } from 'react';
 import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './AdminSearch.style.scss';
+import { useAdminSearchStore } from '../../../../../states/admin-search/adminSearchStore';
 
-const AdminSearch = ({ className, placeholder, children, onSearch }) => {
-  const [keyword, setKeyword] = useState('');
-  const [searched, setSearched] = useState(false);
+/**
+ * 검색창 공통 컴포넌트
+ * @param className 클래스명
+ * @param placeholder input placeholder
+ * @param children 검색창 외 컴포넌트
+ * @param onClick 검색핸들러
+ *
+ * @returns
+ */
+const AdminSearch = ({ className, placeholder, children, onClick }) => {
+  const { keyword, setKeywordState, resetStore } = useAdminSearchStore(
+    (state) => state
+  );
 
-  // 검색 핸들러
-  const searchHandler = () => {
-    if (keyword.trim() === '') {
-      onSearch('', '');
-    } else {
-      onSearch(keyword, keyword);
-    }
-    setSearched(true);
+  const handleSetKeyword = (e) => {
+    // console.log(e.target.value);
+    setKeywordState(e.target.value);
   };
 
-  // 검색 이후 && 검색어가 지워졌을 때 전체 데이터 조회
   useEffect(() => {
-    if (searched && keyword.trim() === '') {
-      onSearch('', '');
-      setSearched(false);
-    }
-  }, [keyword, searched, onSearch]);
+    resetStore(); // 검색 상태 초기화
+  }, []);
 
   return (
     <div className={className}>
       <div className='admin-search-area'>
         <AdminInput
           className='admin-search'
-          placeholder={placeholder}
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          placeholder={placeholder}
+          onChange={(e) => handleSetKeyword(e)}
         />
-        <AdminPrimaryButton onClick={searchHandler}>검색</AdminPrimaryButton>
+        <AdminPrimaryButton onClick={onClick}>검색</AdminPrimaryButton>
       </div>
       {children}
     </div>
