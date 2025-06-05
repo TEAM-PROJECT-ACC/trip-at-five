@@ -34,3 +34,8 @@ export const toastInfo = {
   draggable: true,
   progress: undefined,
 };
+
+// 등록/수정/삭제
+export const INSERT_ROOM = 1;
+export const UPDATE_ROOM = 2;
+export const DELETE_ROOM = 3;
