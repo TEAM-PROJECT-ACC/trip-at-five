@@ -26,6 +26,7 @@ import {
   FaMapMarkerAlt,
   FaAngleRight,
   FaAngleLeft,
+  FaBuilding,
 } from 'react-icons/fa';
 
 export {
@@ -53,6 +54,7 @@ export {
   FaMapMarkerAlt,
   FaAngleRight,
   FaAngleLeft,
+  FaBuilding,
 };
 
 import { BiCabinet } from 'react-icons/bi';
@@ -61,7 +63,11 @@ export { BiCabinet };
 import { TiDelete } from 'react-icons/ti';
 export { TiDelete };
 
+import { TbBeach } from 'react-icons/tb';
+export { TbBeach };
+
 import {
+  MdQuiz,
   MdVilla,
   MdOutlineRestaurant,
   MdLocalBar,
@@ -76,6 +82,7 @@ import {
 } from 'react-icons/md';
 
 export {
+  MdQuiz,
   MdVilla,
   MdOutlineRestaurant,
   MdLocalBar,
@@ -91,3 +98,6 @@ export {
 
 import { GrCart } from 'react-icons/gr';
 export { GrCart };
+
+import { PiBuildingOfficeFill } from 'react-icons/pi';
+export { PiBuildingOfficeFill };

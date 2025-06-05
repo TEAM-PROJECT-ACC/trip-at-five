@@ -1,14 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pagination } from '../../components/pagination/Pagination.component';
 import FilterPanel from './local-components/filter/FilterPanel.component';
 import MapButton from './local-components/map/MapButton.component';
 import AccommodationListBox from './local-components/acc-items-box/AccommodationListBox.component';
 import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
-import { accomData } from '../../assets/sample-data/accomSampleData';
+//import { accomData } from '../../assets/sample-data/accomSampleData';
 import { useFilterState } from './hooks/useFilterState.hook';
-
+import { useAccomSearchStore } from '../../states';
+import { formatDateForApi } from '../../utils/formatDate/formatDate';
+import { searchAccommodationByKeyword } from '../../services/accom/apiService';
+//import { formatDate } from '../../utils/formatDate/formatDate';
 /**
  * 바뀔수 있는 정렬 조건 => 가격높은/낮은순, 평점높은순
  * 필수 정렬 조건 => 숙박업소명
@@ -17,34 +20,39 @@ import { useFilterState } from './hooks/useFilterState.hook';
 const AccommodationList = () => {
   const filterHook = useFilterState();
   const { setCurrentPage, filter } = filterHook;
-  const pageSize = 5;
+
+  const pageSize = 10;
+
+  const [accommodations, setAccommodations] = useState([]);
+
+  const { currentPage } = filter;
 
   const [minPrice, maxPrice] = filter.priceRange;
-  const currentPage = filter.currentPage;
 
-  const accommodations = accomData.accommodation_tb
-    .map((item) => {
-      const minRoomPrice = Math.min(
-        ...item.rooms.map((room) => room.room_price)
-      );
-      return {
-        id: item.accom_sq,
-        name: item.accom_name,
-        address: item.accom_location,
-        type: item.accom_type,
-        rating: item.rooms.length * 100,
-        checkIn: '15:00',
-        checkOut: '11:00',
-        price: minRoomPrice,
-      };
-    })
-    .filter((item) => item.price >= minPrice && item.price <= maxPrice);
-  const startIndex = (currentPage - 1) * pageSize;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { keyword, checkIn, checkOut, tripDay, numberOfPeople } =
+          useAccomSearchStore.getState();
 
-  const currentPageData = accommodations.slice(
-    startIndex,
-    startIndex + pageSize
-  );
+        const params = {
+          keyword,
+          checkIn: formatDateForApi(checkIn),
+          checkOut: formatDateForApi(checkOut),
+          guests: numberOfPeople,
+          page: currentPage - 1,
+          size: pageSize,
+        };
+
+        const data = await searchAccommodationByKeyword(params);
+        setAccommodations(data);
+      } catch (error) {
+        console.error('숙박업소 데이터를 불러오는데 실패했습니다.', error);
+      }
+    };
+
+    fetchData();
+  }, [currentPage]);
 
   return (
     <PageContainer>
@@ -59,18 +67,17 @@ const AccommodationList = () => {
         </aside>
         <div className='list-section'>
           <AccommodationListBox
-            data={currentPageData}
             accommodations={accommodations}
             filterHook={filterHook}
           />
           <Pagination
             className='accom-pagination'
-            totalCount={100}
+            totalCount={500}
             pageLength={5}
             currentPage={currentPage}
             numOfRows={10}
             useMoveToEnd={true}
-            onClick={setCurrentPage}
+            onClick={(pageNo) => setCurrentPage(pageNo)}
           />
         </div>
       </div>
