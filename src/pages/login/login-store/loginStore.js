@@ -2,46 +2,52 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 const initialState = {
-	id: null,
-	pwd: null,
-	isLogin: false,
-	error: '',
+  id: null,
+  pwd: null,
+  isLogin: false,
+  error: '',
 };
 
 export const LoginStateStore = create((set) => ({
-	setId: (text) =>
-		set({
-			id: text,
-		}),
+  setId: (text) =>
+    set({
+      id: text,
+    }),
 
-	setPwd: (text) =>
-		set({
-			pwd: text,
-		}),
+  setPwd: (text) =>
+    set({
+      pwd: text,
+    }),
 
-	setIslogin: (text) =>
-		set({
-			isLogin: text,
-		}),
+  setIslogin: (text) =>
+    set({
+      isLogin: text,
+    }),
 
-	setError: (text) =>
-		set({
-			error: text,
-		}),
+  setError: (text) =>
+    set({
+      error: text,
+    }),
 
-	reset: () => set(() => ({ ...initialState })),
+  reset: () => set(() => ({ ...initialState })),
 }));
 
 const snsInitialState = {
-	code: null,
+  plaform: null,
 };
 
-export const LoginSnsStateStore = create((set) => ({
-	...snsInitialState,
-	setCode: (text) =>
-		set({
-			code: text,
-		}),
-
-	reset: () => set(() => ({ ...snsInitialState })),
-}));
+export const LoginSnsStateStore = create(
+  persist(
+    (set) => ({
+      ...snsInitialState,
+      setPlaform: (text) =>
+        set({
+          plaform: text,
+        }),
+      reset: () => set(() => ({ ...snsInitialState })),
+    }),
+    {
+      name: 'login-plaform-Info',
+    }
+  )
+);

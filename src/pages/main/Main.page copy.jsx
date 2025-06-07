@@ -1,65 +1,66 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MainArea from './local-components/MainArea.component';
 import { useAccomSearchStore } from '../../states';
 import { testServer } from '../../services/test/testServerAPI';
 import './Main.style.scss';
 import { useLocation } from 'react-router-dom';
 import { LoginSnsStateStore } from '../login/login-store/loginStore';
-import {
-	VITE_KAKAO_REST_KEY,
-	VITE_KAKAO_REDIRECT_URI,
-} from '../../../env.config';
-import { KeyTest, sendSnsCode } from '../login/loginUtil';
+import { KeyTest, kakaoLogin, naverLogin } from '../login/loginUtil';
 
 const MainTest = () => {
-	const state = useAccomSearchStore((state) => state);
+  const state = useAccomSearchStore((state) => state);
 
-	const { code, setCode } = LoginSnsStateStore();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchTerm = queryParams.get('code');
+  const isExecuted = useRef(false);
+  const { plaform } = LoginSnsStateStore();
 
-	const location = useLocation();
-	const queryParams = new URLSearchParams(location.search);
-	const searchTerm = queryParams.get('code');
+  useEffect(() => {
+    if (searchTerm != null && !isExecuted.current) {
+      console.log(searchTerm);
 
-useEffect(() => {
-  if (searchTerm !== null) {
-    setCode(searchTerm);
-    if(code !=null) {
-    sendCode();
+      sendCode();
+
+      isExecuted.current = true;
     }
-  }
-}, [code]);
+  }, [searchTerm]);
 
-   const sendCode  = async() => {
-      const result = await sendSnsCode(code);
-   }
+  const sendCode = async () => {
+    if (plaform === 'kakao') {
+      const result = await kakaoLogin(searchTerm);
+    }
+    if (plaform === 'naver') {
+      const result = await naverLogin(searchTerm);
+    }
+  };
 
-	 const TestKey = () => {
-		       KeyTest();
-	 }
+  const TestKey = () => {
+    console.log(plaform);
+    KeyTest();
+  };
 
+  const serverConnectionTest = async () => {
+    // Server 연동 테스트
+    const result = await testServer();
+    console.log('result : ' + result);
+  };
 
+  useEffect(() => {
+    serverConnectionTest();
+  }, []);
 
-	const serverConnectionTest = async () => {
-		// Server 연동 테스트
-		const result = await testServer();
-		console.log('result : ' + result);
-	};
+  useEffect(() => {
+    // 새로고침 할 경우 검색 상태 초기화
+    state.resetState();
+  }, []);
 
-	useEffect(() => {
-		serverConnectionTest();
-	}, []);
-
-	useEffect(() => {
-		// 새로고침 할 경우 검색 상태 초기화
-		state.resetState();
-	}, []);
-
-	return (
-		<div className='main-page__container'>
-			<button onClick={TestKey}>test</button>
-			<MainArea />
-		</div>
-	);
+  return (
+    <div className='main-page__container'>
+      <button onClick={TestKey}>test</button>
+      <MainArea />
+    </div>
+  );
 };
 
 export default MainTest;
