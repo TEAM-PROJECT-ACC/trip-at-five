@@ -8,10 +8,14 @@ import { apiAxios } from '../service';
  */
 export const selectRoomListAPI = async (accomNo, currentPage) => {
   currentPage = currentPage === null ? 1 : currentPage;
-  console.log(currentPage);
+  // console.log('서버 전달 전 accomNo : ' + accomNo);
+  // console.log(currentPage);
   const response = await apiAxios.get(
     `admin/accommodations/${accomNo}/rooms?currentPage=${currentPage}`
   );
+
+  // console.log('서버 response : ' + response.data);
+
   return response;
 };
 
@@ -65,6 +69,11 @@ export const updateRoomAPI = async (formData) => {
   return response;
 };
 
+/**
+ * 객실 삭제 API
+ * @param {*} roomIdentify
+ * @returns
+ */
 export const deleteRoomAPI = async (roomIdentify) => {
   const response = await apiAxios.delete(
     `admin/accommodations/${roomIdentify.accomId}/rooms`,
