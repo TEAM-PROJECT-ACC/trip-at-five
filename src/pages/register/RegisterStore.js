@@ -36,8 +36,8 @@ const RegisterInfoInitialState = {
 	email: null,
 	emailCode: null,
 	pwd: null,
-	pwdCheck: '',
-	nickName: '',
+	pwdCheck: null,
+	nickName: null,
 	tel: null,
 	address: '',
 };
@@ -54,7 +54,7 @@ export const RegisterInfostore = create(
 			setnickNameCheck: (text) => set({ nickCheck: text }),
 			setTel: (text) => set({ tel: text }),
 			setAddress: (text) => set({ address: text }),
-			reset: () => set(() => ({ ...RegisterInfoInitialState })),
+			RegisterInfoReset: () => set(() => ({ ...RegisterInfoInitialState })),
 		}),
 		{
 			name: 'register-Info',

@@ -25,10 +25,13 @@ import ReservationCancelList from './pages/admin/reservation-cancel/ReservationC
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 import ChatRoom from './pages/chat/chat-ui/Chat.room';
 import MainTest from './pages/main/Main.page copy';
+import LoginInterceptor from './pages/login/loginInterCepter/LoginInterceptor';
 
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
   const [isAdmin, setIsAdmin] = useState(() => false);
+  const [isUser, setIsUser] = useState(() => false);
+  const isAuthenticated = sessionStorage.getItem('Logined');
 
   return (
     <>
@@ -41,21 +44,28 @@ function App() {
         />
         {/* path member로 변경 */}
         {/* 복수형으로  */}
-        <Route
-          path='/user'
-          element={<UserPage />}
-        >
-          {USER_ROUTE.map((route, idx) => {
-            return (
-              <Route
-                key={idx}
-                index={route.index}
-                path={route.path}
-                element={<route.element className={route.className} />}
-              />
-            );
-          })}
-        </Route>
+
+        {
+          <Route
+            path='/user'
+            element={<UserPage />}
+          >
+            {USER_ROUTE.map((route, idx) => {
+              return (
+                <Route
+                  key={idx}
+                  index={route.index}
+                  path={route.path}
+                  element={
+                    <LoginInterceptor>
+                      <route.element className={route.className} />
+                    </LoginInterceptor>
+                  }
+                />
+              );
+            })}
+          </Route>
+        }
         <Route
           path='/diary'
           element={<DiaryPage />}
@@ -65,24 +75,20 @@ function App() {
           path='/login'
           element={<LoginPage />}
         ></Route>
-
-         <Route
+        <Route
           path='/auth/callback/'
           element={<MainTest />}
         ></Route>
-
         {/* 회원가입 */}
         <Route
           path='/register'
           element={<Register />}
         />
-
         {/* 비밀번호 재설정 */}
         <Route
           path='/resetting'
           element={<PwdRestting />}
         />
-
         {/* 채팅 */}
         <Route path='/chat'>
           <Route
@@ -94,7 +100,6 @@ function App() {
             element={<ChatRoom />}
           />
         </Route>
-
         <Route
           index
           element={<MainTest />}
@@ -127,7 +132,6 @@ function App() {
           path='/payments'
           element={<Receipt />}
         />
-
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
         <Route
           path='/admin'

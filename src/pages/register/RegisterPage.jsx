@@ -1,6 +1,6 @@
 import './registerPage.scss';
 import { PageContainer } from '../../components';
-import { useRegisterStore } from './RegisterStore';
+import { RegisterInfostore, useRegisterStore } from './RegisterStore';
 import TitleText from './title-text/TitleText.component';
 import Circle from './cricle/Circle';
 import RegisterEmail from './email/Email.component';
@@ -12,41 +12,49 @@ import RegisterComple from './comple/Comple.component';
 import { useEffect } from 'react';
 
 export default function Register() {
-	const { step, reset } = useRegisterStore();
+  const { step, reset } = useRegisterStore();
+  const { RegisterInfoReset } = RegisterInfostore();
 
-	useEffect(()=> {
-     reset();
-	}, [])
+  useEffect(() => {
+    reset();
+    RegisterInfoReset();
+  }, []);
 
+  const registerStep = [
+    {
+      id: 1,
+      page: <RegisterEmail />,
+    },
+    { id: 2, page: <RegisterPassword /> },
+    { id: 3, page: <RegisterNickName /> },
+    { id: 4, page: <RegisterTel /> },
+    { id: 5, page: <RegisterAdress /> },
+    { id: 6, page: <RegisterComple /> },
+  ];
 
-	return (
-		<PageContainer className='register-container'>
-			<div className={`register-wrap register-email`}>
-				<div className={`register-wrap-up`}>
-					<TitleText
-						className={'regitster-main-title'}
-						text={`${step < 6 ? '회원가입' : '환영합니다.'}`}
-					/>
-					{step < 6 ? <Circle /> : ''}
-				</div>
-				<div className={`register-wrap-down`}>
-					{/*이메일 인증*/}
-					{step == 1 && <RegisterEmail />}
-					{/*비밀번호 인증*/}
-					{/* <SignUpPassword />   */}
-					{step == 2 && <RegisterPassword />}
-					{/* 닉네임 */}
-					{/* <SignUpNickName /> */}
-					{step == 3 && <RegisterNickName />}
-					{/* 전화번호 */}
-					{/* <SignUpTel/> */}
-					{step == 4 && <RegisterTel />}
-					{/* 주소 */}
-					{/* <SignUpAdress /> */}
-					{step == 5 && <RegisterAdress />}
-					{step == 6 && <RegisterComple />}
-				</div>
-			</div>
-		</PageContainer>
-	);
+  return (
+    <PageContainer className='register-container'>
+      <div className={`register-wrap register-email`}>
+        <div className={`register-wrap-up`}>
+          <TitleText
+            className={'regitster-main-title'}
+            text={`${step < 6 ? '회원가입' : '환영합니다.'}`}
+          />
+          {step < 6 ? <Circle /> : ''}
+        </div>
+
+        {registerStep.map(
+          (register) =>
+            step === register.id && (
+              <div
+                className='register-wrap-down'
+                key={register.id}
+              >
+                {register.page}
+              </div>
+            )
+        )}
+      </div>
+    </PageContainer>
+  );
 }

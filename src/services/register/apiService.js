@@ -31,7 +31,7 @@ export const nickNameDuplicationCheck = async (nickName) => {
 	const response = await apiAxios.post('/register/nickNameDuplicationCheck', {
 		nickName: nickName,
 	});
-	return response.data;
+	return response;
 };
 
 export const sendRegister = async (email, pwd, nickName, tel, address) => {

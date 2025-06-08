@@ -2,21 +2,24 @@ import SnsButton from './button/Login.Sns.Button.component';
 import kakao from '../resource/kakao-sns-auth-btn.png';
 import naver from '../resource/naver-sns-auth-btn.png';
 import google from '../resource/google-sns-auth-btn.png';
-import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from '../loginUtil';
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL, GOOGLE_AUTH_URL } from '../loginUtil';
 import { LoginSnsStateStore } from '../login-store/loginStore';
 
 export default function SnsButtons() {
-
-	const {setPlaform } = LoginSnsStateStore();
+  const { setPlaform } = LoginSnsStateStore();
 
   const snsLogin = (plaform) => {
     if (plaform == 'kakao') {
-		setPlaform(plaform);
+      setPlaform(plaform);
       window.location.href = KAKAO_AUTH_URL;
     }
     if (plaform == 'naver') {
-		setPlaform(plaform);
+      setPlaform(plaform);
       window.location.href = NAVER_AUTH_URL;
+    }
+    if (plaform == 'google') {
+      setPlaform(plaform);
+      window.location.href = GOOGLE_AUTH_URL;
     }
 
     console.log(plaform);

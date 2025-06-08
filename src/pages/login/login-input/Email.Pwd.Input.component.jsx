@@ -1,33 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ButtonPrimary,
   InputShrink,
   TextLinkButton,
 } from '../../../components';
-import {LoginStateStore} from '../login-store/loginStore';
+import { LoginStateStore } from '../login-store/loginStore';
 import './email.pwd.input.component.scss';
 import { validateEmail } from '../../register/util/validate';
+import { nomalLogin } from '../loginUtil';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginInputBox() {
   const { id, pwd, setId, setPwd } = LoginStateStore();
   const [error, setError] = useState();
-
-  /* 추후 유효성 체크 */
-  const test = () => {
-    const t = id == pwd ? 'ok' : 'fail';
-    console.log(t);
-  };
+  const navigate = useNavigate();
 
   /*이메일 형식 체크 */
-  validateEmail(id);
+  useEffect(() => {
+    validateEmail(id);
+  }, [id]);
 
   const validateEmailCheck = (e) => {
     const value = e.target.value;
     setId(value);
-    if (!validateEmail(value)) {
+
+    if (value.length === 0) {
+      setError('');
+    } else if (!validateEmail(value)) {
       setError('올바른 이메일 형식이 아닙니다.');
     } else {
       setError('');
+    }
+  };
+
+  const sendLogin = async () => {
+    const result = await nomalLogin(id, pwd);
+
+    if (result.status === 200) {
+      navigate('/user');
     }
   };
 
@@ -54,7 +64,7 @@ export default function LoginInputBox() {
 
       <ButtonPrimary
         className={'login-Btn'}
-        onClick={test}
+        onClick={sendLogin}
       >
         이메일로 시작하기
       </ButtonPrimary>

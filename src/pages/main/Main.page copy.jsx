@@ -5,7 +5,12 @@ import { testServer } from '../../services/test/testServerAPI';
 import './Main.style.scss';
 import { useLocation } from 'react-router-dom';
 import { LoginSnsStateStore } from '../login/login-store/loginStore';
-import { KeyTest, kakaoLogin, naverLogin } from '../login/loginUtil';
+import {
+  googleLogin,
+  kakaoLogin,
+  naverLogin,
+} from '../login/loginUtil';
+import { useNavigate } from 'react-router-dom';
 
 const MainTest = () => {
   const state = useAccomSearchStore((state) => state);
@@ -14,6 +19,7 @@ const MainTest = () => {
   const queryParams = new URLSearchParams(location.search);
   const searchTerm = queryParams.get('code');
   const isExecuted = useRef(false);
+  const navigate = useNavigate();
   const { plaform } = LoginSnsStateStore();
 
   useEffect(() => {
@@ -28,16 +34,23 @@ const MainTest = () => {
 
   const sendCode = async () => {
     if (plaform === 'kakao') {
-      const result = await kakaoLogin(searchTerm);
+      const kakaoResult = await kakaoLogin(searchTerm);
+      if (kakaoResult.status === 200) {
+        navigate('/user');
+      }
     }
     if (plaform === 'naver') {
-      const result = await naverLogin(searchTerm);
+      const naverResult = await naverLogin(searchTerm);
+      if (naverResult.status === 200) {
+        navigate('/user');
+      }
     }
-  };
-
-  const TestKey = () => {
-    console.log(plaform);
-    KeyTest();
+    if (plaform === 'google') {
+      const googleResult = await googleLogin(searchTerm);
+      if (googleResult.status === 200) {
+        navigate('/user');
+      }
+    }
   };
 
   const serverConnectionTest = async () => {
@@ -57,7 +70,6 @@ const MainTest = () => {
 
   return (
     <div className='main-page__container'>
-      <button onClick={TestKey}>test</button>
       <MainArea />
     </div>
   );
