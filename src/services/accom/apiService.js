@@ -24,3 +24,20 @@ export const selectAdminAcommDetail = async (accomSq) => {
   console.log(response.data);
   return response.data;
 };
+
+// 수정
+export const updateAdminAccomDetail = async (updatedAccomInfo) => {
+  const response = await apiAxios.put(`/admin/accommodations/${updatedAccomInfo.accomSq}/edit`, updatedAccomInfo);
+  return response.data;
+};
+
+// 삭제
+export const deleteAdminAccomDetail = async (accomSq) => {
+  const response = await apiAxios.delete(`/admin/accommodations/${accomSq}`);
+  return response.data;
+};
+
+// 등록
+export const createAdminAccom = async (formData) => {
+  return apiAxios.post('/admin/accommodations/new', formData);
+};

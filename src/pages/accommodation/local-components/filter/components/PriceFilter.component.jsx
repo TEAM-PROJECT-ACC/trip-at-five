@@ -29,7 +29,7 @@ const PriceFilter = ({ priceRange, setPriceRange }) => {
         />
       </div>
       <p className='price-range'>
-        ₩{priceRange[0].toLocaleString()} ~ ₩{priceRange[1].toLocaleString()}
+        ₩{priceRange[0].toLocaleString()} ~ {priceRange[1] === 500000 ? '₩500,000+' : `₩${priceRange[1].toLocaleString()}`}
       </p>
     </div>
   );

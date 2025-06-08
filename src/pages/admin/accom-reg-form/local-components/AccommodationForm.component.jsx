@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import FormItem from './form/FormItem.component';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-import { selectAdminAcommDetail } from '../../../../services/accom/apiService';
+import { updateAdminAccomDetail, deleteAdminAccomDetail, createAdminAccom } from '../../../../services/accom/apiService';
 import {
   FaSpa,
   FaSwimmer,
@@ -82,9 +82,11 @@ const etcFac = [
 
 const AccommodationForm = ({ accomDetail }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const mapRef = useRef(null);
 
   const [formData, setFormData] = useState({
+    accomSq: '', 
     accomName: '',
     accomPhone: '',
     accomDesc: '',
@@ -158,9 +160,11 @@ const AccommodationForm = ({ accomDetail }) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (accomDetail) {
       setFormData({
         ...formData,
+        accomSq: accomDetail.accomSq || '',
         accomName: accomDetail.accomName || '',
         accomPhone: accomDetail.accomPhone || '',
         accomDesc: accomDetail.accomDesc || '',
@@ -169,6 +173,9 @@ const AccommodationForm = ({ accomDetail }) => {
         accomTypeNo: accomDetail.accomTypeNo || '',
         accomLon: accomDetail.accomLon || '',
         accomLat: accomDetail.accomLat || '',
+        accomPubFacInfo: accomDetail.accomPubFacInfo || '',
+        accomInRoomFacInfo: accomDetail.accomInRoomFacInfo || '',
+        accomEtcFacInfo: accomDetail.accomEtcFacInfo || ''
       });
       setWord(accomDetail.accomDesc || '');
       setWordCount(accomDetail.accomDesc ? accomDetail.accomDesc.length : 0);
@@ -183,29 +190,125 @@ const AccommodationForm = ({ accomDetail }) => {
     }
   }, [accomDetail]);
 
-  const initKakaoMap = () => {
-    if (window.kakao && window.kakao.maps && formData.accomAddr) {
-      const container = mapRef.current;
-      const mapOption = {
-        center: new window.kakao.maps.LatLng(
-          formData.accomLat || 33.450701,
-          formData.accomLon || 126.570667
-        ),
-        level: 5,
-      };
-      const map = new window.kakao.maps.Map(container, mapOption);
+  const handleUpdate = async () => {
+    const updatedData = {
+      accomSq: parseInt(id, 10), 
+      accomName: formData.accomName,
+      accomDesc: formData.accomDesc,
+      accomLat: parseFloat(formData.accomLat),
+      accomLon: parseFloat(formData.accomLon),
+      accomAddr: formData.accomAddr,
+      accomPhone: formData.accomPhone,
+      pubFacInfo: facList.pub.join(','),
+      inRoomFacInfo: facList.room.join(','),
+      etcFacInfo: facList.etc.join(','),
+      accomTypeNo: parseInt(formData.accomTypeNo, 10),
+    };
+    try {
+      await updateAdminAccomDetail(updatedData);
+      alert('수정 완료');
+      navigate('/admin/accommodations');
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error(error);
+      alert('수정 실패');
+    }
+  };
 
-      if (formData.accomLat && formData.accomLon) {
-        const markerPosition = new window.kakao.maps.LatLng(
-          formData.accomLat,
-          formData.accomLon
-        );
+  const handleDelete = async () => {
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+    try {
+      await deleteAdminAccomDetail(id);
+      alert('삭제 완료');
+      navigate('/admin/accommodations');
+      window.scrollTo(0, 0);
+    }catch (error) {
+      alert('삭제 실패');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newData = {
+      accomName: formData.accomName,
+      accomDesc: formData.accomDesc,
+      accomLat: parseFloat(formData.accomLat),
+      accomLon: parseFloat(formData.accomLon),
+      accomAddr: formData.accomAddr,
+      accomPhone: formData.accomPhone,
+      pubFacInfo: facList.pub.join(','),
+      inRoomFacInfo: facList.room.join(','),
+      etcFacInfo: facList.etc.join(','),
+      accomTypeNo: parseInt(formData.accomTypeNo, 10),
+      accomZipCode: formData.accomZipCode
+    };
+    try {
+      await createAdminAccom(newData);
+      alert('등록 완료');
+      navigate('/admin/accommodations');
+      window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
+    } catch (error) {
+      alert('등록 실패');
+      console.error(error);
+    }
+  };
+
+  const initKakaoMap = () => {
+    if (window.kakao && window.kakao.maps) {
+      window.kakao.maps.load(() => {
+        const container = mapRef.current;
+        const centerLat = parseFloat(formData.accomLat) || 33.450701;
+        const centerLon = parseFloat(formData.accomLon) || 126.570667;
+
+        const mapOption = {
+          center: new window.kakao.maps.LatLng(centerLat, centerLon),
+          level: 5,
+        };
+
+        const map = new window.kakao.maps.Map(container, mapOption);
+
         const marker = new window.kakao.maps.Marker({
           map,
-          position: markerPosition,
+          position: new window.kakao.maps.LatLng(centerLat, centerLon),
+          draggable: true, 
         });
-        map.setCenter(marker);
-      }
+
+        // 지도 클릭 시 마커 이동 + 주소, 우편번호 갱신
+        window.kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+          const latlng = mouseEvent.latLng;
+          marker.setPosition(latlng);
+          updateAddressAndCoords(latlng);
+        });
+
+        window.kakao.maps.event.addListener(marker, 'dragend', function () {
+          const latlng = marker.getPosition();
+          updateAddressAndCoords(latlng);
+        });
+
+        function updateAddressAndCoords(latlng) {
+          setFormData((prev) => ({
+            ...prev,
+            accomLat: latlng.getLat(),
+            accomLon: latlng.getLng(),
+          }));
+
+          const geocoder = new window.kakao.maps.services.Geocoder();
+          geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result, status) => {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const roadAddr = result[0].road_address?.address_name || '';
+              const jibunAddr = result[0].address?.address_name || '';
+              const zipCode = result[0].road_address?.zone_no || '';
+
+              setFormData((prev) => ({
+                ...prev,
+                accomAddr: roadAddr || jibunAddr,
+                accomZipCode: zipCode,
+              }));
+            }
+          });
+        }
+      });
     }
   };
 
@@ -219,6 +322,7 @@ const AccommodationForm = ({ accomDetail }) => {
     <form
       className='accom-form'
       encType='multipart/form-data'
+      onSubmit={handleSubmit}
     >
       {/* 숙박업소 정보 등록 */}
       <FormItem title='숙박업소 정보 등록'>
@@ -291,7 +395,7 @@ const AccommodationForm = ({ accomDetail }) => {
           async
           src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
             import.meta.env.VITE_KAKAO_JAVA_API
-          }&autoload=false`}
+          }&autoload=false&libraries=services`}
           onLoad={() => {
             if (window.kakao && window.kakao.maps) {
               window.kakao.maps.load(() => {
@@ -314,11 +418,15 @@ const AccommodationForm = ({ accomDetail }) => {
           <input
             type='hidden'
             name='accomLon'
+            value={formData.accomLon}
+            readOnly 
           />
           {/* 위도 */}
           <input
             type='hidden'
             name='accomLat'
+            value={formData.accomLat}
+            readOnly
           />
 
           <AdminInput
@@ -350,6 +458,7 @@ const AccommodationForm = ({ accomDetail }) => {
               title={value.title}
               icon={value.icon}
               onClick={addFacHandler}
+              active={facList.pub.includes(value.title)}
             />
           ))}
         </div>
@@ -362,6 +471,7 @@ const AccommodationForm = ({ accomDetail }) => {
               title={value.title}
               icon={value.icon}
               onClick={addFacHandler}
+              active={facList.room.includes(value.title)}
             />
           ))}
         </div>
@@ -374,6 +484,7 @@ const AccommodationForm = ({ accomDetail }) => {
               title={value.title}
               icon={value.icon}
               onClick={addFacHandler}
+              active={facList.etc.includes(value.title)}
             />
           ))}
         </div>
@@ -382,14 +493,16 @@ const AccommodationForm = ({ accomDetail }) => {
       {id ? (
         <div className='accom-reg-button-group'>
           <AdminPrimaryButton
-            type={'submit'}
+            type={'button'}
             className={'accom-reg-button'}
+            onClick={handleUpdate}
           >
             수정
           </AdminPrimaryButton>
           <AdminPrimaryButton
-            type={'submit'}
+            type={'button'}
             className={'accom-reg-button'}
+            onClick={handleDelete}
           >
             삭제
           </AdminPrimaryButton>
