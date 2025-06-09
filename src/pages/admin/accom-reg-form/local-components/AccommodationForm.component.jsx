@@ -4,7 +4,11 @@ import FormItem from './form/FormItem.component';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AccomFacButton from '../../../../components/buttons/admin-fac-button/AccomFacButton.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-import { updateAdminAccomDetail, deleteAdminAccomDetail, createAdminAccom } from '../../../../services/accom/apiService';
+import {
+  updateAdminAccomDetail,
+  deleteAdminAccomDetail,
+  createAdminAccom,
+} from '../../../../services/accom/apiService';
 import {
   FaSpa,
   FaSwimmer,
@@ -86,7 +90,7 @@ const AccommodationForm = ({ accomDetail }) => {
   const mapRef = useRef(null);
 
   const [formData, setFormData] = useState({
-    accomSq: '', 
+    accomSq: '',
     accomName: '',
     accomPhone: '',
     accomDesc: '',
@@ -175,7 +179,7 @@ const AccommodationForm = ({ accomDetail }) => {
         accomLat: accomDetail.accomLat || '',
         accomPubFacInfo: accomDetail.accomPubFacInfo || '',
         accomInRoomFacInfo: accomDetail.accomInRoomFacInfo || '',
-        accomEtcFacInfo: accomDetail.accomEtcFacInfo || ''
+        accomEtcFacInfo: accomDetail.accomEtcFacInfo || '',
       });
       setWord(accomDetail.accomDesc || '');
       setWordCount(accomDetail.accomDesc ? accomDetail.accomDesc.length : 0);
@@ -192,7 +196,7 @@ const AccommodationForm = ({ accomDetail }) => {
 
   const handleUpdate = async () => {
     const updatedData = {
-      accomSq: parseInt(id, 10), 
+      accomSq: parseInt(id, 10),
       accomName: formData.accomName,
       accomDesc: formData.accomDesc,
       accomLat: parseFloat(formData.accomLat),
@@ -222,7 +226,7 @@ const AccommodationForm = ({ accomDetail }) => {
       alert('삭제 완료');
       navigate('/admin/accommodations');
       window.scrollTo(0, 0);
-    }catch (error) {
+    } catch (error) {
       alert('삭제 실패');
     }
   };
@@ -240,13 +244,12 @@ const AccommodationForm = ({ accomDetail }) => {
       inRoomFacInfo: facList.room.join(','),
       etcFacInfo: facList.etc.join(','),
       accomTypeNo: parseInt(formData.accomTypeNo, 10),
-      accomZipCode: formData.accomZipCode
+      accomZipCode: formData.accomZipCode,
     };
     try {
       await createAdminAccom(newData);
       alert('등록 완료');
       navigate('/admin/accommodations');
-      window.scrollTo(0, 0);
       window.scrollTo(0, 0);
     } catch (error) {
       alert('등록 실패');
@@ -271,16 +274,21 @@ const AccommodationForm = ({ accomDetail }) => {
         const marker = new window.kakao.maps.Marker({
           map,
           position: new window.kakao.maps.LatLng(centerLat, centerLon),
-          draggable: true, 
+          draggable: true,
         });
 
         // 지도 클릭 시 마커 이동 + 주소, 우편번호 갱신
-        window.kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-          const latlng = mouseEvent.latLng;
-          marker.setPosition(latlng);
-          updateAddressAndCoords(latlng);
-        });
+        window.kakao.maps.event.addListener(
+          map,
+          'click',
+          function (mouseEvent) {
+            const latlng = mouseEvent.latLng;
+            marker.setPosition(latlng);
+            updateAddressAndCoords(latlng);
+          }
+        );
 
+        // 지도 위 드래그로 주소, 우편번호 갱신도 가능
         window.kakao.maps.event.addListener(marker, 'dragend', function () {
           const latlng = marker.getPosition();
           updateAddressAndCoords(latlng);
@@ -294,19 +302,23 @@ const AccommodationForm = ({ accomDetail }) => {
           }));
 
           const geocoder = new window.kakao.maps.services.Geocoder();
-          geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result, status) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-              const roadAddr = result[0].road_address?.address_name || '';
-              const jibunAddr = result[0].address?.address_name || '';
-              const zipCode = result[0].road_address?.zone_no || '';
+          geocoder.coord2Address(
+            latlng.getLng(),
+            latlng.getLat(),
+            (result, status) => {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const roadAddr = result[0].road_address?.address_name || '';
+                const jibunAddr = result[0].address?.address_name || '';
+                const zipCode = result[0].road_address?.zone_no || '';
 
-              setFormData((prev) => ({
-                ...prev,
-                accomAddr: roadAddr || jibunAddr,
-                accomZipCode: zipCode,
-              }));
+                setFormData((prev) => ({
+                  ...prev,
+                  accomAddr: roadAddr || jibunAddr,
+                  accomZipCode: zipCode,
+                }));
+              }
             }
-          });
+          );
         }
       });
     }
@@ -419,7 +431,7 @@ const AccommodationForm = ({ accomDetail }) => {
             type='hidden'
             name='accomLon'
             value={formData.accomLon}
-            readOnly 
+            readOnly
           />
           {/* 위도 */}
           <input

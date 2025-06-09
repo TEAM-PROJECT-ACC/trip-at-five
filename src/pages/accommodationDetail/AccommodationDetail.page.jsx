@@ -310,8 +310,8 @@ const AccommodationDetail = () => {
         className='empty_blank'
         id='ancher-review'
       ></div>
-      {/* 후기 섹션 */}
 
+      {/* 후기 섹션 */}
       <section className='review-section'>
         <div className='review-section__header'>
           <div className='acc-detail-section__title'>이용 후기</div>
@@ -335,7 +335,7 @@ const AccommodationDetail = () => {
             >
               <div className='accom-modal-container'>
                 <div className='accom-modal-title'>
-                  이번 여행은 어떠쎴나요?
+                  이번 여행은 어떠셨습니까?
                   <br />
                   여행에 대한 짫은 후기를 편하게 남겨주세요
                 </div>
