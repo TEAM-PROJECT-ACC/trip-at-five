@@ -15,6 +15,7 @@ import {
   MdShower,
   FaPlug,
 } from '../../../../assets/icons/ys/index';
+import { Button } from '../../../../components';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -113,13 +114,13 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
             </div>
           </div>
           <div className='room-info__btn'>
-            <button
+            <Button
               className={`btn-cart ${isSelected ? 'active' : ''}`}
               onClick={() => handleCartClick(room)}
             >
               <GrCart />
-            </button>
-            <button className='btn-reserve'>객실 예약</button>
+            </Button>
+            <Button className='btn-reserve'>객실 예약</Button>
           </div>
         </div>
       ))}
