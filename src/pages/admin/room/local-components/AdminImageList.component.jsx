@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
 
-const AdminImageList = ({ data, handleDeleteImage }) => {
+const AdminImageList = ({ data, handleDeleteImageModal }) => {
   const { images, setImages } = useDeleteImageInfoStore((state) => state);
   const [selectedAll, setSelectedAll] = useState(false);
 
@@ -28,7 +28,7 @@ const AdminImageList = ({ data, handleDeleteImage }) => {
   };
 
   const handleDelete = () => {
-    handleDeleteImage(images);
+    handleDeleteImageModal(images);
   };
 
   return (
