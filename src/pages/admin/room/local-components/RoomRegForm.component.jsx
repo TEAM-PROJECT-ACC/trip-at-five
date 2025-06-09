@@ -12,7 +12,6 @@ import {
   insertRoomAPI,
   updateRoomAPI,
 } from '../../../../services/room/roomService.api';
-import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 import { diffHoursFunc } from './utils/checkInOut.util';
 import {
   DELETE_ROOM,
@@ -24,6 +23,7 @@ import {
 import { FaTrashAlt } from '../../../../assets/icons/index';
 import { useModal } from '../../../../hooks';
 import { Modal } from '../../../../components';
+import AdminImageList from './AdminImageList.component';
 
 /**
  *
@@ -147,6 +147,14 @@ const RoomRegForm = ({ accomId, roomId }) => {
     retryDelay: 500, // 0.5초 간격으로 재시도
   });
 
+  // 객실 이미지 삭제
+  const { imageMutate } = useMutation({
+    mutationKey: ['deleteImageList'],
+    mutationFn: async ({ deleteImageList }) => {
+      console.log(deleteImageList);
+    },
+  });
+
   // 객실 명 글자 수 유효성 검사 핸들러
   const handleWordCount = (e) => {
     let value = e.target.value;
@@ -193,6 +201,12 @@ const RoomRegForm = ({ accomId, roomId }) => {
   const handleRoomImage = (e) => {
     const files = Array.from(e.target.files);
     setImageFileData(files);
+  };
+
+  const handleDeleteImage = (imageList) => {
+    // console.log(imageList);
+
+    imageMutate({ deleteImageList: imageList });
   };
 
   // Modal
@@ -403,25 +417,10 @@ const RoomRegForm = ({ accomId, roomId }) => {
               </div>
             </div>
 
-            <div className='room-image-list__container'>
-              {data?.imageList && data?.imageList.length > 0 ? (
-                data?.imageList.map((value, idx) => {
-                  return (
-                    <div
-                      key={idx}
-                      className='room-preview-img'
-                    >
-                      <img
-                        src={`${VITE_SERVER_BASE_URL}${value}`}
-                        alt={`객실 이미지 ${idx + 1}`}
-                      />
-                    </div>
-                  );
-                })
-              ) : (
-                <p>등록된 객실 이미지가 없습니다.</p>
-              )}
-            </div>
+            <AdminImageList
+              data={data}
+              handleDeleteImage={handleDeleteImage}
+            />
             <ToastContainer />
           </div>
         </>
