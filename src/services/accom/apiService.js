@@ -11,7 +11,17 @@ export const searchAccommodationByKeyword = async (params) => {
 export const accommodationDetailByAccomSq = async (accomSq) => {
   const response = await apiAxios.get(`/accommodations/${accomSq}`);
   console.log(response);
-  return response.data;
+
+  const data = response.data;
+
+  if (data && data.roomList) {
+    data.roomList = data.roomList.map((room) => ({
+      ...room,
+      accomNo: room.accomNo ?? data.accomSq,
+    }));
+  }
+
+  return data;
 };
 
 // 관리자 숙박 목록

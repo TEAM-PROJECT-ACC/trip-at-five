@@ -88,7 +88,7 @@ const AccommodationForm = ({ accomDetail }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const mapRef = useRef(null);
-
+  // 초기화
   const [formData, setFormData] = useState({
     accomSq: '',
     accomName: '',

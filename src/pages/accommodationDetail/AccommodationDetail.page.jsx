@@ -202,6 +202,12 @@ const AccommodationDetail = () => {
     const fetchAccomDetail = async () => {
       try {
         const data = await accommodationDetailByAccomSq(id);
+        if (data && data.roomList) {
+          data.roomList = data.roomList.map((room) => ({
+            ...room,
+            accomNo: data.accomNo,
+          }));
+        }
         setAccom(data);
         console.log('객실 리스트:', data.roomList);
         if (data && data.images && data.images.length > 0) {
