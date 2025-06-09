@@ -12,15 +12,19 @@ export default function RegisterTel() {
   const { setAddStep } = useRegisterStore();
   const { tel, setTel } = RegisterInfostore();
   const [error, setError] = useState();
+  const [telText, setTelText] = useState();
 
   const telSkip = () => {
     setAddStep();
   };
 
   const telOk = () => {
-	if (tel.length == 11) {
-		setAddStep();
-	}
+    if (tel.length === 11) {
+      setAddStep();
+    } else{
+      setTelText('연락처를 입력해주세요');
+      setError('');
+    }
   };
 
   const validatePhoneNumberCheck = (e) => {
@@ -31,8 +35,10 @@ export default function RegisterTel() {
       setError('');
     } else if (value.includes('-')) {
       setError(" '-'를 제외하고 입력해주세요 ");
+      setTelText('')
     } else if (!validatePhoneNumber(value)) {
       setError('올바른 전화번호 형식이 아닙니다.');
+      setTelText('')
     } else {
       setError('');
     }
@@ -47,7 +53,8 @@ export default function RegisterTel() {
           placeholder={'연락처를 입력해주세요'}
           onChange={validatePhoneNumberCheck}
         />
-        {error && <p className='validatePhone-step4-text'>{error}</p>}
+        {error && <p className='validatePhone-step4-error'>{error}</p>}
+        {telText && <p className='validatePhone-step4-telText'>{telText}</p>}
       </div>
 
       <div className='register-tel-btn'>

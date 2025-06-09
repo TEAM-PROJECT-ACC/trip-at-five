@@ -5,50 +5,57 @@ import {
   InputPrimary,
 } from '../../../components';
 import { MdOutlineRefresh } from '../../../assets/icons/kkh/index';
-
 import { nickNameMaker } from './NickName-sample/NickName.sample';
 import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
 import { nickNameDuplicationCheck } from '../../../services/register/apiService';
 
 export default function RegisterNickName() {
   const { setAddStep } = useRegisterStore();
-  const { nickName, setnickName, nickCheck, setnickNameCheck } =
+  const { nickName, setNickName, nickNameCheck, setNickNameCheckTrue, setNickNameCheckFalse } =
     RegisterInfostore();
 
   let text = '';
-  const result = document.querySelector('.nickName-duplicate-check');
 
   const resetNickName = async () => {
     let nick = nickNameMaker();
-    setnickName(nick);
+    setNickName(nick);
 
-    const respone = await nickNameDuplicationCheck(nickName);
-    console.log(respone);
-    if (respone == 1) {
+    const response = await nickNameDuplicationCheck(nick);
+
+    console.log(response);
+
+    if (response == 1) {
       return resetNickName();
     }
-    if (respone.data == 0) {
+
+    if (response.data == 0) {
       text = '사용 가능한 닉네임입니다.';
-      setnickNameCheck(true);
+      setNickNameCheckTrue();
     }
-    result.innerText = text;
+
+    const result = document.querySelector('.nickName-duplicate-check');
+    if (result) {
+      result.innerText = text;
+    }
   };
 
   const nickNameDuplicateCheck = async () => {
     const respone = await nickNameDuplicationCheck(nickName);
-
     if (respone.data == 0) {
       text = '사용 가능한 닉네임입니다.';
-      setnickNameCheck(true);
+      setNickNameCheckTrue();
     } else {
       text = '이미 사용중인 닉네임입니다.';
-      setnickNameCheck(false);
+      setNickNameCheckFalse(false);
     }
-    result.innerText = text;
+    const result = document.querySelector('.nickName-duplicate-check');
+    if (result) {
+      result.innerText = text;
+    }
   };
 
   const nickNameOk = () => {
-    nickCheck && true && setAddStep();
+    nickNameCheck && true && setAddStep();
   };
 
   return (
@@ -59,7 +66,7 @@ export default function RegisterNickName() {
           className={'register-nickName-input'}
           placeholder={'닉네임 입력해주세요'}
           onChange={(e) => {
-            setnickName(e.target.value);
+            setNickName(e.target.value);
           }}
           value={nickName === null ? '' : nickName}
         />
@@ -69,7 +76,7 @@ export default function RegisterNickName() {
         />
         <p
           className={`nickName-duplicate-check ${
-            nickCheck == true
+            nickNameCheck == true
               ? 'nickName-duplicate-check-ok'
               : 'nickName-duplicate-check-fail'
           }`}
