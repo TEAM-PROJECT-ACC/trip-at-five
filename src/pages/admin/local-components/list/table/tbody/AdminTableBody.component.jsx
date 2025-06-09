@@ -4,20 +4,18 @@ const AdminTableBody = ({ dataList, onClickRow }) => {
   const id = useParams();
   return (
     <tbody className='admin-table-body'>
-      {dataList?.map((value, idx) => (
+      {dataList?.map((item, idx) => (
         <tr
           key={idx}
           className='t-body-item'
-          onClick={() => onClickRow(value.roomSq, id?.id)}
+          onClick={() => onClickRow(item.accomSq)}
         >
-          {Object.keys(dataList[idx]).map((v, i) => (
-            <td
-              key={i}
-              className='t-body-item-col'
-            >
-              {value[v]}
-            </td>
-          ))}
+          <td className='t-body-item-col'>{item.accomSq}</td>
+          <td className='t-body-item-col'>{item.accomTypeName}</td>
+          <td className='t-body-item-col'>{item.accomName}</td>
+          <td className='t-body-item-col'>{item.accomAddr}</td>
+          <td className='t-body-item-col'>{item.accomPhone}</td>
+          <td className='t-body-item-col'>{item.roomPrice}</td>
         </tr>
       ))}
     </tbody>

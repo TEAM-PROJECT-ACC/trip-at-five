@@ -7,7 +7,7 @@ import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 
-export const KakaoMap = ({ onClose }) => {
+export const KakaoMap = ({ onClose, accommodations }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
 

@@ -2,7 +2,7 @@ import { KakaoMap } from './KakaoMap.component';
 import { useState, useEffect } from 'react';
 import './mapButton.style.scss';
 
-const MapButton = () => {
+const MapButton = ({ accommodations }) => {
   const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,12 @@ const MapButton = () => {
         지도보기
       </button>
       <div style={{ display: showMap ? 'block' : 'none' }}>
-        {showMap && <KakaoMap onClose={() => setShowMap(false)} />}
+        {showMap && (
+          <KakaoMap
+            onClose={() => setShowMap(false)}
+            accommodations={accommodations}
+          />
+        )}
       </div>
     </div>
   );
