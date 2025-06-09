@@ -303,7 +303,7 @@ const AccommodationDetail = () => {
       {/* 객실 목록 */}
 
       <RoomList
-        rooms={accom.roomList || []}
+        rooms={accom.roomList}
         selectedFacilities={[
           ...(accom.inRoomFacInfo
             ? accom.inRoomFacInfo.split(',').map((f) => f.trim())

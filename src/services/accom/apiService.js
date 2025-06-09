@@ -10,14 +10,14 @@ export const searchAccommodationByKeyword = async (params) => {
 // 클라이언트 숙박 상세
 export const accommodationDetailByAccomSq = async (accomSq) => {
   const response = await apiAxios.get(`/accommodations/${accomSq}`);
-  console.log(response);
-
   const data = response.data;
+  console.log(response);
+  data.accomNo = data.accomNo ?? data.accomSq;
 
   if (data && data.roomList) {
     data.roomList = data.roomList.map((room) => ({
       ...room,
-      accomNo: room.accomNo ?? data.accomSq,
+      accomNo: room.accomNo, 
     }));
   }
 
