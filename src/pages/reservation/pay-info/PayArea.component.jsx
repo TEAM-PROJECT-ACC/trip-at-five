@@ -10,22 +10,28 @@ import { VITE_BOOTPAY_KEY } from '../../../../env.config';
 
 const PayArea = ({ className, roomInfo }) => {
   const { setResCode } = usePaymentInfoStore((state) => state.actions);
-  const state = usePaymentInfoStore((state) => state);
+  const paymentState = usePaymentInfoStore((state) => state);
 
   const { mutate } = useMutation({
     mutationKey: ['resCode'],
     mutationFn: async ({ resInfo }) => {
-      console.log(resInfo.state);
-      await createResCodeAPI(resInfo.state)
+      console.log(resInfo.paymentState);
+      await createResCodeAPI(resInfo.paymentState)
         .then((res) => {
           setResCode(res.data);
+          // return res; // return을 해줘야지 다음 then 구문에서 사용가능
         })
-        .then(async () => {
+        .then(async (res) => {
+          let totalPay = 0;
+          // console.log(res.data); // 예약코드
           try {
-            // 추후 수정 예정
+            console.log(paymentState);
+
+            // paymentState.roomInfo.map((value, idx) => totalPay += value.room[idx].)
+
             const response = await Bootpay.requestPayment({
               application_id: VITE_BOOTPAY_KEY,
-              price: 1000,
+              price: paymentState,
               order_name: '테스트결제',
               order_id: 'TEST_ORDER_ID',
               pg: '다날',
@@ -65,7 +71,7 @@ const PayArea = ({ className, roomInfo }) => {
     // 예약코드 생성 API
 
     // console.log(state);
-    mutate({ resInfo: { state } });
+    mutate({ resInfo: { paymentState } });
 
     /*
 const resCode = 'testSeongJun';
