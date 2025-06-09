@@ -51,7 +51,9 @@ function App() {
           <Route
             path='/user'
             element={
+              <LoginInterceptor>
                 <UserPage />
+              </LoginInterceptor>
             }
           >
             {USER_ROUTE.map((route, idx) => {
