@@ -1,17 +1,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const RegisterStepInitialState = {
+const initialState = {
 	step: 1,
 	isTrue: false,
 	emailDuplication: false,
-	type: false,
+	isType: false,
+	email: null,
+	emailCode: null,
+	pwd: null,
+	pwdCheck: null,
+	nickName: null,
+	nickNameCheck: false,
+	tel: '',
+	address: '',
 };
 
 export const useRegisterStore = create(
 	persist(
 		(set) => ({
-			...RegisterStepInitialState,
+			...initialState,
 			setAddStep: () => set((state) => ({ step: state.step + 1 })),
 			setMinusStep: () => set({ step: step - 1 }),
 
@@ -24,7 +32,7 @@ export const useRegisterStore = create(
 			setTypeTrue: () => set({ type: true }),
 			setTypeFalse: () => set({ type: false }),
 
-			reset: () => set(() => ({ ...RegisterStepInitialState })),
+			resetRegisterStore: () => set(() => ({ ...initialState })),
 		}),
 		{
 			name: 'register-step',
@@ -32,20 +40,10 @@ export const useRegisterStore = create(
 	)
 );
 
-const RegisterInfoInitialState = {
-	email: null,
-	emailCode: null,
-	pwd: null,
-	pwdCheck: null,
-	nickName: null,
-	nickNameCheck: false,
-	tel: '',
-	address: '',
-};
-export const RegisterInfostore = create(
+export const useRegisterInfostore = create(
 	persist(
 		(set) => ({
-			...RegisterInfoInitialState,
+			...initialState,
 			setEmail: (text) => set({ email: text }),
 			setEmailCode: (text) => set({ emailCode: text }),
 			setPwd: (text) => set({ pwd: text }),
@@ -55,7 +53,7 @@ export const RegisterInfostore = create(
 			setNickNameCheckFalse: () => set({ nickNameCheck: false }),
 			setTel: (text) => set({ tel: text }),
 			setAddress: (text) => set({ address: text }),
-			RegisterInfoReset: () => set(() => ({ ...RegisterInfoInitialState })),
+			resetRegisterInfoStore: () => set(() => ({ ...initialState })),
 		}),
 		{
 			name: 'register-Info',

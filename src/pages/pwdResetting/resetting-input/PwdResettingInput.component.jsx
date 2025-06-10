@@ -1,5 +1,5 @@
 import { InputPrimary } from '../../../components';
-import { ResttingTitle } from '../resetting-title/ResettingTitleComponent';
+import { ResttingTitle } from '../resetting-title/PwdResettingTitle.component';
 
 export function ResettingInput({
 	TclassName,

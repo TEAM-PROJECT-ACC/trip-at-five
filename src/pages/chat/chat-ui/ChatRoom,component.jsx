@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FaArrowAltCircleLeft } from '../../../assets/icons/kkh/index';
+import './chatRoom.style.scss';
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import '@chatscope/chat-ui-kit-react/dist/chat-ui-kit-react.min.js';
-import './chatRoomStyle.scss';
 
 import {
 	MainContainer,

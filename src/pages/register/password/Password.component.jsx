@@ -1,10 +1,13 @@
 import { ButtonPrimary, InputPrimary } from '../../../components';
-import { useRegisterStore, RegisterInfostore } from '../../../states/register/RegisterStore';
-import './passwordStyle.scss';
+import {
+	useRegisterStore,
+	useRegisterInfostore,
+} from '../../../states/register/registerStore';
+import './password.style.scss';
 
 export default function RegisterPassword() {
 	const { setAddStep } = useRegisterStore();
-	const { pwd, setPwd, pwdCheck, setPwdCheck } = RegisterInfostore();
+	const { pwd, setPwd, pwdCheck, setPwdCheck } = useRegisterInfostore();
 
 	const passwordCheckOK = () => {
 		if (pwd && pwdCheck && pwd.length >= 8 && pwdCheck.length >= 8) {

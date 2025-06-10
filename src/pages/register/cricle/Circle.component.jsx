@@ -1,5 +1,5 @@
-import { useRegisterStore } from '../../../states/register/RegisterStore';
-import './circleStyle.scss';
+import { useRegisterStore } from '../../../states/register/registerStore';
+import './circle.style.scss';
 
 export default function Circle() {
 	const { step } = useRegisterStore();

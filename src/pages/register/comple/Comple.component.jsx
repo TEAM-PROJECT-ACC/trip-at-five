@@ -1,13 +1,13 @@
-import './compleStyle.scss';
+import './comple.style.scss';
 import { Link } from 'react-router-dom';
 import { ButtonPrimary } from '../../../components';
 import {
-	RegisterInfostore,
+	useRegisterInfostore,
 	useRegisterStore,
-} from '../../../states/register/RegisterStore';
+} from '../../../states/register/registerStore';
 
 export default function RegisterComple() {
-	const { nickName } = RegisterInfostore();
+	const { nickName } = useRegisterInfostore();
 	const { step, reset } = useRegisterStore();
 	const clearLocalStorage = () => {
 		console.log(step);

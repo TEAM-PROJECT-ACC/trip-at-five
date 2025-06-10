@@ -1,13 +1,13 @@
-import './addressStyle.scss';
+import './address.style.scss';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
 } from '../../../components';
 import {
-	RegisterInfostore,
+	useRegisterInfostore,
 	useRegisterStore,
-} from '../../../states/register/RegisterStore';
+} from '../../../states/register/registerStore';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useState } from 'react';
 import { sendRegister } from '../../../services/register/apiService';
@@ -17,8 +17,8 @@ let scriptUrl =
 
 export default function RegisterAdress() {
 	const { setAddStep } = useRegisterStore();
-	const { setAddress } = RegisterInfostore();
-	const { email, pwd, nickName, tel, address } = RegisterInfostore();
+	const { email, pwd, nickName, tel, address, setAddress } =
+		useRegisterInfostore();
 	const [postNum, setPostNum] = useState('');
 	const [basicAddress, setBasicAddress] = useState('');
 	const [otherAddress, setOtherAddress] = useState('');

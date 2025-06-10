@@ -6,14 +6,14 @@ import {
 	PageContainer,
 	Select,
 } from '../../components';
-import { ChatTitle } from './chat-title/ChatTitleComponent';
-import './chatMainPageStyle.scss';
+import { ChatTitle } from './chat-title/ChatTitle.component';
+import './chatMain.style.scss';
 import ChatStateStore from './chatStore';
 
 export function Chat() {
 	const { setMessage } = ChatStateStore();
 	return (
-		<PageContainer className={'chat-container'}>G
+		<PageContainer className={'chat-container'}>
 			<div className='chat-main-wrap'>
 				<ChatTitle
 					className={'chat-main-title'}

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import './emailPwdInputStyle.scss';
+import './emailPwdInput.style.scss';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../register/util/validate';
 import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
-import { nomalLogin } from '../../../services/login/loginApi';
+import { nomalLogin } from '../../../services/login/loginService';
 import {
 	loginStateStore,
 	loginAccountStore,

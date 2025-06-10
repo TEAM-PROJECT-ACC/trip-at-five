@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import './resettingEmailAuthStyle.scss';
+import './PwdResettingEmailAuth.style.scss';
 import { ButtonPrimary } from '../../../components';
-import { useIsResetting } from '../../../states/pwdRestting/resetting.state';
-import { ResettingInput } from '../resetting-input/ResettingInputComponent';
-import { ResttingTitle } from '../resetting-title/ResettingTitleComponent';
+import { useIsResetting } from '../../../states/pwdRestting/pwdResettingStore';
+import { ResettingInput } from '../resetting-input/PwdResettingInput.component';
+import { ResttingTitle } from '../resetting-title/PwdResettingTitle.component';
 import { validateEmail } from '../../register/util/validate';
 
 export function EmailAuth() {

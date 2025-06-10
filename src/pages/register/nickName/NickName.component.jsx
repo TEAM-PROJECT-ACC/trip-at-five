@@ -1,12 +1,15 @@
-import './nickNameStyle.scss';
+import './nickName.style.scss';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
 } from '../../../components';
 import { MdOutlineRefresh } from '../../../assets/icons/kkh/index';
-import { nickNameMaker } from './NickName-sample/NickNameSampleComponent';
-import { RegisterInfostore, useRegisterStore } from '../../../states/register/RegisterStore';
+import { nickNameMaker } from './NickName-sample/NickNameSample.component';
+import {
+	useRegisterInfostore,
+	useRegisterStore,
+} from '../../../states/register/registerStore';
 import { nickNameDuplicationCheck } from '../../../services/register/apiService';
 
 export default function RegisterNickName() {
@@ -17,7 +20,7 @@ export default function RegisterNickName() {
 		nickNameCheck,
 		setNickNameCheckTrue,
 		setNickNameCheckFalse,
-	} = RegisterInfostore();
+	} = useRegisterInfostore();
 
 	let text = '';
 

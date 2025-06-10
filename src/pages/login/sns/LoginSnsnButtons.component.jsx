@@ -1,4 +1,4 @@
-import SnsButton from './button/LoginSnsButtonComponent';
+import SnsButton from './button/LoginSnsButton.component';
 import kakao from '../resource/kakao-sns-auth-btn.png';
 import naver from '../resource/naver-sns-auth-btn.png';
 import google from '../resource/google-sns-auth-btn.png';
@@ -9,7 +9,7 @@ import {
 	kakaoLogin,
 	naverLogin,
 	googleLogin,
-} from '../../../services/login/loginApi';
+} from '../../../services/login/loginService';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import {

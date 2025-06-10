@@ -1,17 +1,17 @@
-import './loginPageStyle.scss';
+import './login.style.scss';
 import { useEffect } from 'react';
 import { PageContainer } from '../../components';
-import LoginInputBox from './login-input/EmailPwdInputComponent';
-import SnsButtons from './sns/LoginSnsnButtonsComponent';
+import LoginInputBox from './login-input/EmailPwdInput.component';
+import SnsButtons from './sns/LoginSnsnButtons.component';
 import { loginStateStore } from '../../states/login/loginStore';
-import { useRegisterStore } from '../../states/register/RegisterStore';
-import { logout } from '../../services/login/loginApi';
+import { useRegisterStore } from '../../states/register/registerStore';
+import { logout } from '../../services/login/loginService';
 
 export default function Login() {
-	const { reset } = useRegisterStore();
+	const { resetRegisterStore } = useRegisterStore();
 	const { loginInfo, loginedStateStorereset } = loginStateStore();
 	useEffect(() => {
-		reset();
+		resetRegisterStore();
 		if (loginInfo) {
 			loginedStateStorereset();
 		}

@@ -1,16 +1,19 @@
-import './tel.component.scss';
+import './tel.style.scss';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
 } from '../../../components';
-import { RegisterInfostore, useRegisterStore } from '../../../states/register/RegisterStore';
+import {
+	useRegisterInfostore,
+	useRegisterStore,
+} from '../../../states/register/registerStore';
 import { useState } from 'react';
 import { validatePhoneNumber } from '../util/validate';
 
 export default function RegisterTel() {
 	const { setAddStep } = useRegisterStore();
-	const { tel, setTel } = RegisterInfostore();
+	const { tel, setTel } = useRegisterInfostore();
 	const [error, setError] = useState();
 	const [telText, setTelText] = useState();
 

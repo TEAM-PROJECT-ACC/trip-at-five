@@ -1,6 +1,9 @@
-import './emailStyle.scss';
+import './email.style.scss';
 import { ButtonPrimary, InputPrimary } from '../../../components';
-import { useRegisterStore, RegisterInfostore } from '../../../states/register/RegisterStore';
+import {
+	useRegisterStore,
+	useRegisterInfostore,
+} from '../../../states/register/registerStore';
 import { validateEmail } from '../util/validate';
 import { useState } from 'react';
 import {
@@ -12,7 +15,7 @@ import {
 export default function RegisterEmail() {
 	const { setAddStep } = useRegisterStore();
 	const { isTrue, setIsTrue, setIsFalse } = useRegisterStore();
-	const { email, emailCode, setEmail, setEmailCode } = RegisterInfostore();
+	const { email, emailCode, setEmail, setEmailCode } = useRegisterInfostore();
 	const [error, setError] = useState();
 	const [text, setText] = useState();
 
