@@ -4,15 +4,19 @@ import {
 	InputShrink,
 	TextLinkButton,
 } from '../../../components';
-import { LoginStateStore } from '../login-store/loginStore';
 import './email.pwd.input.component.scss';
 import { validateEmail } from '../../register/util/validate';
-import { nomalLogin } from '../loginUtil';
 import { useNavigate } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
+import { nomalLogin } from '../../../services/login/loginApi';
+import {
+	loginStateStore,
+	loginAccountStore,
+} from '../../../states/login/loginStore';
 
 export default function LoginInputBox() {
-	const { id, pwd, setId, setPwd } = LoginStateStore();
+	const { id, pwd, setId, setPwd } = loginAccountStore();
+	const { loginInfo, setLoginInfo } = loginStateStore();
 	const [error, setError] = useState();
 	const navigate = useNavigate();
 
@@ -38,14 +42,18 @@ export default function LoginInputBox() {
 		if (id?.length != 0 && pwd?.length != 0) {
 			const result = await nomalLogin(id, pwd);
 
-			if (result.data === 'IdFail') {
-        errorAlert('Id를 다시 확인해주세요')
-			} else if (result.data === 'pwdFail') {
-        errorAlert('pwd를 다시 확인해주세요')
-			} else {
-        successAlert('login 성공');
-				sessionStorage.setItem('Logined', result.data);
-				navigate('/user');
+			if (result.status === 200) {
+				if (result.data.IdFail === 'IdFail') {
+					errorAlert('Id를 다시 확인해주세요');
+				} else if (result.data.pwdFail === 'pwdFail') {
+					errorAlert('pwd를 다시 확인해주세요');
+				} else {
+					successAlert('login 성공');
+					sessionStorage.setItem('Logined', true);
+					setLoginInfo(result.data);
+					console.log(loginInfo);
+					navigate('/user');
+				}
 			}
 		}
 	};

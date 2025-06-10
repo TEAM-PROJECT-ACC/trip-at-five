@@ -3,7 +3,7 @@ import { PageContainer } from '../../components';
 import { ResttingTitle } from './resetting-title/Resetting.title.conponent';
 import { EmailAuth } from './resetting-Email-auth/Resetting.email.auth.conponent';
 import { PasswordResetting } from './password-resetting/Password-resetting.conponent';
-import { useIsResetting } from './state/resetting.state';
+import { useIsResetting } from '../../states/pwdRestting/resetting.state';
 
 export default function PwdRestting() {
 	const { isTrue, setIsFalse } = useIsResetting();
@@ -12,6 +12,7 @@ export default function PwdRestting() {
 		setIsFalse();
 		console.log(isTrue);
 	};
+
 	return (
 		<PageContainer className={'resetting-container'}>
 			<div className='pwd-resetting-wrap'>

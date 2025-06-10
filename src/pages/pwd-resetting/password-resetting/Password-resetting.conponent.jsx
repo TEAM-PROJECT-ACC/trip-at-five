@@ -3,7 +3,7 @@ import './password-resetting.conponent.scss';
 import { ResettingInput } from '../resetting-input/resetting.input.conponent';
 import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
 import { ButtonPrimary } from '../../../components';
-import { useIsResetting } from '../state/resetting.state';
+import { useIsResetting } from '../../../states/pwdRestting/resetting.state';
 import { Link } from 'react-router-dom';
 
 export function PasswordResetting({ className }) {

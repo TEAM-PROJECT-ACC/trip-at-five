@@ -9,8 +9,7 @@ import {
 	kakaoLogin,
 	naverLogin,
 	googleLogin,
-} from '../loginUtil';
-import { LoginSnsStateStore } from '../login-store/loginStore';
+} from '../../../services/login/loginApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import {
@@ -18,74 +17,77 @@ import {
 	errorAlert,
 	infoAlert,
 } from '../../../utils/toastUtils/toastUtils';
+import {
+	loginSnsStateStore,
+	loginStateStore,
+} from '../../../states/login/loginStore';
 
 export default function SnsButtons() {
-	const { setPlaform } = LoginSnsStateStore();
+	const { plaform, setPlaform } = loginSnsStateStore();
 
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const searchTerm = queryParams.get('code');
 	const isExecuted = useRef(false);
 	const navigate = useNavigate();
-	const { plaform } = LoginSnsStateStore();
+	const { loginInfo, setLoginInfo } = loginStateStore();
 
 	useEffect(() => {
 		if (searchTerm != null && !isExecuted.current) {
-			console.log(searchTerm);
-
 			sendCode();
 
 			isExecuted.current = true;
 		}
 	}, [searchTerm]);
 
-	const snsLogin = (plaform) => {
-		if (plaform == 'kakao') {
-			setPlaform(plaform);
+	const snsLogin = (snsplaform) => {
+		if (snsplaform == 'kakao') {
+			setPlaform(snsplaform);
 			window.location.href = KAKAO_AUTH_URL;
 		}
-		if (plaform == 'naver') {
-			setPlaform(plaform);
+		if (snsplaform == 'naver') {
+			setPlaform(snsplaform);
 			window.location.href = NAVER_AUTH_URL;
 		}
-		if (plaform == 'google') {
-			setPlaform(plaform);
+		if (snsplaform == 'google') {
+			setPlaform(snsplaform);
 			window.location.href = GOOGLE_AUTH_URL;
 		}
-
-		console.log(plaform);
 	};
 
 	const sendCode = async () => {
 		if (plaform === 'kakao') {
 			const kakaoResult = await kakaoLogin(searchTerm);
-
-			if (kakaoResult.data >= 0 && kakaoResult.status == 200) {
+			if (kakaoResult.data.memSq >= 0 && kakaoResult.status == 200) {
 				successAlert('login 성공');
-				sessionStorage.setItem('Logined', kakaoResult.data);
+				sessionStorage.setItem('Logined', true);
+				setLoginInfo(kakaoResult.data);
 				navigate('/user');
 			} else {
-				infoAlert(kakaoResult.data + '로 로그인해주시기 바랍니다.');
+				infoAlert(kakaoResult.data.ckSocPlt + '로 로그인해주시기 바랍니다.');
 			}
 		}
+
 		if (plaform === 'naver') {
 			const naverResult = await naverLogin(searchTerm);
-			if (naverResult.data >= 0 && naverResult.status == 200) {
+			if (naverResult.data.memSq >= 0 && naverResult.status == 200) {
 				successAlert('login 성공');
-				sessionStorage.setItem('Logined', naverResult.data);
+				sessionStorage.setItem('Logined', true);
+				setLoginInfo(naverResult.data);
 				navigate('/user');
 			} else {
-				infoAlert(naverResult.data + '로 로그인해주시기 바랍니다.');
+				infoAlert(naverResult.data.ckSocPlt + '로 로그인해주시기 바랍니다.');
 			}
 		}
 		if (plaform === 'google') {
 			const googleResult = await googleLogin(searchTerm);
-			if (googleResult.data >= 0 && googleResult.status == 200) {
+			if (googleResult.data.memSq >= 0 && googleResult.status == 200) {
 				successAlert('login 성공');
-				sessionStorage.setItem('Logined', googleResult.data);
+				sessionStorage.setItem('Logined', true);
+				setLoginInfo(googleResult.data);
 				navigate('/user');
 			} else {
-				infoAlert(googleResult.data + '로 로그인해주시기 바랍니다.');
+				infoAlert(googleResult.data.ckSocPlt + '로 로그인해주시기 바랍니다.');
 			}
 		}
 	};

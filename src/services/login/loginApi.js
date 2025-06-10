@@ -10,7 +10,7 @@ import {
 	VITE_GOOGLE_CLIENT_SECRET,
 	VITE_GOOGLE_REDIRECT_URI,
 } from '../../../env.config';
-import baseServrAxios from '../../services/Interceptor/Interceptor';
+import baseServrAxios from '../Interceptor/Interceptor';
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${VITE_KAKAO_REST_KEY}&redirect_uri=${VITE_KAKAO_REDIRECT_URI}&response_type=code`;
 export const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?client_id=${VITE_NAVER_CLIENT_ID}&redirect_uri=${VITE_NAVER_REDIRECT_URI}&response_type=code`;
@@ -125,8 +125,6 @@ export const nomalLogin = async (id, pwd) => {
 		email: id,
 		pwd: pwd,
 	});
-	console.log(respone);
-
 	return respone;
 };
 
@@ -134,6 +132,7 @@ export const logout = async () => {
 	const respone = await baseServrAxios.get('/login/logout');
 	if (respone.data === 'ok') {
 		sessionStorage.removeItem('Logined');
+		localStorage.removeItem('userInfo');
 	}
 	return respone;
 };

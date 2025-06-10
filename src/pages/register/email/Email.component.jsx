@@ -1,6 +1,6 @@
 import './email.component.scss';
 import { ButtonPrimary, InputPrimary } from '../../../components';
-import { useRegisterStore, RegisterInfostore } from '../RegisterStore';
+import { useRegisterStore, RegisterInfostore } from '../../../states/register/RegisterStore';
 import { validateEmail } from '../util/validate';
 import { useState } from 'react';
 import {

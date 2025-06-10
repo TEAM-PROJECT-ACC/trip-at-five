@@ -1,7 +1,7 @@
 import './comple.component.scss';
 import { Link } from 'react-router-dom';
 import { ButtonPrimary } from '../../../components';
-import { RegisterInfostore, useRegisterStore } from '../RegisterStore';
+import { RegisterInfostore, useRegisterStore } from '../../../states/register/RegisterStore';
 
 export default function RegisterComple() {
 	const { nickName } = RegisterInfostore();

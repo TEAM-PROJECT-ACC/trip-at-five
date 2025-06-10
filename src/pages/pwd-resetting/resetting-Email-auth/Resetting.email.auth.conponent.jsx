@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './resetting.email.auth.conponent.scss';
 import { ButtonPrimary } from '../../../components';
-import { useIsResetting } from '../state/resetting.state';
+import { useIsResetting } from '../../../states/pwdRestting/resetting.state';
 import { ResettingInput } from '../resetting-input/resetting.input.conponent';
 import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
 import { validateEmail } from '../../register/util/validate';
