@@ -7,12 +7,12 @@ import AdminInput from '../../../../components/inputs/input-admin/AdminInput.com
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './RoomRegForm.style.scss';
 import {
+  deleteImageAPI,
   deleteRoomAPI,
   findRoomByAccomNoAndRoomSq,
   insertRoomAPI,
   updateRoomAPI,
 } from '../../../../services/room/roomService.api';
-import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 import { diffHoursFunc } from './utils/checkInOut.util';
 import {
   DELETE_ROOM,
@@ -24,6 +24,8 @@ import {
 import { FaTrashAlt } from '../../../../assets/icons/index';
 import { useModal } from '../../../../hooks';
 import { Modal } from '../../../../components';
+import AdminImageList from './AdminImageList.component';
+import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
 
 /**
  *
@@ -49,10 +51,13 @@ const RoomRegForm = ({ accomId, roomId }) => {
   });
 
   const [word, setWord] = useState('');
-  const { isModalOpen, handleModalOpen } = useModal();
+  const [isRoomDeleteModalOpen, handleRoomDeleteModalOpen] = useState(false);
+  const [isRoomImageDeleteModalOpen, handleRoomImageDeleteModalOpen] =
+    useState(false);
   const [roomNameWordCount, setRoomNameWordCount] = useState(0);
   const [checkTime, setCheckTime] = useState(false);
   const [imageFileData, setImageFileData] = useState([]);
+  const { images } = useDeleteImageInfoStore((state) => state);
 
   const { data, isLoading } = useQuery({
     queryKey: ['roomInfo', accomId, roomId],
@@ -147,6 +152,32 @@ const RoomRegForm = ({ accomId, roomId }) => {
     retryDelay: 500, // 0.5초 간격으로 재시도
   });
 
+  // 객실 이미지 삭제
+  const { mutate: imageMutate } = useMutation({
+    mutationKey: ['deleteImageList'],
+    mutationFn: async ({ deleteImageList }) => {
+      // console.log(deleteImageList);
+
+      const { status } = await deleteImageAPI(accomId, roomId, deleteImageList);
+      if (status !== 200) throw new Error('에러발생');
+      return status;
+    },
+    onSuccess: (status, variables, context) => {
+      // MutationFn이 성공 시 실행 되는 곳
+      console.log('onSuccess', status, variables, context);
+      // 변이 성공 시 캐시 무효화로 객실 폼 데이터 갱신!
+      queryClient.invalidateQueries({ queryKey: ['deleteImageList'] });
+
+      if (status === HttpStatusCode.Ok) {
+        successToastAlterFunc('이미지 삭제');
+        setTimeout(
+          () => navigate(`/admin/accommodations/${accomId}/edit`),
+          2000
+        );
+      }
+    },
+  });
+
   // 객실 명 글자 수 유효성 검사 핸들러
   const handleWordCount = (e) => {
     let value = e.target.value;
@@ -197,7 +228,12 @@ const RoomRegForm = ({ accomId, roomId }) => {
 
   // Modal
   const handleModal = () => {
-    handleModalOpen(true);
+    handleRoomDeleteModalOpen(true);
+  };
+  const handleDeleteImageModal = (images) => {
+    // console.log(imageList);
+    if (images.length < 1) return;
+    handleRoomImageDeleteModalOpen(true);
   };
 
   // Submit
@@ -211,6 +247,10 @@ const RoomRegForm = ({ accomId, roomId }) => {
         roomChkOut: checkOutRef.current.value,
       },
     });
+  };
+
+  const handleDeleteImage = (imageList) => {
+    imageMutate({ deleteImageList: { imageList } });
   };
 
   /**
@@ -403,33 +443,18 @@ const RoomRegForm = ({ accomId, roomId }) => {
               </div>
             </div>
 
-            <div className='room-image-list__container'>
-              {data?.imageList && data?.imageList.length > 0 ? (
-                data?.imageList.map((value, idx) => {
-                  return (
-                    <div
-                      key={idx}
-                      className='room-preview-img'
-                    >
-                      <img
-                        src={`${VITE_SERVER_BASE_URL}${value}`}
-                        alt={`객실 이미지 ${idx + 1}`}
-                      />
-                    </div>
-                  );
-                })
-              ) : (
-                <p>등록된 객실 이미지가 없습니다.</p>
-              )}
-            </div>
+            <AdminImageList
+              data={data}
+              handleDeleteImageModal={handleDeleteImageModal}
+            />
             <ToastContainer />
           </div>
         </>
       )}
 
-      {isModalOpen && (
+      {isRoomDeleteModalOpen && (
         <Modal
-          modalHandler={handleModalOpen}
+          modalHandler={handleRoomDeleteModalOpen}
           className='delete-room-image-modal'
           useCloseIcon={true}
         >
@@ -441,6 +466,25 @@ const RoomRegForm = ({ accomId, roomId }) => {
           <button
             className='delete-room-image-modal-button'
             onClick={() => handleSubmitRoom(DELETE_ROOM)}
+          >
+            <FaTrashAlt />
+          </button>
+        </Modal>
+      )}
+      {isRoomImageDeleteModalOpen && (
+        <Modal
+          modalHandler={handleRoomImageDeleteModalOpen}
+          className='delete-room-image-modal'
+          useCloseIcon={true}
+        >
+          <div className='delete-room-image-modal-message__container'>
+            <span className='delete-room-image-modal-message'>
+              객실 이미지를 <strong>삭제</strong>하시겠습니까?
+            </span>
+          </div>
+          <button
+            className='delete-room-image-modal-button'
+            onClick={() => handleDeleteImage(images)}
           >
             <FaTrashAlt />
           </button>
