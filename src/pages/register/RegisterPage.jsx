@@ -1,14 +1,17 @@
 import './registerPage.scss';
 import { PageContainer } from '../../components';
-import { RegisterInfostore, useRegisterStore } from '../../states/register/RegisterStore';
+import {
+	RegisterInfostore,
+	useRegisterStore,
+} from '../../states/register/RegisterStore';
 import TitleText from './title-text/TitleText.component';
-import Circle from './cricle/Circle';
-import RegisterEmail from './email/Email.component';
-import RegisterPassword from './password/Password.component';
-import RegisterNickName from './nickName/NickName.component';
+import Circle from './cricle/CircleComponent';
+import RegisterEmail from './email/EmailComponent';
+import RegisterPassword from './password/PasswordComponent';
+import RegisterNickName from './nickName/NickNameComponent';
 import RegisterTel from './Tel/Tel.component';
-import RegisterAdress from './address/Address.component';
-import RegisterComple from './comple/Comple.component';
+import RegisterAdress from './address/AddressComponent';
+import RegisterComple from './comple/CompleComponent';
 import { useEffect } from 'react';
 
 export default function Register() {

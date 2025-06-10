@@ -1,4 +1,4 @@
-import './email.component.scss';
+import './emailStyle.scss';
 import { ButtonPrimary, InputPrimary } from '../../../components';
 import { useRegisterStore, RegisterInfostore } from '../../../states/register/RegisterStore';
 import { validateEmail } from '../util/validate';

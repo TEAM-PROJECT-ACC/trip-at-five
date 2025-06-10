@@ -1,8 +1,8 @@
-import './password.resetting.component.scss';
+import './passwordResettingStyle.scss';
 import { PageContainer } from '../../components';
-import { ResttingTitle } from './resetting-title/Resetting.title.conponent';
-import { EmailAuth } from './resetting-Email-auth/Resetting.email.auth.conponent';
-import { PasswordResetting } from './password-resetting/Password-resetting.conponent';
+import { ResttingTitle } from './resetting-title/ResettingTitleComponent';
+import { EmailAuth } from './resetting-Email-auth/ResettingEmailAuthComponent';
+import { PasswordResetting } from './password-resetting/PasswordResettingComponent';
 import { useIsResetting } from '../../states/pwdRestting/resetting.state';
 
 export default function PwdRestting() {

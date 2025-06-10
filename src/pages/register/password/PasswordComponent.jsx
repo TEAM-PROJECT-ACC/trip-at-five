@@ -1,6 +1,6 @@
 import { ButtonPrimary, InputPrimary } from '../../../components';
 import { useRegisterStore, RegisterInfostore } from '../../../states/register/RegisterStore';
-import './password.component.scss';
+import './passwordStyle.scss';
 
 export default function RegisterPassword() {
 	const { setAddStep } = useRegisterStore();

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import './password-resetting.conponent.scss';
-import { ResettingInput } from '../resetting-input/resetting.input.conponent';
-import { ResttingTitle } from '../resetting-title/Resetting.title.conponent';
+import './passwordResettingStyle.scss';
+import { ResettingInput } from '../resetting-input/ResettingInputComponent';
+import { ResttingTitle } from '../resetting-title/ResettingTitleComponent';
 import { ButtonPrimary } from '../../../components';
 import { useIsResetting } from '../../../states/pwdRestting/resetting.state';
 import { Link } from 'react-router-dom';

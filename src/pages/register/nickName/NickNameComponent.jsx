@@ -1,11 +1,11 @@
-import './nickName.component.scss';
+import './nickNameStyle.scss';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
 } from '../../../components';
 import { MdOutlineRefresh } from '../../../assets/icons/kkh/index';
-import { nickNameMaker } from './NickName-sample/NickName.sample';
+import { nickNameMaker } from './NickName-sample/NickNameSampleComponent';
 import { RegisterInfostore, useRegisterStore } from '../../../states/register/RegisterStore';
 import { nickNameDuplicationCheck } from '../../../services/register/apiService';
 

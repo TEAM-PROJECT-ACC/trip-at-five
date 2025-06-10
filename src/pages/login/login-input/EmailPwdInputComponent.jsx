@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import {
-	ButtonPrimary,
-	InputShrink,
-	TextLinkButton,
-} from '../../../components';
-import './email.pwd.input.component.scss';
-import { validateEmail } from '../../register/util/validate';
+import './emailPwdInputStyle.scss';
 import { useNavigate } from 'react-router-dom';
+import { validateEmail } from '../../register/util/validate';
 import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
 import { nomalLogin } from '../../../services/login/loginApi';
 import {
 	loginStateStore,
 	loginAccountStore,
 } from '../../../states/login/loginStore';
+import {
+	ButtonPrimary,
+	InputShrink,
+	TextLinkButton,
+} from '../../../components';
 
 export default function LoginInputBox() {
 	const { id, pwd, setId, setPwd } = loginAccountStore();

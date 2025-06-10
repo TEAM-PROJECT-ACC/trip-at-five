@@ -1,10 +1,13 @@
-import './address.component.scss';
+import './addressStyle.scss';
 import {
 	ButtonPrimary,
 	ButtonSecondary,
 	InputPrimary,
 } from '../../../components';
-import { RegisterInfostore, useRegisterStore } from '../../../states/register/RegisterStore';
+import {
+	RegisterInfostore,
+	useRegisterStore,
+} from '../../../states/register/RegisterStore';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useState } from 'react';
 import { sendRegister } from '../../../services/register/apiService';

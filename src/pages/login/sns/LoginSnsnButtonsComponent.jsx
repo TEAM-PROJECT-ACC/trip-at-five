@@ -1,4 +1,4 @@
-import SnsButton from './button/Login.Sns.Button.component';
+import SnsButton from './button/LoginSnsButtonComponent';
 import kakao from '../resource/kakao-sns-auth-btn.png';
 import naver from '../resource/naver-sns-auth-btn.png';
 import google from '../resource/google-sns-auth-btn.png';
