@@ -48,6 +48,7 @@ const accomTypeMap = {
   24: '펜션',
   25: '캠핑',
   26: '게하/한옥',
+  999: '미지정',
 };
 
 const publicFac = [
@@ -90,15 +91,15 @@ const AccommodationForm = ({ accomDetail }) => {
   const mapRef = useRef(null);
   // 초기화
   const [formData, setFormData] = useState({
-    accomSq: '',
+    accomSq: 0,
     accomName: '',
     accomPhone: '',
     accomDesc: '',
     accomZipCode: '',
     accomAddr: '',
-    accomTypeNo: '',
-    accomLon: '',
-    accomLat: '',
+    accomTypeNo: 999,
+    accomLon: 0,
+    accomLat: 0,
   });
 
   const [word, setWord] = useState('');
