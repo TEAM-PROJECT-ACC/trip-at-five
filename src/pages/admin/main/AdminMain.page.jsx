@@ -23,7 +23,7 @@ const AdminMain = () => {
   const [dataList, setDataList] = useState([]);
   const navigate = useNavigate();
 
-  const handleSearch = async (keyword) => {
+  const handleSearch = async () => {
     try {
       const data = await selectAdminAccomList(keyword);
       setDataList(data);
@@ -43,7 +43,7 @@ const AdminMain = () => {
   };
 
   useEffect(() => {
-    handleSearch('');
+    handleSearch();
   }, []);
 
   useEffect(() => {
