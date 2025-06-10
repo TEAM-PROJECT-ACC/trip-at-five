@@ -63,7 +63,7 @@ export default function RegisterNickName() {
 	};
 
 	const nickNameOk = () => {
-		nickNameCheck && true && setAddStep();
+		nickNameCheck && setAddStep();
 	};
 
 	return (
@@ -84,8 +84,7 @@ export default function RegisterNickName() {
 				/>
 				<p
 					className={`nickName-duplicate-check ${
-						nickNameCheck == true
-							? 'nickName-duplicate-check-ok'
+						nickNameCheck ? 'nickName-duplicate-check-ok'
 							: 'nickName-duplicate-check-fail'
 					}`}
 				>

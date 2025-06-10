@@ -6,6 +6,7 @@ import SnsButtons from './sns/LoginSnsnButtons.component';
 import { loginStateStore } from '../../states/login/loginStore';
 import { useRegisterStore } from '../../states/register/registerStore';
 import { logout } from '../../services/login/loginService';
+import { successAlert } from '../../utils/toastUtils/toastUtils';
 
 export default function Login() {
 	const { resetRegisterStore } = useRegisterStore();
@@ -17,9 +18,9 @@ export default function Login() {
 		}
 	}, []);
 
-	const Test = async () => {
+	const logoutHandler = async () => {
 		const result = await logout();
-		console.log(result);
+		successAlert('로그아웃 했습니다.');
 	};
 
 	return (
@@ -30,7 +31,7 @@ export default function Login() {
 				</div>
 				<LoginInputBox />
 				<SnsButtons />
-				<button onClick={Test}>로그아웃</button>
+				<button onClick={logoutHandler}>로그아웃</button>
 			</div>
 		</PageContainer>
 	);

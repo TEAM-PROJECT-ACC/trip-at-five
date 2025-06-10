@@ -12,11 +12,7 @@ import {
 } from '../../../services/login/loginService';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import {
-	successAlert,
-	errorAlert,
-	infoAlert,
-} from '../../../utils/toastUtils/toastUtils';
+import { successAlert, infoAlert } from '../../../utils/toastUtils/toastUtils';
 import {
 	loginSnsStateStore,
 	loginStateStore,
@@ -31,14 +27,6 @@ export default function SnsButtons() {
 	const isExecuted = useRef(false);
 	const navigate = useNavigate();
 	const { loginInfo, setLoginInfo } = loginStateStore();
-
-	useEffect(() => {
-		if (searchTerm != null && !isExecuted.current) {
-			sendCode();
-
-			isExecuted.current = true;
-		}
-	}, [searchTerm]);
 
 	const snsLogin = (snsplaform) => {
 		if (snsplaform == 'kakao') {
@@ -91,6 +79,13 @@ export default function SnsButtons() {
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (searchTerm != null && !isExecuted.current) {
+			sendCode();
+			isExecuted.current = true;
+		}
+	}, [searchTerm]);
 
 	return (
 		<div className='login-page bottom'>

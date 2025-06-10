@@ -10,7 +10,7 @@ export default function RegisterPassword() {
 	const { pwd, setPwd, pwdCheck, setPwdCheck } = useRegisterInfostore();
 
 	const passwordCheckOK = () => {
-		if (pwd && pwdCheck && pwd.length >= 8 && pwdCheck.length >= 8) {
+		if (pwd.length >= 8 && pwdCheck.length >= 8) {
 			setAddStep();
 		}
 	};
@@ -37,7 +37,9 @@ export default function RegisterPassword() {
 					setPwdCheck(e.target.value);
 				}}
 			/>
-			<p className='pwd-unconsistent'>{passwordCheckFail}</p>
+			{passwordCheckFail && (
+				<p className='pwd-unconsistent'>{passwordCheckFail}</p>
+			)}
 			<br />
 			<ButtonPrimary onClick={passwordCheckOK}>확인</ButtonPrimary>
 		</div>

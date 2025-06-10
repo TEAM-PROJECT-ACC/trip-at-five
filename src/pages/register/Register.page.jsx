@@ -16,12 +16,7 @@ import { useEffect } from 'react';
 
 export default function Register() {
 	const { step, resetRegisterStore } = useRegisterStore();
-	const { RegisterInfoReset } = useRegisterInfostore();
-
-	useEffect(() => {
-		resetRegisterStore();
-		RegisterInfoReset();
-	}, []);
+	const { resetRegisterInfoStore } = useRegisterInfostore();
 
 	const registerStep = [
 		{
@@ -34,6 +29,11 @@ export default function Register() {
 		{ id: 5, page: <RegisterAdress /> },
 		{ id: 6, page: <RegisterComple /> },
 	];
+
+	useEffect(() => {
+		resetRegisterStore();
+		resetRegisterInfoStore();
+	}, []);
 
 	return (
 		<PageContainer className='register-container'>

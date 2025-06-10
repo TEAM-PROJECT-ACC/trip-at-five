@@ -11,9 +11,9 @@ import {
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useState } from 'react';
 import { sendRegister } from '../../../services/register/apiService';
+import { postCodeUrl } from '../../../services/login/loginService';
 
-let scriptUrl =
-	'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+	
 
 export default function RegisterAdress() {
 	const { setAddStep } = useRegisterStore();
@@ -23,7 +23,7 @@ export default function RegisterAdress() {
 	const [basicAddress, setBasicAddress] = useState('');
 	const [otherAddress, setOtherAddress] = useState('');
 
-	const open = useDaumPostcodePopup(scriptUrl);
+	const open = useDaumPostcodePopup(postCodeUrl);
 
 	const handleComplete = (data) => {
 		let fullAddress = data.address;

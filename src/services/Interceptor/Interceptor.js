@@ -16,11 +16,10 @@ baseServrAxios.interceptors.response.use(
 		if (error.response?.status === 401) {
 			sessionStorage.removeItem('Logined');
 			window.location.href = '/login';
-			console.log('401 에러');
 		}
 
 		if (error.code !== 'ERR_CANCELED') {
-			alert('문제가 발생했습니다.');
+			alert('다시 로그인해 주시기 바랍니다.');
 		}
 
 		return Promise.reject(error);

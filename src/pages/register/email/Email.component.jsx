@@ -7,7 +7,7 @@ import {
 import { validateEmail } from '../util/validate';
 import { useState } from 'react';
 import {
-	EmailCodeCheck,
+	emailCodeCheck,
 	emailDuplicationCheck,
 	sendEmailCode,
 } from '../../../services/register/apiService';
@@ -57,7 +57,7 @@ export default function RegisterEmail() {
 	const sendEmailCodeCheck = async () => {
 		{
 			console.log('sendEmailCode 부분');
-			const result = await EmailCodeCheck(email, emailCode);
+			const result = await emailCodeCheck(email, emailCode);
 			if (result == 'sussess') {
 				console.log(result);
 				setAddStep();

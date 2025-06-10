@@ -20,11 +20,6 @@ export default function LoginInputBox() {
 	const [error, setError] = useState();
 	const navigate = useNavigate();
 
-	/*이메일 형식 체크 */
-	useEffect(() => {
-		validateEmail(id);
-	}, [id]);
-
 	const validateEmailCheck = (e) => {
 		const value = e.target.value;
 		setId(value);
@@ -57,6 +52,12 @@ export default function LoginInputBox() {
 			}
 		}
 	};
+
+	/*이메일 형식 체크 */
+	useEffect(() => {
+		validateEmail(id);
+	}, [id]);
+
 	return (
 		<div className='login-page mid'>
 			<InputShrink

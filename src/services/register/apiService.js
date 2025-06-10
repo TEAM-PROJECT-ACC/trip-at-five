@@ -12,7 +12,7 @@ export const sendEmailCode = async (email) => {
   return response.data;
 };
 
-export const EmailCodeCheck = async (email, code) => {
+export const emailCodeCheck = async (email, code) => {
   const response = await baseServrAxios.post('/email/verify', {
     email: email,
     code: code,

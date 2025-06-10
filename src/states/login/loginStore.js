@@ -29,7 +29,7 @@ export const loginAccountStore = create((set) => ({
 			error: text,
 		}),
 
-	reset: () => set(() => ({ ...initialState })),
+	resetLoginAccountStore: () => set(() => ({ ...initialState })),
 }));
 
 const snsInitialState = {
@@ -44,7 +44,7 @@ export const loginSnsStateStore = create(
 				set({
 					plaform: text,
 				}),
-			reset: () => set(() => ({ ...snsInitialState })),
+			resetLoginSnsStateStore: () => set(() => ({ ...snsInitialState })),
 		}),
 		{
 			name: 'login-plaform-Info',
