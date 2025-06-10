@@ -55,5 +55,11 @@ export const deleteAdminAccomDetail = async (accomSq) => {
 
 // 등록
 export const createAdminAccom = async (formData) => {
-  return apiAxios.post('/admin/accommodations/new', formData);
+  console.log(Array.from(formData));
+  const response = await apiAxios.post('/admin/accommodations/new', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
 };

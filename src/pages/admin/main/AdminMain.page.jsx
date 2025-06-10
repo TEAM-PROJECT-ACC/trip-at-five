@@ -37,8 +37,10 @@ const AdminMain = () => {
     navigate('/admin/accommodations/new');
   };
   // 수정 페이지 이동 핸들러
-  const detailPageHandler = (accomNo) => {
+  const detailPageHandler = (no, id) => {
+    let accomNo = `${no !== undefined ? no : ''}`;
     console.log(accomNo);
+    // console.log(accomNo);
     navigate(`/admin/accommodations/${accomNo}/edit`);
   };
 
@@ -46,9 +48,9 @@ const AdminMain = () => {
     handleSearch();
   }, []);
 
-  useEffect(() => {
-    console.log(keyword);
-  }, [keyword]);
+  // useEffect(() => {
+  //   console.log(keyword);
+  // }, [keyword]);
 
   return (
     <div className='accom-list__container'>

@@ -22,7 +22,6 @@ import {
   UPDATE_ROOM,
 } from './data/roomRegFrom.constant';
 import { FaTrashAlt } from '../../../../assets/icons/index';
-import { useModal } from '../../../../hooks';
 import { Modal } from '../../../../components';
 import AdminImageList from './AdminImageList.component';
 import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';

@@ -37,7 +37,7 @@ const RoomList = () => {
         searchParams.get('currentPage')
       );
 
-      console.log(data);
+      // console.log(data);
       return data ?? [];
     },
     // enabled: !!accomNo, // 초기 accomNo undefined 될 때 에러 방지
@@ -52,8 +52,7 @@ const RoomList = () => {
 
     // navigate(`/admin/accommodations/${accomNo}/rooms/${no}`);
     let roomNo = `${no !== undefined ? no : ''}`;
-    // console.log(roomNo);
-    navigate(`/admin/accommodations/2757748/rooms/` + roomNo);
+    navigate(`/admin/accommodations/${accomNo}/rooms/` + roomNo);
   };
 
   // 객실 검색 API 호출 핸들러
@@ -61,16 +60,16 @@ const RoomList = () => {
     if (keyword && keyword.trim().length > 0) {
       const { data } = await findRoomByAccomNoAndRoomNameLike(accomNo, keyword);
 
-      console.log(data);
+      // console.log(data);
       setSearchData(data ?? []);
     } else {
       setSearchData(null);
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <>

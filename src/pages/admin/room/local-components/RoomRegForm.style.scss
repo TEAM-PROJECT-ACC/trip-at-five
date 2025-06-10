@@ -77,7 +77,7 @@
     }
   }
 
-  .room-image-list__container {
+  .image-list__container {
     width: 100%;
     display: flex;
     align-items: center;
@@ -85,7 +85,7 @@
     flex-wrap: wrap;
     @include admin-body;
 
-    .image-check-option__container {
+    .check-option__container {
       width: 100%;
       display: flex;
       align-items: center;
@@ -106,7 +106,7 @@
       }
     }
 
-    .room-preview-img {
+    .preview-img {
       width: 300px;
       height: 300px;
       border-radius: 16px;
