@@ -1,0 +1,61 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.register-address-wrap {
+	.register-address-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+	}
+
+	.bold {
+		font-weight: bold;
+	}
+
+	.register-address-Postal {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 20px;
+	}
+
+	.register-postal-input {
+		width: 175px;
+		height: 36px;
+		font-size: 16px;
+	}
+
+	.register-address-serch {
+		width: 175px;
+		height: 36px;
+		font-size: 14px;
+	}
+
+	.address-main-input {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	.address-sub-input {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	.register-address-btn {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.address-btn-later {
+		width: 175px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+
+	.adress-btn-check {
+		width: 175px;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+}
