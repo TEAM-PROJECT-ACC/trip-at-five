@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react';
 import './kakaoMap.style.scss';
 import FilterPanel from '../filter/FilterPanel.component';
 import { MapInnerList } from '../acc-map-list/MapInnerList.component';
-import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
 import { useFilterState } from '../../hooks/useFilterState.hook';
+import { useAccomSearchStore } from '../../../../states';
 
 export const KakaoMap = ({ onClose, accommodations }) => {
   const mapRef = useRef();
@@ -15,6 +15,83 @@ export const KakaoMap = ({ onClose, accommodations }) => {
   const { filter } = filterHook;
   const { priceRange } = filter;
 
+  // 단순 지역명일 경우 중심지(시청, 도청) 위도, 경도으로 설정
+  const regionCenters = {
+    서울특별시: { lat: 37.5665, lon: 126.978, locId: 11 },
+    부산광역시: { lat: 35.1796, lon: 129.0756, locId: 26 },
+    대구광역시: { lat: 35.8714, lon: 128.6014, locId: 27 },
+    인천광역시: { lat: 37.4563, lon: 126.7052, locId: 28 },
+    광주광역시: { lat: 35.1595, lon: 126.8526, locId: 29 },
+    대전광역시: { lat: 36.3504, lon: 127.3845, locId: 30 },
+    울산광역시: { lat: 35.5384, lon: 129.3114, locId: 31 },
+    경기도: { lat: 37.4138, lon: 127.5183, locId: 41 },
+    충청북도: { lat: 36.6357, lon: 127.4917, locId: 43 },
+    충청남도: { lat: 36.5184, lon: 126.8, locId: 44 },
+    전라남도: { lat: 34.8161, lon: 126.463, locId: 46 },
+    경상북도: { lat: 36.5756, lon: 128.5056, locId: 47 },
+    경상남도: { lat: 35.4606, lon: 128.2132, locId: 48 },
+    제주특별자치도: { lat: 33.4996, lon: 126.5312, locId: 50 },
+    강원특별자치도: { lat: 37.8228, lon: 128.1555, locId: 51 },
+    전북특별자치도: { lat: 35.82, lon: 127.1088, locId: 52 },
+    세종특별자치시: { lat: 36.48, lon: 127.289, locId: 36110 },
+  };
+  const calculateMapCenterLevel = (accommodations, keyword) => {
+    const regionNames = accommodations.map((item) => {
+      if (item.accomAddr) {
+        return item.accomAddr.split(' ')[0];
+      }
+      return null;
+    });
+    // keyword 단순 지역명인 경우
+    for (const regionName of regionNames) {
+      if (regionName && regionCenters[regionName]) {
+        if (regionName.includes(keyword) || keyword.includes(regionName)) {
+          const region = regionCenters[regionName];
+          return { centerLat: region.lat, centerLon: region.lon, mapLevel: 8 };
+        }
+      }
+    }
+
+    const groupByLocation = {};
+    accommodations.forEach((item) => {
+      if (item.locId === null) return;
+      if (!groupByLocation[item.locId]) {
+        //새 배열
+        groupByLocation[item.locId] = [];
+      }
+      // 지역번호 별로 숙소 데이터 배열
+      groupByLocation[item.locId].push(item);
+    });
+
+    // 지역 평균 위도 경도 계산
+    const regionCenterLonLat = [];
+    Object.keys(groupByLocation).forEach((locId) => {
+      const regionAccoms = groupByLocation[locId];
+      const sumLat = regionAccoms.reduce((sum, curr) => sum + curr.accomLat, 0); // sum 초기값=0
+      const sumLon = regionAccoms.reduce((sum, curr) => sum + curr.accomLon, 0);
+      const avgLat = sumLat / regionAccoms.length;
+      const avgLon = sumLon / regionAccoms.length;
+      regionCenterLonLat.push([avgLat, avgLon]);
+    });
+
+    const sumCenterLat = regionCenterLonLat.reduce(
+      (sum, curr) => sum + curr[0],
+      0
+    );
+    const sumCenterLon = regionCenterLonLat.reduce(
+      (sum, curr) => sum + curr[1],
+      0
+    );
+    // 평균 위경도 값 = 중심 좌표
+    const centerLat = sumCenterLat / regionCenterLonLat.length;
+    const centerLon = sumCenterLon / regionCenterLonLat.length;
+
+    const distances = regionCenterLonLat.map((region) => {
+      getDistance(centerLat, centerLon, region[0], region[1]);
+    });
+
+    const avgDistance = distances.reduce((sum, dis) => sum + dis, 0);
+  };
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
 
@@ -25,7 +102,7 @@ export const KakaoMap = ({ onClose, accommodations }) => {
     if (!kakaoMap.current) {
       kakaoMap.current = new window.kakao.maps.Map(mapContainer, {
         /**
-         * level 범위 1 ~ 14
+         * level 범위 8 ~ 14
          *
          * 단순 지역명일 경우
          * center : 중심지(시청, 도청) 위도, 경도 값으로 설정
@@ -70,7 +147,7 @@ export const KakaoMap = ({ onClose, accommodations }) => {
 
         if (lat == null || lon == null) return null;
 
-        const minRoomPrice = item.roomPrice;  
+        const minRoomPrice = item.roomPrice;
 
         if (minRoomPrice < minPrice || minRoomPrice > maxPrice) return null;
 
@@ -204,7 +281,7 @@ export const KakaoMap = ({ onClose, accommodations }) => {
         <FilterPanel filterHook={filterHook} />
       </div>
       <div className='acc-list-map'>
-        <MapInnerList accommodations={accommodations}/>
+        <MapInnerList accommodations={accommodations} />
         <div
           className='map'
           ref={mapRef}

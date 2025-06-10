@@ -6,12 +6,11 @@ import MapButton from './local-components/map/MapButton.component';
 import AccommodationListBox from './local-components/acc-items-box/AccommodationListBox.component';
 import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
-//import { accomData } from '../../assets/sample-data/accomSampleData';
 import { useFilterState } from './hooks/useFilterState.hook';
 import { useAccomSearchStore } from '../../states';
 import { formatDateForApi } from '../../utils/formatDate/formatDate';
 import { searchAccommodationByKeyword } from '../../services/accom/apiService';
-//import { formatDate } from '../../utils/formatDate/formatDate';
+
 /**
  * 바뀔수 있는 정렬 조건 => 가격높은/낮은순, 평점높은순
  * 필수 정렬 조건 => 숙박업소명
@@ -60,7 +59,10 @@ const AccommodationList = () => {
       <div className='search-bar'></div>
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>
-          <MapButton accommodations={accommodations} />
+          <MapButton
+            accommodations={accommodations}
+            filterHook={filterHook}
+          />
           <FilterPanel
             className={'accom-filter-panel'}
             filterHook={filterHook}
