@@ -59,7 +59,7 @@ const AdminMain = () => {
         <AdminSearch
           className='admin-search-area__container'
           placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
-          onClick={handleSearch}
+          onClick={() => handleSearch}
         >
           <AdminIconButton
             onClick={registerPageHandler}

@@ -12,12 +12,11 @@ export const accommodationDetailByAccomSq = async (accomSq) => {
   const response = await apiAxios.get(`/accommodations/${accomSq}`);
   const data = response.data;
   console.log(response);
-  data.accomNo = data.accomNo ?? data.accomSq;
-
+  data.accomNo = data.accomSq;
   if (data && data.roomList) {
     data.roomList = data.roomList.map((room) => ({
       ...room,
-      accomNo: room.accomNo, 
+      accomNo: room.accomNo,
     }));
   }
 
