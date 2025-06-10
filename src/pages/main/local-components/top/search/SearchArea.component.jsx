@@ -15,6 +15,8 @@ const SearchArea = () => {
   const searchHandler = async () => {
     setKeywordState(inputValue);
     navigate('/accommodations');
+    window.scrollTo(0, 0);
+
     // 필요한 상태만 추출
     const searchData = {
       keyword: inputValue,

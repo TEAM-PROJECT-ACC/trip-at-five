@@ -23,7 +23,7 @@ const AdminMain = () => {
   const [dataList, setDataList] = useState([]);
   const navigate = useNavigate();
 
-  const handleSearch = async (keyword) => {
+  const handleSearch = async () => {
     try {
       const data = await selectAdminAccomList(keyword);
       setDataList(data);
@@ -43,7 +43,7 @@ const AdminMain = () => {
   };
 
   useEffect(() => {
-    handleSearch('');
+    handleSearch();
   }, []);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const AdminMain = () => {
         <AdminSearch
           className='admin-search-area__container'
           placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
-          onClick={() => handleSearch}
+          onClick={handleSearch}
         >
           <AdminIconButton
             onClick={registerPageHandler}
