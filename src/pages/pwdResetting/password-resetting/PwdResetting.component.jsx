@@ -1,24 +1,33 @@
 import { useState } from 'react';
 import './pwdResetting.style.scss';
 import { ResettingInput } from '../resetting-input/PwdResettingInput.component';
-import { ResttingTitle } from '../resetting-title/PwdResettingTitle.component';
 import { ButtonPrimary } from '../../../components';
-import { useIsResetting } from '../../../states/pwdRestting/pwdResettingStore';
+import {
+	useIsResetting,
+	useResettingInfo,
+} from '../../../states/pwdRestting/pwdResettingStore';
 import { Link } from 'react-router-dom';
+import { updatePwd } from '../../../services/pwdResetting/pwdResetting';
+import { successAlert } from '../../../utils/toastUtils/toastUtils';
 
 export function PasswordResetting({ className }) {
-	const [pwd, setPwd] = useState(null);
+	const { email, pwd, setPwd } = useResettingInfo();
 	const [pwdCheck, setPwdCheck] = useState('');
 	const { setIsFalse } = useIsResetting();
 
-	const pCheck = pwd == pwdCheck ? 'ok' : 'fail';
-
-	/* 로컬저장소 초기화*/
+	const passwordCheckFail = pwd !== pwdCheck;
 
 	/* 비밀번호 재설정 */
-	const updatePwd = () => {
-		setIsFalse();
-		window.localStorage.removeItem('pwd-resetting');
+	const updatePassword = async () => {
+		const result = await updatePwd(email, pwd);
+		console.log(result);
+
+		if ((result.data === 1) & (result.status === 200)) {
+			successAlert('비밀번호 변경 성공했습니다.')
+			setIsFalse();
+			window.localStorage.removeItem('pwd-resetting');
+			window.localStorage.removeItem('pwdResettingInfo');
+		}
 	};
 
 	return (
@@ -44,24 +53,23 @@ export function PasswordResetting({ className }) {
 					setPwdCheck(e.target.value);
 				}}
 			/>
-			<ResttingTitle
-				className={`pwd-resetting-receive ${
-					pCheck != 'ok' ? 'pwd-fail-color' : ''
-				} `}
-				text={
-					pwd == pwdCheck
-						? '비밀번호가 일치합니다.'
-						: '비밀번호가 일치하지 않습니다.'
-				}
-			/>
+
+			{passwordCheckFail && (
+				<p
+					className={`pwd-resetting-receive pwd-fail-color
+					 `}
+				>
+					비밀번호가 일치하지 않습니다
+				</p>
+			)}
 
 			<Link to='/login'>
-				<ButtonPrimary
-					className={'pwd-update'}
-					onClick={updatePwd}
-				>
-					비밀번호 재설정
-				</ButtonPrimary>
+			<ButtonPrimary
+				className={'pwd-update'}
+				onClick={updatePassword}
+			>
+				비밀번호 재설정
+			</ButtonPrimary>
 			</Link>
 		</div>
 	);

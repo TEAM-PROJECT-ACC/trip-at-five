@@ -8,10 +8,9 @@ import {
 
 export default function RegisterComple() {
 	const { nickName } = useRegisterInfostore();
-	const { step, reset } = useRegisterStore();
+	const { step, resetRegisterStore } = useRegisterStore();
 	const clearLocalStorage = () => {
-		console.log(step);
-		reset();
+		resetRegisterStore();
 		window.localStorage.clear();
 	};
 

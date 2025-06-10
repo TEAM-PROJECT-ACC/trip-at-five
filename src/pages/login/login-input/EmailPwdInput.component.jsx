@@ -3,7 +3,7 @@ import './emailPwdInput.style.scss';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../register/util/validate';
 import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
-import { nomalLogin } from '../../../services/login/loginService';
+import { adminlLogin, nomalLogin } from '../../../services/login/loginService';
 import {
 	loginStateStore,
 	loginAccountStore,
@@ -32,14 +32,18 @@ export default function LoginInputBox() {
 			setError('');
 		}
 	};
+	const checkEmailDomain = (id) => {
+		return typeof id === 'string' && id.includes('@clock.com');
+	};
 
 	const sendLogin = async () => {
 		if (id?.length != 0 && pwd?.length != 0) {
-			const result = await nomalLogin(id, pwd);
-
+			const result = checkEmailDomain(id)
+				? await adminlLogin(id, pwd)
+				: await nomalLogin(id, pwd);
 			if (result.status === 200) {
 				if (result.data.IdFail === 'IdFail') {
-					errorAlert('Id를 다시 확인해주세요');
+					errorAlert('계정을 다시 확인해주세요');
 				} else if (result.data.pwdFail === 'pwdFail') {
 					errorAlert('pwd를 다시 확인해주세요');
 				} else {
@@ -50,6 +54,9 @@ export default function LoginInputBox() {
 					navigate('/user');
 				}
 			}
+			console.log(result);
+		} else {
+			console.log('Test');
 		}
 	};
 

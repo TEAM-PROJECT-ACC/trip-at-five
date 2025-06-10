@@ -4,12 +4,12 @@ export const emailDuplicationCheck = async (email) => {
   const response = await baseServrAxios.post('/register/emailDuplication', {
     email: email,
   });
-  return response.data;
+  return response;
 };
 
 export const sendEmailCode = async (email) => {
   const response = await baseServrAxios.post('/email/send', { email: email });
-  return response.data;
+  return response;
 };
 
 export const emailCodeCheck = async (email, code) => {
@@ -17,7 +17,7 @@ export const emailCodeCheck = async (email, code) => {
     email: email,
     code: code,
   });
-  return response.data;
+  return response;
 };
 
 export const nickNameDuplicationCheck = async (nickName) => {

@@ -58,7 +58,7 @@ export default function RegisterEmail() {
 		{
 			console.log('sendEmailCode 부분');
 			const result = await emailCodeCheck(email, emailCode);
-			if (result == 'sussess') {
+			if (result.data == 'sussess') {
 				console.log(result);
 				setAddStep();
 			} else {

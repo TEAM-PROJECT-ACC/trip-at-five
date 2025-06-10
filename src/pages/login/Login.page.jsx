@@ -8,20 +8,22 @@ import { useRegisterStore } from '../../states/register/registerStore';
 import { logout } from '../../services/login/loginService';
 import { successAlert } from '../../utils/toastUtils/toastUtils';
 
+
 export default function Login() {
 	const { resetRegisterStore } = useRegisterStore();
 	const { loginInfo, loginedStateStorereset } = loginStateStore();
+
+	const logoutHandler = async () => {
+		const result = await logout();
+		successAlert('로그아웃 했습니다.');
+	};
+
 	useEffect(() => {
 		resetRegisterStore();
 		if (loginInfo) {
 			loginedStateStorereset();
 		}
 	}, []);
-
-	const logoutHandler = async () => {
-		const result = await logout();
-		successAlert('로그아웃 했습니다.');
-	};
 
 	return (
 		<PageContainer className={'login-container'}>

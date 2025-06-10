@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 const initialState = {
-	id: null,
-	pwd: null,
+	id: '',
+	pwd: '',
 	isLogin: false,
 	error: '',
 };

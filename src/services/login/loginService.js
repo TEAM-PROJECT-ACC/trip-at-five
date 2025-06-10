@@ -130,6 +130,14 @@ export const nomalLogin = async (id, pwd) => {
 	return respone;
 };
 
+export const adminlLogin = async (id, pwd) => {
+	const respone = await baseServrAxios.post('/login/admin', {
+		email: id,
+		pwd: pwd,
+	});
+	return respone;
+};
+
 export const logout = async () => {
 	const respone = await baseServrAxios.get('/login/logout');
 	if (respone.data === 'ok') {
