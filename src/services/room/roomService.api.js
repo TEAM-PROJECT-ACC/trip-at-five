@@ -81,3 +81,12 @@ export const deleteRoomAPI = async (roomIdentify) => {
   );
   return response;
 };
+
+export const deleteImageAPI = async (accomNo, roomNo, imageList) => {
+  const response = await apiAxios.delete(
+    `admin/accommodations/${accomNo}/rooms/${roomNo}/images`,
+    { data: imageList }
+  );
+
+  return response;
+};
