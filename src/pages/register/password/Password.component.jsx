@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ButtonPrimary, InputPrimary } from '../../../components';
 import {
 	useRegisterStore,
@@ -15,7 +16,7 @@ export default function RegisterPassword() {
 		}
 	};
 
-	const passwordCheckFail = pwd !== pwdCheck && '비밀번호가 일치하지 않습니다';
+	const passwordCheckFail = pwd !== pwdCheck ;
 
 	return (
 		<div className='register-password-wrap'>
@@ -38,7 +39,7 @@ export default function RegisterPassword() {
 				}}
 			/>
 			{passwordCheckFail && (
-				<p className='pwd-unconsistent'>{passwordCheckFail}</p>
+				<p className='pwd-unconsistent'>비밀번호가 일치하지 않습니다</p>
 			)}
 			<br />
 			<ButtonPrimary onClick={passwordCheckOK}>확인</ButtonPrimary>
