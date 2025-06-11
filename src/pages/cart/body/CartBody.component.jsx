@@ -6,6 +6,7 @@ import { usePaymentInfoStore } from '../../../states';
 import { accomData } from '../../../assets/sample-data/accomSampleData';
 import { GoCheckCircle } from '../../../assets/icons/index';
 import './CartBody.style.scss';
+import { useAccomCartStore } from '../../../states/accom-cart/accomCartStore';
 
 const accomDataList = accomData.accommodation_tb;
 
@@ -14,6 +15,8 @@ const CartBody = ({ className }) => {
   const roomInfo = usePaymentInfoStore((state) => state.roomInfo);
   const { setRoomInfo } = usePaymentInfoStore((state) => state.actions);
   const [setSelectedAll] = useState(false);
+
+  const { selectedItems } = useAccomCartStore((state) => state);
 
   // 전체 선택
   const checkAllHandler = () => {
@@ -44,6 +47,10 @@ const CartBody = ({ className }) => {
     }
     navigate('/reservations', roomInfo);
   };
+
+  useEffect(() => {
+    console.log(selectedItems);
+  }, []);
 
   return (
     <>

@@ -9,22 +9,12 @@ export const useAccomCartStore = create((set, get) => ({
   actions: {
     toggleItem: (item) => {
       const selectedItems = get().selectedItems;
-      const idx = selectedItems.findIndex(
-        (i) =>
-          i.accomNo === item.accomNo &&
-          i.roomSq === item.roomSq &&
-          i.roomPrice === item.roomPrice
-      );
+      const idx = selectedItems.findIndex((i) => i.roomSq === item.roomSq);
       if (idx !== -1) {
         // 이미 존재 => 삭제
         set({
           selectedItems: selectedItems.filter(
-            (i) =>
-              !(
-                i.accomNo === item.accomNo &&
-                i.roomSq === item.roomSq &&
-                i.roomPrice === item.roomPrice
-              )
+            (i) => !(i.roomSq === item.roomSq)
           ),
         });
       } else {
