@@ -28,21 +28,6 @@ export default function SnsButtons() {
 	const navigate = useNavigate();
 	const { loginInfo, setLoginInfo } = loginStateStore();
 
-	const snsLogin = (snsplaform) => {
-		if (snsplaform == 'kakao') {
-			setPlaform(snsplaform);
-			window.location.href = KAKAO_AUTH_URL;
-		}
-		if (snsplaform == 'naver') {
-			setPlaform(snsplaform);
-			window.location.href = NAVER_AUTH_URL;
-		}
-		if (snsplaform == 'google') {
-			setPlaform(snsplaform);
-			window.location.href = GOOGLE_AUTH_URL;
-		}
-	};
-
 	const sendCode = async () => {
 		if (plaform === 'kakao') {
 			const kakaoResult = await kakaoLogin(searchTerm);
@@ -77,6 +62,21 @@ export default function SnsButtons() {
 			} else {
 				infoAlert(googleResult.data.ckSocPlt + '로 로그인해주시기 바랍니다.');
 			}
+		}
+	};
+
+	const snsLogin = (snsplaform) => {
+		if (snsplaform == 'kakao') {
+			setPlaform(snsplaform);
+			window.location.href = KAKAO_AUTH_URL;
+		}
+		if (snsplaform == 'naver') {
+			setPlaform(snsplaform);
+			window.location.href = NAVER_AUTH_URL;
+		}
+		if (snsplaform == 'google') {
+			setPlaform(snsplaform);
+			window.location.href = GOOGLE_AUTH_URL;
 		}
 	};
 

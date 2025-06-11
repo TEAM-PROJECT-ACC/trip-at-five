@@ -11,7 +11,7 @@ import ChatRoom from './pages/chat/chat-ui/ChatRoom,component';
 import LoginInterceptor from './pages/login/loginInterCepter/LoginInterceptor.component';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Receipt from './pages/payment/Receipt.page';
 import Reservation from './pages/reservation/Reservation.page';
 import CartMain from './pages/cart/CartMain.page';
@@ -31,7 +31,19 @@ import { loginStateStore } from './states/login/loginStore';
 function App() {
 	// 로그인 정보 확인 후 사용자/관리자 처리 용 상태
 	const [isAdmin, setIsAdmin] = useState(() => false);
-	const { loginInfo } = loginStateStore();
+	const { loginInfo, resetLoginedStateStore } = loginStateStore();
+
+	useEffect(() => {
+		if (!sessionStorage.getItem('Logined')) {
+			 localStorage.removeItem('userInfo');
+		}
+	}, []);
+
+	// useEffect(() => {
+	// 	if (sessionStorage.getItem('Logined')) {
+	// 		console.log(loginInfo);
+	// 	}
+	// }, []);
 
 	return (
 		<>

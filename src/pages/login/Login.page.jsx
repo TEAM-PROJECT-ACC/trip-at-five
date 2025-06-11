@@ -4,26 +4,27 @@ import { PageContainer } from '../../components';
 import LoginInputBox from './login-input/EmailPwdInput.component';
 import SnsButtons from './sns/LoginSnsnButtons.component';
 import { loginStateStore } from '../../states/login/loginStore';
-import { useRegisterStore } from '../../states/register/registerStore';
 import { logout } from '../../services/login/loginService';
 import { successAlert } from '../../utils/toastUtils/toastUtils';
 
-
 export default function Login() {
-	const { resetRegisterStore } = useRegisterStore();
-	const { loginInfo, loginedStateStorereset } = loginStateStore();
+	const { loginInfo, resetLoginedStateStore } = loginStateStore();
 
 	const logoutHandler = async () => {
 		const result = await logout();
 		successAlert('로그아웃 했습니다.');
 	};
 
-	useEffect(() => {
-		resetRegisterStore();
-		if (loginInfo) {
-			loginedStateStorereset();
-		}
-	}, []);
+	useEffect(()=>{
+		console.log(loginInfo)	;
+	})
+
+	// useEffect(() => {
+	// 	if (loginInfo) {
+	// 		sessionStorage.removeItem('Logined');
+	// 		localStorage.removeItem('userInfo');
+	// 	}
+	// }, []);
 
 	return (
 		<PageContainer className={'login-container'}>

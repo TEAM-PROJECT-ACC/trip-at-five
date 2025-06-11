@@ -51,6 +51,10 @@ export default function LoginInputBox() {
 					sessionStorage.setItem('Logined', true);
 					setLoginInfo(result.data);
 					console.log(loginInfo);
+				}
+				if (result.data.memType === 'admin') {
+					navigate('/admin');
+				} else {
 					navigate('/user');
 				}
 			}
