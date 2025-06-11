@@ -6,49 +6,66 @@ import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 import { useAccomSearchStore } from '../../../../states';
+import { useFilterStore } from '../../../../states/accom-filter/filterStore';
 import { useNavigate } from 'react-router-dom';
 
-export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
+const regionMapLevelConfig = {
+  11: 8,    // 서울특별시
+  26: 9,    // 부산광역시
+  27: 9,    // 대구광역시
+  28: 8,    // 인천광역시
+  29: 9,    // 광주광역시
+  30: 9,    // 대전광역시
+  31: 9,    // 울산광역시
+  41: 9,    // 경기도
+  43: 10,   // 충청북도
+  44: 10,   // 충청남도
+  46: 10,   // 전라남도
+  47: 10,   // 경상북도
+  48: 10,   // 경상남도
+  50: 10,   // 제주특별자치도
+  51: 10,   // 강원특별자치도
+  52: 10,   // 전북특별자치도
+  36110: 10 // 세종특별자치시
+};
+
+export const KakaoMap = ({ onClose, allAccommodations }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
   const navigate = useNavigate();
 
-  const filterHook = useFilterState();
-  const { filter } = filterHook;
-  const { priceRange, selectedCategory, selectedFacilities } = filter;
+  const selectedCategory = useFilterStore((state) => state.selectedCategory);
+  const selectedPub = useFilterStore((state) => state.selectedPub);
+  const selectedInroom = useFilterStore((state) => state.selectedInroom);
+  const selectedEtc = useFilterStore((state) => state.selectedEtc);
+  const priceRange = useFilterStore((state) => state.priceRange);
+  const resetFilters = useFilterStore((state) => state.resetFilters);
 
   const keyword = useAccomSearchStore.getState().keyword;
 
+  const handleClose = () => {
+    resetFilters();
+    onClose();
+  };
   // 필터 기능
   const filteredAccommodations = allAccommodations.filter((item) => {
-    // 카테고리
-    if (
-      selectedCategory &&
-      Number(item.accomTypeNo) !== Number(selectedCategory)
-    )
+    if (selectedCategory && Number(item.accomTypeNo) !== Number(selectedCategory))
       return false;
-    // 시설
-    if (selectedFacilities.length > 0) {
-      const allFacilities = [
-        ...(item.pubFacInfo
-          ? item.pubFacInfo.split(',').map((f) => f.trim())
-          : []),
-        ...(item.inRoomFacInfo
-          ? item.inRoomFacInfo.split(',').map((f) => f.trim())
-          : []),
-        ...(item.etcFacInfo
-          ? item.etcFacInfo.split(',').map((f) => f.trim())
-          : []),
-      ];
-      const hasAllSelected = selectedFacilities.every((facility) =>
-        allFacilities.includes(facility)
-      );
-      if (!hasAllSelected) return false;
-    }
-    // 가격
-    const [minPrice, maxPrice] = priceRange;
+
+    const allFacilities = [
+      ...(item.pubFacInfo ? item.pubFacInfo.split(',').map((f) => f.trim()) : []),
+      ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map((f) => f.trim()) : []),
+      ...(item.etcFacInfo ? item.etcFacInfo.split(',').map((f) => f.trim()) : []),
+    ];
+
+    const hasPub = selectedPub.every((f) => allFacilities.includes(f));
+    const hasInroom = selectedInroom.every((f) => allFacilities.includes(f));
+    const hasEtc = selectedEtc.every((f) => allFacilities.includes(f));
+
+    if (!hasPub || !hasInroom || !hasEtc) return false;
+
     const minRoomPrice = item.roomPrice;
-    if (minRoomPrice < minPrice || minRoomPrice > maxPrice) return false;
+    if (minRoomPrice < priceRange[0] || minRoomPrice > priceRange[1]) return false;
 
     return true;
   });
@@ -61,6 +78,27 @@ export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
         groupByLocation[item.locId] = groupByLocation[item.locId] || [];
         groupByLocation[item.locId].push(item);
       }
+    });
+    const filteredAccommodations = allAccommodations.filter((item) => {
+      if (selectedCategory && Number(item.accomTypeNo) !== Number(selectedCategory))
+        return false;
+
+      const allFacilities = [
+        ...(item.pubFacInfo ? item.pubFacInfo.split(',').map((f) => f.trim()) : []),
+        ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map((f) => f.trim()) : []),
+        ...(item.etcFacInfo ? item.etcFacInfo.split(',').map((f) => f.trim()) : []),
+      ];
+
+      const hasPub = selectedPub.every((f) => allFacilities.includes(f));
+      const hasInroom = selectedInroom.every((f) => allFacilities.includes(f));
+      const hasEtc = selectedEtc.every((f) => allFacilities.includes(f));
+
+      if (!hasPub || !hasInroom || !hasEtc) return false;
+
+      const minRoomPrice = item.roomPrice;
+      if (minRoomPrice < priceRange[0] || minRoomPrice > priceRange[1]) return false;
+
+      return true;
     });
 
     const locIds = Object.keys(groupByLocation);
@@ -87,15 +125,15 @@ export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
       });
       const maxDistance = distances.length > 0 ? Math.max(...distances) : 0;
       console.log('최대거리 (km):', maxDistance.toFixed(2) + 'km');
-
+      
       let mapLevel = 6;
       if (maxDistance >= 4.99 && maxDistance <= 10) mapLevel = 8;
       else if (maxDistance > 10 && maxDistance <= 30) mapLevel = 9;
       else if (maxDistance > 30 && maxDistance <= 100) mapLevel = 11;
-
+      
       console.log('맵레벨 (single region):', mapLevel);
 
-      return { centerLat: avgLat, centerLon: avgLon, mapLevel: mapLevel };
+      return { centerLat: avgLat, centerLon: avgLon, mapLevel: 8 };
     }
 
     // 지역 평균 위도 경도 계산
@@ -269,7 +307,6 @@ export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
 
       const container = document.createElement('div');
       container.className = 'customoverlay-wrapper';
-      // container.style.zIndex = `${1000 + idx}`;
 
       container.innerHTML = `
           <div class="price-bubble">₩${accom.price.toLocaleString()}</div>
@@ -336,6 +373,7 @@ export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
       });
     });
   };
+  
   const zoomIn = () => {
     const map = kakaoMap.current;
     if (map) map.setLevel(map.getLevel() - 1);
@@ -352,7 +390,7 @@ export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
         init();
       });
     }
-  }, [mapRef.current, priceRange, selectedCategory, selectedFacilities]);
+  }, [mapRef.current, priceRange, selectedCategory, selectedPub, selectedInroom, selectedEtc]);
 
   return (
     <div className='container'>
@@ -373,12 +411,12 @@ export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
       <button
         className='btn-exit'
         type='button'
-        onClick={onClose}
+        onClick={handleClose}
       >
         <TiDelete />
       </button>
       <div className='filter-map'>
-        <FilterPanel filterHook={filterHook} />
+        <FilterPanel />
       </div>
       <div className='acc-list-map'>
         <MapInnerList accommodations={filteredAccommodations} />

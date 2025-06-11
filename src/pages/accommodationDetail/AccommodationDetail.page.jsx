@@ -5,13 +5,14 @@ import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
 import {
+  Button,
   ButtonPrimary,
   Modal,
   Pagination,
   StarRating,
   Textarea,
 } from '../../components';
-import { MdAddPhotoAlternate } from '../../assets/icons/ys/index';
+import { MdAddPhotoAlternate,FaArrowUp  } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
 import { Star } from '../../components/star-rating/components/star/Star.component';
@@ -227,6 +228,10 @@ const AccommodationDetail = () => {
 
   return (
     <PageContainer>
+      <Button
+      className='scroll-to-top-btn'
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    ><FaArrowUp /></Button>
       <section className='accom-header'>
         <div className='image-wrapper'>
           <img

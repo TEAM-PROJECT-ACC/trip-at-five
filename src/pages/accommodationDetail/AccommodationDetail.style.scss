@@ -1,3 +1,19 @@
+.scroll-to-top-btn{
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 1px 1px 5px #222222;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  @include color-fafafa;
+  @include background-5500ff;
+}
+.scroll-to-top-btn:hover{
+  background-color: #baabfa;
+}
 .accom-header {
   display: flex;
   flex-direction: column;

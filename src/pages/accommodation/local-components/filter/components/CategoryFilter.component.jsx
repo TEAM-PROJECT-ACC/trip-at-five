@@ -8,12 +8,17 @@ import {
   FaHouseUser,
 } from '../../../../../assets/icons/ys/index';
 import './filter.style.scss';
+import { useFilterStore } from '../../../../../states/accom-filter/filterStore';
 
 /**
  * 모텔, 호텔, 리조트, 펜션, 캠핑, 게스트하우스/한옥
  */
 
-const CategoryFilter = ({ selectedCategory, setCategory }) => {
+const CategoryFilter = () => {
+
+  const selectedCategory = useFilterStore((state) => state.selectedCategory);
+  const setCategory = useFilterStore((state) => state.setCategory);
+
   const categoryIcons = [
     { icon: <FaBuilding />, value: 21, title: '모텔' },
     { icon: <FaHotel />, value: 22, title: '호텔' },
@@ -25,7 +30,7 @@ const CategoryFilter = ({ selectedCategory, setCategory }) => {
 
   const handleClick = (category) => {
     if (selectedCategory === category) {
-      setCategory('');
+      setCategory(null);
     } else {
       setCategory(category);
     }

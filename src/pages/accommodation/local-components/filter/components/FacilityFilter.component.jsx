@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   FaSpa,
   FaSwimmer,
@@ -29,17 +29,24 @@ import {
   MdOutlineFoodBank,
 } from '../../../../../assets/icons/ys/index';
 import './filter.style.scss';
+import { useFilterStore } from '../../../../../states/accom-filter/filterStore';
 
-const FacilityFilter = ({ selectedFacilities, toggleFacility }) => {
-  const renderButtons = (facilities) =>
+const FacilityFilter = () => {
+  const selectedPub = useFilterStore((state) => state.selectedPub);
+  const selectedInroom = useFilterStore((state) => state.selectedInroom);
+  const selectedEtc = useFilterStore((state) => state.selectedEtc);
+
+  const togglePub = useFilterStore((state) => state.togglePub);
+  const toggleInroom = useFilterStore((state) => state.toggleInroom);
+  const toggleEtc = useFilterStore((state) => state.toggleEtc);
+
+  const renderButtons = (facilities, selectedFacilities, toggleFunc) =>
     facilities.map(({ icon, label }) => (
       <button
         key={label}
         title={label}
-        className={`filter-btn ${
-          selectedFacilities.includes(label) ? 'selected' : ''
-        }`}
-        onClick={() => toggleFacility(label)}
+        className={`filter-btn ${selectedFacilities.includes(label) ? 'selected' : ''}`}
+        onClick={() => toggleFunc(label)}
       >
         {icon}
       </button>
@@ -85,17 +92,23 @@ const FacilityFilter = ({ selectedFacilities, toggleFacility }) => {
     <>
       <div className='filter-group'>
         <h4 className='sub-title'>공용시설</h4>
-        <div className='filter-options'>{renderButtons(publicFacilities)}</div>
+        <div className='filter-options'>
+          {renderButtons(publicFacilities, selectedPub, togglePub)}
+        </div>
       </div>
       <div className='line'></div>
       <div className='filter-group'>
         <h4 className='sub-title'>객실 내 시설</h4>
-        <div className='filter-options'>{renderButtons(roomFacilities)}</div>
+        <div className='filter-options'>
+          {renderButtons(roomFacilities, selectedInroom, toggleInroom)}
+        </div>
       </div>
       <div className='line'></div>
       <div className='filter-group'>
         <h4 className='sub-title'>기타 시설</h4>
-        <div className='filter-options'>{renderButtons(etcFacilities)}</div>
+        <div className='filter-options'>
+          {renderButtons(etcFacilities, selectedEtc, toggleEtc)}
+        </div>
       </div>
     </>
   );
