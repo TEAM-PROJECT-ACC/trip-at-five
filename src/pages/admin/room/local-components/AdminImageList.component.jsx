@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
+import './adminImageList.style.scss';
 
 const AdminImageList = ({ data, handleDeleteImageModal }) => {
   const { images, setImages } = useDeleteImageInfoStore((state) => state);
@@ -32,7 +33,7 @@ const AdminImageList = ({ data, handleDeleteImageModal }) => {
   };
 
   return (
-    <div className='room-image-list__container'>
+    <div className='image-list__container'>
       <div className='image-check-option__container'>
         <span
           className='check-all__true'
@@ -55,14 +56,14 @@ const AdminImageList = ({ data, handleDeleteImageModal }) => {
       </div>
       {data?.imageList && data?.imageList.length > 0 ? (
         data?.imageList.map((value, idx) => {
-          // console.log(value);
+          console.log(value);
           const isChecked = images.some(
             (item) => item.hashCode === value.hashCode
           );
           return (
             <div
               key={idx}
-              className={`room-preview-img ${isChecked ? 'active' : ''}`}
+              className={`preview-img ${isChecked ? 'active' : ''}`}
               onClick={(e) => {
                 e.preventDefault();
                 handleCheck(value);
@@ -70,13 +71,13 @@ const AdminImageList = ({ data, handleDeleteImageModal }) => {
             >
               <img
                 src={`${VITE_SERVER_BASE_URL}${value.imagePath}`}
-                alt={`객실 이미지 ${idx + 1}`}
+                alt={`이미지 ${idx + 1}`}
               />
             </div>
           );
         })
       ) : (
-        <p>등록된 객실 이미지가 없습니다.</p>
+        <p>등록된 이미지가 없습니다.</p>
       )}
     </div>
   );
