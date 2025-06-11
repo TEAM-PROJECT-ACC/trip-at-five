@@ -18,7 +18,10 @@ import {
 import { Button } from '../../../../components';
 import { useMutation } from '@tanstack/react-query';
 import { HttpStatusCode } from 'axios';
-import { insertCartItem } from '../../../../services/cart/cartService.api';
+import {
+  deleteCartItem,
+  insertCartItem,
+} from '../../../../services/cart/cartService.api';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -48,10 +51,11 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
   const timeoutRef = useRef(null);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  const selectedItems = useAccomCartStore((state) => state.selectedItems);
-  const toggleItem = useAccomCartStore((state) => state.actions.toggleItem);
+  const { selectedItems, removedItems } = useAccomCartStore((state) => state);
+  const { resetSelectedCart, resetRemovedCart, toggleItem } =
+    useAccomCartStore();
 
-  const { mutate: syncCart } = useMutation({
+  const { mutate: insertCart } = useMutation({
     mutationKey: ['insertCartItem'],
     mutationFn: async (cartItem) => {
       const memSq = 2; // 추후 회원 데이터 조회해야함
@@ -65,7 +69,41 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
       // console.log(cartInfo);
       const { status } = await insertCartItem(cartInfo);
 
-      if (status !== HttpStatusCode.Ok) toast.error('장바구니 등록 실패');
+      if (status !== HttpStatusCode.Ok) {
+        toast.error('장바구니 등록 실패');
+        return;
+      }
+
+      return status;
+    },
+    onSuccess: (status, variable, context) => {
+      if (status === HttpStatusCode.Ok) resetRemovedCart();
+    },
+  });
+
+  const { mutate: deleteCart } = useMutation({
+    mutationKey: ['deleteCartItem'],
+    mutationFn: async (cartItem) => {
+      const memSq = 2;
+      const cartInfo = cartItem.map((cart, idx) => {
+        return {
+          roomNo: cart.roomSq,
+          memNo: memSq,
+        };
+      });
+
+      const { status } = await deleteCartItem(cartInfo);
+
+      if (status !== HttpStatusCode.Ok) {
+        toast.error('장바구니 제거 실패');
+        return;
+      }
+
+      return status;
+    },
+    onSuccess: (status, variable, context) => {
+      console.log(status);
+      if (status === HttpStatusCode.Ok) resetSelectedCart();
     },
   });
 
@@ -79,6 +117,8 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
     });
 
     if (alreadySelected) {
+      console.log(alreadySelected);
+      console.log(selectedItems);
       toast.error('장바구니에서 제외되었습니다.');
     } else {
       toast.success('장바구니에 추가되었습니다.');
@@ -93,19 +133,21 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
      * 타이머 사용해서 일정 시간동안
      * 상태에 변화가 없을 경우 API 호출
      */
-
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
     timeoutRef.current = setTimeout(() => {
       if (selectedItems.length > 0) {
-        syncCart(selectedItems);
+        insertCart(selectedItems);
+      }
+      if (removedItems.length > 0) {
+        deleteCart(removedItems);
       }
     }, 3000);
 
     return () => clearTimeout(timeoutRef.current);
-  }, [selectedItems]);
+  }, [selectedItems.length, removedItems.length]);
 
   return (
     <section className='room-list'>
