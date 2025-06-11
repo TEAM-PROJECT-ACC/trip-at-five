@@ -77,7 +77,7 @@
     }
   }
 
-  .room-image-list__container {
+  .image-list__container {
     width: 100%;
     display: flex;
     align-items: center;
@@ -85,7 +85,7 @@
     flex-wrap: wrap;
     @include admin-body;
 
-    .image-check-option__container {
+    .check-option__container {
       width: 100%;
       display: flex;
       align-items: center;
@@ -106,7 +106,7 @@
       }
     }
 
-    .room-preview-img {
+    .preview-img {
       width: 300px;
       height: 300px;
       border-radius: 16px;
@@ -130,7 +130,7 @@
   }
 }
 
-.delete-room-image-modal {
+.delete-image-modal {
   width: 500px;
   padding: 16px;
   display: flex;
@@ -139,7 +139,7 @@
     width: 100%;
     padding: 16px;
     text-align: center;
-    .delete-room-image-modal-message {
+    .delete-image-modal-message {
       font-size: 24px;
       strong {
         font-weight: 900;

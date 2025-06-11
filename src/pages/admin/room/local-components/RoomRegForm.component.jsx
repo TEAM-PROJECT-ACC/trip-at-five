@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import AdminInput from '../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
-import './RoomRegForm.style.scss';
 import {
   deleteImageAPI,
   deleteRoomAPI,
@@ -22,10 +21,10 @@ import {
   UPDATE_ROOM,
 } from './data/roomRegFrom.constant';
 import { FaTrashAlt } from '../../../../assets/icons/index';
-import { useModal } from '../../../../hooks';
 import { Modal } from '../../../../components';
 import AdminImageList from './AdminImageList.component';
 import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
+import './RoomRegForm.style.scss';
 
 /**
  *
@@ -474,16 +473,16 @@ const RoomRegForm = ({ accomId, roomId }) => {
       {isRoomImageDeleteModalOpen && (
         <Modal
           modalHandler={handleRoomImageDeleteModalOpen}
-          className='delete-room-image-modal'
+          className='delete-image-modal'
           useCloseIcon={true}
         >
-          <div className='delete-room-image-modal-message__container'>
-            <span className='delete-room-image-modal-message'>
+          <div className='delete-image-modal-message__container'>
+            <span className='delete-image-modal-message'>
               객실 이미지를 <strong>삭제</strong>하시겠습니까?
             </span>
           </div>
           <button
-            className='delete-room-image-modal-button'
+            className='delete-image-modal-button'
             onClick={() => handleDeleteImage(images)}
           >
             <FaTrashAlt />

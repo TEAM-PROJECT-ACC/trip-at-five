@@ -8,7 +8,9 @@ import {
   updateAdminAccomDetail,
   deleteAdminAccomDetail,
   createAdminAccom,
+  deleteAccomImageAPI,
 } from '../../../../services/accom/apiService';
+import { FaTrashAlt } from '../../../../assets/icons/index';
 import {
   FaSpa,
   FaSwimmer,
@@ -40,6 +42,14 @@ import {
 } from '../../../../assets/icons/ys/index';
 import './AccommodationForm.style.scss';
 import Script from '../../../accommodation/local-components/map/Script';
+import AdminImageList from '../../room/local-components/AdminImageList.component';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteImageAPI } from '../../../../services/room/roomService.api';
+import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
+import { toast, ToastContainer } from 'react-toastify';
+import { toastInfo } from '../../room/local-components/data/roomRegFrom.constant';
+import { Modal } from '../../../../components';
+import { HttpStatusCode } from 'axios';
 
 const accomTypeMap = {
   21: '모텔',
@@ -86,11 +96,12 @@ const etcFac = [
 ];
 
 const AccommodationForm = ({ accomDetail }) => {
+  const queryClient = useQueryClient();
   const { id } = useParams();
   const navigate = useNavigate();
   const mapRef = useRef(null);
   // 초기화
-  const [formData, setFormData] = useState({
+  const [accomData, setAccomData] = useState({
     accomSq: 0,
     accomName: '',
     accomPhone: '',
@@ -102,12 +113,17 @@ const AccommodationForm = ({ accomDetail }) => {
     accomLat: 0,
   });
 
+  const [isAccomImageDeleteModalOpen, handleAccomImageDeleteModalOpen] =
+    useState(false);
+  const [imageFileData, setImageFileData] = useState([]);
+  const { images } = useDeleteImageInfoStore((state) => state);
+
   const [word, setWord] = useState('');
   const [wordCount, setWordCount] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setAccomData((prev) => ({ ...prev, [name]: value }));
   };
 
   // 글자 수 세기
@@ -116,7 +132,7 @@ const AccommodationForm = ({ accomDetail }) => {
     let value = e.target.value;
 
     if (value.length <= 1330) {
-      setFormData((prev) => ({ ...prev, accomDesc: value }));
+      setAccomData((prev) => ({ ...prev, accomDesc: value }));
       setWordCount(value.length);
     }
   };
@@ -126,6 +142,43 @@ const AccommodationForm = ({ accomDetail }) => {
     room: [],
     etc: [],
   });
+
+  // 이미지 삭제
+  const { mutate: imageMutate } = useMutation({
+    mutationKey: ['deleteAccomImageList'],
+    mutationFn: async ({ deleteImageList }) => {
+      // console.log(deleteImageList);
+
+      const { status } = await deleteAccomImageAPI(id, deleteImageList);
+      if (status !== 200) throw new Error('에러발생');
+      return status;
+    },
+    onSuccess: (status, variables, context) => {
+      // MutationFn이 성공 시 실행 되는 곳
+      console.log('onSuccess', status, variables, context);
+      // 변이 성공 시 캐시 무효화로 객실 폼 데이터 갱신!
+      queryClient.invalidateQueries({ queryKey: ['deleteAccomImageList'] });
+
+      if (status === HttpStatusCode.Ok) {
+        successToastAlterFunc('이미지 삭제');
+        setTimeout(() => navigate(0), 2000);
+      }
+    },
+  });
+
+  // 이미지 처리 핸들러
+  const handleAccomImage = (e) => {
+    const files = Array.from(e.target.files);
+    setImageFileData(files);
+  };
+  const handleDeleteImageModal = (images) => {
+    // console.log(imageList);
+    if (images.length < 1) return;
+    handleAccomImageDeleteModalOpen(true);
+  };
+  const handleDeleteImage = (imageList) => {
+    imageMutate({ deleteImageList: { imageList } });
+  };
 
   // 시설정보 추가 핸들러
   const addFacHandler = (data) => {
@@ -167,8 +220,8 @@ const AccommodationForm = ({ accomDetail }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (accomDetail) {
-      setFormData({
-        ...formData,
+      setAccomData({
+        ...accomData,
         accomSq: accomDetail.accomSq || '',
         accomName: accomDetail.accomName || '',
         accomPhone: accomDetail.accomPhone || '',
@@ -198,19 +251,37 @@ const AccommodationForm = ({ accomDetail }) => {
   const handleUpdate = async () => {
     const updatedData = {
       accomSq: parseInt(id, 10),
-      accomName: formData.accomName,
-      accomDesc: formData.accomDesc,
-      accomLat: parseFloat(formData.accomLat),
-      accomLon: parseFloat(formData.accomLon),
-      accomAddr: formData.accomAddr,
-      accomPhone: formData.accomPhone,
+      accomName: accomData.accomName,
+      accomDesc: accomData.accomDesc,
+      accomLat: parseFloat(accomData.accomLat),
+      accomLon: parseFloat(accomData.accomLon),
+      accomAddr: accomData.accomAddr,
+      accomPhone: accomData.accomPhone,
       pubFacInfo: facList.pub.join(','),
       inRoomFacInfo: facList.room.join(','),
       etcFacInfo: facList.etc.join(','),
-      accomTypeNo: parseInt(formData.accomTypeNo, 10),
+      accomTypeNo: parseInt(accomData.accomTypeNo, 10),
     };
+
+    const formData = new FormData();
+
+    for (const [key, val] of Object.entries(updatedData)) {
+      if (val === 0 || val === '') {
+        errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
+        return;
+      }
+
+      formData.append(key, val);
+    }
+
+    if (imageFileData.length > 0) {
+      imageFileData.forEach((file) => formData.append('images', file));
+    }
+
+    console.log(Array.from(formData));
+
     try {
-      await updateAdminAccomDetail(updatedData);
+      await updateAdminAccomDetail(id, formData);
       alert('수정 완료');
       navigate('/admin/accommodations');
       window.scrollTo(0, 0);
@@ -235,20 +306,38 @@ const AccommodationForm = ({ accomDetail }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newData = {
-      accomName: formData.accomName,
-      accomDesc: formData.accomDesc,
-      accomLat: parseFloat(formData.accomLat),
-      accomLon: parseFloat(formData.accomLon),
-      accomAddr: formData.accomAddr,
-      accomPhone: formData.accomPhone,
+      accomName: accomData.accomName,
+      accomDesc: accomData.accomDesc,
+      accomLat: parseFloat(accomData.accomLat),
+      accomLon: parseFloat(accomData.accomLon),
+      accomAddr: accomData.accomAddr,
+      accomPhone: accomData.accomPhone,
       pubFacInfo: facList.pub.join(','),
       inRoomFacInfo: facList.room.join(','),
       etcFacInfo: facList.etc.join(','),
-      accomTypeNo: parseInt(formData.accomTypeNo, 10),
-      accomZipCode: formData.accomZipCode,
+      accomTypeNo: parseInt(accomData.accomTypeNo, 10),
+      accomZipCode: accomData.accomZipCode,
     };
+
+    const formData = new FormData();
+
+    for (const [key, val] of Object.entries(newData)) {
+      if (val === 0 || val === '') {
+        errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
+        return;
+      }
+
+      formData.append(key, val);
+    }
+
+    if (imageFileData.length > 0) {
+      imageFileData.forEach((file) => formData.append('images', file));
+    }
+
+    console.log(Array.from(formData));
+
     try {
-      await createAdminAccom(newData);
+      await createAdminAccom(formData);
       alert('등록 완료');
       navigate('/admin/accommodations');
       window.scrollTo(0, 0);
@@ -262,8 +351,8 @@ const AccommodationForm = ({ accomDetail }) => {
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(() => {
         const container = mapRef.current;
-        const centerLat = parseFloat(formData.accomLat) || 33.450701;
-        const centerLon = parseFloat(formData.accomLon) || 126.570667;
+        const centerLat = parseFloat(accomData.accomLat) || 33.450701;
+        const centerLon = parseFloat(accomData.accomLon) || 126.570667;
 
         const mapOption = {
           center: new window.kakao.maps.LatLng(centerLat, centerLon),
@@ -296,7 +385,7 @@ const AccommodationForm = ({ accomDetail }) => {
         });
 
         function updateAddressAndCoords(latlng) {
-          setFormData((prev) => ({
+          setAccomData((prev) => ({
             ...prev,
             accomLat: latlng.getLat(),
             accomLon: latlng.getLng(),
@@ -312,7 +401,7 @@ const AccommodationForm = ({ accomDetail }) => {
                 const jibunAddr = result[0].address?.address_name || '';
                 const zipCode = result[0].road_address?.zone_no || '';
 
-                setFormData((prev) => ({
+                setAccomData((prev) => ({
                   ...prev,
                   accomAddr: roadAddr || jibunAddr,
                   accomZipCode: zipCode,
@@ -325,210 +414,255 @@ const AccommodationForm = ({ accomDetail }) => {
     }
   };
 
+  /**
+   * 성공 시 toast 함수
+   * @param {*} message
+   */
+  const successToastAlterFunc = (message) => {
+    toast.success(`${message} 성공!`, toastInfo);
+  };
+
+  /**
+   * 실패 시 toast 함수
+   * @param {*} error
+   */
+  const errorToastAlterFunc = (error) => {
+    toast.error(error, toastInfo);
+  };
+
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       initKakaoMap();
     }
-  }, [formData.accomAddr]);
+  }, [accomData.accomAddr]);
 
   return (
-    <form
-      className='accom-form'
-      encType='multipart/form-data'
-      onSubmit={handleSubmit}
-    >
-      {/* 숙박업소 정보 등록 */}
-      <FormItem title='숙박업소 정보 등록'>
-        <select
-          className='accom-type-select'
-          name='accomTypeNo'
-          value={formData.accomTypeNo}
-          onChange={handleChange}
+    <>
+      <form
+        className='accom-form'
+        encType='multipart/form-data'
+        onSubmit={handleSubmit}
+      >
+        {/* 숙박업소 정보 등록 */}
+        <FormItem title='숙박업소 정보 등록'>
+          <select
+            className='accom-type-select'
+            name='accomTypeNo'
+            value={accomData.accomTypeNo}
+            onChange={handleChange}
+          >
+            {Object.entries(accomTypeMap).map(([key, value]) => (
+              <option
+                key={key}
+                value={key}
+              >
+                {value}
+              </option>
+            ))}
+          </select>
+          <AdminInput
+            type='text'
+            name='accomName'
+            className='accom-name'
+            placeholder={'숙박업소명을 입력해주세요'}
+            value={accomData.accomName}
+            onChange={handleChange}
+          />
+          <AdminInput
+            type='tel'
+            name='accomPhone'
+            className='accom-phone'
+            placeholder={"'-'없이 입력해주세요"}
+            value={accomData.accomPhone}
+            onChange={handleChange}
+          />
+        </FormItem>
+        {/* 숙박업소 이미지 등록 */}
+        <FormItem title='숙박업소 이미지 등록'>
+          <AdminInput
+            type='file'
+            multiple
+            name='imageList'
+            className='accom-image'
+            onChange={handleAccomImage}
+          />
+        </FormItem>
+        <FormItem>
+          <AdminImageList
+            data={accomDetail}
+            handleDeleteImageModal={handleDeleteImageModal}
+          />
+        </FormItem>
+        {/* 숙박업소 설명 */}
+        <FormItem
+          title='숙박업소 설명'
+          className='accom-desc__container'
         >
-          {Object.entries(accomTypeMap).map(([key, value]) => (
-            <option
-              key={key}
-              value={key}
+          <textarea
+            className='accom-desc'
+            name='accomDesc'
+            placeholder='숙박업소 설명을 작성해주세요...'
+            value={accomData.accomDesc}
+            onChange={checkWordCountHandler}
+          />
+          <span className='accom-desc-count'>
+            {wordCount >= 1330 && (
+              <span className='accom-desc-warning'>최대 1330자입니다!</span>
+            )}
+            <span>{wordCount}</span> / 1330자
+          </span>
+        </FormItem>
+        {/* 숙박업소 주소 */}
+        <FormItem
+          title='숙박업소 설명'
+          className='content__container'
+        >
+          <Script
+            async
+            src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
+              import.meta.env.VITE_KAKAO_JAVA_API
+            }&autoload=false&libraries=services`}
+            onLoad={() => {
+              if (window.kakao && window.kakao.maps) {
+                window.kakao.maps.load(() => {
+                  initKakaoMap();
+                });
+              }
+            }}
+          />
+          <div
+            className='map-area'
+            ref={mapRef}
+            style={{
+              width: '100%',
+              height: '500px',
+              borderRadius: '8px',
+            }}
+          ></div>
+          <div className='map-input'>
+            {/* 경도 */}
+            <input
+              type='hidden'
+              name='accomLon'
+              value={accomData.accomLon}
+              readOnly
+            />
+            {/* 위도 */}
+            <input
+              type='hidden'
+              name='accomLat'
+              value={accomData.accomLat}
+              readOnly
+            />
+
+            <AdminInput
+              type='text'
+              name='accomZipCode'
+              className='accom-zip-code'
+              placeholder={'우편번호'}
+              value={accomData.accomZipCode}
+              onChange={handleChange}
+            />
+            <AdminInput
+              type='text'
+              name='accomAddr'
+              className='accom-addr'
+              placeholder={'주소지'}
+              value={accomData.accomAddr}
+              onChange={handleChange}
+            />
+          </div>
+        </FormItem>
+        {/* 숙박업소 시설 정보 */}
+        <FormItem title='숙박업소 시설 정보'>
+          <div className='fac-content__container'>
+            {publicFac.map((value, idx) => (
+              <AccomFacButton
+                key={idx}
+                type='button'
+                data-category='pub'
+                title={value.title}
+                icon={value.icon}
+                onClick={addFacHandler}
+                active={facList.pub.includes(value.title)}
+              />
+            ))}
+          </div>
+          <div className='fac-content__container'>
+            {inRoomFac.map((value, idx) => (
+              <AccomFacButton
+                key={idx}
+                type='button'
+                data-category='room'
+                title={value.title}
+                icon={value.icon}
+                onClick={addFacHandler}
+                active={facList.room.includes(value.title)}
+              />
+            ))}
+          </div>
+          <div className='fac-content__container'>
+            {etcFac.map((value, idx) => (
+              <AccomFacButton
+                key={idx}
+                type='button'
+                data-category='etc'
+                title={value.title}
+                icon={value.icon}
+                onClick={addFacHandler}
+                active={facList.etc.includes(value.title)}
+              />
+            ))}
+          </div>
+        </FormItem>
+
+        {id ? (
+          <div className='accom-reg-button-group'>
+            <AdminPrimaryButton
+              type={'button'}
+              className={'accom-reg-button'}
+              onClick={handleUpdate}
             >
-              {value}
-            </option>
-          ))}
-        </select>
-        <AdminInput
-          type='text'
-          name='accomName'
-          className='accom-name'
-          placeholder={'숙박업소명을 입력해주세요'}
-          value={formData.accomName}
-          onChange={handleChange}
-        />
-        <AdminInput
-          type='tel'
-          name='accomPhone'
-          className='accom-phone'
-          placeholder={"'-'없이 입력해주세요"}
-          value={formData.accomPhone}
-          onChange={handleChange}
-        />
-      </FormItem>
-      {/* 숙박업소 이미지 등록 */}
-      <FormItem title='숙박업소 이미지 등록'>
-        <AdminInput
-          type='file'
-          multiple
-          name='accomImageList'
-          className='accom-image'
-        />
-      </FormItem>
-      {/* 숙박업소 설명 */}
-      <FormItem
-        title='숙박업소 설명'
-        className='accom-desc__container'
-      >
-        <textarea
-          className='accom-desc'
-          name='accomDesc'
-          placeholder='숙박업소 설명을 작성해주세요...'
-          value={formData.accomDesc}
-          onChange={checkWordCountHandler}
-        />
-        <span className='accom-desc-count'>
-          {wordCount >= 1330 && (
-            <span className='accom-desc-warning'>최대 1330자입니다!</span>
-          )}
-          <span>{wordCount}</span> / 1330자
-        </span>
-      </FormItem>
-      {/* 숙박업소 주소 */}
-      <FormItem
-        title='숙박업소 설명'
-        className='content__container'
-      >
-        <Script
-          async
-          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
-            import.meta.env.VITE_KAKAO_JAVA_API
-          }&autoload=false&libraries=services`}
-          onLoad={() => {
-            if (window.kakao && window.kakao.maps) {
-              window.kakao.maps.load(() => {
-                initKakaoMap();
-              });
-            }
-          }}
-        />
-        <div
-          className='map-area'
-          ref={mapRef}
-          style={{
-            width: '100%',
-            height: '500px',
-            borderRadius: '8px',
-          }}
-        ></div>
-        <div className='map-input'>
-          {/* 경도 */}
-          <input
-            type='hidden'
-            name='accomLon'
-            value={formData.accomLon}
-            readOnly
-          />
-          {/* 위도 */}
-          <input
-            type='hidden'
-            name='accomLat'
-            value={formData.accomLat}
-            readOnly
-          />
-
-          <AdminInput
-            type='text'
-            name='accomZipCode'
-            className='accom-zip-code'
-            placeholder={'우편번호'}
-            value={formData.accomZipCode}
-            onChange={handleChange}
-          />
-          <AdminInput
-            type='text'
-            name='accomAddr'
-            className='accom-addr'
-            placeholder={'주소지'}
-            value={formData.accomAddr}
-            onChange={handleChange}
-          />
-        </div>
-      </FormItem>
-      {/* 숙박업소 시설 정보 */}
-      <FormItem title='숙박업소 시설 정보'>
-        <div className='fac-content__container'>
-          {publicFac.map((value, idx) => (
-            <AccomFacButton
-              key={idx}
-              type='button'
-              data-category='pub'
-              title={value.title}
-              icon={value.icon}
-              onClick={addFacHandler}
-              active={facList.pub.includes(value.title)}
-            />
-          ))}
-        </div>
-        <div className='fac-content__container'>
-          {inRoomFac.map((value, idx) => (
-            <AccomFacButton
-              key={idx}
-              type='button'
-              data-category='room'
-              title={value.title}
-              icon={value.icon}
-              onClick={addFacHandler}
-              active={facList.room.includes(value.title)}
-            />
-          ))}
-        </div>
-        <div className='fac-content__container'>
-          {etcFac.map((value, idx) => (
-            <AccomFacButton
-              key={idx}
-              type='button'
-              data-category='etc'
-              title={value.title}
-              icon={value.icon}
-              onClick={addFacHandler}
-              active={facList.etc.includes(value.title)}
-            />
-          ))}
-        </div>
-      </FormItem>
-
-      {id ? (
-        <div className='accom-reg-button-group'>
+              수정
+            </AdminPrimaryButton>
+            <AdminPrimaryButton
+              type={'button'}
+              className={'accom-reg-button'}
+              onClick={handleDelete}
+            >
+              삭제
+            </AdminPrimaryButton>
+          </div>
+        ) : (
           <AdminPrimaryButton
-            type={'button'}
+            type={'submit'}
             className={'accom-reg-button'}
-            onClick={handleUpdate}
           >
-            수정
+            등록
           </AdminPrimaryButton>
-          <AdminPrimaryButton
-            type={'button'}
-            className={'accom-reg-button'}
-            onClick={handleDelete}
-          >
-            삭제
-          </AdminPrimaryButton>
-        </div>
-      ) : (
-        <AdminPrimaryButton
-          type={'submit'}
-          className={'accom-reg-button'}
+        )}
+      </form>
+      <ToastContainer />
+      {isAccomImageDeleteModalOpen && (
+        <Modal
+          modalHandler={handleAccomImageDeleteModalOpen}
+          className='delete-image-modal'
+          useCloseIcon={true}
         >
-          등록
-        </AdminPrimaryButton>
+          <div className='delete-image-modal-message__container'>
+            <span className='delete-image-modal-message'>
+              숙박업소 이미지를 <strong>삭제</strong>하시겠습니까?
+            </span>
+          </div>
+          <button
+            className='delete-image-modal-button'
+            onClick={() => handleDeleteImage(images)}
+          >
+            <FaTrashAlt />
+          </button>
+        </Modal>
       )}
-    </form>
+    </>
   );
 };
 
