@@ -34,17 +34,23 @@ export const selectAdminAccomList = async (keyword = '') => {
 // 관리자 숙박 상세 페이지
 export const selectAdminAcommDetail = async (accomSq) => {
   const response = await apiAxios.get(`/admin/accommodations/${accomSq}/edit`);
-  console.log(response.data);
+
   return response.data;
 };
 
 // 수정
-export const updateAdminAccomDetail = async (updatedAccomInfo) => {
+export const updateAdminAccomDetail = async (id, formData) => {
+  const accomSq = id;
   const response = await apiAxios.put(
-    `/admin/accommodations/${updatedAccomInfo.accomSq}/edit`,
-    updatedAccomInfo
+    `/admin/accommodations/${accomSq}/edit`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   );
-  return response.data;
+  return response;
 };
 
 // 삭제
@@ -55,11 +61,22 @@ export const deleteAdminAccomDetail = async (accomSq) => {
 
 // 등록
 export const createAdminAccom = async (formData) => {
-  console.log(Array.from(formData));
   const response = await apiAxios.post('/admin/accommodations/new', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return response;
+};
+
+// 숙박업소 이미지 삭제
+export const deleteAccomImageAPI = async (accomNo, deleteImageList) => {
+  const response = await apiAxios.delete(
+    `/admin/accommodations/${accomNo}/images`,
+    {
+      data: deleteImageList,
+    }
+  );
+
   return response;
 };

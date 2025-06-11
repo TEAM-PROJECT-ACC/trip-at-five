@@ -8,7 +8,9 @@ import {
   updateAdminAccomDetail,
   deleteAdminAccomDetail,
   createAdminAccom,
+  deleteAccomImageAPI,
 } from '../../../../services/accom/apiService';
+import { FaTrashAlt } from '../../../../assets/icons/index';
 import {
   FaSpa,
   FaSwimmer,
@@ -44,8 +46,10 @@ import AdminImageList from '../../room/local-components/AdminImageList.component
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteImageAPI } from '../../../../services/room/roomService.api';
 import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { toastInfo } from '../../room/local-components/data/roomRegFrom.constant';
+import { Modal } from '../../../../components';
+import { HttpStatusCode } from 'axios';
 
 const accomTypeMap = {
   21: '모텔',
@@ -145,7 +149,7 @@ const AccommodationForm = ({ accomDetail }) => {
     mutationFn: async ({ deleteImageList }) => {
       // console.log(deleteImageList);
 
-      const { status } = await deleteImageAPI(accomId, roomId, deleteImageList);
+      const { status } = await deleteAccomImageAPI(id, deleteImageList);
       if (status !== 200) throw new Error('에러발생');
       return status;
     },
@@ -157,10 +161,7 @@ const AccommodationForm = ({ accomDetail }) => {
 
       if (status === HttpStatusCode.Ok) {
         successToastAlterFunc('이미지 삭제');
-        setTimeout(
-          () => navigate(`/admin/accommodations/${accomId}/edit`),
-          2000
-        );
+        setTimeout(() => navigate(0), 2000);
       }
     },
   });
@@ -261,8 +262,26 @@ const AccommodationForm = ({ accomDetail }) => {
       etcFacInfo: facList.etc.join(','),
       accomTypeNo: parseInt(accomData.accomTypeNo, 10),
     };
+
+    const formData = new FormData();
+
+    for (const [key, val] of Object.entries(updatedData)) {
+      if (val === 0 || val === '') {
+        errorToastAlterFunc(`${key} 비어 있는 항목이 있습니다!`);
+        return;
+      }
+
+      formData.append(key, val);
+    }
+
+    if (imageFileData.length > 0) {
+      imageFileData.forEach((file) => formData.append('images', file));
+    }
+
+    console.log(Array.from(formData));
+
     try {
-      await updateAdminAccomDetail(updatedData);
+      await updateAdminAccomDetail(id, formData);
       alert('수정 완료');
       navigate('/admin/accommodations');
       window.scrollTo(0, 0);
@@ -400,7 +419,7 @@ const AccommodationForm = ({ accomDetail }) => {
    * @param {*} message
    */
   const successToastAlterFunc = (message) => {
-    toast.success(`객실 ${message} 성공!`, toastInfo);
+    toast.success(`${message} 성공!`, toastInfo);
   };
 
   /**
@@ -416,14 +435,6 @@ const AccommodationForm = ({ accomDetail }) => {
       initKakaoMap();
     }
   }, [accomData.accomAddr]);
-
-  useEffect(() => {
-    console.log(accomDetail);
-  }, []);
-
-  useEffect(() => {
-    console.log(imageFileData);
-  }, [imageFileData]);
 
   return (
     <>
@@ -477,7 +488,10 @@ const AccommodationForm = ({ accomDetail }) => {
           />
         </FormItem>
         <FormItem>
-          <AdminImageList data={accomDetail?.imageList} />
+          <AdminImageList
+            data={accomDetail}
+            handleDeleteImageModal={handleDeleteImageModal}
+          />
         </FormItem>
         {/* 숙박업소 설명 */}
         <FormItem
@@ -628,6 +642,7 @@ const AccommodationForm = ({ accomDetail }) => {
           </AdminPrimaryButton>
         )}
       </form>
+      <ToastContainer />
       {isAccomImageDeleteModalOpen && (
         <Modal
           modalHandler={handleAccomImageDeleteModalOpen}
