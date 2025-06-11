@@ -4,64 +4,89 @@ import Room from '../../../components/room-list/room/Room.component';
 import { usePaymentInfoStore } from '../../../states';
 import './PayArea.style.scss';
 import { useMutation } from '@tanstack/react-query';
-import { createResCodeAPI } from '../../../services/reservation/reservationService';
-import { useEffect } from 'react';
+
 import { VITE_BOOTPAY_KEY } from '../../../../env.config';
+import { createResCodeAPI } from '../../../services/reservation/reservationService';
+import { useNavigate } from 'react-router-dom';
 
 const PayArea = ({ className, roomInfo }) => {
+  const navigate = useNavigate();
   const { setResCode } = usePaymentInfoStore((state) => state.actions);
   const paymentState = usePaymentInfoStore((state) => state);
+  const memNo = 2; // 추후 회원번호 값
 
-  const { mutate } = useMutation({
-    mutationKey: ['resCode'],
+  const { mutate: resMutate } = useMutation({
+    mutationKey: ['resCode', roomInfo],
     mutationFn: async ({ resInfo }) => {
-      console.log(resInfo.paymentState);
-      await createResCodeAPI(resInfo.paymentState)
-        .then((res) => {
-          setResCode(res.data);
-          // return res; // return을 해줘야지 다음 then 구문에서 사용가능
-        })
-        .then(async (res) => {
-          let totalPay = 0;
-          // console.log(res.data); // 예약코드
-          try {
-            console.log(paymentState);
+      const resUserInfo = {
+        resEmail: resInfo.paymentState.resEmail,
+        resName: resInfo.paymentState.resName,
+        resPhone: resInfo.paymentState.resPhone,
+      };
 
-            // paymentState.roomInfo.map((value, idx) => totalPay += value.room[idx].)
+      const { data } = await createResCodeAPI(resUserInfo).then((res) => {
+        setResCode(res.data);
+        return res;
+      });
 
-            const response = await Bootpay.requestPayment({
-              application_id: VITE_BOOTPAY_KEY,
-              price: paymentState,
-              order_name: '테스트결제',
-              order_id: 'TEST_ORDER_ID',
-              pg: '다날',
-              method: '카드',
-              tax_free: 0,
-              user: {
-                id: '회원아이디',
-                username: '회원이름',
-                phone: '01000000000',
-                email: 'test@test.com',
-              },
-              items: roomInfo,
-              extra: {
-                open_type: 'iframe',
-                card_quota: '0,2,3',
-                escrow: false,
-              },
-            });
-          } catch (e) {
-            console.log('결제 오류', e.message);
-            switch (e.event) {
-              case 'cancel':
-                console.log('사용자가 결제 취소');
-                break;
-              case 'error':
-                console.log('PG 오류 : ', e.message);
-                break;
-            }
-          }
+      return data;
+    },
+    onSuccess: async (data, variable, context) => {
+      // console.log(variable);
+      const { paymentState } = variable.resInfo;
+      let totalPay = 0;
+      try {
+        paymentState.roomInfo.map(
+          (value, idx) => (totalPay += value.roomPrice)
+        );
+        // console.log(totalPay);
+        console.log(paymentState.roomInfo);
+
+        const items = paymentState.roomInfo.map((value, idx) => {
+          return {
+            id: value.roomNo,
+            name: `${value.accomName} - ${value.roomName}`,
+            qty: 1,
+            price: value.roomPrice,
+          };
         });
+
+        const response = await Bootpay.requestPayment({
+          application_id: VITE_BOOTPAY_KEY,
+          price: totalPay,
+          order_name: '여행다섯시 예약',
+          order_id: data,
+          pg: '이니시스',
+          method: '카드',
+          tax_free: 0,
+          user: {
+            id: memNo,
+            username: paymentState.resName,
+            phone: paymentState.resPhone,
+            email: paymentState.resEmail,
+          },
+          items: items,
+          extra: {
+            open_type: 'iframe',
+            card_quota: '0,2,3',
+            escrow: false,
+            separately_confirmed: true,
+            display_error_result: true,
+          },
+        });
+      } catch (e) {
+        console.log('결제 오류', e.message);
+        switch (e.event) {
+          case 'cancel':
+            console.log('사용자가 결제 취소');
+            break;
+          case 'error':
+            console.log('PG 오류 : ', e.message);
+            break;
+        }
+
+        navigate(-1);
+      }
     },
   });
 
@@ -71,7 +96,7 @@ const PayArea = ({ className, roomInfo }) => {
     // 예약코드 생성 API
 
     // console.log(state);
-    mutate({ resInfo: { paymentState } });
+    resMutate({ resInfo: { paymentState } });
 
     /*
 const resCode = 'testSeongJun';
