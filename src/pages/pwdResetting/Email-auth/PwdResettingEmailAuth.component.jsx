@@ -1,47 +1,76 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './PwdResettingEmailAuth.style.scss';
 import { ButtonPrimary } from '../../../components';
-import { useIsResetting } from '../../../states/pwdRestting/pwdResettingStore';
+import {
+	useIsResetting,
+	useResettingInfo,
+} from '../../../states/pwdRestting/pwdResettingStore';
 import { ResettingInput } from '../resetting-input/PwdResettingInput.component';
 import { ResttingTitle } from '../resetting-title/PwdResettingTitle.component';
 import { validateEmail } from '../../register/util/validate';
+import {
+	emailCodeCheck,
+	emailDuplicationCheck,
+	sendEmailCode,
+} from '../../../services/register/apiService';
 
 export function EmailAuth() {
-	const [email, setEmail] = useState(null);
-	const [validationCheck, setValidationCheck] = useState(false);
+	const { email, setEmail } = useResettingInfo();
+	const [setValidationCheck] = useState(false);
 	const [isSend, setIsSend] = useState(false);
 	const [emailCode, setEmailCode] = useState();
-	const { isTrue, setIsTrue, setIsFalse } = useIsResetting();
+	const { setIsTrue, setIsFalse } = useIsResetting();
 	const [error, setError] = useState(false);
 
-	const testCode = '1234';
-
-	/*이메일 인증코드 보내기  */
-	const sendCode = () => {
-		{
-			validationCheck != false && setIsSend(true);
-		}
-	};
-
 	/* 이메일 형식 체크  */
-	validateEmail(email);
-
 	const validateEmailCheck = (e) => {
 		const value = e.target.value;
 		setEmail(value);
-		if (!validateEmail(value)) {
-			setError('올바른 이메일 형식이 아닙니다.');
-			setValidationCheck(false);
+
+		if (value.lengt === 0) {
+			setError('');
+			if (!validateEmail(value)) {
+				setError('올바른 이메일 형식이 아닙니다.');
+				setValidationCheck(false);
+			} else {
+				setError(false);
+				setValidationCheck(true);
+			}
 		} else {
-			setError(false);
-			setValidationCheck(true);
+			setError('');
 		}
 	};
 
+	/*이메일 중복체크  */
+	const sendEmail = async () => {
+		try {
+			const response = await emailDuplicationCheck(email);
+			if (response.data == 0) {
+				setIsFalse();
+				console.log('가입한 이메일이 없습니다.');
+			} else {
+				// 	/*인증코드 보내기*/
+				setIsSend(true);
+				const result = await sendCode(email);
+			}
+		} catch (error) {
+			console.log('실패');
+		}
+	};
+
+	/* 인증코드 보내기*/
+	const sendCode = async (email) => {
+		const result = await sendEmailCode(email);
+		return result;
+	};
+
 	/* 인증코드 유효성 체크 부분 */
-	const codeCheck = () => {
-		const result = emailCode == testCode ? 'ok' : 'fail';
-		result == 'ok' && setIsTrue();
+	const codeCheck = async () => {
+		const result = await emailCodeCheck(email, emailCode);
+		console.log(result);
+		if (result.status === 200 && result.data === 'sussess') {
+			setIsTrue();
+		}
 	};
 
 	return (
@@ -75,7 +104,7 @@ export function EmailAuth() {
 
 			<ButtonPrimary
 				className={'email-auth'}
-				onClick={isSend ? codeCheck : sendCode}
+				onClick={isSend ? codeCheck : sendEmail}
 			>
 				이메일 인증
 			</ButtonPrimary>
