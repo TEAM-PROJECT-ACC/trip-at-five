@@ -21,3 +21,15 @@ export const deleteCartItem = async (cartInfo) => {
 
   return response;
 };
+
+/**
+ * 장바구니 목록 조회
+ * @param {*} memNo : 회원번호
+ * @returns
+ */
+export const findCartByMemNo = async (memNo) => {
+  console.log('memNo : ' + memNo);
+  const response = await apiAxios.get(`/carts/${memNo}`);
+
+  return response;
+};
