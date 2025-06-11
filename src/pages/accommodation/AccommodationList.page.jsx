@@ -46,6 +46,7 @@ const AccommodationList = () => {
 
         const data = await searchAccommodationByKeyword(params);
         setAccommodations(data);
+        window.scrollTo(0, 0);
       } catch (error) {
         console.error('숙박업소 데이터를 불러오는데 실패했습니다.', error);
       }

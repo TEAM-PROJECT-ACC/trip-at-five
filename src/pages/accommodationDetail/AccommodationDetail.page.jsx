@@ -18,7 +18,7 @@ import { Star } from '../../components/star-rating/components/star/Star.componen
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import { AccommodationDetailByAccomSq } from '../../services/accom/apiService';
+import { accommodationDetailByAccomSq } from '../../services/accom/apiService';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
@@ -201,7 +201,13 @@ const AccommodationDetail = () => {
   useEffect(() => {
     const fetchAccomDetail = async () => {
       try {
-        const data = await AccommodationDetailByAccomSq(id);
+        const data = await accommodationDetailByAccomSq(id);
+        if (data && data.roomList) {
+          data.roomList = data.roomList.map((room) => ({
+            ...room,
+            accomNo: data.accomNo,
+          }));
+        }
         setAccom(data);
         console.log('객실 리스트:', data.roomList);
         if (data && data.images && data.images.length > 0) {
@@ -297,7 +303,7 @@ const AccommodationDetail = () => {
       {/* 객실 목록 */}
 
       <RoomList
-        rooms={accom.roomList || []}
+        rooms={accom.roomList}
         selectedFacilities={[
           ...(accom.inRoomFacInfo
             ? accom.inRoomFacInfo.split(',').map((f) => f.trim())
@@ -310,8 +316,8 @@ const AccommodationDetail = () => {
         className='empty_blank'
         id='ancher-review'
       ></div>
-      {/* 후기 섹션 */}
 
+      {/* 후기 섹션 */}
       <section className='review-section'>
         <div className='review-section__header'>
           <div className='acc-detail-section__title'>이용 후기</div>
@@ -335,7 +341,7 @@ const AccommodationDetail = () => {
             >
               <div className='accom-modal-container'>
                 <div className='accom-modal-title'>
-                  이번 여행은 어떠쎴나요?
+                  이번 여행은 어떠셨습니까?
                   <br />
                   여행에 대한 짫은 후기를 편하게 남겨주세요
                 </div>

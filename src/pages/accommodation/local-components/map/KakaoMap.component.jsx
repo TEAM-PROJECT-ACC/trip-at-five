@@ -7,7 +7,7 @@ import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 
-export const KakaoMap = ({ onClose }) => {
+export const KakaoMap = ({ onClose, accommodations }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
 
@@ -63,23 +63,23 @@ export const KakaoMap = ({ onClose }) => {
 
     let openOverlayId = null;
 
-    const filteredData = accomData.accommodation_tb
+    const filteredData = (accommodations ?? [])
       .map((item) => {
-        const lat = item.accom_lat;
-        const lon = item.accom_lon;
+        const lat = item.accomLat;
+        const lon = item.accomLon;
 
         if (lat == null || lon == null) return null;
-        const minRoomPrice = Math.min(
-          ...item.rooms.map((room) => room.room_price)
-        );
+
+        const minRoomPrice = item.roomPrice;  
+
         if (minRoomPrice < minPrice || minRoomPrice > maxPrice) return null;
+
         return {
-          id: item.accom_sq,
-          name: item.accom_name,
-          address: item.accom_location,
-          rating: item.rooms.length * 100,
-          checkIn: '15:00',
-          checkOut: '11:00',
+          id: item.accomSq,
+          name: item.accomName,
+          address: item.accomAddr,
+          checkIn: item.roomChkIn,
+          checkOut: item.roomChkOut,
           price: minRoomPrice,
           lat,
           lon,
@@ -204,7 +204,7 @@ export const KakaoMap = ({ onClose }) => {
         <FilterPanel filterHook={filterHook} />
       </div>
       <div className='acc-list-map'>
-        <MapInnerList />
+        <MapInnerList accommodations={accommodations}/>
         <div
           className='map'
           ref={mapRef}

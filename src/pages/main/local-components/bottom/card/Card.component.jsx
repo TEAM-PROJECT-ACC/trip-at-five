@@ -7,6 +7,7 @@ const Card = ({ cardText, ...props }) => {
 
   const setKeywordStateHandler = () => {
     setKeywordState(cardText);
+    window.scrollTo(0, 0);
   };
 
   return (

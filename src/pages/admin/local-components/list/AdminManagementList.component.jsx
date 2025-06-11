@@ -12,7 +12,7 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
   const [pageNationProps, setPageNationProps] = useState(() => {
     return {
       className: '',
-      totalCount: 150,
+      totalCount: dataList.length,
       pageLength: 10,
       currentPage: 1,
       numOfRows: 10,
@@ -30,13 +30,26 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
     navigate(location.pathname + '?currentPage=' + pageNo);
   };
 
+  const [displayData, setDisplayData] = useState([]);
+  useEffect(() => {
+    setPageNationProps((prev) => ({
+      ...prev,
+      totalCount: dataList.length,
+    }));
+
+    const startIdx =
+      (pageNationProps.currentPage - 1) * pageNationProps.pageLength;
+    const endIdx = startIdx + pageNationProps.pageLength;
+    setDisplayData(dataList.slice(startIdx, endIdx));
+  }, [dataList, pageNationProps.currentPage, pageNationProps.pageLength]);
+
   return (
     <>
       <div className='admin-main-body'>
         <table className='admin-table'>
           <AdminTableHead columnList={columnList} />
           <AdminTableBody
-            dataList={dataList}
+            dataList={displayData}
             onClickRow={onClickRow}
           />
         </table>
