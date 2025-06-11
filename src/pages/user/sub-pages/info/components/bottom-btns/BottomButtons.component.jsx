@@ -23,7 +23,7 @@ export const BottomButtons = () => {
 	};
 
 	const sendUserInfo = async () => {
-		if (initialState.isEmailCodeCheck) {
+		if (initialState.isEmailCodeCheck ) {
 			const reuslt = await userInfoUpdate(userUpdateTest);
 			if (reuslt.status === 200 && reuslt.data === 1) {
 				successAlert('회원정보가 수정되었습니다.');
