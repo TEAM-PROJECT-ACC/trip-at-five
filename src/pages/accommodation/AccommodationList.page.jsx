@@ -41,11 +41,19 @@ const AccommodationList = () => {
 
     if (selectedFacilities.length > 0) {
       const allFacilities = [
-        ...(item.pubFacInfo ? item.pubFacInfo.split(',').map(f => f.trim()) : []),
-        ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map(f => f.trim()) : []),
-        ...(item.etcFacInfo ? item.etcFacInfo.split(',').map(f => f.trim()) : []),
+        ...(item.pubFacInfo
+          ? item.pubFacInfo.split(',').map((f) => f.trim())
+          : []),
+        ...(item.inRoomFacInfo
+          ? item.inRoomFacInfo.split(',').map((f) => f.trim())
+          : []),
+        ...(item.etcFacInfo
+          ? item.etcFacInfo.split(',').map((f) => f.trim())
+          : []),
       ];
-      const hasAllSelected = selectedFacilities.every(facility => allFacilities.includes(facility));
+      const hasAllSelected = selectedFacilities.every((facility) =>
+        allFacilities.includes(facility)
+      );
       if (!hasAllSelected) return false;
     }
 
@@ -62,7 +70,7 @@ const AccommodationList = () => {
         keyword,
         checkIn,
         checkOut,
-        numberOfPeople,
+        guests: numberOfPeople,
         page: currentPage - 1,
         size: 10,
       };
@@ -76,26 +84,26 @@ const AccommodationList = () => {
         keyword,
         checkIn,
         checkOut,
-        numberOfPeople,
+        guests: numberOfPeople,
         page: 0,
-        size: 9999, 
+        size: 9999,
       };
       const data = await searchAccommodationByKeyword(params);
+      console.log('fetchAllData response:', data);
       setAllAccommodations(data);
     };
 
     fetchData();
     fetchAllData();
   }, [currentPage, keyword, checkIn, checkOut, numberOfPeople]);
-  
+
   return (
     <PageContainer>
-      <div className='search-bar'>
-      </div>
+      <div className='search-bar'></div>
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>
           <MapButton
-            accommodations={allAccommodations}
+            allAccommodations={allAccommodations}
             filterHook={filterHook}
           />
           <FilterPanel
@@ -105,7 +113,7 @@ const AccommodationList = () => {
         </aside>
         <div className='list-section'>
           <AccommodationListBox
-            accommodations={filteredAccommodations}
+            filteredAccommodations={filteredAccommodations}
             filterHook={filterHook}
           />
           <Pagination

@@ -2,7 +2,7 @@ import { KakaoMap } from './KakaoMap.component';
 import { useState, useEffect } from 'react';
 import './mapButton.style.scss';
 
-const MapButton = ({ accommodations }) => {
+const MapButton = ({ allAccommodations }) => {
   const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const MapButton = ({ accommodations }) => {
         {showMap && (
           <KakaoMap
             onClose={() => setShowMap(false)}
-            accommodations={accommodations}
+            allAccommodations={allAccommodations}
           />
         )}
       </div>

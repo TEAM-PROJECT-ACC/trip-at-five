@@ -6,51 +6,43 @@ import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 import { useAccomSearchStore } from '../../../../states';
-import { shallow } from 'zustand/shallow';
 import { useNavigate } from 'react-router-dom';
 
-export const KakaoMap = ({ onClose, accommodations }) => {
+export const KakaoMap = ({ onClose, allAccommodations = [] }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
   const navigate = useNavigate();
 
   const filterHook = useFilterState();
   const { filter } = filterHook;
-  const { priceRange,selectedCategory, selectedFacilities } = filter;
+  const { priceRange, selectedCategory, selectedFacilities } = filter;
 
   const keyword = useAccomSearchStore.getState().keyword;
 
-  // 단순 지역명일 경우 중심지(시청, 도청) 위도, 경도으로 설정
-  const regionCenters = {
-    서울특별시: { lat: 37.5665, lon: 126.978, locId: 11 },
-    부산광역시: { lat: 35.1796, lon: 129.0756, locId: 26 },
-    대구광역시: { lat: 35.8714, lon: 128.6014, locId: 27 },
-    인천광역시: { lat: 37.4563, lon: 126.7052, locId: 28 },
-    광주광역시: { lat: 35.1595, lon: 126.8526, locId: 29 },
-    대전광역시: { lat: 36.3504, lon: 127.3845, locId: 30 },
-    울산광역시: { lat: 35.5384, lon: 129.3114, locId: 31 },
-    경기도: { lat: 37.4138, lon: 127.5183, locId: 41 },
-    충청북도: { lat: 36.6357, lon: 127.4917, locId: 43 },
-    충청남도: { lat: 36.5184, lon: 126.8, locId: 44 },
-    전라남도: { lat: 34.8161, lon: 126.463, locId: 46 },
-    경상북도: { lat: 36.5756, lon: 128.5056, locId: 47 },
-    경상남도: { lat: 35.4606, lon: 128.2132, locId: 48 },
-    제주특별자치도: { lat: 33.4996, lon: 126.5312, locId: 50 },
-    강원특별자치도: { lat: 37.8228, lon: 128.1555, locId: 51 },
-    전북특별자치도: { lat: 35.82, lon: 127.1088, locId: 52 },
-    세종특별자치시: { lat: 36.48, lon: 127.289, locId: 36110 },
-  };
-  const filteredAccommodations = accommodations.filter(item => {
+  // 필터 기능
+  const filteredAccommodations = allAccommodations.filter((item) => {
     // 카테고리
-    if (selectedCategory && item.accomTypeNo !== selectedCategory) return false;
+    if (
+      selectedCategory &&
+      Number(item.accomTypeNo) !== Number(selectedCategory)
+    )
+      return false;
     // 시설
     if (selectedFacilities.length > 0) {
       const allFacilities = [
-        ...(item.pubFacInfo ? item.pubFacInfo.split(',').map(f => f.trim()) : []),
-        ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map(f => f.trim()) : []),
-        ...(item.etcFacInfo ? item.etcFacInfo.split(',').map(f => f.trim()) : []),
+        ...(item.pubFacInfo
+          ? item.pubFacInfo.split(',').map((f) => f.trim())
+          : []),
+        ...(item.inRoomFacInfo
+          ? item.inRoomFacInfo.split(',').map((f) => f.trim())
+          : []),
+        ...(item.etcFacInfo
+          ? item.etcFacInfo.split(',').map((f) => f.trim())
+          : []),
       ];
-      const hasAllSelected = selectedFacilities.every(facility => allFacilities.includes(facility));
+      const hasAllSelected = selectedFacilities.every((facility) =>
+        allFacilities.includes(facility)
+      );
       if (!hasAllSelected) return false;
     }
     // 가격
@@ -61,29 +53,17 @@ export const KakaoMap = ({ onClose, accommodations }) => {
     return true;
   });
 
-  const calculateMapCenterLevel = (accommodations, keyword) => {
-    const regionNames = accommodations.map((item) =>
-      item.accomAddr ? item.accomAddr.split(' ')[0] : null
-    );
-    
-    for (const regionName of regionNames) {
-      if (regionName && regionCenters[regionName]) {
-        if (regionName === keyword) {
-          const region = regionCenters[regionName];
-          return { centerLat: region.lat, centerLon: region.lon, mapLevel: 9 };
-        }
-      }
-    }
-    
-   const groupByLocation = {};
+  const calculateMapCenterLevel = (accommodations) => {
+    const groupByLocation = {};
     accommodations.forEach((item) => {
-      if (item.locId !== null) {
+      console.log(item);
+      if (item.locId != null) {
         groupByLocation[item.locId] = groupByLocation[item.locId] || [];
         groupByLocation[item.locId].push(item);
       }
     });
 
-   const locIds = Object.keys(groupByLocation);
+    const locIds = Object.keys(groupByLocation);
 
     if (locIds.length === 1) {
       const regionAccoms = groupByLocation[locIds[0]];
@@ -93,13 +73,34 @@ export const KakaoMap = ({ onClose, accommodations }) => {
       const avgLat = sumLat / regionAccoms.length;
       const avgLon = sumLon / regionAccoms.length;
 
-      console.log('Single region:', avgLat, avgLon);
+      console.log('단일 지역:', locIds[0], '평균 좌표:', avgLat, avgLon);
 
-      return { centerLat: avgLat, centerLon: avgLon, mapLevel: 10 };
+      const distances = regionAccoms.map((accom) => {
+        const distance = getDistance(
+          avgLat,
+          avgLon,
+          accom.accomLat,
+          accom.accomLon
+        );
+
+        return distance;
+      });
+      const maxDistance = distances.length > 0 ? Math.max(...distances) : 0;
+      console.log('최대거리 (km):', maxDistance.toFixed(2) + 'km');
+
+      let mapLevel = 6;
+      if (maxDistance >= 4.99 && maxDistance <= 10) mapLevel = 8;
+      else if (maxDistance > 10 && maxDistance <= 30) mapLevel = 9;
+      else if (maxDistance > 30 && maxDistance <= 100) mapLevel = 11;
+
+      console.log('맵레벨 (single region):', mapLevel);
+
+      return { centerLat: avgLat, centerLon: avgLon, mapLevel: mapLevel };
     }
 
     // 지역 평균 위도 경도 계산
     const regionCenterLonLat = [];
+
     locIds.forEach((locId) => {
       const regionAccoms = groupByLocation[locId];
       const sumLat = regionAccoms.reduce((sum, curr) => sum + curr.accomLat, 0); // sum 초기값=0
@@ -108,16 +109,20 @@ export const KakaoMap = ({ onClose, accommodations }) => {
       const avgLat = sumLat / regionAccoms.length;
       const avgLon = sumLon / regionAccoms.length;
 
-      regionCenterLonLat.push([avgLat, avgLon]);
+      if (avgLat >= 33 && avgLat <= 39 && avgLon >= 124 && avgLon <= 132) {
+        // 대한민국 범위 체크
+        regionCenterLonLat.push({ locId, avgLat, avgLon });
+      }
+      console.log(`지역 ${locId} 평균 좌표:`, avgLat, avgLon);
     });
 
     const sumCenterLat = regionCenterLonLat.reduce(
-      (sum, curr) => sum + curr[0],
+      (sum, curr) => sum + curr.avgLat,
       0
     );
 
     const sumCenterLon = regionCenterLonLat.reduce(
-      (sum, curr) => sum + curr[1],
+      (sum, curr) => sum + curr.avgLon,
       0
     );
 
@@ -125,22 +130,35 @@ export const KakaoMap = ({ onClose, accommodations }) => {
     const centerLat = sumCenterLat / regionCenterLonLat.length;
     const centerLon = sumCenterLon / regionCenterLonLat.length;
 
-    console.log("CenterLat:", centerLat, "CenterLon:", centerLon);
-
+    console.log('CenterLat:', centerLat, 'CenterLon:', centerLon);
+    /*
     const distances = regionCenterLonLat.map((region) =>
-      getDistance(centerLat, centerLon, region[0], region[1])
+      getDistance(centerLat, centerLon, region.avgLat, region.avgLon)
     );
+    */
+    const distances = regionCenterLonLat.map((region) => {
+      const distance = getDistance(
+        centerLat,
+        centerLon,
+        region.avgLat,
+        region.avgLon
+      );
+      console.log(
+        `지역 ${region.locId} 중심까지 거리: ${distance.toFixed(2)} km`
+      );
+      return distance;
+    });
+    const avgDistance =
+      distances.length > 0
+        ? distances.reduce((sum, dis) => sum + dis, 0) / distances.length
+        : 0;
+    console.log('Average Distance (km):', avgDistance);
 
-    const avgDistance = distances.length > 0
-    ? distances.reduce((sum, dis) => sum + dis, 0) / distances.length
-    : 0;
-    console.log("Average Distance (km):", avgDistance);
+    let mapLevel = 11;
+    if (avgDistance >= 100 && avgDistance >= 150) mapLevel = 13;
+    else if (avgDistance >= 70 && avgDistance < 100) mapLevel = 12;
 
-    let mapLevel = 9;
-    if (avgDistance >= 150) mapLevel = 13;
-    else if (avgDistance >= 100 && avgDistance < 150) mapLevel = 12;
-
-    console.log("Calculated mapLevel:", mapLevel);
+    console.log('Calculated mapLevel:', mapLevel);
 
     return { centerLat, centerLon, mapLevel };
   };
@@ -165,14 +183,14 @@ export const KakaoMap = ({ onClose, accommodations }) => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
-  
+
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
 
     const mapContainer = mapRef.current;
 
     if (!window.kakao || !window.kakao.maps) return;
- 
+
     const { centerLat, centerLon, mapLevel } = calculateMapCenterLevel(
       filteredAccommodations,
       keyword
@@ -239,6 +257,8 @@ export const KakaoMap = ({ onClose, accommodations }) => {
           price: minRoomPrice,
           lat,
           lon,
+          locId: item.locId,
+          accomTypeNo: item.accomTypeNo,
         };
       })
       .filter(Boolean);
@@ -268,14 +288,13 @@ export const KakaoMap = ({ onClose, accommodations }) => {
 
       box.addEventListener('click', (e) => {
         e.stopPropagation();
-        navigate(`/accommodations/${accom.id}`);  
+        navigate(`/accommodations/${accom.id}`);
       });
 
       const overlay = new kakao.maps.CustomOverlay({
         position,
         content: container,
         yAnchor: 0.3,
-        // zIndex: 1000 + idx,
       });
 
       overlay.setMap(map);
@@ -290,9 +309,6 @@ export const KakaoMap = ({ onClose, accommodations }) => {
           el.style.visibility = 'hidden';
         });
 
-        // document.querySelectorAll('.price-bubble').forEach((el) => {
-        //   el.style.zIndex = '101';
-        // });
         if (openOverlayId === accom.id) {
           openOverlayId = null;
         } else {

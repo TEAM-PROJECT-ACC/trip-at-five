@@ -2,12 +2,12 @@ import React from 'react';
 import AccommodationCard from './card/AccommodationCard.component';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 
-const AccommodationListBox = ({ accommodations, filterHook }) => {
+const AccommodationListBox = ({ filteredAccommodations, filterHook }) => {
   const { filter } = filterHook;
 
   return (
     <ul className='accom-list-ul'>
-      {accommodations.map((accom, idx) => (
+      {filteredAccommodations.map((accom, idx) => (
         <React.Fragment key={accom.accomSq || idx}>
           <AccommodationCard
             accom={accom}
