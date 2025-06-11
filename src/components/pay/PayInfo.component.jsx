@@ -9,10 +9,7 @@ const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
     console.log(roomInfo);
     let total = 0;
     roomInfo?.map((value) => {
-      // console.log(totalPrice);
-      // console.log(value.rooms[0].room_price);
-      // totalPrice += value.rooms[0].room_price;
-      total += value.rooms[0].room_price;
+      total += value.roomPrice;
     });
     setTotalPrice(total);
   }, [resState, roomInfo]);
@@ -25,12 +22,9 @@ const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
           <ul>
             {roomInfo?.map((value, idx) => (
               <li key={idx}>
-                <span>{value.rooms[0].room_name}</span>
+                <span>{value.roomName}</span>
                 <span>
-                  <span>
-                    {value.rooms[0].room_price.toLocaleString('ko-KR')}
-                  </span>
-                  원
+                  <span>{value.roomPrice.toLocaleString('ko-KR')}</span>원
                 </span>
               </li>
             ))}

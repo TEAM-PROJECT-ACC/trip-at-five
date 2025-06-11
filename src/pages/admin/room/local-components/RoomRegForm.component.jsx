@@ -120,7 +120,7 @@ const RoomRegForm = ({ accomId, roomId }) => {
     },
     onSuccess: (status, variables, context) => {
       // MutationFn이 성공 시 실행 되는 곳
-      console.log('onSuccess', status, variables, context);
+      // console.log('onSuccess', status, variables, context);
       // 변이 성공 시 캐시 무효화로 객실 폼 데이터 갱신!
       queryClient.invalidateQueries({ queryKey: ['roomInfo'] });
 

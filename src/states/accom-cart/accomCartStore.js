@@ -1,37 +1,30 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 const initialState = {
   selectedItems: [],
+  removedItems: [],
 };
 
-export const useAccomCartStore = create((set, get) => ({
-  ...initialState,
-  actions: {
-    toggleItem: (item) => {
-      const selectedItems = get().selectedItems;
-      const idx = selectedItems.findIndex(
-        (i) =>
-          i.accomNo === item.accomNo &&
-          i.roomSq === item.roomSq &&
-          i.roomPrice === item.roomPrice
-      );
-      if (idx !== -1) {
-        // 이미 존재 => 삭제
-        set({
-          selectedItems: selectedItems.filter(
-            (i) =>
-              !(
-                i.accomNo === item.accomNo &&
-                i.roomSq === item.roomSq &&
-                i.roomPrice === item.roomPrice
-              )
-          ),
-        });
-      } else {
-        // 없으면 => 추가
-        set({ selectedItems: [...selectedItems, item] });
-      }
-    },
-    resetCart: () => set(initialState),
-  },
-}));
+export const useAccomCartStore = create(
+  persist(
+    (set, get) => ({
+      ...initialState,
+      toggleItem: (item) => {
+        const selectedItems = get().selectedItems;
+        const removedItems = get().removedItems;
+        const idx = selectedItems.findIndex((i) => i.roomSq === item.roomSq);
+
+        if (idx !== -1) set({ removedItems: [...removedItems, item] });
+        else set({ selectedItems: [...selectedItems, item] });
+      },
+      resetSelectedCart: () =>
+        set({ selectedItems: initialState.selectedItems }),
+      resetRemovedCart: () => set({ removedItems: initialState.removedItems }),
+    }),
+    {
+      name: 'accomCartStore',
+      getStorage: () => localStorage,
+    }
+  )
+);
