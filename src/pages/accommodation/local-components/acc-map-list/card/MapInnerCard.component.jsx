@@ -1,11 +1,18 @@
 import React from 'react';
 import './mapInnerCard.style.scss';
+import { useNavigate } from 'react-router-dom';
 
 const MapInnerCard = ({ accom }) => {
   const price = accom.price != null ? accom.price.toLocaleString() : '0';
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/accommodations/${accom.id}`);
+  };
+
   return (
     <>
-      <li className='acc-list__box'>
+      <li className='acc-list__box' onClick={handleCardClick}>
         <div className='acc-list-img'>
           <img
             src={accom.thumbnail}

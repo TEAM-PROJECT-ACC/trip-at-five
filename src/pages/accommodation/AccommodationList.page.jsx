@@ -20,47 +20,82 @@ const AccommodationList = () => {
   const filterHook = useFilterState();
   const { setCurrentPage, filter } = filterHook;
 
+  const keyword = useAccomSearchStore.getState().keyword;
+  const checkIn = useAccomSearchStore.getState().checkIn;
+  const checkOut = useAccomSearchStore.getState().checkOut;
+  const numberOfPeople = useAccomSearchStore.getState().numberOfPeople;
+
   const pageSize = 10;
 
+  // 숙박목록용 데이터
   const [accommodations, setAccommodations] = useState([]);
+  // 모달 안 목록용 데이터
+  const [allAccommodations, setAllAccommodations] = useState([]);
 
-  const { currentPage } = filter;
+  const { currentPage, selectedCategory, selectedFacilities } = filter;
 
   const [minPrice, maxPrice] = filter.priceRange;
 
+  const filteredAccommodations = accommodations.filter((item) => {
+    if (selectedCategory && item.accomTypeNo !== selectedCategory) return false;
+
+    if (selectedFacilities.length > 0) {
+      const allFacilities = [
+        ...(item.pubFacInfo ? item.pubFacInfo.split(',').map(f => f.trim()) : []),
+        ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map(f => f.trim()) : []),
+        ...(item.etcFacInfo ? item.etcFacInfo.split(',').map(f => f.trim()) : []),
+      ];
+      const hasAllSelected = selectedFacilities.every(facility => allFacilities.includes(facility));
+      if (!hasAllSelected) return false;
+    }
+
+    const minRoomPrice = item.roomPrice;
+    if (minRoomPrice < minPrice || minRoomPrice > maxPrice) return false;
+
+    return true;
+  });
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const { keyword, checkIn, checkOut, tripDay, numberOfPeople } =
-          useAccomSearchStore.getState();
+      // 기존 페이지네이션 데이터 (AccommodationListBox)
+      const params = {
+        keyword,
+        checkIn,
+        checkOut,
+        numberOfPeople,
+        page: currentPage - 1,
+        size: 10,
+      };
+      const data = await searchAccommodationByKeyword(params);
+      setAccommodations(data);
+    };
 
-        const params = {
-          keyword,
-          checkIn: formatDateForApi(checkIn),
-          checkOut: formatDateForApi(checkOut),
-          guests: numberOfPeople,
-          page: currentPage - 1,
-          size: pageSize,
-        };
-
-        const data = await searchAccommodationByKeyword(params);
-        setAccommodations(data);
-        window.scrollTo(0, 0);
-      } catch (error) {
-        console.error('숙박업소 데이터를 불러오는데 실패했습니다.', error);
-      }
+    const fetchAllData = async () => {
+      // 전체 데이터 (KakaoMap)
+      const params = {
+        keyword,
+        checkIn,
+        checkOut,
+        numberOfPeople,
+        page: 0,
+        size: 9999, 
+      };
+      const data = await searchAccommodationByKeyword(params);
+      setAllAccommodations(data);
     };
 
     fetchData();
-  }, [currentPage]);
-
+    fetchAllData();
+  }, [currentPage, keyword, checkIn, checkOut, numberOfPeople]);
+  
   return (
     <PageContainer>
-      <div className='search-bar'></div>
+      <div className='search-bar'>
+      </div>
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>
           <MapButton
-            accommodations={accommodations}
+            accommodations={allAccommodations}
             filterHook={filterHook}
           />
           <FilterPanel
@@ -70,7 +105,7 @@ const AccommodationList = () => {
         </aside>
         <div className='list-section'>
           <AccommodationListBox
-            accommodations={accommodations}
+            accommodations={filteredAccommodations}
             filterHook={filterHook}
           />
           <Pagination

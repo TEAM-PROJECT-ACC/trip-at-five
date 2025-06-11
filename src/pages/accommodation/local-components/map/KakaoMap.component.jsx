@@ -6,14 +6,19 @@ import { TiDelete } from '../../../../assets/icons/ys/index';
 import Script from './Script';
 import { useFilterState } from '../../hooks/useFilterState.hook';
 import { useAccomSearchStore } from '../../../../states';
+import { shallow } from 'zustand/shallow';
+import { useNavigate } from 'react-router-dom';
 
 export const KakaoMap = ({ onClose, accommodations }) => {
   const mapRef = useRef();
   const kakaoMap = useRef(null);
+  const navigate = useNavigate();
 
   const filterHook = useFilterState();
   const { filter } = filterHook;
-  const { priceRange } = filter;
+  const { priceRange,selectedCategory, selectedFacilities } = filter;
+
+  const keyword = useAccomSearchStore.getState().keyword;
 
   // 단순 지역명일 경우 중심지(시청, 도청) 위도, 경도으로 설정
   const regionCenters = {
@@ -35,42 +40,74 @@ export const KakaoMap = ({ onClose, accommodations }) => {
     전북특별자치도: { lat: 35.82, lon: 127.1088, locId: 52 },
     세종특별자치시: { lat: 36.48, lon: 127.289, locId: 36110 },
   };
+  const filteredAccommodations = accommodations.filter(item => {
+    // 카테고리
+    if (selectedCategory && item.accomTypeNo !== selectedCategory) return false;
+    // 시설
+    if (selectedFacilities.length > 0) {
+      const allFacilities = [
+        ...(item.pubFacInfo ? item.pubFacInfo.split(',').map(f => f.trim()) : []),
+        ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map(f => f.trim()) : []),
+        ...(item.etcFacInfo ? item.etcFacInfo.split(',').map(f => f.trim()) : []),
+      ];
+      const hasAllSelected = selectedFacilities.every(facility => allFacilities.includes(facility));
+      if (!hasAllSelected) return false;
+    }
+    // 가격
+    const [minPrice, maxPrice] = priceRange;
+    const minRoomPrice = item.roomPrice;
+    if (minRoomPrice < minPrice || minRoomPrice > maxPrice) return false;
+
+    return true;
+  });
+
   const calculateMapCenterLevel = (accommodations, keyword) => {
-    const regionNames = accommodations.map((item) => {
-      if (item.accomAddr) {
-        return item.accomAddr.split(' ')[0];
-      }
-      return null;
-    });
-    // keyword 단순 지역명인 경우
+    const regionNames = accommodations.map((item) =>
+      item.accomAddr ? item.accomAddr.split(' ')[0] : null
+    );
+    
     for (const regionName of regionNames) {
       if (regionName && regionCenters[regionName]) {
-        if (regionName.includes(keyword) || keyword.includes(regionName)) {
+        if (regionName === keyword) {
           const region = regionCenters[regionName];
-          return { centerLat: region.lat, centerLon: region.lon, mapLevel: 8 };
+          return { centerLat: region.lat, centerLon: region.lon, mapLevel: 9 };
         }
       }
     }
-
-    const groupByLocation = {};
+    
+   const groupByLocation = {};
     accommodations.forEach((item) => {
-      if (item.locId === null) return;
-      if (!groupByLocation[item.locId]) {
-        //새 배열
-        groupByLocation[item.locId] = [];
+      if (item.locId !== null) {
+        groupByLocation[item.locId] = groupByLocation[item.locId] || [];
+        groupByLocation[item.locId].push(item);
       }
-      // 지역번호 별로 숙소 데이터 배열
-      groupByLocation[item.locId].push(item);
     });
+
+   const locIds = Object.keys(groupByLocation);
+
+    if (locIds.length === 1) {
+      const regionAccoms = groupByLocation[locIds[0]];
+      const sumLat = regionAccoms.reduce((sum, curr) => sum + curr.accomLat, 0);
+      const sumLon = regionAccoms.reduce((sum, curr) => sum + curr.accomLon, 0);
+
+      const avgLat = sumLat / regionAccoms.length;
+      const avgLon = sumLon / regionAccoms.length;
+
+      console.log('Single region:', avgLat, avgLon);
+
+      return { centerLat: avgLat, centerLon: avgLon, mapLevel: 10 };
+    }
 
     // 지역 평균 위도 경도 계산
     const regionCenterLonLat = [];
-    Object.keys(groupByLocation).forEach((locId) => {
+    locIds.forEach((locId) => {
       const regionAccoms = groupByLocation[locId];
       const sumLat = regionAccoms.reduce((sum, curr) => sum + curr.accomLat, 0); // sum 초기값=0
       const sumLon = regionAccoms.reduce((sum, curr) => sum + curr.accomLon, 0);
+
       const avgLat = sumLat / regionAccoms.length;
       const avgLon = sumLon / regionAccoms.length;
+
       regionCenterLonLat.push([avgLat, avgLon]);
     });
 
@@ -78,26 +115,68 @@ export const KakaoMap = ({ onClose, accommodations }) => {
       (sum, curr) => sum + curr[0],
       0
     );
+
     const sumCenterLon = regionCenterLonLat.reduce(
       (sum, curr) => sum + curr[1],
       0
     );
+
     // 평균 위경도 값 = 중심 좌표
     const centerLat = sumCenterLat / regionCenterLonLat.length;
     const centerLon = sumCenterLon / regionCenterLonLat.length;
 
-    const distances = regionCenterLonLat.map((region) => {
-      getDistance(centerLat, centerLon, region[0], region[1]);
-    });
+    console.log("CenterLat:", centerLat, "CenterLon:", centerLon);
 
-    const avgDistance = distances.reduce((sum, dis) => sum + dis, 0);
+    const distances = regionCenterLonLat.map((region) =>
+      getDistance(centerLat, centerLon, region[0], region[1])
+    );
+
+    const avgDistance = distances.length > 0
+    ? distances.reduce((sum, dis) => sum + dis, 0) / distances.length
+    : 0;
+    console.log("Average Distance (km):", avgDistance);
+
+    let mapLevel = 9;
+    if (avgDistance >= 150) mapLevel = 13;
+    else if (avgDistance >= 100 && avgDistance < 150) mapLevel = 12;
+
+    console.log("Calculated mapLevel:", mapLevel);
+
+    return { centerLat, centerLon, mapLevel };
   };
+  /*
+    a : 두 점 간의 대원거리의 중간 계산값
+    c : 대원거리(라디안)
+    R : 지구 반지름
+    R*c : 최종 거리리
+  */
+  const getDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371.0;
+    // 위도/경도의 차이를 라디안으로 계산한 값
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+  
   const init = () => {
     const [minPrice, maxPrice] = priceRange;
 
     const mapContainer = mapRef.current;
 
     if (!window.kakao || !window.kakao.maps) return;
+ 
+    const { centerLat, centerLon, mapLevel } = calculateMapCenterLevel(
+      filteredAccommodations,
+      keyword
+    );
 
     if (!kakaoMap.current) {
       kakaoMap.current = new window.kakao.maps.Map(mapContainer, {
@@ -128,8 +207,8 @@ export const KakaoMap = ({ onClose, accommodations }) => {
          * => 해당 km level은 증가
          *
          */
-        center: new kakao.maps.LatLng(37.888862916, 127.3564676189),
-        level: 8,
+        center: new kakao.maps.LatLng(centerLat, centerLon),
+        level: mapLevel,
       });
     }
     const map = kakaoMap.current;
@@ -140,7 +219,7 @@ export const KakaoMap = ({ onClose, accommodations }) => {
 
     let openOverlayId = null;
 
-    const filteredData = (accommodations ?? [])
+    const filteredData = filteredAccommodations
       .map((item) => {
         const lat = item.accomLat;
         const lon = item.accomLon;
@@ -186,6 +265,11 @@ export const KakaoMap = ({ onClose, accommodations }) => {
       box.style.opacity = '0';
       box.style.visibility = 'hidden';
       box.style.transition = 'all 0.3s ease';
+
+      box.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigate(`/accommodations/${accom.id}`);  
+      });
 
       const overlay = new kakao.maps.CustomOverlay({
         position,
@@ -252,7 +336,7 @@ export const KakaoMap = ({ onClose, accommodations }) => {
         init();
       });
     }
-  }, [mapRef.current, priceRange]);
+  }, [mapRef.current, priceRange, selectedCategory, selectedFacilities]);
 
   return (
     <div className='container'>
@@ -281,7 +365,7 @@ export const KakaoMap = ({ onClose, accommodations }) => {
         <FilterPanel filterHook={filterHook} />
       </div>
       <div className='acc-list-map'>
-        <MapInnerList accommodations={accommodations} />
+        <MapInnerList accommodations={filteredAccommodations} />
         <div
           className='map'
           ref={mapRef}

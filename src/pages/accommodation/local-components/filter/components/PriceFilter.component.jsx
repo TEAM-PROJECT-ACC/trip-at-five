@@ -21,7 +21,7 @@ const PriceFilter = ({ priceRange, setPriceRange }) => {
           range
           min={0}
           max={500000}
-          step={10000}
+          step={100}
           value={priceRange}
           onChange={handleChange}
           trackStyle={[{ backgroundColor: '#5500ff' }]}
