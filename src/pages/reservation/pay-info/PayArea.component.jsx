@@ -39,7 +39,7 @@ const PayArea = ({ className, roomInfo }) => {
       console.log('서버 승인 성공', data);
       // 결제창 닫고 결과 페이지로 이동 (URL에 receipt_id 전달)
       Bootpay.destroy();
-      navigate(`/result/${data.receiptId}`);
+      navigate(`/payments/${data.receiptId}`);
     },
     onError: (error) => {
       console.error('서버 승인 실패', error);
