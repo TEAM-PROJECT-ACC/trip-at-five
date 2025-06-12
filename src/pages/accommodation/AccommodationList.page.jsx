@@ -26,8 +26,6 @@ const AccommodationList = () => {
   const resetFilters = useFilterStore((state) => state.resetFilters);
 
   // 숙박목록용 데이터
-  //const [accommodations, setAccommodations] = useState([]);
-  // 모달 안 목록용 데이터
   const [allAccommodations, setAllAccommodations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -66,14 +64,7 @@ const AccommodationList = () => {
         return false;
       return true;
     });
-  }, [
-    allAccommodations,
-    filterState.selectedCategory,
-    filterState.selectedPub,
-    filterState.selectedInroom,
-    filterState.selectedEtc,
-    filterState.priceRange,
-  ]);
+  }, [allAccommodations, filterState]);
 
   const pagedAccommodations = useMemo(() => {
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -104,7 +95,7 @@ const AccommodationList = () => {
         maxPrice: filterState.priceRange[1],
       };
       const data = await searchAccommodationByKeyword(params);
-      console.log('fetchAllData :', data);
+      //console.log('fetchAllData :', data);
       setAllAccommodations(data);
       setCurrentPage(1);
     };
@@ -115,11 +106,7 @@ const AccommodationList = () => {
     searchState.checkIn,
     searchState.checkOut,
     searchState.numberOfPeople,
-    filterState.selectedCategory,
-    filterState.selectedPub,
-    filterState.selectedInroom,
-    filterState.selectedEtc,
-    filterState.priceRange,
+    filterState,
   ]);
 
   useEffect(() => {

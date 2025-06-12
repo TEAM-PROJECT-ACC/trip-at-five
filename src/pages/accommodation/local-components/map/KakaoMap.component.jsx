@@ -70,15 +70,7 @@ export const KakaoMap = ({ onClose, allAccommodations }) => {
 
       return true;
     });
-  }, [
-    allAccommodations,
-    keywordState.keyword,
-    filterState.selectedCategory,
-    filterState.selectedPub,
-    filterState.selectedInroom,
-    filterState.selectedEtc,
-    filterState.priceRange,
-  ]);
+  }, [allAccommodations, keywordState.keyword, filterState]);
 
   const calculateMapCenterLevel = (accommodations) => {
     if (!accommodations.length) {
@@ -362,14 +354,7 @@ export const KakaoMap = ({ onClose, allAccommodations }) => {
         init();
       });
     }
-  }, [
-    mapRef.current,
-    filterState.priceRange,
-    filterState.selectedCategory,
-    filterState.selectedPub,
-    filterState.selectedInroom,
-    filterState.selectedEtc,
-  ]);
+  }, [mapRef.current, filterState]);
 
   return (
     <div className='container'>

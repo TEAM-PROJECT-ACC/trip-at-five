@@ -32,20 +32,16 @@ import './filter.style.scss';
 import { useFilterStore } from '../../../../../states/accom-filter/filterStore';
 
 const FacilityFilter = () => {
-  const selectedPub = useFilterStore((state) => state.selectedPub);
-  const selectedInroom = useFilterStore((state) => state.selectedInroom);
-  const selectedEtc = useFilterStore((state) => state.selectedEtc);
-
-  const togglePub = useFilterStore((state) => state.togglePub);
-  const toggleInroom = useFilterStore((state) => state.toggleInroom);
-  const toggleEtc = useFilterStore((state) => state.toggleEtc);
+  const filterState = useFilterStore((state) => state);
 
   const renderButtons = (facilities, selectedFacilities, toggleFunc) =>
     facilities.map(({ icon, label }) => (
       <button
         key={label}
         title={label}
-        className={`filter-btn ${selectedFacilities.includes(label) ? 'selected' : ''}`}
+        className={`filter-btn ${
+          selectedFacilities.includes(label) ? 'selected' : ''
+        }`}
         onClick={() => toggleFunc(label)}
       >
         {icon}
@@ -93,21 +89,33 @@ const FacilityFilter = () => {
       <div className='filter-group'>
         <h4 className='sub-title'>공용시설</h4>
         <div className='filter-options'>
-          {renderButtons(publicFacilities, selectedPub, togglePub)}
+          {renderButtons(
+            publicFacilities,
+            filterState.selectedPub,
+            filterState.togglePub
+          )}
         </div>
       </div>
       <div className='line'></div>
       <div className='filter-group'>
         <h4 className='sub-title'>객실 내 시설</h4>
         <div className='filter-options'>
-          {renderButtons(roomFacilities, selectedInroom, toggleInroom)}
+          {renderButtons(
+            roomFacilities,
+            filterState.selectedInroom,
+            filterState.toggleInroom
+          )}
         </div>
       </div>
       <div className='line'></div>
       <div className='filter-group'>
         <h4 className='sub-title'>기타 시설</h4>
         <div className='filter-options'>
-          {renderButtons(etcFacilities, selectedEtc, toggleEtc)}
+          {renderButtons(
+            etcFacilities,
+            filterState.selectedEtc,
+            filterState.toggleEtc
+          )}
         </div>
       </div>
     </>

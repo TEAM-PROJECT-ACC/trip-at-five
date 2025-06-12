@@ -45,7 +45,9 @@
     border: none;
     cursor: pointer;
   }
-
+  .accom-header-img-change-btn:hover {
+    background-color: #1b181875;
+  }
   &__text {
     display: flex;
     justify-content: space-between;
