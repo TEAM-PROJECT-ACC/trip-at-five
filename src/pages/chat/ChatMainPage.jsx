@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {
   ButtonPrimary,
   ButtonSecondary,
@@ -6,49 +6,66 @@ import {
   PageContainer,
   Select,
 } from '../../components';
-import { ChatTitle } from './chat-title/Chat.title.conponent';
-import './chatMainPage.scss';
+import { ChatTitle } from './chat-title/ChatTitle.component';
 import ChatStateStore from './chatStore';
+import { loginStateStore } from '../../states/login/loginStore';
+import { topCenterAlert } from '../../utils/toastUtils/toastUtils';
+import './chatMain.style.scss';
 
 export function Chat() {
-  const { setMessage } = ChatStateStore();
+  const { category, setMessage, setCategory } = ChatStateStore();
+  const { loginInfo } = loginStateStore();
 
-  // TODO:
-  // 1. 카테고리 선택
-  // 2. 문의하기 클릭 시 채팅 방 페이지 이동
+  const onSelect = (option) => {
+    setCategory(option);
+  };
 
-  // [GET] 로그인 회원 정보를 서버에 요청 후
-  // 채팅방 데이터가 있으면 채팅방 페이지로 리디렉트
+  const onClickContactButton = (event) => {
+    if (!category) {
+      event.preventDefault();
+      topCenterAlert('문의 유형을 선택해주세요');
+    }
+  };
 
   return (
     <PageContainer className={'chat-container'}>
-      <div className='chat-main-wrap'>
-        <ChatTitle
-          className={'chat-main-title'}
-          text={'문의하기'}
-        />
+      {loginInfo ? (
+        <div className='chat-main-wrap'>
+          <ChatTitle
+            className={'chat-main-title'}
+            text={'문의하기'}
+          />
 
-        <InputPrimary
-          className={'chat-main-content-input'}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        />
-        <Select
-          className={'chat-main-content-select'}
-          optionList={[
-            { value: '1', label: '예약문의' },
-            { value: '2', label: '기타문의' },
-          ]}
-        />
+          <InputPrimary
+            className={'chat-main-content-input'}
+            defaultValue={loginInfo.memNick}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            readOnly={loginInfo.memNick !== ''}
+          />
+          <Select
+            className={'chat-main-content-select'}
+            optionList={[
+              { value: 'RESERVE', label: '예약문의' },
+              { value: 'ETC', label: '기타문의' },
+            ]}
+            onSelect={onSelect}
+          />
 
-        <div className='chat-main-button'>
-          <ButtonSecondary className={'chat-send'}>취소</ButtonSecondary>
-          <Link to='room/'>
-            <ButtonPrimary className={'chat-cancle'}>문의하기</ButtonPrimary>
-          </Link>
+          <div className='chat-main-button'>
+            <ButtonSecondary className={'chat-send'}>취소</ButtonSecondary>
+            <Link
+              to='room/'
+              onClick={onClickContactButton}
+            >
+              <ButtonPrimary className={'chat-cancel'}>문의하기</ButtonPrimary>
+            </Link>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Navigate to='/login' />
+      )}
     </PageContainer>
   );
 }

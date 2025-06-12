@@ -2,11 +2,12 @@ import { Route, Routes } from 'react-router-dom';
 import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
-import './App.css';
-import LoginPage from './pages/login/LoginPage';
-import Register from './pages/login/register/RegisterPage';
-import PwdRestting from './pages/login/pwd-resetting/Password.resetting.component';
-import { Chat } from './pages/chat/ChatMainPage';
+import LoginPage from './pages/login/Login.page';
+import Register from './pages/register/Register.page';
+import PwdRestting from './pages/pwdResetting/PwdResetting.page';
+import { Chat } from './pages/chat/ChatMain.page';
+import ChatRoom from './pages/chat/chat-ui/ChatRoom.component';
+import LoginInterceptor from './pages/login/loginInterCepter/LoginInterceptor.component';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
 import { useEffect, useState } from 'react';
@@ -23,7 +24,6 @@ import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
 import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
-import ChatRoom from './pages/chat/chat-ui/Chat.room';
 
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
@@ -85,7 +85,11 @@ function App() {
           />
           <Route
             path='/chat/room'
-            element={<ChatRoom />}
+            element={
+              <WebSocketProvider>
+                <ChatRoom />
+              </WebSocketProvider>
+            }
           />
         </Route>
 

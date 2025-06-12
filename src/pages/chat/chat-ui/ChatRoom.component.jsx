@@ -1,0 +1,184 @@
+import { useEffect, useState } from 'react';
+import { FaArrowAltCircleLeft } from '../../../assets/icons/kkh/index';
+import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
+import '@chatscope/chat-ui-kit-react/dist/chat-ui-kit-react.min.js';
+import './chatRoom.style.scss';
+import {
+  MainContainer,
+  ChatContainer,
+  MessageList,
+  Message,
+  MessageInput,
+} from '@chatscope/chat-ui-kit-react';
+import { PageContainer, useWebSocket } from '../../../components';
+import { serverWebSocketURL } from '../../../services/serverBaseURL';
+import { loginStateStore } from '../../../states/login/loginStore';
+import { getInitChatRoom } from '../../../services/chat/chat.api';
+import ChatStateStore from '../chatStore';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { CHAT_REQUEST } from '../../../services/chat/chat.requests';
+import { getMessage, getMessages } from '../utils/getMessages/getMessages.util';
+
+// const defaultMessage = [
+//   {
+//     model: {
+//       sender: 'Joe',
+//       message: '채팅이 시작되었습니다.',
+//       direction: 'incoming',
+//     },
+//   },
+//   {
+//     model: {
+//       sender: 'Joe',
+//       message: '채팅이 시작되었습니다.',
+//       direction: 'incoming',
+//     },
+//   },
+// ];
+
+const getMessageComponent = (messages) => {
+  return (
+    <>
+      {messages.length > 0 &&
+        messages.map((message, index) => {
+          return (
+            <Message
+              key={index}
+              model={message.model}
+            ></Message>
+          );
+        })}
+    </>
+  );
+};
+
+const ChatRoom = () => {
+  const [messages, setMessages] = useState(() => []);
+  const [chatRoom, setChatRoom] = useState(() => null);
+  const { category } = ChatStateStore();
+  const { loginInfo } = loginStateStore();
+  const navigate = useNavigate();
+  const { data, createWebSocket, sendMessageWebSocket, closeWebSocket } =
+    useWebSocket();
+
+  const handleSend = (message) => {
+    // TODO: 비회원 예약 조회 구현 후 비회원 상태 관리 필요
+    // 비회원 : 이메일, 예약 코드
+    let messageData = {};
+    let sender = '';
+
+    if (loginInfo) {
+      const isAdmin = loginInfo.memType === 'admin';
+      sender = isAdmin ? loginInfo.adminEmailId : loginInfo.memEmailId;
+
+      messageData = {
+        chatMsgCont: message,
+        ckSenderType: isAdmin ? 'ADMIN' : 'MEMBER',
+        senderEmail: sender,
+      };
+    } else {
+      messageData = {
+        chatMsgCont: message,
+        ckSenderType: 'NON-M',
+        senderEmail: '',
+      };
+    }
+
+    const webSocketData = {
+      type: 'NEW',
+      data: {
+        chatRoom,
+        messageData,
+      },
+    };
+
+    const newMessage = getMessage(messageData, loginInfo);
+
+    sendMessageWebSocket(webSocketData);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  const handleCloseWebSocket = () => {
+    closeWebSocket();
+    if (loginInfo) {
+      if (loginInfo.memType === 'admin') {
+        navigate('/admin/contact');
+      } else {
+        navigate('/user');
+      }
+    } else {
+      navigate('/');
+    }
+  };
+
+  useEffect(() => {
+    if (loginInfo && category) {
+      console.log('init useEffect : ');
+      const apiRequestData = {
+        loginInfo,
+        inqCtgCd: category.value,
+      };
+      getInitChatRoom(apiRequestData).then((data) => {
+        createWebSocket({
+          requestURL: `${serverWebSocketURL}${CHAT_REQUEST.initChatRoom}`,
+          type: data.messages && data.messages.length > 0 ? 'EXISTING' : 'INIT',
+          data,
+        });
+        const messages = getMessages(data.messages, loginInfo);
+        setMessages(() => messages);
+        setChatRoom(() => data.chatRoom);
+      });
+    }
+    return () => {
+      closeWebSocket();
+      console.log('websocket closed');
+    };
+  }, [category, closeWebSocket, createWebSocket, loginInfo]);
+
+  useEffect(() => {
+    if (data) {
+      console.log('data useEffect : ', data);
+      const messages = getMessages(data.messages, loginInfo);
+
+      if (messages.length > 0) {
+        setMessages((prevMessages) => [...prevMessages, ...messages]);
+      }
+    }
+  }, [data, loginInfo]);
+
+  return (
+    <PageContainer className={'chat-room-container'}>
+      {loginInfo && category ? (
+        <div className='chat-main-room-wrap'>
+          <FaArrowAltCircleLeft
+            className='chat-room-close-icon'
+            onClick={handleCloseWebSocket}
+          />
+          <MainContainer className='chat-main-container'>
+            <ChatContainer className='chat-container-wrap'>
+              <MessageList className='chat-message-list'>
+                {getMessageComponent(messages)}
+              </MessageList>
+            </ChatContainer>
+          </MainContainer>
+
+          <MainContainer className='chat-input-container'>
+            <ChatContainer>
+              <MessageInput
+                className='chat-message-list  '
+                placeholder='Type message here'
+                onSend={handleSend}
+                attachButton={false}
+                // value={'채팅을 입력하세요...'}
+              />
+            </ChatContainer>
+          </MainContainer>
+        </div>
+      ) : (
+        <Navigate to={'/chat'} />
+      )}
+    </PageContainer>
+  );
+};
+
+export default ChatRoom;
