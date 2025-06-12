@@ -31,3 +31,12 @@ export const challengeSucces = async (memSq, chalHistoryNo) => {
 	});
 	return respone;
 };
+
+
+/* 회원 쿠폰 정보 조회 */
+export const couponSelect = async (userMemSq) => {
+	const respone = await baseServrAxios.get(
+		`/users/couponSelect?userMemSq=${userMemSq}`
+	);
+	return respone;
+};
