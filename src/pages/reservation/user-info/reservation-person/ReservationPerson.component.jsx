@@ -20,24 +20,24 @@ const ReservationPerson = ({ className }) => {
    */
   const couponList = [
     {
-      label: '1만원권',
-      value: 10000,
+      label: '1천원권',
+      value: 1000,
     },
     {
-      label: '2만원권',
-      value: 20000,
+      label: '2천원권',
+      value: 2000,
     },
     {
-      label: '3만원권',
-      value: 30000,
+      label: '3천원권',
+      value: 3000,
     },
     {
-      label: '4만원권',
-      value: 40000,
+      label: '4천원권',
+      value: 4000,
     },
     {
-      label: '5만원권',
-      value: 50000,
+      label: '5천원권',
+      value: 5000,
     },
   ];
 

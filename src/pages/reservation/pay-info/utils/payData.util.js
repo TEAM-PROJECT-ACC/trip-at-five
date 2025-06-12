@@ -12,10 +12,12 @@ export const getRoomInfo = (roomInfo) => {
   return items;
 };
 
-// 총 가격 구하기
-export const calcTotalPrice = (roomInfo) => {
+// 총 가격 구하기 (쿠폰 적용)
+export const calcTotalPrice = (roomInfo, coupon) => {
   let totalPay = 0;
   roomInfo.map((value, idx) => (totalPay += value.roomPrice));
 
-  return totalPay;
+  return coupon !== undefined && coupon !== null
+    ? totalPay - coupon.value
+    : totalPay;
 };

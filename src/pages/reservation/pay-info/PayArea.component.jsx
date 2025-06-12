@@ -87,7 +87,10 @@ const PayArea = ({ className, roomInfo }) => {
         // 결제 요청 및 결제 정보 저장
         console.log(paymentState.roomInfo);
 
-        const totalPrice = calcTotalPrice(paymentState.roomInfo);
+        const totalPrice = calcTotalPrice(
+          paymentState.roomInfo,
+          paymentState.userCoupon
+        );
         const items = getRoomInfo(paymentState.roomInfo);
 
         await bootpayAPI(result.insertResInfo, res, totalPrice, items)
@@ -116,10 +119,10 @@ const PayArea = ({ className, roomInfo }) => {
   // 결제 버튼 클릭 핸들러
   const paymentHandler = async () => {
     /**
-     * 1. 예약정보 저장
-     * 2. 저장완료 후 예약코드 목록을 반환
-     * 3. 주문 ID 생성 API 요청 후 반환된 주문ID 저장
-     * 4. 주문ID와 함께 결제 요청
+     * 1. 예약정보 저장 => OK
+     * 2. 저장완료 후 예약코드 목록을 반환 => OK
+     * 3. 주문 ID 생성 API 요청 후 반환된 주문ID 저장 => OK
+     * 4. 주문ID와 함께 결제 요청 => OK
      * 5. 완료 시 주문 예약코드 목록과 영수증ID로 주문 테이블에 저장 API 요청 후 저장
      */
 

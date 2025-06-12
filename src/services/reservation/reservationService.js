@@ -83,3 +83,5 @@ export const requestServerConfirm = async (payment) => {
 
   return response;
 };
+
+// 주문 테이블에 저장
