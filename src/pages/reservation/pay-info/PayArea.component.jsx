@@ -27,14 +27,16 @@ const PayArea = ({ className, roomInfo }) => {
   // 주문 정보 저장 요청
   const { mutate: orderInfoMutation } = useMutation({
     mutationKey: ['order'],
-    mutationFn: async ({ resCodeList, payInfo }) => {
+    mutationFn: async (orderInfo) => {
       // 예약코드 목록 길이만큼 예약코드 - 주문ID, 영수증ID 를 한쌍으로 DB에 저장
 
-      const { data } = await insertOrder(resCodeList, payInfo);
+      const { data } = await insertOrder(orderInfo);
+      console.log(data);
 
-      return payInfo.receiptId;
+      return data;
     },
     onSuccess: (data) => {
+      console.log(data);
       navigate(`/payments/${data}`);
     },
   });
@@ -42,7 +44,7 @@ const PayArea = ({ className, roomInfo }) => {
   // 결제 승인 요청
   const { mutate: confirmMutation } = useMutation({
     mutationKey: ['payment'],
-    mutationFn: async (payment) => {
+    mutationFn: async ({ payment, resCodeList }) => {
       console.log('payment : ' + JSON.stringify(payment));
       const confirmInfo = {
         receiptId: payment.receipt_id,
@@ -50,14 +52,28 @@ const PayArea = ({ className, roomInfo }) => {
       };
       const { data } = await requestServerConfirm(confirmInfo); // 상태코드 반환
 
-      return data;
+      const result = {
+        resCodeList: { ...resCodeList },
+        payment: { ...payment },
+      };
+
+      return result;
     },
     onSuccess: (data) => {
       console.log('서버 승인 성공', data);
       // 결제창 닫고 결과 페이지로 이동 (URL에 receipt_id 전달)
       Bootpay.destroy();
 
-      return data;
+      const orderInfo = {
+        orderId: data.payment.order_id,
+        receiptId: data.payment.receipt_id,
+        resCode: Array.isArray(data.resCodeList)
+          ? data.resCodeList
+          : Object.values(data.resCodeList),
+      };
+
+      // 주문 테이블에 저장
+      orderInfoMutation(orderInfo);
     },
     onError: (error) => {
       console.error('서버 승인 실패', error);
@@ -111,12 +127,11 @@ const PayArea = ({ className, roomInfo }) => {
         await bootpayAPI(result.insertResInfo, response, totalPrice, items)
           .then((response) => {
             if (response.event === 'confirm') {
-              return confirmMutation(response); // 서버 승인 요청
+              return confirmMutation({
+                payment: response,
+                resCodeList: result.data,
+              }); // 서버 승인 요청
             }
-          })
-          .then((response) => {
-            // 주문 테이블에 저장
-            orderInfoMutation(result.data, response);
           })
           .catch((e) => {
             console.log('결제 오류', e.message);
