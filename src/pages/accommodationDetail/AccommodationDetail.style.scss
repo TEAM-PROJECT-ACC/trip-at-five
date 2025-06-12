@@ -1,3 +1,20 @@
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 2px 2px 3px #727272;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  @include color-5500ff;
+  @include background-baabfa;
+}
+.scroll-to-top-btn:hover {
+  @include color-ffaf45;
+  @include background-5500ff;
+}
 .accom-header {
   display: flex;
   flex-direction: column;
@@ -28,7 +45,9 @@
     border: none;
     cursor: pointer;
   }
-
+  .accom-header-img-change-btn:hover {
+    background-color: #1b181875;
+  }
   &__text {
     display: flex;
     justify-content: space-between;

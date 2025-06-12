@@ -27,6 +27,7 @@ import {
   FaAngleRight,
   FaAngleLeft,
   FaBuilding,
+  FaArrowUp, 
 } from 'react-icons/fa';
 
 export {
@@ -55,6 +56,7 @@ export {
   FaAngleRight,
   FaAngleLeft,
   FaBuilding,
+  FaArrowUp,
 };
 
 import { BiCabinet } from 'react-icons/bi';
