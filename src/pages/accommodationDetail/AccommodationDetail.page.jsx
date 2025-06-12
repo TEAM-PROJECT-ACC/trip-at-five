@@ -11,7 +11,7 @@ import { RoomDetailText } from './components/room-detail-text/RoomDetailText.com
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import { accommodationDetailByAccomSq } from '../../services/accom/apiService';
+import { accommodationDetailByAccomSq } from '../../services/accom/accomService.api';
 import { AccomReview } from './components/room-review-component/AccomReview.component';
 
 const AccommodationDetail = () => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AccommodationForm from './local-components/AccommodationForm.component';
 import RoomList from './local-components/room-list/RoomList';
-import { selectAdminAcommDetail } from '../../../services/accom/apiService';
+import { selectAdminAcommDetail } from '../../../services/accom/accomService.api';
 import './AccommodationFormContainer.style.scss';
 
 const AccommodationFormContainer = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ButtonPrimary,
   Modal,
@@ -10,7 +10,12 @@ import { Star } from '../../../../components/star-rating/components/star/Star.co
 import { MdAddPhotoAlternate } from '../../../../assets/icons/ys/index';
 import '../../accommodationDetail.style.scss';
 
+const MAX_IMAGES = 5;
+
 export const AccomReview = () => {
+  // 이미지
+  const [images, setImages] = useState([]);
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [starRateScore, setStarRateScore] = useState(() => 2.6);
 

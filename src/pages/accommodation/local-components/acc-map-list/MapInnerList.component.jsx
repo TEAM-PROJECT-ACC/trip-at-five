@@ -1,5 +1,3 @@
-import React from 'react';
-import { accomData } from '../../../../assets/sample-data/accomSampleData';
 import MapInnerCard from './card/MapInnerCard.component';
 import './mapInnerList.style.scss';
 
