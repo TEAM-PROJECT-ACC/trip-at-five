@@ -13,6 +13,8 @@ export default function Login() {
 	const logoutHandler = async () => {
 		const result = await logout();
 		successAlert('로그아웃 했습니다.');
+		localStorage.clear();
+		sessionStorage.clear();
 	};
 
 	useEffect(() => {
