@@ -48,10 +48,10 @@ const ReservationPerson = ({ className }) => {
   };
 
   // 상태 값 변경 확인
-  useEffect(() => {
-    const price = calcTotalPrice(userCoupon, totalPrice);
-    setTotalPrice(price);
-  }, [userCoupon]);
+  // useEffect(() => {
+  //   const price = calcTotalPrice(userCoupon, totalPrice);
+  //   setTotalPrice(price);
+  // }, [userCoupon]);
 
   return (
     <div className={className}>
@@ -80,7 +80,7 @@ const ReservationPerson = ({ className }) => {
               }}
             />
           </div>
-          <div className='reservation-person-form-item'>
+          {/* <div className='reservation-person-form-item'>
             <Select
               defaultOption={{ label: '쿠폰을 선택해주세요' }}
               className='reservation-person-form-select'
@@ -89,7 +89,7 @@ const ReservationPerson = ({ className }) => {
                 couponHandler(data);
               }}
             />
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

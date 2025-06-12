@@ -12,7 +12,7 @@ import {
   requestServerConfirm,
 } from '../../../services/reservation/reservationService';
 import { useNavigate } from 'react-router-dom';
-import { calcTotalPrice, getRoomInfo } from './utils/payData.util';
+import { getRoomInfo } from './utils/payData.util';
 import { useEffect } from 'react';
 
 const PayArea = ({ className, roomInfo }) => {
@@ -20,6 +20,7 @@ const PayArea = ({ className, roomInfo }) => {
   const { setResCode, setRoomInfo, setTotalPrice } = usePaymentInfoStore(
     (state) => state.actions
   );
+
   const paymentState = usePaymentInfoStore((state) => state);
   const memNo = 2; // 추후 회원번호 값
 
@@ -98,27 +99,16 @@ const PayArea = ({ className, roomInfo }) => {
       return result;
     },
     onSuccess: (result) => {
+      const totalPrice = usePaymentInfoStore.getState().totalPrice;
       // 주문 ID 생성 API 요청
       createOrderId(result.data).then(async (response) => {
         console.log('res : ' + response);
         // 결제 요청 및 결제 정보 저장
         console.log(paymentState.roomInfo);
 
-        // const totalPrice = calcTotalPrice(
-        //   paymentState.roomInfo,
-        //   paymentState.userCoupon
-        // );
+        const items = getRoomInfo(paymentState.roomInfo, totalPrice);
 
-        // setTotalPrice(totalPrice);
-
-        const items = getRoomInfo(paymentState.roomInfo);
-
-        await bootpayAPI(
-          result.insertResInfo,
-          response,
-          paymentState.totalPrice,
-          items
-        )
+        await bootpayAPI(result.insertResInfo, response, totalPrice, items)
           .then((response) => {
             if (response.event === 'confirm') {
               return confirmMutation(response); // 서버 승인 요청

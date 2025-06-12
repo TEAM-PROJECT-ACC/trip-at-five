@@ -4,17 +4,13 @@ import './PayInfo.style.scss';
 import { usePaymentInfoStore } from '../../states';
 
 const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
-  const { totalPrice } = usePaymentInfoStore((state) => state);
+  const totalPrice = usePaymentInfoStore((state) => state.totalPrice);
   const { setTotalPrice } = usePaymentInfoStore((state) => state.actions);
+
   useEffect(() => {
-    // console.log(resState);
-    console.log(roomInfo);
-    let total = 0;
-    roomInfo?.map((value) => {
-      total += value.roomPrice;
-    });
+    const total = roomInfo?.reduce((acc, cur) => acc + cur.roomPrice, 0) || 0;
     setTotalPrice(total);
-  }, [resState, roomInfo]);
+  }, [roomInfo]);
 
   return (
     <div className={className}>
