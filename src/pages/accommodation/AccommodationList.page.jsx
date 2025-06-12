@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Pagination } from '../../components/pagination/Pagination.component';
 import FilterPanel from './local-components/filter/FilterPanel.component';
 import MapButton from './local-components/map/MapButton.component';
@@ -16,11 +16,12 @@ import SearchArea from '../main/local-components/top/search/SearchArea.component
  * 필수 정렬 조건 => 숙박업소명
  */
 
+const PAGE_SIZE = 10;
+const PAGE_LENGTH = 5;
+
 const AccommodationList = () => {
-  const keyword = useAccomSearchStore.getState().keyword;
-  const checkIn = useAccomSearchStore.getState().checkIn;
-  const checkOut = useAccomSearchStore.getState().checkOut;
-  const numberOfPeople = useAccomSearchStore.getState().numberOfPeople;
+  const { keyword, checkIn, checkOut, tripDay, numberOfPeople } =
+    useAccomSearchStore((state) => state);
 
   const {
     selectedCategory,
@@ -31,54 +32,58 @@ const AccommodationList = () => {
   } = useFilterStore((state) => state);
 
   // 숙박목록용 데이터
-  const [accommodations, setAccommodations] = useState([]);
+  //const [accommodations, setAccommodations] = useState([]);
   // 모달 안 목록용 데이터
   const [allAccommodations, setAllAccommodations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredAccommodations = accommodations.filter((item) => {
-    if (selectedCategory && item.accomTypeNo !== selectedCategory) return false;
+  const filteredAccommodations = useMemo(() => {
+    return allAccommodations.filter((item) => {
+      // 숙박 유형 카테고리
+      if (selectedCategory && item.accomTypeNo !== selectedCategory)
+        return false;
+      // 시설
+      const facilities = [
+        ...(item.pubFacInfo
+          ? item.pubFacInfo.split(',').map((f) => f.trim())
+          : []),
+        ...(item.inRoomFacInfo
+          ? item.inRoomFacInfo.split(',').map((f) => f.trim())
+          : []),
+        ...(item.etcFacInfo
+          ? item.etcFacInfo.split(',').map((f) => f.trim())
+          : []),
+      ];
+      if (!selectedPub.every((f) => facilities.includes(f))) return false;
+      if (!selectedInroom.every((f) => facilities.includes(f))) return false;
+      if (!selectedEtc.every((f) => facilities.includes(f))) return false;
+      // 가격
+      const minRoomPrice = item.roomPrice;
+      if (minRoomPrice < priceRange[0] || minRoomPrice > priceRange[1])
+        return false;
+      return true;
+    });
+  }, [
+    allAccommodations,
+    selectedCategory,
+    selectedPub,
+    selectedInroom,
+    selectedEtc,
+    priceRange,
+  ]);
 
-    const facilities = [
-      ...(item.pubFacInfo ? item.pubFacInfo.split(',').map((f) => f.trim()) : []),
-      ...(item.inRoomFacInfo ? item.inRoomFacInfo.split(',').map((f) => f.trim()) : []),
-      ...(item.etcFacInfo ? item.etcFacInfo.split(',').map((f) => f.trim()) : []),
-    ];
+  const pagedAccommodations = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filteredAccommodations.slice(start, start + PAGE_SIZE);
+  }, [filteredAccommodations, currentPage]);
 
-    const hasSelectedPub = selectedPub.every((f) => facilities.includes(f));
-    const hasSelectedInroom = selectedInroom.every((f) => facilities.includes(f));
-    const hasSelectedEtc = selectedEtc.every((f) => facilities.includes(f));
-
-    if (!hasSelectedPub || !hasSelectedInroom || !hasSelectedEtc) return false;
-
-    const minRoomPrice = item.roomPrice;
-    if (minRoomPrice < priceRange[0] || minRoomPrice > priceRange[1]) return false;
-
-    return true;
-  });
+  const onClickHandler = () => {
+    (pageNo) => setCurrentPage(pageNo);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // 기존 페이지네이션 데이터 (AccommodationListBox)
-      const params = {
-        keyword,
-        checkIn,
-        checkOut,
-        guests: numberOfPeople,
-        page: currentPage - 1,
-        size: 10,
-        accomTypeNo: selectedCategory ? Number(selectedCategory) : null,
-        selectedPub,
-        selectedInroom,
-        selectedEtc,
-      };
-      const data = await searchAccommodationByKeyword(params);
-      console.log('notFetchData :', data);
-      setAccommodations(data);
-    };
-
     const fetchAllData = async () => {
-      // 전체 데이터 (KakaoMap)
       const params = {
         keyword,
         checkIn,
@@ -94,11 +99,20 @@ const AccommodationList = () => {
       const data = await searchAccommodationByKeyword(params);
       console.log('fetchAllData :', data);
       setAllAccommodations(data);
+      setCurrentPage(1);
     };
-
-    fetchData();
     fetchAllData();
-  }, [currentPage, keyword, checkIn, checkOut, numberOfPeople, selectedCategory, selectedPub, selectedInroom, selectedEtc,]);
+  }, [
+    currentPage,
+    keyword,
+    checkIn,
+    checkOut,
+    numberOfPeople,
+    selectedCategory,
+    selectedPub,
+    selectedInroom,
+    selectedEtc,
+  ]);
 
   return (
     <PageContainer>
@@ -107,25 +121,19 @@ const AccommodationList = () => {
       </div>
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>
-          <MapButton
-            allAccommodations={allAccommodations}
-          />
-          <FilterPanel
-            className={'accom-filter-panel'}
-          />
+          <MapButton allAccommodations={allAccommodations} />
+          <FilterPanel className={'accom-filter-panel'} />
         </aside>
         <div className='list-section'>
-          <AccommodationListBox
-            filteredAccommodations={filteredAccommodations}
-          />
+          <AccommodationListBox filteredAccommodations={pagedAccommodations} />
           <Pagination
             className='accom-pagination'
-            totalCount={500}
-            pageLength={5}
+            totalCount={filteredAccommodations.length}
+            pageLength={PAGE_LENGTH}
             currentPage={currentPage}
-            numOfRows={10}
+            numOfRows={PAGE_SIZE}
             useMoveToEnd={true}
-            onClick={(pageNo) => setCurrentPage(pageNo)}
+            onClick={onClickHandler}
           />
         </div>
       </div>

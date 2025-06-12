@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ButtonPrimary,
   Modal,
@@ -7,9 +7,21 @@ import {
   Textarea,
 } from '../../../../components';
 import { Star } from '../../../../components/star-rating/components/star/Star.component';
+import { MdAddPhotoAlternate } from '../../../../assets/icons/ys/index';
 import '../../accommodationDetail.style.scss';
 
 export const AccomReview = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [starRateScore, setStarRateScore] = useState(() => 2.6);
+
+  const modalHandler = () => {
+    setModalOpen(true);
+  };
+
+  const handleRatingStar = (score) => {
+    setStarRateScore(() => score);
+  };
+
   return (
     <section className='review-section'>
       <div className='review-section__header'>

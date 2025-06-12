@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// 초기값
 const initialState = {
   selectedCategory: '',
   selectedPub: [],
@@ -10,36 +11,34 @@ const initialState = {
 };
 
 export const useFilterStore = create(
-    persist(
-      (set) => ({
-        ...initialState,
+  persist((set) => ({
+    ...initialState,
+    setCategory: (cat) => set({ selectedCategory: cat }),
 
-        setCategory: (category) => set({ selectedCategory: category }),
+    // 여러개 할 수 있어서
+    togglePub: (fac) =>
+      set((state) => ({
+        selectedPub: state.selectedPub.includes(fac)
+          ? state.selectedPub.filter((f) => f !== fac)
+          : [...state.selectedPub, fac],
+      })),
 
-        togglePub: (facility) =>
-          set((state) => ({
-            selectedPub: state.selectedPub.includes(facility)
-              ? state.selectedPub.filter((f) => f !== facility)
-              : [...state.selectedPub, facility],
-          })),
+    toggleInroom: (fac) =>
+      set((state) => ({
+        selectedInroom: state.selectedInroom.includes(fac)
+          ? state.selectedInroom.filter((f) => f !== fac)
+          : [...state.selectedInroom, fac],
+      })),
 
-        toggleInroom: (facility) =>
-          set((state) => ({
-            selectedInroom: state.selectedInroom.includes(facility)
-              ? state.selectedInroom.filter((f) => f !== facility)
-              : [...state.selectedInroom, facility],
-          })),
+    toggleEtc: (fac) =>
+      set((state) => ({
+        selectedEtc: state.selectedEtc.includes(fac)
+          ? state.selectedEtc.filter((f) => f !== fac)
+          : [...state.selectedEtc, fac],
+      })),
 
-        toggleEtc: (facility) =>
-          set((state) => ({
-            selectedEtc: state.selectedEtc.includes(facility)
-              ? state.selectedEtc.filter((f) => f !== facility)
-              : [...state.selectedEtc, facility],
-          })),
-
-        setPriceRange: (range) => set({ priceRange: range }),
-
-        resetFilters: () => set(initialState),
-      })   
-  )
+    setPriceRange: (range) => set({ priceRange: range }),
+    // 초기화
+    resetFilters: () => set(initialState),
+  }))
 );
