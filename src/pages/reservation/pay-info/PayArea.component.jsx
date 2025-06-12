@@ -4,16 +4,10 @@ import Room from '../../../components/room-list/room/Room.component';
 import { usePaymentInfoStore } from '../../../states';
 import './PayArea.style.scss';
 import { useMutation } from '@tanstack/react-query';
-
-import {
-  VITE_BOOTPAY_KEY,
-  VITE_RESERVATION_ORDER_METHOD,
-  VITE_RESERVATION_ORDER_NAME,
-  VITE_RESERVATION_ORDER_PG,
-} from '../../../../env.config';
 import {
   bootpayAPI,
-  createResCodeAPI,
+  createOrderId,
+  insertReservation,
   requestServerConfirm,
 } from '../../../services/reservation/reservationService';
 import { useNavigate } from 'react-router-dom';
@@ -32,16 +26,20 @@ const PayArea = ({ className, roomInfo }) => {
   const { mutate: confirmMutation } = useMutation({
     mutationKey: ['payment'],
     mutationFn: async (payment) => {
-      console.log('payment : ' + payment);
-      const { data } = await requestServerConfirm(payment); // 상태코드 반환
+      console.log('payment : ' + JSON.stringify(payment));
+      const confirmInfo = {
+        receiptId: payment.receipt_id,
+        orderId: payment.order_id,
+      };
+      const { data } = await requestServerConfirm(confirmInfo); // 상태코드 반환
 
       return data;
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (data) => {
       console.log('서버 승인 성공', data);
       // 결제창 닫고 결과 페이지로 이동 (URL에 receipt_id 전달)
       Bootpay.destroy();
-      navigate(`/result/${variables.receiptId}`);
+      navigate(`/result/${data.receiptId}`);
     },
     onError: (error) => {
       console.error('서버 승인 실패', error);
@@ -50,96 +48,82 @@ const PayArea = ({ className, roomInfo }) => {
 
   // 예약
   const { mutate: resMutate } = useMutation({
-    mutationKey: ['resCode', roomInfo],
+    mutationKey: ['reservation', roomInfo],
     mutationFn: async ({ resInfo }) => {
-      let resUserInfo = {
+      console.log('resInfo: ' + JSON.stringify(resInfo));
+      const insertResInfo = {
         resEmail: resInfo.paymentState.resEmail,
         resName: resInfo.paymentState.resName,
         resPhone: resInfo.paymentState.resPhone,
+        resNumOfPeo: resInfo.paymentState.numberOfPeople,
+        checkInDt: resInfo.paymentState.checkIn,
+        checkOutDt: resInfo.paymentState.checkOut,
+        memNo: memNo,
       };
 
-      const { data } = await createResCodeAPI(resUserInfo).then((res) => {
-        setResCode(res.data);
-        return res;
-      });
+      console.log('insertResInfo: ' + insertResInfo);
 
-      const { resCode } = await bootpayAPI(
-        paymentState,
-        resUserInfo,
-        data,
-        memNo
+      // 예약 정보 저장 후 예약코드 목록 반환
+      const { data } = await insertReservation(
+        insertResInfo,
+        paymentState.roomInfo
       );
 
-      return resCode; // 예약코드 반환
+      console.log('resMutate : ' + data);
+
+      const result = {
+        data: { ...data },
+        insertResInfo: { ...insertResInfo },
+      };
+
+      console.log(result);
+
+      return result;
     },
-    onSuccess: async (data, variable, context) => {
-      // console.log(variable);
-      const { paymentState } = variable.resInfo;
-      try {
+    onSuccess: (result) => {
+      // 주문 ID 생성 API 요청
+      createOrderId(result.data).then(async (res) => {
+        console.log('res : ' + res);
+        // 결제 요청 및 결제 정보 저장
         console.log(paymentState.roomInfo);
 
         const totalPrice = calcTotalPrice(paymentState.roomInfo);
         const items = getRoomInfo(paymentState.roomInfo);
 
-        await Bootpay.requestPayment({
-          application_id: VITE_BOOTPAY_KEY,
-          price: totalPrice,
-          order_name: VITE_RESERVATION_ORDER_NAME,
-          order_id: data,
-          pg: VITE_RESERVATION_ORDER_PG,
-          method: VITE_RESERVATION_ORDER_METHOD,
-          tax_free: 0,
-          user: {
-            id: memNo,
-            username: paymentState.resName,
-            phone: paymentState.resPhone,
-            email: paymentState.resEmail,
-          },
-          items: items,
-          extra: {
-            open_type: 'iframe',
-            card_quota: '0,2,3',
-            escrow: false,
-            separately_confirmed: true,
-            display_error_result: true,
-          },
-        }).then((response) => {
-          if (response.event === 'confirm') {
-            confirmMutation(response); // 서버 승인 요청
-          }
-        });
-      } catch (e) {
-        console.log('결제 오류', e.message);
-        switch (e.event) {
-          case 'cancel':
-            console.log('사용자가 결제 취소');
-            break;
-          case 'error':
-            console.log('PG 오류 : ', e.message);
-            break;
-        }
+        await bootpayAPI(result.insertResInfo, res, totalPrice, items)
+          .then((response) => {
+            if (response.event === 'confirm') {
+              confirmMutation(response); // 서버 승인 요청
+            }
+          })
+          .catch((e) => {
+            console.log('결제 오류', e.message);
+            switch (e.event) {
+              case 'cancel':
+                console.log('사용자가 결제 취소');
+                break;
+              case 'error':
+                console.log('PG 오류 : ', e.message);
+                break;
+            }
 
-        navigate(-1);
-      }
+            navigate(-1);
+          });
+      });
     },
   });
 
+  // 결제 버튼 클릭 핸들러
   const paymentHandler = async () => {
-    // 서버에서 로직을 통해 예약코드 생성해서 넣을 예정
+    /**
+     * 1. 예약정보 저장
+     * 2. 저장완료 후 예약코드 목록을 반환
+     * 3. 주문 ID 생성 API 요청 후 반환된 주문ID 저장
+     * 4. 주문ID와 함께 결제 요청
+     * 5. 완료 시 주문 예약코드 목록과 영수증ID로 주문 테이블에 저장 API 요청 후 저장
+     */
 
-    // 예약코드 생성 API
-
-    // console.log(state);
     resMutate({ resInfo: { paymentState } });
-
-    /*
-const resCode = 'testSeongJun';
-    setResCode(resCode);
-
-    console.log(state);
-
-    
-    */
   };
 
   useEffect(() => {
