@@ -20,16 +20,10 @@ const PAGE_SIZE = 10;
 const PAGE_LENGTH = 5;
 
 const AccommodationList = () => {
-  const { keyword, checkIn, checkOut, tripDay, numberOfPeople } =
-    useAccomSearchStore((state) => state);
+  const searchState = useAccomSearchStore((state) => state);
+  const filterState = useFilterStore((state) => state);
 
-  const {
-    selectedCategory,
-    selectedPub,
-    selectedInroom,
-    selectedEtc,
-    priceRange,
-  } = useFilterStore((state) => state);
+  const resetFilters = useFilterStore((state) => state.resetFilters);
 
   // 숙박목록용 데이터
   //const [accommodations, setAccommodations] = useState([]);
@@ -40,7 +34,10 @@ const AccommodationList = () => {
   const filteredAccommodations = useMemo(() => {
     return allAccommodations.filter((item) => {
       // 숙박 유형 카테고리
-      if (selectedCategory && item.accomTypeNo !== selectedCategory)
+      if (
+        filterState.selectedCategory &&
+        item.accomTypeNo !== filterState.selectedCategory
+      )
         return false;
       // 시설
       const facilities = [
@@ -54,22 +51,28 @@ const AccommodationList = () => {
           ? item.etcFacInfo.split(',').map((f) => f.trim())
           : []),
       ];
-      if (!selectedPub.every((f) => facilities.includes(f))) return false;
-      if (!selectedInroom.every((f) => facilities.includes(f))) return false;
-      if (!selectedEtc.every((f) => facilities.includes(f))) return false;
+      if (!filterState.selectedPub.every((f) => facilities.includes(f)))
+        return false;
+      if (!filterState.selectedInroom.every((f) => facilities.includes(f)))
+        return false;
+      if (!filterState.selectedEtc.every((f) => facilities.includes(f)))
+        return false;
       // 가격
       const minRoomPrice = item.roomPrice;
-      if (minRoomPrice < priceRange[0] || minRoomPrice > priceRange[1])
+      if (
+        minRoomPrice < filterState.priceRange[0] ||
+        minRoomPrice > filterState.priceRange[1]
+      )
         return false;
       return true;
     });
   }, [
     allAccommodations,
-    selectedCategory,
-    selectedPub,
-    selectedInroom,
-    selectedEtc,
-    priceRange,
+    filterState.selectedCategory,
+    filterState.selectedPub,
+    filterState.selectedInroom,
+    filterState.selectedEtc,
+    filterState.priceRange,
   ]);
 
   const pagedAccommodations = useMemo(() => {
@@ -77,24 +80,28 @@ const AccommodationList = () => {
     return filteredAccommodations.slice(start, start + PAGE_SIZE);
   }, [filteredAccommodations, currentPage]);
 
-  const onClickHandler = () => {
-    (pageNo) => setCurrentPage(pageNo);
+  const onClickHandler = (pageNo) => {
+    setCurrentPage(pageNo);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
     const fetchAllData = async () => {
       const params = {
-        keyword,
-        checkIn,
-        checkOut,
-        guests: numberOfPeople,
+        keyword: searchState.keyword,
+        checkIn: searchState.checkIn,
+        checkOut: searchState.checkOut,
+        guests: searchState.numberOfPeople,
         page: 0,
         size: 9999,
-        accomTypeNo: selectedCategory ? Number(selectedCategory) : null,
-        selectedPub,
-        selectedInroom,
-        selectedEtc,
+        accomTypeNo: filterState.selectedCategory
+          ? Number(filterState.selectedCategory)
+          : null,
+        selectedPub: filterState.selectedPub,
+        selectedInroom: filterState.selectedInroom,
+        selectedEtc: filterState.selectedEtc,
+        minPrice: filterState.priceRange[0],
+        maxPrice: filterState.priceRange[1],
       };
       const data = await searchAccommodationByKeyword(params);
       console.log('fetchAllData :', data);
@@ -104,16 +111,21 @@ const AccommodationList = () => {
     fetchAllData();
   }, [
     currentPage,
-    keyword,
-    checkIn,
-    checkOut,
-    numberOfPeople,
-    selectedCategory,
-    selectedPub,
-    selectedInroom,
-    selectedEtc,
+    searchState.keyword,
+    searchState.checkIn,
+    searchState.checkOut,
+    searchState.numberOfPeople,
+    filterState.selectedCategory,
+    filterState.selectedPub,
+    filterState.selectedInroom,
+    filterState.selectedEtc,
+    filterState.priceRange,
   ]);
 
+  useEffect(() => {
+    resetFilters();
+    setCurrentPage(1);
+  }, [searchState.keyword]);
   return (
     <PageContainer>
       <div className='search-bar'>
