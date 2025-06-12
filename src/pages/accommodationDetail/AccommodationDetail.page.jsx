@@ -88,7 +88,8 @@ const AccommodationDetail = () => {
 
   const toggleImageList = () => setShowImageList((prev) => !prev);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [resCd, setResCd] = useState('');
+  
   const handlePageChange = () => {
     setCurrentPage(pageNo);
   };
@@ -196,6 +197,7 @@ const AccommodationDetail = () => {
         if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0]);
         }
+
       } catch (error) {
         console.error('숙소 상세 데이터 불러오기 실패:', error);
       }
@@ -308,7 +310,7 @@ const AccommodationDetail = () => {
 
       {/* 후기 섹션 */}
 
-      <AccomReview />
+      <AccomReview resCd={resCd}/>
 
       {/* 상세 정보 */}
 
