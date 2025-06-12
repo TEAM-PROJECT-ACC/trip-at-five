@@ -1,0 +1,23 @@
+import baseServrAxios from '../Interceptor/Interceptor';
+
+/* 회원 정보 수정 */
+export const userInfoUpdate = async (userUpdateTest) => {
+  const respone = await baseServrAxios.put('/users/infoUpdate', userUpdateTest);
+  return respone;
+};
+
+/* 회원 비활성화 */
+export const userInactive = async (userInfo, pwd) => {
+  const respone = await baseServrAxios.put('/users/userInactive', {
+    email: userInfo,
+    pwd: pwd,
+  });
+  return respone;
+};
+
+/* 회원 챌린지 정보 조회 */
+export const challengeSelect = async () => {
+  const respone = await baseServrAxios.get('/users/challenge', 
+);
+  return respone;
+};

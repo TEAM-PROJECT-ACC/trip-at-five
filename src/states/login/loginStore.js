@@ -56,12 +56,12 @@ export const loginSnsStateStore = create(
 export const loginStateStore = create(
 	persist(
 		(set) => ({
-			loginInfo: null,
+			loginInfo: '',
 			setLoginInfo: (text) =>
 				set({
 					loginInfo: text,
 				}),
-			loginedStateStorereset: () => set(() => ({ loginInfo: null })),
+			resetLoginedStateStore: () => set(() => ({ loginInfo: '' })),
 		}),
 		{
 			name: 'userInfo',

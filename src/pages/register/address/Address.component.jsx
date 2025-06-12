@@ -13,8 +13,6 @@ import { useState } from 'react';
 import { sendRegister } from '../../../services/register/apiService';
 import { postCodeUrl } from '../../../services/login/loginService';
 
-	
-
 export default function RegisterAdress() {
 	const { setAddStep } = useRegisterStore();
 	const { email, pwd, nickName, tel, address, setAddress } =
@@ -48,17 +46,25 @@ export default function RegisterAdress() {
 		open({ onComplete: handleComplete });
 	};
 
+	const sendRegisterCall = async () => {
+		const result = await sendRegister(email, pwd, nickName, tel, address);
+		if (result.data === 1 && result.status === 200) {
+			setAddStep();
+			return 1;
+		} else {
+			return 0;
+		}
+	};
+
 	const addressSikp = () => {
-		setAddStep();
+		if (sendRegisterCall() == 0) {
+			setAddStep();
+		}
 	};
 
 	const sendAddress = async () => {
 		setAddress(postNum + ',' + basicAddress + ',' + otherAddress);
-		const result = await sendRegister(email, pwd, nickName, tel, address);
-		if (result.data === 1 && result.status === 200) {
-			console.log(result);
-			setAddStep();
-		}
+		sendRegisterCall();
 	};
 
 	return (
