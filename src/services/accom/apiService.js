@@ -2,8 +2,13 @@ import { apiAxios } from '..';
 
 // 클라이언트 숙박 목록
 export const searchAccommodationByKeyword = async (params) => {
-  const response = await apiAxios.get('/accommodations', { params });
-  console.log(response);
+  const fullParams = {
+    ...params,
+    locId: params.locId || null,
+  };
+  const response = await apiAxios.get('/accommodations', {
+    params: fullParams,
+  });
   return response.data;
 };
 

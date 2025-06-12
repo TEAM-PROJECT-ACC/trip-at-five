@@ -11,7 +11,7 @@ export const MapInnerList = ({ accommodations }) => {
   const innerData = (accommodations ?? []).map((accom) => ({
     id: accom.accomSq,
     name: accom.accomName,
-    price:accom.roomPrice,
+    price: accom.roomPrice,
     lat: accom.accomLat,
     lon: accom.accomLon,
     address: accom.accomAddr,
@@ -20,12 +20,17 @@ export const MapInnerList = ({ accommodations }) => {
 
   return (
     <ul className='acc-inner-list'>
-      {innerData.map((accom) => (
-        <MapInnerCard
-          key={accom.id}
-          accom={accom}
-        />
-      ))}
+      {innerData.length === 0 ? (
+        // 해당되는 데이터 없는 경우에만 나오는 메세지
+        <li className='no-data-msg'>해당되는 데이터가 없습니다</li>
+      ) : (
+        innerData.map((accom) => (
+          <MapInnerCard
+            key={accom.id}
+            accom={accom}
+          />
+        ))
+      )}
     </ul>
   );
 };
