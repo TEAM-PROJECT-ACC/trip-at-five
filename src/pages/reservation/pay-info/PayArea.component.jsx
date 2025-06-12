@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import {
   bootpayAPI,
   createOrderId,
+  insertOrder,
   insertReservation,
   requestServerConfirm,
 } from '../../../services/reservation/reservationService';
@@ -16,11 +17,26 @@ import { useEffect } from 'react';
 
 const PayArea = ({ className, roomInfo }) => {
   const navigate = useNavigate();
-  const { setResCode, setRoomInfo } = usePaymentInfoStore(
+  const { setResCode, setRoomInfo, setTotalPrice } = usePaymentInfoStore(
     (state) => state.actions
   );
   const paymentState = usePaymentInfoStore((state) => state);
   const memNo = 2; // 추후 회원번호 값
+
+  // 주문 정보 저장 요청
+  const { mutate: orderInfoMutation } = useMutation({
+    mutationKey: ['order'],
+    mutationFn: async ({ resCodeList, payInfo }) => {
+      // 예약코드 목록 길이만큼 예약코드 - 주문ID, 영수증ID 를 한쌍으로 DB에 저장
+
+      const { data } = await insertOrder(resCodeList, payInfo);
+
+      return payInfo.receiptId;
+    },
+    onSuccess: (data) => {
+      navigate(`/payments/${data}`);
+    },
+  });
 
   // 결제 승인 요청
   const { mutate: confirmMutation } = useMutation({
@@ -39,7 +55,8 @@ const PayArea = ({ className, roomInfo }) => {
       console.log('서버 승인 성공', data);
       // 결제창 닫고 결과 페이지로 이동 (URL에 receipt_id 전달)
       Bootpay.destroy();
-      navigate(`/payments/${data.receiptId}`);
+
+      return data;
     },
     onError: (error) => {
       console.error('서버 승인 실패', error);
@@ -82,22 +99,34 @@ const PayArea = ({ className, roomInfo }) => {
     },
     onSuccess: (result) => {
       // 주문 ID 생성 API 요청
-      createOrderId(result.data).then(async (res) => {
-        console.log('res : ' + res);
+      createOrderId(result.data).then(async (response) => {
+        console.log('res : ' + response);
         // 결제 요청 및 결제 정보 저장
         console.log(paymentState.roomInfo);
 
-        const totalPrice = calcTotalPrice(
-          paymentState.roomInfo,
-          paymentState.userCoupon
-        );
+        // const totalPrice = calcTotalPrice(
+        //   paymentState.roomInfo,
+        //   paymentState.userCoupon
+        // );
+
+        // setTotalPrice(totalPrice);
+
         const items = getRoomInfo(paymentState.roomInfo);
 
-        await bootpayAPI(result.insertResInfo, res, totalPrice, items)
+        await bootpayAPI(
+          result.insertResInfo,
+          response,
+          paymentState.totalPrice,
+          items
+        )
           .then((response) => {
             if (response.event === 'confirm') {
-              confirmMutation(response); // 서버 승인 요청
+              return confirmMutation(response); // 서버 승인 요청
             }
+          })
+          .then((response) => {
+            // 주문 테이블에 저장
+            orderInfoMutation(result.data, response);
           })
           .catch((e) => {
             console.log('결제 오류', e.message);

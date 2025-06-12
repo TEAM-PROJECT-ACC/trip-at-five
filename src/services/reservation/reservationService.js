@@ -73,15 +73,20 @@ export const bootpayAPI = async (insertResInfo, orderId, totalPrice, items) => {
   return response;
 };
 
-// 서버 승인
+// 서버 승인 요청
 export const requestServerConfirm = async (payment) => {
   console.log('payment : ' + JSON.stringify(payment));
 
   const response = await apiAxios.post('/payments/confirm', payment);
 
-  console.log('requestServerConfirm : ' + response);
-
   return response;
 };
 
 // 주문 테이블에 저장
+export const insertOrder = async (orderInfo) => {
+  console.log(JSON.stringify(orderInfo));
+
+  const response = await apiAxios.post('/orders', orderInfo);
+
+  return response;
+};

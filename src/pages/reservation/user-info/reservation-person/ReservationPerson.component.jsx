@@ -2,18 +2,18 @@ import { useEffect } from 'react';
 import { InputShrink, Select } from '../../../../components';
 import { usePaymentInfoStore } from '../../../../states';
 import './ReservationPerson.style.scss';
+import { calcTotalPrice } from '../../pay-info/utils/payData.util';
 
 /**
  * 예약자 정보를 입력받고 해당 값을 예약 상태관리 정보에 저장
  */
 const ReservationPerson = ({ className }) => {
   // 상태 정보
-  const { resName, resPhone, userCoupon } = usePaymentInfoStore(
+  const { resName, resPhone, userCoupon, totalPrice } = usePaymentInfoStore(
     (state) => state
   );
-  const { setResName, setResPhone, setUserCoupon } = usePaymentInfoStore(
-    (state) => state.actions
-  );
+  const { setResName, setResPhone, setUserCoupon, setTotalPrice } =
+    usePaymentInfoStore((state) => state.actions);
 
   /**
    * coupon은 추후 데이터 서버에서 불러와서 출력할 예정
@@ -49,10 +49,9 @@ const ReservationPerson = ({ className }) => {
 
   // 상태 값 변경 확인
   useEffect(() => {
-    console.log(resName);
-    console.log(resPhone);
-    console.log(userCoupon);
-  }, [resName, resPhone, userCoupon]);
+    const price = calcTotalPrice(userCoupon, totalPrice);
+    setTotalPrice(price);
+  }, [userCoupon]);
 
   return (
     <div className={className}>
