@@ -15,16 +15,12 @@ export default function Login() {
 		successAlert('로그아웃 했습니다.');
 	};
 
-	useEffect(()=>{
-		console.log(loginInfo)	;
-	})
-
-	// useEffect(() => {
-	// 	if (loginInfo) {
-	// 		sessionStorage.removeItem('Logined');
-	// 		localStorage.removeItem('userInfo');
-	// 	}
-	// }, []);
+	useEffect(() => {
+		if (loginInfo) {
+			sessionStorage.removeItem('Logined');
+			localStorage.removeItem('userInfo');
+		}
+	}, []);
 
 	return (
 		<PageContainer className={'login-container'}>

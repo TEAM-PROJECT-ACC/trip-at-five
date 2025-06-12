@@ -16,8 +16,8 @@ export const userInactive = async (userInfo, pwd) => {
 };
 
 /* 회원 챌린지 정보 조회 */
-export const challengeSelect = async () => {
-  const respone = await baseServrAxios.get('/users/challenge', 
+export const challengeSelect = async (userMemSq) => {
+  const respone = await baseServrAxios.get('/users/challenge', userMemSq
 );
   return respone;
 };
