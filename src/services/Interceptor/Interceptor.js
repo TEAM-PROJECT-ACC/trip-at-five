@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { VITE_WEB_SOCKET_URL } from '../../../env.config';
+import { VITE_SERVER_BASE_URL } from '../../../env.config';
 const baseServrAxios = axios.create({
-  baseURL: VITE_WEB_SOCKET_URL,
+  baseURL: VITE_SERVER_BASE_URL,
   withCredentials: true,
 });
 
