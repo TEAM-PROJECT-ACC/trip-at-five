@@ -185,6 +185,8 @@ const AccommodationDetail = ({ memNo }) => {
     const fetchAccomDetail = async () => {
       try {
         const data = await accommodationDetailByAccomSq(id, memNo);
+        console.log('data: ' + JSON.stringify(data));
+        console.log('data: ' + data);
         if (data && data.roomList) {
           data.roomList = data.roomList.map((room) => ({
             ...room,
@@ -192,6 +194,7 @@ const AccommodationDetail = ({ memNo }) => {
             memNo: 2,
           }));
         }
+        data.memNo = 2;
         setAccom(data);
 
         console.log('객실 리스트:', data.roomList);

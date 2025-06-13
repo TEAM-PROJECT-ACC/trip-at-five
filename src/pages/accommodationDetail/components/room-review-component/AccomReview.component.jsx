@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   ButtonPrimary,
   Modal,
@@ -14,9 +14,9 @@ import '../../accommodationDetail.style.scss';
 
 const MAX_IMAGES = 5;
 
-export const AccomReview = ({ resCd, accomSq }) => {
+export const AccomReview = ({ resCd, memNo, accomSq }) => {
   // 이미지
-  const memNo = 2;
+
   const imageState = useDeleteImageInfoStore((state) => state);
   const imageInputRef = useRef();
 
@@ -26,6 +26,11 @@ export const AccomReview = ({ resCd, accomSq }) => {
   const [content, setContent] = useState('');
 
   const canWriteReview = !!memNo && !!resCd;
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files).slice(0, MAX_IMAGES);
+    imageState.setImages(files);
+  };
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -48,6 +53,11 @@ export const AccomReview = ({ resCd, accomSq }) => {
       alert('리뷰 등록 실패');
     }
   };
+
+  useEffect(() => {
+    console.log('memNo : ' + memNo);
+    console.log('resCd : ' + resCd);
+  }, []);
   return (
     <section className='review-section'>
       <div className='review-section__header'>
@@ -57,8 +67,7 @@ export const AccomReview = ({ resCd, accomSq }) => {
           3.0
         </div>
         <button
-          onClick={() => canWriteReview && setModalOpen(true)}
-          disabled={!canWriteReview}
+          onClick={() => setModalOpen(true)}
           className='accom-modal-btn'
         >
           후기 등록
@@ -89,6 +98,7 @@ export const AccomReview = ({ resCd, accomSq }) => {
                   placeholder={'후기를 작성해주세요'}
                   className='accom-modal-textbox'
                   onChange={(e) => setContent(e.target.value)}
+                  value={content}
                 />
                 <div className='accom-modal-img'>
                   <input
