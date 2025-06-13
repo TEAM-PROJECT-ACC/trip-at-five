@@ -1,11 +1,11 @@
 import axios from 'axios';
-import {VITE_WEB_SOCKET_URL} from '../../../env.config'
 import { DIARY_REQUESTS } from './diary.requests';
+import { VITE_SERVER_BASE_URL } from '../../../env.config';
 
 // axios default options
 const API_OPTIONS = {
   // baseURL
-  baseURL: VITE_WEB_SOCKET_URL,
+  baseURL: VITE_SERVER_BASE_URL,
   withCredentials: true,
 };
 
