@@ -97,7 +97,6 @@ const AccommodationList = () => {
       const data = await searchAccommodationByKeyword(params);
       //console.log('fetchAllData :', data);
       setAllAccommodations(data);
-      setCurrentPage(1);
     };
     fetchAllData();
   }, [

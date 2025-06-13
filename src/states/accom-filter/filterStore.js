@@ -7,7 +7,7 @@ const initialState = {
   selectedPub: [],
   selectedInroom: [],
   selectedEtc: [],
-  priceRange: [0, 500000],
+  priceRange: [0, 1500],
 };
 
 export const useFilterStore = create(

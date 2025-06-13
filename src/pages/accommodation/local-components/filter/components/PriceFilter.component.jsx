@@ -23,7 +23,7 @@ const PriceFilter = () => {
         <Slider
           range
           min={0}
-          max={500000}
+          max={1500}
           step={100}
           value={priceRange}
           onChange={handleChange}
@@ -32,7 +32,10 @@ const PriceFilter = () => {
         />
       </div>
       <p className='price-range'>
-        ₩{priceRange[0].toLocaleString()} ~ {priceRange[1] === 500000 ? '₩500,000+' : `₩${priceRange[1].toLocaleString()}`}
+        ₩{priceRange[0].toLocaleString()} ~{' '}
+        {priceRange[1] >= 1500
+          ? '₩1,500+'
+          : `₩${priceRange[1].toLocaleString()}`}
       </p>
     </div>
   );
