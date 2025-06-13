@@ -113,7 +113,7 @@ const ChatRoom = () => {
 
   useEffect(() => {
     if (loginInfo && category) {
-      console.log('init useEffect : ');
+      console.log('init useEffect : ', loginInfo);
       const apiRequestData = {
         loginInfo,
         inqCtgCd: category.value,
