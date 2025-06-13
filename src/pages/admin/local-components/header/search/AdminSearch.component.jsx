@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react';
 import AdminInput from '../../../../../components/inputs/input-admin/AdminInput.component';
 import AdminPrimaryButton from '../../../../../components/buttons/admin-primary-button/AdminPrimaryButton.component';
 import './AdminSearch.style.scss';
 import { useAdminSearchStore } from '../../../../../states/admin-search/adminSearchStore';
-import { useEffect } from 'react';
 
 /**
  * 검색창 공통 컴포넌트

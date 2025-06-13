@@ -25,9 +25,23 @@ import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
 import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
+
+import ChatRoom from './pages/chat/chat-ui/Chat.room';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import { ToastContainer } from 'react-toastify';
 import { loginStateStore } from './states/login/loginStore';
 import { WebSocketProvider } from './components/websocket/contexts/WebSocket.provider';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // refetchOnWindowFocus: false, // 기본값이 true. true일 경우 브라우저 화면이 포커스 되었을 경우 데이터를 갱신한다
+    },
+  },
+});
+
 
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
@@ -47,8 +61,10 @@ function App() {
   // }, []);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
+
       <ToastContainer />
+
       {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
       {!isAdmin && <AppHeader />}
       <Routes>
@@ -148,7 +164,7 @@ function App() {
           element={<Reservation />}
         />
         <Route
-          path='/payments'
+          path='/orders/:id'
           element={<Receipt />}
         />
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
@@ -180,6 +196,10 @@ function App() {
               path=':id/rooms'
               element={<RoomMain />}
             />
+            <Route
+              path=':id/rooms/:roomSq'
+              element={<RoomMain />}
+            />
           </Route>
           <Route path='reservations'>
             <Route
@@ -203,7 +223,8 @@ function App() {
       </Routes>
       {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
       {!isAdmin && <AppFooter />}
-    </>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 

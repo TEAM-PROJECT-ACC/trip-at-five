@@ -4,15 +4,18 @@ import NumberOfPeople from '../../../../../components/accom-search/number-of-peo
 import { ButtonSecondary, InputSecondary } from '../../../../../components';
 import { useAccomSearchStore } from '../../../../../states';
 import './SearchArea.style.scss';
+import { useNavigate } from 'react-router-dom';
 
 const SearchArea = () => {
   const state = useAccomSearchStore.getState();
   const { setKeywordState } = useAccomSearchStore();
-
   const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
 
   const searchHandler = async () => {
     setKeywordState(inputValue);
+    navigate('/accommodations');
+
     // 필요한 상태만 추출
     const searchData = {
       keyword: inputValue,

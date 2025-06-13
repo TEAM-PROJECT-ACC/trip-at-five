@@ -5,7 +5,7 @@ export const useFilterState = () => {
   const [filter, setFilter] = useState({
     selectedCategory: '',
     selectedFacilities: [],
-    priceRange: [0, 1000000],
+    priceRange: [0, 500000],
     currentPage: 1,
   });
 
@@ -38,7 +38,7 @@ export const useFilterState = () => {
     setFilter({
       selectedCategory: '',
       selectedFacilities: [],
-      priceRange: [0, 1000000],
+      priceRange: [0, 500000],
       currentPage: 1,
     });
   };

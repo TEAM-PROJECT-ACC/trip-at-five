@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ButtonPrimary,
   Modal,
@@ -7,9 +7,45 @@ import {
   Textarea,
 } from '../../../../components';
 import { Star } from '../../../../components/star-rating/components/star/Star.component';
+import { MdAddPhotoAlternate } from '../../../../assets/icons/ys/index';
+import { useDeleteImageInfoStore } from '../../../../states/image-info/imageInfoStore';
+import { insertReviewAPI } from '../../../../services/review/reviewService.api';
 import '../../accommodationDetail.style.scss';
 
-export const AccomReview = () => {
+const MAX_IMAGES = 5;
+
+export const AccomReview = ({ resCd, memNo }) => {
+  // 이미지
+  const imageState = useDeleteImageInfoStore((state) => state);
+  const imageInputRef = useRef();
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [starRateScore, setStarRateScore] = useState(0);
+
+  const [content, setContent] = useState('');
+
+  const canWriteReview = !!memNo && !!resCd;
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('revSco', starRateScore);
+    formData.append('ckRevSt', 'PUBLIC');
+    formData.append('revCont', content);
+    formData.append('resCd', resCd);
+    formData.append('memNo', memNo);
+
+    imageState.images.forEach((img) => formData.append('images', img));
+    try {
+      const response = await insertReviewAPI(formData);
+      if (response.status === 200) {
+        alert('리뷰가 등록되었습니다!');
+        imageState.resetImageInfoStore();
+        setModalOpen(false);
+      }
+    } catch {
+      alert('리뷰 등록 실패');
+    }
+  };
   return (
     <section className='review-section'>
       <div className='review-section__header'>
@@ -19,7 +55,8 @@ export const AccomReview = () => {
           3.0
         </div>
         <button
-          onClick={modalHandler}
+          onClick={() => canWriteReview && setModalOpen(true)}
+          disabled={!canWriteReview}
           className='accom-modal-btn'
         >
           후기 등록
@@ -30,6 +67,8 @@ export const AccomReview = () => {
             useCloseIcon={true}
             modalHandler={() => {
               setModalOpen(false);
+              imageState.resetImageInfoStore();
+              setContent('');
             }}
           >
             <div className='accom-modal-container'>
@@ -40,26 +79,47 @@ export const AccomReview = () => {
               </div>
               <StarRating
                 score={starRateScore}
-                onClick={handleRatingStar}
+                onClick={setStarRateScore}
                 className='accom-modal-stars'
               />
               <div className='accom-modal-body'>
                 <Textarea
                   placeholder={'후기를 작성해주세요'}
                   className='accom-modal-textbox'
+                  onChange={(e) => setContent(e.target.value)}
                 />
-                <div
-                  type='file'
-                  className='accom-modal-img'
-                >
-                  <MdAddPhotoAlternate className='accom-modal-img-icon' />
+                <div className='accom-modal-img'>
+                  <input
+                    type='file'
+                    accept='image/*'
+                    multiple
+                    style={{ display: 'none' }}
+                    ref={imageInputRef}
+                    onChange={handleImageChange}
+                  />
+                  <MdAddPhotoAlternate
+                    className='accom-modal-img-icon'
+                    onClick={() => imageInputRef.current.click()}
+                  />
+                  {imageState.images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      style={{ position: 'relative' }}
+                    >
+                      <img
+                        src={URL.createObjectURL(img)}
+                        alt='preview'
+                        width={48}
+                        height={48}
+                        style={{ objectFit: 'cover', borderRadius: 8 }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
               <ButtonPrimary
                 className='accom-modal-btn-inner'
-                onClick={() => {
-                  setModalOpen(false);
-                }}
+                onClick={handleSubmit}
               >
                 등록하기
               </ButtonPrimary>

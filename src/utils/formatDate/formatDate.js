@@ -29,6 +29,16 @@ const dayHandler = (day) => {
   }
 };
 
+export const formatDateForApi = (dateString) => {
+  if (!dateString) return '';
+  const regex = /^(\d{4})\.(\d{2})\.(\d{2})/;
+  const match = dateString.match(regex);
+  if (match) {
+    return `${match[1]}-${match[2]}-${match[3]}`;
+  }
+  return '';
+}
+
 export const getDatePad = (date, padsCount = 2, pad = '0') => {
   return String(date).padStart(padsCount, pad);
 };

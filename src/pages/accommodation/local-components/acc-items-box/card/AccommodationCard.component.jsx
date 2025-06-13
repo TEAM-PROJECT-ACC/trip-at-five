@@ -3,29 +3,42 @@ import { Link } from 'react-router-dom';
 import {
   FaBed,
   FaHotel,
+  TbBeach,
+  MdHouse,
   FaCampground,
   FaHouseUser,
-  MdHouse,
-  MdVilla,
+  FaBuilding,
 } from '../../../../../assets/icons/ys/index';
 import './accommodationCard.style.scss';
 
+const typeNameMap = {
+  21: '모텔',
+  22: '호텔',
+  23: '리조트',
+  24: '펜션',
+  25: '캠핑',
+  26: '게하/한옥',
+  999: '미지정',
+};
+
 const typeIconMap = {
-  모텔: FaBed,
-  호텔: FaHotel,
-  펜션: MdHouse,
-  '홈&빌라': MdVilla,
-  캠핑: FaCampground,
-  '게하/한옥': FaHouseUser,
+  모텔: <FaBuilding />,
+  호텔: <FaHotel />,
+  리조트: <TbBeach />,
+  펜션: <MdHouse />,
+  캠핑: <FaCampground />,
+  '게하/한옥': <FaHouseUser />,
+  미지정: <FaBed />,
 };
 
 const AccommodationCard = ({ accom }) => {
-  const TypeIcon = typeIconMap[accom.type];
+  const typeName = typeNameMap[accom.accomTypeNo] || '미지정';
+  const typeIcon = typeIconMap[typeName] || typeIconMap['미지정'];
 
   return (
     <li className='accommodation-item'>
       <Link
-        to={`/accommodations/${accom.id}`}
+        to={`/accommodations/${accom.accomSq}`}
         className='accom-link'
       >
         <div className='image'>
@@ -36,29 +49,29 @@ const AccommodationCard = ({ accom }) => {
         </div>
         <div className='accom-info'>
           <div className='level-one'>
-            <div className='accom-name'>{accom.name}</div>
+            <div className='accom-name'>{accom.accomName}</div>
             <div
               className='accom-info-icon'
-              title={accom.type}
+              title={typeName}
             >
-              <TypeIcon />
+              {typeIcon}
             </div>
           </div>
-          <p className='accom-address'>{accom.address}</p>
+          <p className='accom-address'>{accom.accomAddr}</p>
           <div className='star'>
             <span className='star-icon'></span>
-            {accom.rating}명 평가
+            1000 명 평가
           </div>
           <div className='accom-info-time-price'>
             {/* <div className='v-line'></div> */}
             <span>
-              <p className='accom-time'>{accom.checkIn} 체크인</p>
-              <p className='accom-time'>{accom.checkOut} 체크아웃</p>
+              <p className='accom-time'>{accom.roomChkIn} 체크인</p>
+              <p className='accom-time'>{accom.roomChkOut} 체크아웃</p>
             </span>
             <p className='accom-price'>
               <span className='accom-price-text'>최저가</span>
               <span className='accom-price-value'>
-                <strong>{accom.price.toLocaleString()}</strong>
+                <strong>{accom.roomPrice}</strong>
                 <span>원</span>
               </span>
             </p>
