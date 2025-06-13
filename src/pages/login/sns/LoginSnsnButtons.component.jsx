@@ -53,7 +53,7 @@ export default function SnsButtons() {
         successAlert('login 성공');
         sessionStorage.setItem('Logined', true);
         setLoginInfo(naverResult.data);
-        navigate('/user');
+        navigate('/');
       } else if (naverResult.data.INACTIVE === 'INACTIVE') {
         errorAlert('비활성화 된 계정입니다.');
       } else {
@@ -66,7 +66,7 @@ export default function SnsButtons() {
         successAlert('login 성공');
         sessionStorage.setItem('Logined', true);
         setLoginInfo(googleResult.data);
-        navigate('/user');
+        navigate('/');
       } else if (googleResult.data.INACTIVE === 'INACTIVE') {
         errorAlert('비활성화 된 계정입니다.');
       } else {

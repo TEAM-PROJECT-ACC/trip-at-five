@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { VITE_SERVER_BASE_URL } from '../../../env.config';
+import { infoAlert,warningAlertLeft } from '../../utils/toastUtils/toastUtils';
 const baseServrAxios = axios.create({
   baseURL: VITE_SERVER_BASE_URL,
   withCredentials: true,
@@ -19,7 +20,9 @@ baseServrAxios.interceptors.response.use(
     }
 
     if (error.code !== 'ERR_CANCELED') {
-      alert('다시 로그인해 주시기 바랍니다.');
+      warningAlertLeft('Interceptor!');
+      infoAlert('세션이 끊어졌습니다 재로그인해주세요')
+      
     }
 
     return Promise.reject(error);

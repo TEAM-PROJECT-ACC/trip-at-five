@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { PageContainer } from '../../components';
 import LoginInputBox from './login-input/EmailPwdInput.component';
 import SnsButtons from './sns/LoginSnsnButtons.component';
-import { loginStateStore } from '../../states/login/loginStore';
+import {
+	loginStateStore,
+} from '../../states/login/loginStore';
 import { logout } from '../../services/login/loginService';
 import { successAlert } from '../../utils/toastUtils/toastUtils';
 

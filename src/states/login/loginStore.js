@@ -2,35 +2,31 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 const initialState = {
-	id: '',
-	pwd: '',
 	isLogin: false,
 	error: '',
 };
 
-export const loginAccountStore = create((set) => ({
-	setId: (text) =>
-		set({
-			id: text,
-		}),
+export const loginAccountStore = create(
+	persist(
+		(set) => ({
+			...initialState,
+			setIslogin: () =>
+				set({
+					isLogin: true,
+				}),
 
-	setPwd: (text) =>
-		set({
-			pwd: text,
-		}),
+			setError: (text) =>
+				set({
+					error: text,
+				}),
 
-	setIslogin: (text) =>
-		set({
-			isLogin: text,
+			resetLoginAccountStore: () => set(() => ({ ...initialState })),
 		}),
-
-	setError: (text) =>
-		set({
-			error: text,
-		}),
-
-	resetLoginAccountStore: () => set(() => ({ ...initialState })),
-}));
+		{
+			name: 'islogin',
+		}
+	)
+);
 
 const snsInitialState = {
 	plaform: '',
