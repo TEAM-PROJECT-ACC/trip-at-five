@@ -9,7 +9,7 @@ import {
   deleteAdminAccomDetail,
   createAdminAccom,
   deleteAccomImageAPI,
-} from '../../../../services/accom/apiService';
+} from '../../../../services/accom/accomService.api';
 import { FaTrashAlt } from '../../../../assets/icons/index';
 import {
   FaSpa,

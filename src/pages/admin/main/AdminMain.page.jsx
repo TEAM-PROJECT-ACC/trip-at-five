@@ -5,7 +5,7 @@ import AdminSearch from '../local-components/header/search/AdminSearch.component
 import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { BsFillHouseAddFill } from '../../../assets/icons/index';
-import { selectAdminAccomList } from '../../../services/accom/apiService';
+import { selectAdminAccomList } from '../../../services/accom/accomService.api';
 import './AdminMain.style.scss';
 import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
 

@@ -8,7 +8,7 @@ import './accommodationList.style.scss';
 import { PageContainer } from '../../components';
 import { useAccomSearchStore } from '../../states';
 import { useFilterStore } from '../../states/accom-filter/filterStore';
-import { searchAccommodationByKeyword } from '../../services/accom/apiService';
+import { searchAccommodationByKeyword } from '../../services/accom/accomService.api';
 import SearchArea from '../main/local-components/top/search/SearchArea.component';
 
 /**

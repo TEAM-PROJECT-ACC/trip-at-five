@@ -3,7 +3,7 @@ import CategoryFilter from './components/CategoryFilter.component';
 import PriceFilter from './components/PriceFilter.component';
 import FacilityFilter from './components/FacilityFilter.component';
 import { useFilterStore } from '../../../../states/accom-filter/filterStore';
-import { shallow } from 'zustand/shallow';
+
 const FilterPanel = ({ className }) => {
   const filterState = useFilterStore((state) => state);
 
