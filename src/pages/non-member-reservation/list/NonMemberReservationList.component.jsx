@@ -1,10 +1,25 @@
+import { useEffect } from 'react';
 import { accomData } from '../../../assets/sample-data/accomSampleData';
 import { ButtonPrimary, Label } from '../../../components';
 import './NonMemberReservationList.style.scss';
+import { loginStateStore } from '../../../states/login/loginStore';
 
 const dataList = accomData;
 
-const NonMemberReservationList = ({ className }) => {
+const NonMemberReservationList = ({ className, nonMemberInfo }) => {
+  const { setLoginInfo } = loginStateStore();
+
+  useEffect(() => {
+    setLoginInfo(() => {
+      return {
+        memEmailId: nonMemberInfo.email, // memEmailId: "k@naver.com"
+        // memNick: "여행다섯시"
+        // memSq: 1
+        // memType: "user"
+      };
+    });
+  }, [nonMemberInfo.email, setLoginInfo]);
+
   return (
     <div className={className}>
       <div className='non-m-reservation-list-title'>

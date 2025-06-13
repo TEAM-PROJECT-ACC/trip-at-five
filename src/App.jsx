@@ -72,7 +72,7 @@ function App() {
 
         {
           <Route
-            path='/user'
+            path='/users'
             element={
               <LoginInterceptor>
                 <UserPage />
@@ -136,7 +136,11 @@ function App() {
         />
         <Route
           path='/carts'
-          element={<CartMain />}
+          element={
+            <LoginInterceptor>
+              <CartMain />
+            </LoginInterceptor>
+          }
         />
         <Route
           path='/guest/reservations'

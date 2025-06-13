@@ -107,7 +107,7 @@ const ChatRoom = () => {
         navigate('/user');
       }
     } else {
-      navigate('/');
+      navigate('/guest/reservations');
     }
   };
 
