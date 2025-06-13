@@ -14,7 +14,7 @@ import '../../accommodationDetail.style.scss';
 
 const MAX_IMAGES = 5;
 
-export const AccomReview = ({ resCd, memNo }) => {
+export const AccomReview = ({ resCd, memNo, accomSq }) => {
   // 이미지
   const imageState = useDeleteImageInfoStore((state) => state);
   const imageInputRef = useRef();
@@ -33,6 +33,7 @@ export const AccomReview = ({ resCd, memNo }) => {
     formData.append('revCont', content);
     formData.append('resCd', resCd);
     formData.append('memNo', memNo);
+    formData.append('accomSq', accomSq);
 
     imageState.images.forEach((img) => formData.append('images', img));
     try {

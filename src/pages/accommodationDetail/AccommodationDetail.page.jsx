@@ -18,7 +18,6 @@ const AccommodationDetail = ({ memNo }) => {
   const { id } = useParams();
 
   const [accom, setAccom] = useState([]);
-  const [resCd, setResCd] = useState('');
 
   const imageList = [
     '/assets/images/room-page/sampleImg2.png',
@@ -312,6 +311,7 @@ const AccommodationDetail = ({ memNo }) => {
 
       <AccomReview
         resCd={accom.resCd}
+        accomSq={accom.accomSq}
         memNo={accom.memNo}
       />
 
