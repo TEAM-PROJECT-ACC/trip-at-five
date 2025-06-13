@@ -14,10 +14,11 @@ import Slider from 'react-slick';
 import { accommodationDetailByAccomSq } from '../../services/accom/accomService.api';
 import { AccomReview } from './components/room-review-component/AccomReview.component';
 
-const AccommodationDetail = () => {
+const AccommodationDetail = ({ memNo }) => {
   const { id } = useParams();
 
   const [accom, setAccom] = useState([]);
+  const [resCd, setResCd] = useState('');
 
   const imageList = [
     '/assets/images/room-page/sampleImg2.png',
@@ -88,8 +89,7 @@ const AccommodationDetail = () => {
 
   const toggleImageList = () => setShowImageList((prev) => !prev);
   const [currentPage, setCurrentPage] = useState(1);
-  const [resCd, setResCd] = useState('');
-  
+
   const handlePageChange = () => {
     setCurrentPage(pageNo);
   };
@@ -185,26 +185,26 @@ const AccommodationDetail = () => {
   useEffect(() => {
     const fetchAccomDetail = async () => {
       try {
-        const data = await accommodationDetailByAccomSq(id);
+        const data = await accommodationDetailByAccomSq(id, memNo);
         if (data && data.roomList) {
           data.roomList = data.roomList.map((room) => ({
             ...room,
             accomNo: data.accomNo,
+            memNo: 2,
           }));
         }
         setAccom(data);
+
         console.log('객실 리스트:', data.roomList);
         if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0]);
         }
-
       } catch (error) {
         console.error('숙소 상세 데이터 불러오기 실패:', error);
       }
     };
-
     fetchAccomDetail();
-  }, [id]);
+  }, [id, memNo]);
 
   if (!accom) {
     return <div>Loading...</div>;
@@ -310,7 +310,10 @@ const AccommodationDetail = () => {
 
       {/* 후기 섹션 */}
 
-      <AccomReview resCd={resCd}/>
+      <AccomReview
+        resCd={accom.resCd}
+        memNo={accom.memNo}
+      />
 
       {/* 상세 정보 */}
 

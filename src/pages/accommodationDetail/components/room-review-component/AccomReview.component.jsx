@@ -14,7 +14,7 @@ import '../../accommodationDetail.style.scss';
 
 const MAX_IMAGES = 5;
 
-export const AccomReview = ({ resCd }) => {
+export const AccomReview = ({ resCd, memNo }) => {
   // 이미지
   const imageState = useDeleteImageInfoStore((state) => state);
   const imageInputRef = useRef();
@@ -24,21 +24,15 @@ export const AccomReview = ({ resCd }) => {
 
   const [content, setContent] = useState('');
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length + imageState.images.length > MAX_IMAGES) {
-      alert('최대 5장까지만 업로드할 수 있습니다.');
-      return;
-    }
-    imageState.setImages([...imageState.images, ...files].slice(0, MAX_IMAGES));
-  };
+  const canWriteReview = !!memNo && !!resCd;
 
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('revSco', starRateScore);
     formData.append('ckRevSt', 'PUBLIC');
     formData.append('revCont', content);
-    formData.append('resCd', resCd); 
+    formData.append('resCd', resCd);
+    formData.append('memNo', memNo);
 
     imageState.images.forEach((img) => formData.append('images', img));
     try {
@@ -61,7 +55,8 @@ export const AccomReview = ({ resCd }) => {
           3.0
         </div>
         <button
-          onClick={() => setModalOpen(true)}
+          onClick={() => canWriteReview && setModalOpen(true)}
+          disabled={!canWriteReview}
           className='accom-modal-btn'
         >
           후기 등록
@@ -74,7 +69,6 @@ export const AccomReview = ({ resCd }) => {
               setModalOpen(false);
               imageState.resetImageInfoStore();
               setContent('');
-
             }}
           >
             <div className='accom-modal-container'>
@@ -92,7 +86,7 @@ export const AccomReview = ({ resCd }) => {
                 <Textarea
                   placeholder={'후기를 작성해주세요'}
                   className='accom-modal-textbox'
-                  onChange={e => setContent(e.target.value)}
+                  onChange={(e) => setContent(e.target.value)}
                 />
                 <div className='accom-modal-img'>
                   <input
@@ -103,18 +97,24 @@ export const AccomReview = ({ resCd }) => {
                     ref={imageInputRef}
                     onChange={handleImageChange}
                   />
-                  <MdAddPhotoAlternate className='accom-modal-img-icon' onClick={() => imageInputRef.current.click()}/>
-                    {imageState.images.map((img, idx) => (
-                      <div key={idx} style={{ position: 'relative' }}>
-                        <img
-                          src={URL.createObjectURL(img)}
-                          alt='preview'
-                          width={48}
-                          height={48}
-                          style={{ objectFit: 'cover', borderRadius: 8 }}
-                        />
-                        </div>
-                    ))}
+                  <MdAddPhotoAlternate
+                    className='accom-modal-img-icon'
+                    onClick={() => imageInputRef.current.click()}
+                  />
+                  {imageState.images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      style={{ position: 'relative' }}
+                    >
+                      <img
+                        src={URL.createObjectURL(img)}
+                        alt='preview'
+                        width={48}
+                        height={48}
+                        style={{ objectFit: 'cover', borderRadius: 8 }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
               <ButtonPrimary
