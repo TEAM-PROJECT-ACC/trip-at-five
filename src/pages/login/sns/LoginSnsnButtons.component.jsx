@@ -39,7 +39,7 @@ export default function SnsButtons() {
         successAlert('login 성공');
         sessionStorage.setItem('Logined', true);
         setLoginInfo(kakaoResult.data);
-        navigate('/user');
+        navigate('/');
       } else if (kakaoResult.data.INACTIVE === 'INACTIVE') {
         errorAlert('비활성화 된 계정입니다.');
       } else {

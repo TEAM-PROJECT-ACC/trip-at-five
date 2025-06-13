@@ -56,7 +56,7 @@ export default function LoginInputBox() {
         if (result.data.memType === 'admin') {
           navigate('/admin');
         } else {
-          navigate('/user');
+          navigate('/');
         }
       }
     } else {

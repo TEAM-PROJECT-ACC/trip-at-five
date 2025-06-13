@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { serverBaseURL } from './serverBaseURL';
-const baseURL = serverBaseURL;
+import { VITE_SERVER_BASE_URL } from '../../env.config';
+const baseURL = VITE_SERVER_BASE_URL;
 
 export const apiAxios = axios.create({
   baseURL: baseURL,

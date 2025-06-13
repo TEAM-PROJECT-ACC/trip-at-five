@@ -6,6 +6,7 @@ import './userProfile.style.scss';
 const CLASSNAME = 'aside-user-profile';
 
 export const UserProfile = ({ className }) => {
+  
   return (
     <div className={classNames(className, `${CLASSNAME}__container`)}>
       <div className={`${CLASSNAME}__user-nickname`}>
