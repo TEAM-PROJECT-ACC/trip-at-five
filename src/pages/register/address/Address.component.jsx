@@ -48,6 +48,7 @@ export default function RegisterAdress() {
 
 	const sendRegisterCall = async () => {
 		const result = await sendRegister(email, pwd, nickName, tel, address);
+		console.log(result);
 		if (result.data === 1 && result.status === 200) {
 			setAddStep();
 			return 1;
@@ -64,7 +65,10 @@ export default function RegisterAdress() {
 
 	const sendAddress = async () => {
 		setAddress(postNum + ',' + basicAddress + ',' + otherAddress);
-		sendRegisterCall();
+		if (sendRegisterCall()== 1){
+			 console.log('가입성공');
+		}
+
 	};
 
 	return (
