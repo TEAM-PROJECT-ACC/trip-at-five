@@ -11,9 +11,9 @@ const Receipt = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['resultPayment'],
     queryFn: async () => {
-      console.log(id);
+      // console.log(id);
       const { data } = await orderResultAPI(id);
-      console.log(data);
+      // console.log(data);
       return data;
     },
     staleTime: 1000 * 60,

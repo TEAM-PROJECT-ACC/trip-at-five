@@ -43,7 +43,7 @@ const ReservationPerson = ({ className }) => {
 
   // coupon 값 저장 핸들러
   const couponHandler = (data) => {
-    console.log(data);
+    // console.log(data);
     setUserCoupon(data);
   };
 

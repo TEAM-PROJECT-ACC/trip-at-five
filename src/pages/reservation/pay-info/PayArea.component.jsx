@@ -36,7 +36,7 @@ const PayArea = ({ className, roomInfo }) => {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       navigate(`/orders/${data}`);
     },
   });
@@ -45,7 +45,7 @@ const PayArea = ({ className, roomInfo }) => {
   const { mutate: confirmMutation } = useMutation({
     mutationKey: ['payment'],
     mutationFn: async ({ payment, resCodeList }) => {
-      console.log('payment : ' + JSON.stringify(payment));
+      // console.log('payment : ' + JSON.stringify(payment));
       const confirmInfo = {
         receiptId: payment.receipt_id,
         orderId: payment.order_id,

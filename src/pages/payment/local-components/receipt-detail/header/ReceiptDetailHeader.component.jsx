@@ -7,7 +7,6 @@ import {
 import './ReceiptDetailHeader.style.scss';
 
 const ReceiptDetailHeader = ({ className, resUserInfo }) => {
-  console.log(resUserInfo);
   return (
     <div className={className}>
       {resUserInfo && (

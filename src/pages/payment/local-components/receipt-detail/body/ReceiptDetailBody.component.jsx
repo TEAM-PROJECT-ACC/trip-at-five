@@ -2,7 +2,6 @@ import { FaInfoCircle } from '../../../../../assets/icons/index';
 import './ReceiptDetailBody.style.scss';
 
 const ReceiptDetailBody = ({ className, resInfo }) => {
-  console.log(resInfo);
   return (
     <div className={className}>
       <h2 className='receipt-detail-body-item'>
@@ -10,7 +9,6 @@ const ReceiptDetailBody = ({ className, resInfo }) => {
         &nbsp;예약 정보
       </h2>
       {resInfo.map((value, idx) => {
-        console.log(value);
         return (
           <div
             key={idx}

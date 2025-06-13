@@ -102,7 +102,7 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
       return status;
     },
     onSuccess: (status, variable, context) => {
-      console.log(status);
+      // console.log(status);
       if (status === HttpStatusCode.Ok) resetSelectedCart();
     },
   });
@@ -117,8 +117,8 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
     });
 
     if (alreadySelected) {
-      console.log(alreadySelected);
-      console.log(selectedItems);
+      // console.log(alreadySelected);
+      // console.log(selectedItems);
       toast.error('장바구니에서 제외되었습니다.');
     } else {
       toast.success('장바구니에 추가되었습니다.');
