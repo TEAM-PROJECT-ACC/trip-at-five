@@ -3,7 +3,7 @@ import {
   deleteDiary,
   insertDiary,
   selectAllList,
-} from '../../../../services/diary/api';
+} from '../../../../services/diary/diary.api';
 
 const initialState = {
   pageInfo: {
