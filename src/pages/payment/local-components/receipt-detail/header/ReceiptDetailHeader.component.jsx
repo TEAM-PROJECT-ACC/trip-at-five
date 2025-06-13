@@ -5,8 +5,11 @@ import {
   IoReceipt,
 } from '../../../../../assets/icons/index';
 import './ReceiptDetailHeader.style.scss';
+import { loginStateStore } from '../../../../../states/login/loginStore';
 
 const ReceiptDetailHeader = ({ className, resUserInfo }) => {
+  const memNick = loginStateStore((state) => state.loginInfo.memNick);
+
   return (
     <div className={className}>
       {resUserInfo && (
@@ -14,7 +17,7 @@ const ReceiptDetailHeader = ({ className, resUserInfo }) => {
           {/* 백엔드 연동 후 데이터 출력으로 변경할 부분 */}
           <h1 className='receipt-detail-header-item'>
             <IoReceipt />
-            &nbsp;여행 다섯시 XXX님의 영수증
+            &nbsp;여행 다섯시 {memNick}님의 영수증
           </h1>
           <div className='receipt-detail-header-item'>
             <h3>

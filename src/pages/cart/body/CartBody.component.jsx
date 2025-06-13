@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import PayInfo from '../../../components/pay/PayInfo.component';
 import Room from '../../../components/room-list/room/Room.component';
 import { usePaymentInfoStore } from '../../../states';
-import { accomData } from '../../../assets/sample-data/accomSampleData';
 import { GoCheckCircle } from '../../../assets/icons/index';
-import './CartBody.style.scss';
 import { useAccomCartStore } from '../../../states/accom-cart/accomCartStore';
 import { useQuery } from '@tanstack/react-query';
 import { HttpStatusCode } from 'axios';
 import { findCartByMemNo } from '../../../services/cart/cartService.api';
+import './CartBody.style.scss';
+import { loginStateStore } from '../../../states/login/loginStore';
 
 const CartBody = ({ className }) => {
   const navigate = useNavigate();
@@ -18,12 +18,13 @@ const CartBody = ({ className }) => {
   const [_, setSelectedAll] = useState(false);
 
   const { selectedItems } = useAccomCartStore((state) => state);
-  const memNo = 2; // 추후 회원 ID로 수정할 예정
+  const memNo = loginStateStore((state) => state.loginInfo.memSq);
 
   // 장바구니 데이터 조회
   const { data, isLoading } = useQuery({
     queryKey: ['myCartList', memNo],
     queryFn: async () => {
+      console.log(memNo);
       const { data, status } = await findCartByMemNo(memNo);
 
       if (status !== HttpStatusCode.Ok) {
@@ -31,7 +32,7 @@ const CartBody = ({ className }) => {
         navigate(-1);
       }
 
-      // console.log(data);
+      console.log(data);
 
       return data ?? [];
     },
@@ -68,9 +69,9 @@ const CartBody = ({ className }) => {
     navigate('/reservations', roomInfo);
   };
 
-  // useEffect(() => {
-  //   console.log(JSON.stringify(data));
-  // }, []);
+  useEffect(() => {
+    console.log(memNo);
+  }, []);
 
   return (
     <>
@@ -112,22 +113,6 @@ const CartBody = ({ className }) => {
               })}
             </>
           )}
-          {/* {accomDataList.map((value, idx) => {
-            // 배열 안의 요소를 판별하여 boolean 값 전달
-            const isChecked = roomInfo.some(
-              (item) => item.accom_sq === value.accom_sq
-            );
-            return (
-              <Room
-                key={idx}
-                className='room-item'
-                value={value}
-                checkArea={true}
-                checkHandler={checkHandler}
-                isChecked={isChecked}
-              />
-            );
-          })} */}
         </div>
         <PayInfo
           className='cart-pay-area__container'
