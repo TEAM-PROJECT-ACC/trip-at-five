@@ -1,4 +1,4 @@
-import { VITE_WEB_SOCKET_URL } from '../../../env.config';
+import {VITE_WEB_SOCKET_URL} from '../../../env.config'
 
 const mappingURL = '/chat';
 
