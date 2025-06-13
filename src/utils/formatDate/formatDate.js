@@ -37,7 +37,7 @@ export const formatDateForApi = (dateString) => {
     return `${match[1]}-${match[2]}-${match[3]}`;
   }
   return '';
-}
+};
 
 export const getDatePad = (date, padsCount = 2, pad = '0') => {
   return String(date).padStart(padsCount, pad);
