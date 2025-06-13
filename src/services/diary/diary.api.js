@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { serverBaseURL } from '../serverBaseURL';
-import { DIARY_REQUESTS } from './requests';
+import { DIARY_REQUESTS } from './diary.requests';
 
 // axios default options
 const API_OPTIONS = {

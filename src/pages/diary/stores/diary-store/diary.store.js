@@ -1,5 +1,5 @@
 import { createStore } from 'zustand';
-import { modifyDiary } from '../../../../services/diary/api';
+import { modifyDiary } from '../../../../services/diary/diary.api';
 
 const initialState = {
   diary: null,
