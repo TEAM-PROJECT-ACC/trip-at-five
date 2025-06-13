@@ -14,8 +14,9 @@ import '../../accommodationDetail.style.scss';
 
 const MAX_IMAGES = 5;
 
-export const AccomReview = ({ resCd, memNo, accomSq }) => {
+export const AccomReview = ({ resCd, accomSq }) => {
   // 이미지
+  const memNo = 2;
   const imageState = useDeleteImageInfoStore((state) => state);
   const imageInputRef = useRef();
 
