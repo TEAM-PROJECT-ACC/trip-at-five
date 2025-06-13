@@ -11,13 +11,13 @@ import {
   MessageInput,
 } from '@chatscope/chat-ui-kit-react';
 import { PageContainer, useWebSocket } from '../../../components';
-import { serverWebSocketURL } from '../../../services/serverBaseURL';
 import { loginStateStore } from '../../../states/login/loginStore';
 import { getInitChatRoom } from '../../../services/chat/chat.api';
 import ChatStateStore from '../chatStore';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { CHAT_REQUEST } from '../../../services/chat/chat.requests';
 import { getMessage, getMessages } from '../utils/getMessages/getMessages.util';
+import { VITE_WEB_SOCKET_URL } from '../../../../env.config';
 
 // const defaultMessage = [
 //   {
@@ -120,7 +120,7 @@ const ChatRoom = () => {
       };
       getInitChatRoom(apiRequestData).then((data) => {
         createWebSocket({
-          requestURL: `${serverWebSocketURL}${CHAT_REQUEST.initChatRoom}`,
+          requestURL: `${VITE_WEB_SOCKET_URL}${CHAT_REQUEST.initChatRoom}`,
           type: data.messages && data.messages.length > 0 ? 'EXISTING' : 'INIT',
           data,
         });

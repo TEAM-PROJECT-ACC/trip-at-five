@@ -29,8 +29,6 @@ const dayHandler = (day) => {
   }
 };
 
-<<<<<<< HEAD
-=======
 export const formatDateForApi = (dateString) => {
   if (!dateString) return '';
   const regex = /^(\d{4})\.(\d{2})\.(\d{2})/;
@@ -39,9 +37,8 @@ export const formatDateForApi = (dateString) => {
     return `${match[1]}-${match[2]}-${match[3]}`;
   }
   return '';
-}
+};
 
->>>>>>> 3d6f558e03c59beb0755f1c69b77925b5d5ea1e6
 export const getDatePad = (date, padsCount = 2, pad = '0') => {
   return String(date).padStart(padsCount, pad);
 };

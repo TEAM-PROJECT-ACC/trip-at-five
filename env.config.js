@@ -20,3 +20,4 @@ export const {
   VITE_NAVER_REDIRECT_URI,
 } = import.meta.env;
 
+export const { VITE_WEB_SOCKET_URL } = import.meta.env;
