@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { serverBaseURL } from '../serverBaseURL';
 import { DIARY_REQUESTS } from './diary.requests';
+import { VITE_SERVER_BASE_URL } from '../../../env.config';
 
 // axios default options
 const API_OPTIONS = {
   // baseURL
-  baseURL: serverBaseURL,
+  baseURL: VITE_SERVER_BASE_URL,
   withCredentials: true,
 };
 
