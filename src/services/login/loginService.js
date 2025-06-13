@@ -9,7 +9,7 @@ import {
 	VITE_GOOGLE_CLIENT_SECRET,
 	VITE_GOOGLE_REDIRECT_URI,
 } from '../../../env.config';
-import baseServrAxios from '../Interceptor/Interceptor';
+import baseServerAxios from '../Interceptor/Interceptor';
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${VITE_KAKAO_REST_KEY}&redirect_uri=${VITE_KAKAO_REDIRECT_URI}&response_type=code`;
 export const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?client_id=${VITE_NAVER_CLIENT_ID}&redirect_uri=${VITE_NAVER_REDIRECT_URI}&response_type=code`;
@@ -18,12 +18,12 @@ export const postCodeUrl =
 	'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
 export const kakaoLogin = (code) => {
-	const respone = axios
+	const response = axios
 		.post(
 			'https://kauth.kakao.com/oauth/token' +
 				'?grant_type=authorization_code' +
 				`&client_id=${VITE_KAKAO_REST_KEY}` +
-				`&edirect_uri${VITE_KAKAO_REDIRECT_URI}` +
+				`&redirect_uri=${VITE_KAKAO_REDIRECT_URI}` +
 				`&code=${code}`,
 			{
 				headers: {
@@ -32,20 +32,20 @@ export const kakaoLogin = (code) => {
 				},
 			}
 		)
-		.then(async (respone) => {
+		.then(async (response) => {
 			const kakakoGet = await axios
 				.get('https://kapi.kakao.com/v2/user/me', {
 					headers: {
-						Authorization: `Bearer ${respone.data.access_token}`,
+						Authorization: `Bearer ${response.data.access_token}`,
 					},
 				})
-				.then(async (respone) => {
-					const kakaoresult = await baseServrAxios.post(
+				.then(async (response) => {
+					const kakaoResult = await baseServerAxios.post(
 						'/login/kakao',
-						respone
+						response
 					);
 
-					return kakaoresult;
+					return kakaoResult;
 				})
 				.catch(() => {
 					console.error('GET 유저 정보 요청 에러:', error);
@@ -55,11 +55,11 @@ export const kakaoLogin = (code) => {
 		.catch((error) => {
 			console.error('GET SNS 로그인 에러:', error);
 		});
-	return respone;
+	return response;
 };
 
 export const naverLogin = async (code) => {
-	const respone = await axios
+	const response = await axios
 		.post(
 			'/oauth2.0/token' +
 				'?grant_type=authorization_code' +
@@ -67,18 +67,18 @@ export const naverLogin = async (code) => {
 				`&client_secret=${VITE_NAVER_CLIENT_SECRET}` +
 				`&code=${code}`
 		)
-		.then(async (respone) => {
-			const responeGet = await axios
+		.then(async (response) => {
+			const responseGet = await axios
 				.get('/v1/nid/me', {
 					headers: {
 						'content-type': 'application/json',
-						Authorization: `Bearer ${respone.data.access_token}`,
+						Authorization: `Bearer ${response.data.access_token}`,
 					},
 				})
-				.then(async (respone) => {
-					const naverResult = await baseServrAxios.post(
+				.then(async (response) => {
+					const naverResult = await baseServerAxios.post(
 						'/login/naver',
-						respone
+						response
 					);
 
 					return naverResult;
@@ -86,14 +86,14 @@ export const naverLogin = async (code) => {
 				.catch(() => {
 					console.log('정보요청실패');
 				});
-			return responeGet;
+			return responseGet;
 		})
 		.catch();
-	return respone;
+	return response;
 };
 
 export const googleLogin = async (code) => {
-	const respone = await axios
+	const response = await axios
 		.post(
 			'https://oauth2.googleapis.com/token' +
 				`?client_id=${VITE_GOOGLE_CLIENT_ID}` +
@@ -102,46 +102,46 @@ export const googleLogin = async (code) => {
 				`&grant_type=authorization_code` +
 				`&redirect_uri=${VITE_GOOGLE_REDIRECT_URI}`
 		)
-		.then(async (respone) => {
+		.then(async (response) => {
 			const googleGet = await axios
 				.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
 					headers: {
-						Authorization: `Bearer ${respone.data.access_token}`,
+						Authorization: `Bearer ${response.data.access_token}`,
 					},
 				})
-				.then(async (respone) => {
-					const googleResult = await baseServrAxios.post(
+				.then(async (response) => {
+					const googleResult = await baseServerAxios.post(
 						'/login/google',
-						respone
+						response
 					);
 					return googleResult;
 				});
 			return googleGet;
 		});
-	return respone;
+	return response;
 };
 
-export const nomalLogin = async (id, pwd) => {
-	const respone = await baseServrAxios.post('/login/nomal', {
+export const normalLogin = async (id, pwd) => {
+	const response = await baseServerAxios.post('/login/normal', {
 		email: id,
 		pwd: pwd,
 	});
-	return respone;
+	return response;
 };
 
-export const adminlLogin = async (id, pwd) => {
-	const respone = await baseServrAxios.post('/login/admin', {
+export const adminLogin = async (id, pwd) => {
+	const response = await baseServerAxios.post('/login/admin', {
 		email: id,
 		pwd: pwd,
 	});
-	return respone;
+	return response;
 };
 
 export const logout = async () => {
-	const respone = await baseServrAxios.get('/login/logout');
-	if (respone.data === 'ok') {
-		sessionStorage.removeItem('Logined');
+	const response = await baseServerAxios.get('/login/logout');
+	if (response.data === 'ok') {
+		sessionStorage.removeItem('Logged');
 		localStorage.removeItem('userInfo');
 	}
-	return respone;
+	return response;
 };

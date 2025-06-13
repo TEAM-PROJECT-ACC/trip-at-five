@@ -3,7 +3,7 @@ import './emailPwdInput.style.scss';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../register/util/validate';
 import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
-import { adminlLogin, nomalLogin } from '../../../services/login/loginService';
+import { adminLogin, normalLogin } from '../../../services/login/loginService';
 import {
 	loginStateStore,
 	loginAccountStore,
@@ -42,7 +42,7 @@ export default function LoginInputBox() {
 	const sendLogin = async () => {
 		if (email?.length != 0 && pwd?.length != 0) {
 			const result = checkEmailDomain(email)
-				? await adminlLogin(email, pwd)
+				? await adminLogin(email, pwd)
 				: await nomalLogin(email, pwd);
 			if (result.status === 200) {
 				if (result.data.INACTIVE === 'INACTIVE') {
@@ -53,7 +53,7 @@ export default function LoginInputBox() {
 					errorAlert('pwd를 다시 확인해주세요');
 				} else {
 					successAlert('login 성공');
-					sessionStorage.setItem('Logined', true);
+					sessionStorage.setItem('Logged', true);
 					setLoginInfo(result.data);
 					setIslogin();
 				}

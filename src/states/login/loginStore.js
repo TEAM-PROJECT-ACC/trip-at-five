@@ -29,21 +29,21 @@ export const loginAccountStore = create(
 );
 
 const snsInitialState = {
-	plaform: '',
+	platform: '',
 };
 
 export const loginSnsStateStore = create(
 	persist(
 		(set) => ({
 			...snsInitialState,
-			setPlaform: (text) =>
+			setPlatform: (text) =>
 				set({
-					plaform: text,
+					platform: text,
 				}),
 			resetLoginSnsStateStore: () => set(() => ({ ...snsInitialState })),
 		}),
 		{
-			name: 'login-plaform-Info',
+			name: 'login-platform-Info',
 		}
 	)
 );
