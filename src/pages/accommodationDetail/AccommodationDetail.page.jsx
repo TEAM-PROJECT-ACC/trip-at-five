@@ -18,6 +18,7 @@ const AccommodationDetail = ({ memNo }) => {
   const { id } = useParams();
 
   const [accom, setAccom] = useState([]);
+  const loginMemNo = memNo ?? Number(localStorage.getItem('memNo'));
 
   const imageList = [
     '/assets/images/room-page/sampleImg2.png',
@@ -191,10 +192,9 @@ const AccommodationDetail = ({ memNo }) => {
           data.roomList = data.roomList.map((room) => ({
             ...room,
             accomNo: data.accomNo,
-            memNo: 2,
+            memNo: data.memSq,
           }));
         }
-        data.memNo = 2;
         setAccom(data);
 
         console.log('객실 리스트:', data.roomList);
@@ -211,7 +211,7 @@ const AccommodationDetail = ({ memNo }) => {
   if (!accom) {
     return <div>Loading...</div>;
   }
-
+  console.log(accom);
   return (
     <PageContainer>
       <Button
@@ -315,7 +315,7 @@ const AccommodationDetail = ({ memNo }) => {
       <AccomReview
         resCd={accom.resCd}
         accomSq={accom.accomSq}
-        memNo={accom.memNo}
+        memNo={loginMemNo}
       />
 
       {/* 상세 정보 */}

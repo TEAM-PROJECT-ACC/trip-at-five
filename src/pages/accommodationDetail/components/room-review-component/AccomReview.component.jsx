@@ -41,6 +41,10 @@ export const AccomReview = ({ resCd, memNo, accomSq }) => {
     formData.append('memNo', memNo);
     formData.append('accomSq', accomSq);
 
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
     imageState.images.forEach((img) => formData.append('images', img));
     try {
       const response = await insertReviewAPI(formData);

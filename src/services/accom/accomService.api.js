@@ -18,7 +18,7 @@ export const accommodationDetailByAccomSq = async (accomSq, memNo) => {
     params: { memNo },
   });
   const data = response.data;
-
+  data.memNo = data.memNo;
   data.accomNo = data.accomSq;
   if (data && data.roomList) {
     data.roomList = data.roomList.map((room) => ({
