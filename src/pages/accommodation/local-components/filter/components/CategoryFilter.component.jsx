@@ -1,29 +1,36 @@
 import React from 'react';
-import { FaBed, FaHotel } from '../../../../../assets/icons/ys/index';
-import { MdHouse, MdVilla } from '../../../../../assets/icons/ys/index';
 import {
+  FaBuilding,
+  FaHotel,
+  TbBeach,
+  MdHouse,
   FaCampground,
   FaHouseUser,
 } from '../../../../../assets/icons/ys/index';
 import './filter.style.scss';
+import { useFilterStore } from '../../../../../states/accom-filter/filterStore';
 
 /**
  * 모텔, 호텔, 리조트, 펜션, 캠핑, 게스트하우스/한옥
  */
 
-const CategoryFilter = ({ selectedCategory, setCategory }) => {
+const CategoryFilter = () => {
+
+  const selectedCategory = useFilterStore((state) => state.selectedCategory);
+  const setCategory = useFilterStore((state) => state.setCategory);
+
   const categoryIcons = [
-    { icon: <FaBed />, value: '모텔', title: '모텔' },
-    { icon: <FaHotel />, value: '호텔', title: '호텔' },
-    { icon: <MdHouse />, value: '펜션', title: '펜션' },
-    { icon: <MdVilla />, value: '홈&빌라', title: '홈&빌라' },
-    { icon: <FaCampground />, value: '캠핑', title: '캠핑' },
-    { icon: <FaHouseUser />, value: '게하/한옥', title: '게하/한옥' },
+    { icon: <FaBuilding />, value: 21, title: '모텔' },
+    { icon: <FaHotel />, value: 22, title: '호텔' },
+    { icon: <TbBeach />, value: 23, title: '리조트' },
+    { icon: <MdHouse />, value: 24, title: '펜션' },
+    { icon: <FaCampground />, value: 25, title: '캠핑' },
+    { icon: <FaHouseUser />, value: 26, title: '게하/한옥' },
   ];
 
   const handleClick = (category) => {
     if (selectedCategory === category) {
-      setCategory('');
+      setCategory(null);
     } else {
       setCategory(category);
     }

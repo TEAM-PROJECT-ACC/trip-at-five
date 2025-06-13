@@ -1,6 +1,17 @@
 .user-page.social-row__icon-container {
-  .social-row_icon {
-    width: 24px;
-    height: 24px;
+	.social-row_icon {
+		width: 24px;
+		height: 24px;
+		&.sns-color-kakao {
+			color: black;
+			background-color: yellow;
+		}
+		&.sns-color-naver{
+      color: #06BE34;
+			background-color: white;
+		}
+	}
+  .trip-nomal-user{
+    width: 100px;
   }
 }

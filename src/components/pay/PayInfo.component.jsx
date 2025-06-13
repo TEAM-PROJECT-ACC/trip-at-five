@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react';
 import { ButtonPrimary } from '../buttons';
 import './PayInfo.style.scss';
+import { usePaymentInfoStore } from '../../states';
 
 const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
-  const [totalPrice, setTotalPrice] = useState(0);
+  const totalPrice = usePaymentInfoStore((state) => state.totalPrice);
+  const { setTotalPrice } = usePaymentInfoStore((state) => state.actions);
+
   useEffect(() => {
-    // console.log(resState);
-    console.log(roomInfo);
-    let total = 0;
-    roomInfo?.map((value) => {
-      // console.log(totalPrice);
-      // console.log(value.rooms[0].room_price);
-      // totalPrice += value.rooms[0].room_price;
-      total += value.rooms[0].room_price;
-    });
+    const total = roomInfo?.reduce((acc, cur) => acc + cur.roomPrice, 0) || 0;
     setTotalPrice(total);
-  }, [resState, roomInfo]);
+  }, [roomInfo]);
 
   return (
     <div className={className}>
@@ -25,12 +20,9 @@ const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
           <ul>
             {roomInfo?.map((value, idx) => (
               <li key={idx}>
-                <span>{value.rooms[0].room_name}</span>
+                <span>{value.roomName}</span>
                 <span>
-                  <span>
-                    {value.rooms[0].room_price.toLocaleString('ko-KR')}
-                  </span>
-                  원
+                  <span>{value.roomPrice.toLocaleString('ko-KR')}</span>원
                 </span>
               </li>
             ))}
@@ -42,6 +34,7 @@ const PayInfo = ({ className, clickHandler, resState, roomInfo }) => {
           <h3>
             <span>{totalPrice.toLocaleString('ko-KR')}</span>원
           </h3>
+          <p>(최소 금액 : 100원)</p>
         </div>
         {/* 결제 버튼 텍스트 총 금액 표기하기 ex) 총금액 원 결제하기 */}
         <ButtonPrimary

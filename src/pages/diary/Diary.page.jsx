@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import { Button, Modal, PageContainer } from '../../components';
 import { useDiaryList } from './hooks/useDiaryList.hook';
 import { useModal } from '../../hooks';
 import { InsertModal } from './components/modal/InsertModal.component';
 import { DiaryItem } from './components/diary-item/DiaryItem.component';
 import { DiaryProvider } from './stores';
+=======
+import { Button, Modal, PageContainer, Pagination } from '../../components';
+import { ToastContainer } from 'react-toastify';
+import { useModal } from '../../hooks';
+import { InsertModal } from './components/modal/InsertModal.component';
+import { DiaryList } from './components/diary-list/DiaryList.component';
+>>>>>>> 3d6f558e03c59beb0755f1c69b77925b5d5ea1e6
 import './diary.style.scss';
 
 export const DiaryPage = () => {
@@ -13,6 +21,8 @@ export const DiaryPage = () => {
   const handleClickPost = () => {
     handleModalOpen();
   };
+
+  // TODO: 로그인 정보가 없으면 로그인 페이지로 리디렉션 (useEffect)
 
   return (
     <PageContainer className='diary-page__container'>
@@ -36,6 +46,7 @@ export const DiaryPage = () => {
           </Modal>
         )}
       </div>
+<<<<<<< HEAD
       <div className='diary-page__diary-list-container'>
         {diaryList &&
           diaryList.length > 0 &&
@@ -55,6 +66,10 @@ export const DiaryPage = () => {
           })}
         {/* totalCount > 10 && pagination */}
       </div>
+=======
+      <DiaryList />
+      <ToastContainer />
+>>>>>>> 3d6f558e03c59beb0755f1c69b77925b5d5ea1e6
     </PageContainer>
   );
 };

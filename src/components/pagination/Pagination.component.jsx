@@ -13,24 +13,23 @@ import './pagination.style.scss';
 /**
  *
  *
- * @param {
- * className 사용하는 위치에서 스타일 변경 시 전달할 클래스
- * totalCount 총 아이템 수
- * pageLength 페이지 단위
- * currentPage 현재 페이지
- * numOfRows 페이지 당 아이템 요청 수
- * useMoveToEnd 시작 페이지 또는 마지막 페이지로 이동 사용 여부
- * onClick 페이지 번호 넘겨받는 함수 전달
+ * @param className 사용하는 위치에서 스타일 변경 시 전달할 클래스
+ * @param totalCount 총 아이템 수
+ * @param pageLength 페이지 단위 default = 5
+ * @param currentPage 현재 페이지
+ * @param numOfRows 페이지 당 아이템 요청 수 default = 10
+ * @param useMoveToEnd 시작 페이지 또는 마지막 페이지로 이동 사용 여부
+ * @param onClick 페이지 번호 넘겨받는 함수 전달
  * }
- * @returns
+ * @returns pageNo
  */
 
 export const Pagination = ({
   className,
   totalCount,
-  pageLength,
+  pageLength = 5,
   currentPage,
-  numOfRows,
+  numOfRows = 10,
   useMoveToEnd,
   onClick,
 }) => {

@@ -31,7 +31,7 @@ export const TestPage = () => {
   const [pageNationProps, setPagintionProps] = useState(() => {
     return {
       className: '',
-      totalCount: 150,
+      totalCount: 25,
       pageLength: 7,
       currentPage: 1,
       numOfRows: 10,

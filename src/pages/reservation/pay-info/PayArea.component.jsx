@@ -3,52 +3,170 @@ import PayInfo from '../../../components/pay/PayInfo.component';
 import Room from '../../../components/room-list/room/Room.component';
 import { usePaymentInfoStore } from '../../../states';
 import './PayArea.style.scss';
+import { useMutation } from '@tanstack/react-query';
+import {
+  bootpayAPI,
+  createOrderId,
+  insertOrder,
+  insertReservation,
+  requestServerConfirm,
+} from '../../../services/reservation/reservationService';
+import { useNavigate } from 'react-router-dom';
+import { getRoomInfo } from './utils/payData.util';
+import { useEffect } from 'react';
 
 const PayArea = ({ className, roomInfo }) => {
-  const { setResCode } = usePaymentInfoStore((state) => state.actions);
-  const state = usePaymentInfoStore((state) => state);
-  const paymentHandler = async () => {
-    // 서버에서 로직을 통해 예약코드 생성해서 넣을 예정
-    const resCode = 'testSeongJun';
-    setResCode(resCode);
+  const navigate = useNavigate();
+  const { setResCode, setRoomInfo, setTotalPrice } = usePaymentInfoStore(
+    (state) => state.actions
+  );
 
-    console.log(state);
+  const paymentState = usePaymentInfoStore((state) => state);
+  const memNo = 2; // 추후 회원번호 값
 
-    try {
-      // 추후 수정 예정
-      const response = await Bootpay.requestPayment({
-        application_id: '59a4d323396fa607cbe75de4',
-        price: 1000,
-        order_name: '테스트결제',
-        order_id: 'TEST_ORDER_ID',
-        pg: '다날',
-        method: '카드',
-        tax_free: 0,
-        user: {
-          id: '회원아이디',
-          username: '회원이름',
-          phone: '01000000000',
-          email: 'test@test.com',
-        },
-        items: roomInfo,
-        extra: {
-          open_type: 'iframe',
-          card_quota: '0,2,3',
-          escrow: false,
-        },
+  // 주문 정보 저장 요청
+  const { mutate: orderInfoMutation } = useMutation({
+    mutationKey: ['order'],
+    mutationFn: async (orderInfo) => {
+      // 예약코드 목록 길이만큼 예약코드 - 주문ID, 영수증ID 를 한쌍으로 DB에 저장
+
+      const { data } = await insertOrder(orderInfo);
+      // console.log(data);
+
+      return data;
+    },
+    onSuccess: (data) => {
+      // console.log(data);
+      navigate(`/orders/${data}`);
+    },
+  });
+
+  // 결제 승인 요청
+  const { mutate: confirmMutation } = useMutation({
+    mutationKey: ['payment'],
+    mutationFn: async ({ payment, resCodeList }) => {
+      // console.log('payment : ' + JSON.stringify(payment));
+      const confirmInfo = {
+        receiptId: payment.receipt_id,
+        orderId: payment.order_id,
+      };
+      const { data } = await requestServerConfirm(confirmInfo); // 상태코드 반환
+
+      const result = {
+        resCodeList: { ...resCodeList },
+        payment: { ...payment },
+      };
+
+      return result;
+    },
+    onSuccess: (data) => {
+      // console.log('서버 승인 성공', data);
+      // 결제창 닫고 결과 페이지로 이동 (URL에 receipt_id 전달)
+      Bootpay.destroy();
+
+      const orderInfo = {
+        orderId: data.payment.order_id,
+        receiptId: data.payment.receipt_id,
+        resCode: Array.isArray(data.resCodeList)
+          ? data.resCodeList
+          : Object.values(data.resCodeList),
+      };
+
+      // 주문 테이블에 저장
+      orderInfoMutation(orderInfo);
+    },
+    onError: (error) => {
+      console.error('서버 승인 실패', error);
+    },
+  });
+
+  // 예약
+  const { mutate: resMutate } = useMutation({
+    mutationKey: ['reservation', roomInfo],
+    mutationFn: async ({ resInfo }) => {
+      // console.log('resInfo: ' + JSON.stringify(resInfo));
+      const insertResInfo = {
+        resEmail: resInfo.paymentState.resEmail,
+        resName: resInfo.paymentState.resName,
+        resPhone: resInfo.paymentState.resPhone,
+        resNumOfPeo: resInfo.paymentState.numberOfPeople,
+        checkInDt: resInfo.paymentState.checkIn,
+        checkOutDt: resInfo.paymentState.checkOut,
+        memNo: memNo,
+      };
+
+      // console.log('insertResInfo: ' + insertResInfo);
+
+      // 예약 정보 저장 후 예약코드 목록 반환
+      const { data } = await insertReservation(
+        insertResInfo,
+        paymentState.roomInfo
+      );
+
+      // console.log('resMutate : ' + data);
+
+      const result = {
+        data: { ...data },
+        insertResInfo: { ...insertResInfo },
+      };
+
+      // console.log(result);
+
+      return result;
+    },
+    onSuccess: (result) => {
+      const totalPrice = usePaymentInfoStore.getState().totalPrice;
+      // 주문 ID 생성 API 요청
+      createOrderId(result.data).then(async (response) => {
+        // console.log('res : ' + response);
+        // 결제 요청 및 결제 정보 저장
+        // console.log(paymentState.roomInfo);
+
+        const items = getRoomInfo(paymentState.roomInfo, totalPrice);
+
+        await bootpayAPI(result.insertResInfo, response, totalPrice, items)
+          .then((response) => {
+            if (response.event === 'confirm') {
+              return confirmMutation({
+                payment: response,
+                resCodeList: result.data,
+              }); // 서버 승인 요청
+            }
+          })
+          .catch((e) => {
+            console.error('결제 오류', e.message);
+            switch (e.event) {
+              case 'cancel':
+                console.log('사용자가 결제 취소');
+                break;
+              case 'error':
+                console.error('PG 오류 : ', e.message);
+                break;
+            }
+
+            navigate(-1);
+          });
       });
-    } catch (e) {
-      console.log('결제 오류', e.message);
-      switch (e.event) {
-        case 'cancel':
-          console.log('사용자가 결제 취소');
-          break;
-        case 'error':
-          console.log('PG 오류 : ', e.message);
-          break;
-      }
-    }
+    },
+  });
+
+  // 결제 버튼 클릭 핸들러
+  const paymentHandler = async () => {
+    /**
+     * 1. 예약정보 저장 => OK
+     * 2. 저장완료 후 예약코드 목록을 반환 => OK
+     * 3. 주문 ID 생성 API 요청 후 반환된 주문ID 저장 => OK
+     * 4. 주문ID와 함께 결제 요청 => OK
+     * 5. 완료 시 주문 예약코드 목록과 영수증ID로 주문 테이블에 저장 API 요청 후 저장
+     */
+
+    resMutate({ resInfo: { paymentState } });
   };
+
+  useEffect(() => {
+    setRoomInfo(roomInfo);
+  }, []);
+
   return (
     <div className={className}>
       <div className='room-area__container'>

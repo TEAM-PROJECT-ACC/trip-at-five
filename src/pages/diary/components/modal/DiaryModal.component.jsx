@@ -9,10 +9,18 @@ export const DiaryModal = ({
   onChangeInput,
   onChangeTextarea,
 }) => {
+<<<<<<< HEAD
+=======
+  // TODO: 입력 값 제한 (글자 수)
+>>>>>>> 3d6f558e03c59beb0755f1c69b77925b5d5ea1e6
   const [diaryTitle, setDiaryTitle] = useState(() => diary?.diaryTitle);
   const [diaryCont, setDiaryCont] = useState(() => diary?.diaryCont);
 
   const handleChangeInput = (event) => {
+<<<<<<< HEAD
+=======
+    event.stopPropagation();
+>>>>>>> 3d6f558e03c59beb0755f1c69b77925b5d5ea1e6
     const targetValue = event.target.value;
     setDiaryTitle(() => targetValue);
     if (onChangeInput) {

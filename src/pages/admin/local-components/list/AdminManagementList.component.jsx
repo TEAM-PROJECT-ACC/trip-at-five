@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AdminTableHead from './table/thead/AdminTableHead.component';
 import AdminTableBody from './table/tbody/AdminTableBody.component';
 import { AdminPagination } from '../../../../components/admin-pagination/AdminPagination.component';
 import './AdminManagementList.style.scss';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryString = location.search;
   const [pageNationProps, setPageNationProps] = useState(() => {
     return {
       className: '',
-      totalCount: 150,
+      totalCount: dataList.length,
       pageLength: 10,
       currentPage: 1,
       numOfRows: 10,
@@ -23,14 +27,29 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
         currentPage: pageNo,
       };
     });
+    navigate(location.pathname + '?currentPage=' + pageNo);
   };
+
+  const [displayData, setDisplayData] = useState([]);
+  useEffect(() => {
+    setPageNationProps((prev) => ({
+      ...prev,
+      totalCount: dataList.length,
+    }));
+
+    const startIdx =
+      (pageNationProps.currentPage - 1) * pageNationProps.pageLength;
+    const endIdx = startIdx + pageNationProps.pageLength;
+    setDisplayData(dataList.slice(startIdx, endIdx));
+  }, [dataList, pageNationProps.currentPage, pageNationProps.pageLength]);
+
   return (
     <>
       <div className='admin-main-body'>
         <table className='admin-table'>
           <AdminTableHead columnList={columnList} />
           <AdminTableBody
-            dataList={dataList}
+            dataList={displayData}
             onClickRow={onClickRow}
           />
         </table>

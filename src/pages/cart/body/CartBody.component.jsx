@@ -6,18 +6,41 @@ import { usePaymentInfoStore } from '../../../states';
 import { accomData } from '../../../assets/sample-data/accomSampleData';
 import { GoCheckCircle } from '../../../assets/icons/index';
 import './CartBody.style.scss';
-
-const accomDataList = accomData.accommodation_tb;
+import { useAccomCartStore } from '../../../states/accom-cart/accomCartStore';
+import { useQuery } from '@tanstack/react-query';
+import { HttpStatusCode } from 'axios';
+import { findCartByMemNo } from '../../../services/cart/cartService.api';
 
 const CartBody = ({ className }) => {
   const navigate = useNavigate();
   const roomInfo = usePaymentInfoStore((state) => state.roomInfo);
   const { setRoomInfo } = usePaymentInfoStore((state) => state.actions);
-  const [setSelectedAll] = useState(false);
+  const [_, setSelectedAll] = useState(false);
+
+  const { selectedItems } = useAccomCartStore((state) => state);
+  const memNo = 2; // 추후 회원 ID로 수정할 예정
+
+  // 장바구니 데이터 조회
+  const { data, isLoading } = useQuery({
+    queryKey: ['myCartList', memNo],
+    queryFn: async () => {
+      const { data, status } = await findCartByMemNo(memNo);
+
+      if (status !== HttpStatusCode.Ok) {
+        alert('데이터 조회 실패');
+        navigate(-1);
+      }
+
+      // console.log(data);
+
+      return data ?? [];
+    },
+    staleTime: 1000 * 5,
+  });
 
   // 전체 선택
   const checkAllHandler = () => {
-    setRoomInfo(accomDataList);
+    setRoomInfo(data);
     setSelectedAll(true);
   };
 
@@ -29,9 +52,9 @@ const CartBody = ({ className }) => {
 
   // 하나 선택
   const checkHandler = (data) => {
-    const exists = roomInfo.some((item) => item.accom_sq === data.accom_sq);
+    const exists = roomInfo.some((item) => item.roomNo === data.roomNo);
     if (exists) {
-      setRoomInfo(roomInfo.filter((item) => item.accom_sq !== data.accom_sq));
+      setRoomInfo(roomInfo.filter((item) => item.roomNo !== data.roomNo));
     } else {
       setRoomInfo([...roomInfo, data]);
     }
@@ -44,6 +67,10 @@ const CartBody = ({ className }) => {
     }
     navigate('/reservations', roomInfo);
   };
+
+  // useEffect(() => {
+  //   console.log(JSON.stringify(data));
+  // }, []);
 
   return (
     <>
@@ -63,7 +90,29 @@ const CartBody = ({ className }) => {
               전체해제
             </span>
           </div>
-          {accomDataList?.map((value, idx) => {
+          {isLoading ? (
+            <p>조회중...</p>
+          ) : (
+            <>
+              {data.map((value, idx) => {
+                // 배열 안의 요소를 판별하여 boolean 값 전달
+                const isChecked = roomInfo.some(
+                  (item) => item.roomNo === value.roomNo
+                );
+                return (
+                  <Room
+                    key={idx}
+                    className='room-item'
+                    value={value}
+                    checkArea={true}
+                    checkHandler={checkHandler}
+                    isChecked={isChecked}
+                  />
+                );
+              })}
+            </>
+          )}
+          {/* {accomDataList.map((value, idx) => {
             // 배열 안의 요소를 판별하여 boolean 값 전달
             const isChecked = roomInfo.some(
               (item) => item.accom_sq === value.accom_sq
@@ -78,7 +127,7 @@ const CartBody = ({ className }) => {
                 isChecked={isChecked}
               />
             );
-          })}
+          })} */}
         </div>
         <PayInfo
           className='cart-pay-area__container'

@@ -14,7 +14,8 @@ export const accomData = {
         {
           room_sq: 1,
           room_name: '스탠다드 더블룸',
-          room_price: 135000,
+          // room_price: 135000,
+          room_price: 135,
           max_person: 2,
           bed_type: '더블',
           room_info: '시티뷰, 무료 WiFi, 에어컨, 욕조 포함',
