@@ -14,6 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { getRoomInfo } from './utils/payData.util';
 import { useEffect } from 'react';
+import { loginStateStore } from '../../../states/login/loginStore';
 
 const PayArea = ({ className, roomInfo }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const PayArea = ({ className, roomInfo }) => {
   );
 
   const paymentState = usePaymentInfoStore((state) => state);
-  const memNo = 2; // 추후 회원번호 값
+  const memNo = loginStateStore((state) => state.loginInfo.memSq);
 
   // 주문 정보 저장 요청
   const { mutate: orderInfoMutation } = useMutation({

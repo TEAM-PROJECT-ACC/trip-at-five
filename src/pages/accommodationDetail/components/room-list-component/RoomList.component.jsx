@@ -22,7 +22,11 @@ import {
   deleteCartItem,
   insertCartItem,
 } from '../../../../services/cart/cartService.api';
-import { loginAccountStore } from '../../../../states/login/loginStore';
+import {
+  loginAccountStore,
+  loginStateStore,
+} from '../../../../states/login/loginStore';
+import { usePaymentInfoStore } from '../../../../states';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -48,15 +52,16 @@ const renderIcons = (selectedFacilities) =>
       </div>
     ));
 
-const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
+const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
   const timeoutRef = useRef(null);
   const [visibleCount, setVisibleCount] = useState(10);
 
   const { selectedItems, removedItems } = useAccomCartStore((state) => state);
   const { resetSelectedCart, resetRemovedCart, toggleItem } =
     useAccomCartStore();
+  const { setRoomInfo } = usePaymentInfoStore((state) => state.actions);
 
-  const memNo = loginAccountStore((state) => state.id); // 추후 회원 데이터 조회해야함
+  const { loginInfo } = loginStateStore((state) => state);
 
   const { mutate: insertCart } = useMutation({
     mutationKey: ['insertCartItem'],
@@ -65,7 +70,7 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo,
+          memNo: loginInfo.memSq,
         };
       });
       // console.log(cartInfo);
@@ -89,7 +94,7 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo,
+          memNo: loginInfo.memSq,
         };
       });
 
@@ -130,13 +135,19 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
   const handleReservation = (room) => {
     console.log('room : ' + JSON.stringify(room));
 
+    /**
+     * 단순 객실 정보만
+     */
+
     if (room.roomCnt > 0) {
       const resInfo = {
         roomNo: room.roomSq,
         roomName: room.roomName,
         roomPrice: room.roomPrice,
         accomNo: room.accomNo,
+        accomName,
       };
+      setRoomInfo(resInfo);
     } else toast.error('객실이 없습니다');
   };
 
@@ -148,7 +159,7 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
      * 타이머 사용해서 일정 시간동안
      * 상태에 변화가 없을 경우 API 호출
      */
-    if (memNo) {
+    if (loginInfo) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -206,7 +217,7 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
             </div>
           </div>
           <div className='room-info__btn'>
-            {memNo && (
+            {loginInfo && (
               <Button
                 className={`btn-cart ${isSelected(room) ? 'active' : ''}`}
                 onClick={() => handleCartClick(room)}
