@@ -1,12 +1,14 @@
+import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { DiaryPage, TestPage, UserPage } from './pages';
 import { AppFooter, AppHeader } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
-import './App.css';
-import LoginPage from './pages/login/LoginPage';
-import Register from './pages/login/register/RegisterPage';
-import PwdRestting from './pages/login/pwd-resetting/Password.resetting.component';
-import { Chat } from './pages/chat/ChatMainPage';
+import LoginPage from './pages/login/Login.page';
+import Register from './pages/register/Register.page';
+import PwdRestting from './pages/pwdResetting/PwdResetting.page';
+import { Chat } from './pages/chat/ChatMain.page';
+import ChatRoom from './pages/chat/chat-ui/ChatRoom.component';
+import LoginInterceptor from './pages/login/loginInterCepter/LoginInterceptor.component';
 import AccommodationList from './pages/accommodation/AccommodationList.page';
 import Main from './pages/main/Main.page';
 import { useEffect, useState } from 'react';
@@ -23,9 +25,14 @@ import AdminMain from './pages/admin/main/AdminMain.page';
 import ReservationManagementDetail from './pages/admin/reservation-detail/ReservationManagementDetail.component';
 import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
+
 import ChatRoom from './pages/chat/chat-ui/Chat.room';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import { ToastContainer } from 'react-toastify';
+import { loginStateStore } from './states/login/loginStore';
+import { WebSocketProvider } from './components/websocket/contexts/WebSocket.provider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,12 +42,29 @@ const queryClient = new QueryClient({
   },
 });
 
+
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
   const [isAdmin, setIsAdmin] = useState(() => false);
+  const { loginInfo, resetLoginedStateStore } = loginStateStore();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('Logined')) {
+      localStorage.removeItem('userInfo');
+    }
+  }, []);
+
+  // useEffect(() => {
+  // 	if (sessionStorage.getItem('Logined')) {
+  // 		console.log(loginInfo);
+  // 	}
+  // }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
+
+      <ToastContainer />
+
       {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
       {!isAdmin && <AppHeader />}
       <Routes>
@@ -50,21 +74,28 @@ function App() {
         />
         {/* path member로 변경 */}
         {/* 복수형으로  */}
-        <Route
-          path='/user'
-          element={<UserPage />}
-        >
-          {USER_ROUTE.map((route, idx) => {
-            return (
-              <Route
-                key={idx}
-                index={route.index}
-                path={route.path}
-                element={<route.element className={route.className} />}
-              />
-            );
-          })}
-        </Route>
+
+        {
+          <Route
+            path='/user'
+            element={
+              <LoginInterceptor>
+                <UserPage />
+              </LoginInterceptor>
+            }
+          >
+            {USER_ROUTE.map((route, idx) => {
+              return (
+                <Route
+                  key={idx}
+                  index={route.index}
+                  path={route.path}
+                  element={<route.element className={route.className} />}
+                />
+              );
+            })}
+          </Route>
+        }
         <Route
           path='/diary'
           element={<DiaryPage />}
@@ -74,13 +105,15 @@ function App() {
           path='/login'
           element={<LoginPage />}
         ></Route>
-
+        <Route
+          path='/auth/callback/'
+          element={<LoginPage />}
+        ></Route>
         {/* 회원가입 */}
         <Route
           path='/register'
           element={<Register />}
         />
-
         {/* 비밀번호 재설정 */}
         <Route
           path='/resetting'
@@ -95,10 +128,13 @@ function App() {
           />
           <Route
             path='/chat/room'
-            element={<ChatRoom />}
+            element={
+              <WebSocketProvider>
+                <ChatRoom />
+              </WebSocketProvider>
+            }
           />
         </Route>
-
         <Route
           index
           element={<Main />}
@@ -131,7 +167,6 @@ function App() {
           path='/orders/:id'
           element={<Receipt />}
         />
-
         {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
         <Route
           path='/admin'

@@ -1,0 +1,40 @@
+@use '@scss/_colors_variable.style.scss' as *;
+
+.register-email-wrap {
+	.register-email-text {
+		font-size: 16px;
+		margin-bottom: 8px;
+	}
+
+	.register-email-input-wrap {
+		margin-bottom: 20px;
+	}
+
+	.register-email-input {
+		width: 100%;
+	}
+
+	.register-email-code-input {
+		width: 100%;
+		margin-bottom: 8px;
+	}
+
+	.validateEmail-step1-text {
+		margin-top: 4px;
+		font-size: 12px;
+		color: red;
+	}
+	.validateEmailcode-step1-text{
+		font-size: 12px;
+		margin-bottom: 20px;
+		cursor: pointer;
+		@include color-5500ff;
+	}
+
+	.send-email-btn {
+		width: 100%;
+		padding: 13px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+}
