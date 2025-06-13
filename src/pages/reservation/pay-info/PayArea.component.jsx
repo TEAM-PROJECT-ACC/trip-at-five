@@ -10,10 +10,13 @@ import {
   insertOrder,
   insertReservation,
   requestServerConfirm,
+  updatePaymentStateAPI,
 } from '../../../services/reservation/reservationService';
 import { useNavigate } from 'react-router-dom';
 import { getRoomInfo } from './utils/payData.util';
 import { useEffect } from 'react';
+import { HttpStatusCode } from 'axios';
+import { loginStateStore } from '../../../states/login/loginStore';
 
 const PayArea = ({ className, roomInfo }) => {
   const navigate = useNavigate();
@@ -22,7 +25,7 @@ const PayArea = ({ className, roomInfo }) => {
   );
 
   const paymentState = usePaymentInfoStore((state) => state);
-  const memNo = 2; // 추후 회원번호 값
+  const memNo = loginStateStore((state) => state.loginInfo.memSq);
 
   // 주문 정보 저장 요청
   const { mutate: orderInfoMutation } = useMutation({
@@ -35,7 +38,7 @@ const PayArea = ({ className, roomInfo }) => {
 
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       // console.log(data);
       navigate(`/orders/${data}`);
     },
@@ -50,7 +53,11 @@ const PayArea = ({ className, roomInfo }) => {
         receiptId: payment.receipt_id,
         orderId: payment.order_id,
       };
-      const { data } = await requestServerConfirm(confirmInfo); // 상태코드 반환
+      const { data, status } = await requestServerConfirm(confirmInfo); // 상태코드 반환
+
+      if (status === HttpStatusCode.Ok) {
+        await updatePaymentStateAPI(resCodeList);
+      }
 
       const result = {
         resCodeList: { ...resCodeList },
@@ -92,7 +99,7 @@ const PayArea = ({ className, roomInfo }) => {
         resNumOfPeo: resInfo.paymentState.numberOfPeople,
         checkInDt: resInfo.paymentState.checkIn,
         checkOutDt: resInfo.paymentState.checkOut,
-        memNo: memNo,
+        memNo,
       };
 
       // console.log('insertResInfo: ' + insertResInfo);
