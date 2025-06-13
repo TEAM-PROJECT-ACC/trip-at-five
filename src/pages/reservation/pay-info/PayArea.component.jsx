@@ -31,13 +31,13 @@ const PayArea = ({ className, roomInfo }) => {
       // 예약코드 목록 길이만큼 예약코드 - 주문ID, 영수증ID 를 한쌍으로 DB에 저장
 
       const { data } = await insertOrder(orderInfo);
-      console.log(data);
+      // console.log(data);
 
       return data;
     },
     onSuccess: (data) => {
       console.log(data);
-      navigate(`/payments/${data}`);
+      navigate(`/orders/${data}`);
     },
   });
 
@@ -60,7 +60,7 @@ const PayArea = ({ className, roomInfo }) => {
       return result;
     },
     onSuccess: (data) => {
-      console.log('서버 승인 성공', data);
+      // console.log('서버 승인 성공', data);
       // 결제창 닫고 결과 페이지로 이동 (URL에 receipt_id 전달)
       Bootpay.destroy();
 
@@ -84,7 +84,7 @@ const PayArea = ({ className, roomInfo }) => {
   const { mutate: resMutate } = useMutation({
     mutationKey: ['reservation', roomInfo],
     mutationFn: async ({ resInfo }) => {
-      console.log('resInfo: ' + JSON.stringify(resInfo));
+      // console.log('resInfo: ' + JSON.stringify(resInfo));
       const insertResInfo = {
         resEmail: resInfo.paymentState.resEmail,
         resName: resInfo.paymentState.resName,
@@ -95,7 +95,7 @@ const PayArea = ({ className, roomInfo }) => {
         memNo: memNo,
       };
 
-      console.log('insertResInfo: ' + insertResInfo);
+      // console.log('insertResInfo: ' + insertResInfo);
 
       // 예약 정보 저장 후 예약코드 목록 반환
       const { data } = await insertReservation(
@@ -103,14 +103,14 @@ const PayArea = ({ className, roomInfo }) => {
         paymentState.roomInfo
       );
 
-      console.log('resMutate : ' + data);
+      // console.log('resMutate : ' + data);
 
       const result = {
         data: { ...data },
         insertResInfo: { ...insertResInfo },
       };
 
-      console.log(result);
+      // console.log(result);
 
       return result;
     },
@@ -118,9 +118,9 @@ const PayArea = ({ className, roomInfo }) => {
       const totalPrice = usePaymentInfoStore.getState().totalPrice;
       // 주문 ID 생성 API 요청
       createOrderId(result.data).then(async (response) => {
-        console.log('res : ' + response);
+        // console.log('res : ' + response);
         // 결제 요청 및 결제 정보 저장
-        console.log(paymentState.roomInfo);
+        // console.log(paymentState.roomInfo);
 
         const items = getRoomInfo(paymentState.roomInfo, totalPrice);
 
@@ -134,13 +134,13 @@ const PayArea = ({ className, roomInfo }) => {
             }
           })
           .catch((e) => {
-            console.log('결제 오류', e.message);
+            console.error('결제 오류', e.message);
             switch (e.event) {
               case 'cancel':
                 console.log('사용자가 결제 취소');
                 break;
               case 'error':
-                console.log('PG 오류 : ', e.message);
+                console.error('PG 오류 : ', e.message);
                 break;
             }
 

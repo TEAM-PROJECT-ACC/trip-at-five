@@ -1,72 +1,37 @@
 import { FaInfoCircle } from '../../../../../assets/icons/index';
 import './ReceiptDetailBody.style.scss';
 
-const ReceiptDetailBody = ({ className }) => {
+const ReceiptDetailBody = ({ className, resInfo }) => {
+  console.log(resInfo);
   return (
     <div className={className}>
       <h2 className='receipt-detail-body-item'>
         <FaInfoCircle />
         &nbsp;예약 정보
       </h2>
-      <div className='reservation-info__container'>
-        <div className='reservation-info-item'>
-          <div className='accom-name'>
-            <h3>숙박 시설 정보</h3>
-          </div>
-          <div className='room-name-list'>
-            <div className='room-name-item'>
-              <p>예약코드</p>
-              <p>객실명</p>
-              <p>예약일정</p>
-              <p>가격</p>
-            </div>
-            <div className='room-name-item'>
-              <p>예약코드</p>
-              <p>객실명</p>
-              <p>예약일정</p>
-              <p>가격</p>
-            </div>
-          </div>
-        </div>
-        <div className='reservation-info-item'>
-          <div className='accom-name'>
-            <h3>숙박 시설 정보</h3>
-          </div>
-          <div className='room-name-list'>
-            <div className='room-name-item'>
-              <p>예약코드</p>
-              <p>객실명</p>
-              <p>예약일정</p>
-              <p>가격</p>
+      {resInfo.map((value, idx) => {
+        console.log(value);
+        return (
+          <div
+            key={idx}
+            className='reservation-info__container'
+          >
+            <div className='reservation-info-item'>
+              <div className='accom-name'>
+                <h2>{value.accomName}</h2>
+              </div>
+              <div className='room-name-list'>
+                <div className='room-name-item'>
+                  <p>{value.resCode}</p>
+                  <p>{value.roomName}</p>
+                  <p>{`${value.checkInDt} ~ ${value.checkOutDt}`}</p>
+                  <p>{value.roomPrice.toLocaleString()} 원</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className='reservation-info-item'>
-          <div className='accom-name'>
-            <h3>숙박 시설 정보</h3>
-          </div>
-          <div className='room-name-list'>
-            <div className='room-name-item'>
-              <p>예약코드</p>
-              <p>객실명</p>
-              <p>예약일정</p>
-              <p>가격</p>
-            </div>
-            <div className='room-name-item'>
-              <p>예약코드</p>
-              <p>객실명</p>
-              <p>예약일정</p>
-              <p>가격</p>
-            </div>
-            <div className='room-name-item'>
-              <p>예약코드</p>
-              <p>객실명</p>
-              <p>예약일정</p>
-              <p>가격</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 };

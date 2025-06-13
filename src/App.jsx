@@ -128,7 +128,7 @@ function App() {
           element={<Reservation />}
         />
         <Route
-          path='/payments/:id'
+          path='/orders/:id'
           element={<Receipt />}
         />
 

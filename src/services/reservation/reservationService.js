@@ -12,7 +12,7 @@ export const createOrderId = async (resCodeObj) => {
     resCodeList: Object.values(resCodeObj), // 배열로 변환
   };
 
-  console.log('resCodeList:', resCodeList);
+  // console.log('resCodeList:', resCodeList);
 
   const response = await apiAxios.post('/reservations/order-id', resCodeList, {
     headers: {
@@ -20,18 +20,18 @@ export const createOrderId = async (resCodeObj) => {
     },
   });
 
-  console.log('createOrderId : ' + response.data);
+  // console.log('createOrderId : ' + response.data);
 
   return response.data;
 };
 
 // 사용자 예약 정보 저장
 export const insertReservation = async (insertResInfo, roomInfo) => {
-  console.log('insertReservation : ' + JSON.stringify(insertResInfo));
-  console.log('insertReservation1 : ' + JSON.stringify(roomInfo));
+  // console.log('insertReservation : ' + JSON.stringify(insertResInfo));
+  // console.log('insertReservation1 : ' + JSON.stringify(roomInfo));
 
   const roomNoList = roomInfo.map((value, idx) => value.roomNo);
-  console.log('insertReservation2 : ' + roomNoList);
+  // console.log('insertReservation2 : ' + roomNoList);
 
   insertResInfo = {
     ...insertResInfo,
@@ -44,7 +44,7 @@ export const insertReservation = async (insertResInfo, roomInfo) => {
 };
 
 export const bootpayAPI = async (insertResInfo, orderId, totalPrice, items) => {
-  console.log(insertResInfo, orderId, totalPrice, items);
+  // console.log(insertResInfo, orderId, totalPrice, items);
   const response = await Bootpay.requestPayment({
     application_id: VITE_BOOTPAY_KEY,
     price: totalPrice,
@@ -69,24 +69,39 @@ export const bootpayAPI = async (insertResInfo, orderId, totalPrice, items) => {
     },
   });
 
-  console.log('bootpayAPI: ' + response.data);
+  // console.log('bootpayAPI: ' + response.data);
   return response;
 };
 
 // 서버 승인 요청
 export const requestServerConfirm = async (payment) => {
-  console.log('payment : ' + JSON.stringify(payment));
+  // console.log('payment : ' + JSON.stringify(payment));
 
   const response = await apiAxios.post('/payments/confirm', payment);
 
   return response;
 };
 
-// 주문 테이블에 저장
+/**
+ * 주문 테이블에 저장
+ * @param {*} orderInfo
+ * @returns
+ */
 export const insertOrder = async (orderInfo) => {
-  console.log(JSON.stringify(orderInfo));
+  // console.log(JSON.stringify(orderInfo));
 
   const response = await apiAxios.post('/orders', orderInfo);
+
+  return response;
+};
+
+/**
+ * 영수증 아이디로 결제 정보 불러오기
+ * @param {*} receiptId
+ * @returns
+ */
+export const orderResultAPI = async (receiptId) => {
+  const response = await apiAxios.get(`/orders/${receiptId}`);
 
   return response;
 };
