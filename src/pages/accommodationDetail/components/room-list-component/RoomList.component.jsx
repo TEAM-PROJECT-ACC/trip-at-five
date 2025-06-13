@@ -22,11 +22,8 @@ import {
   deleteCartItem,
   insertCartItem,
 } from '../../../../services/cart/cartService.api';
-import {
-  loginAccountStore,
-  loginStateStore,
-} from '../../../../states/login/loginStore';
 import { usePaymentInfoStore } from '../../../../states';
+import { loginStateStore } from '../../../../states/login/loginStore';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -61,7 +58,7 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
     useAccomCartStore();
   const { setRoomInfo } = usePaymentInfoStore((state) => state.actions);
 
-  const { loginInfo } = loginStateStore((state) => state);
+  const memNo = loginStateStore((state) => state.loginInfo.memSq);
 
   const { mutate: insertCart } = useMutation({
     mutationKey: ['insertCartItem'],
@@ -70,7 +67,7 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo: loginInfo.memSq,
+          memNo,
         };
       });
       // console.log(cartInfo);
@@ -94,7 +91,7 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo: loginInfo.memSq,
+          memNo,
         };
       });
 
@@ -159,7 +156,7 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
      * 타이머 사용해서 일정 시간동안
      * 상태에 변화가 없을 경우 API 호출
      */
-    if (loginInfo) {
+    if (memNo) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -217,7 +214,7 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
             </div>
           </div>
           <div className='room-info__btn'>
-            {loginInfo && (
+            {memNo && (
               <Button
                 className={`btn-cart ${isSelected(room) ? 'active' : ''}`}
                 onClick={() => handleCartClick(room)}

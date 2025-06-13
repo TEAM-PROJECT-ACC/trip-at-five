@@ -17,6 +17,7 @@ export function Chat() {
   const { loginInfo } = loginStateStore();
 
   const onSelect = (option) => {
+    console.log(option);
     setCategory(option);
   };
 
