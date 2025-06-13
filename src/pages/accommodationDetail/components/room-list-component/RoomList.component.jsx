@@ -22,6 +22,7 @@ import {
   deleteCartItem,
   insertCartItem,
 } from '../../../../services/cart/cartService.api';
+import { loginStateStore } from '../../../../states/login/loginStore';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -54,16 +55,16 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
   const { selectedItems, removedItems } = useAccomCartStore((state) => state);
   const { resetSelectedCart, resetRemovedCart, toggleItem } =
     useAccomCartStore();
+  const memNo = loginStateStore((state) => state.loginInfo.memSq);
 
   const { mutate: insertCart } = useMutation({
     mutationKey: ['insertCartItem'],
     mutationFn: async (cartItem) => {
-      const memSq = 2; // 추후 회원 데이터 조회해야함
       // cartItem.map((cart, idx) => console.log(cart));
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo: memSq,
+          memNo,
         };
       });
       // console.log(cartInfo);
@@ -84,11 +85,10 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
   const { mutate: deleteCart } = useMutation({
     mutationKey: ['deleteCartItem'],
     mutationFn: async (cartItem) => {
-      const memSq = 2;
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo: memSq,
+          memNo,
         };
       });
 

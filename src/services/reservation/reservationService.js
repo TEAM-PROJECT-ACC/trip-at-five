@@ -105,3 +105,12 @@ export const orderResultAPI = async (receiptId) => {
 
   return response;
 };
+
+export const updatePaymentStateAPI = async (resCodeList) => {
+  console.log('resCodeList : ' + Object.values(resCodeList));
+  const response = await apiAxios.put(
+    '/reservations',
+    Object.values(resCodeList)
+  );
+  return response;
+};
