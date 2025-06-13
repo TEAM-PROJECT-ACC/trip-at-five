@@ -26,7 +26,6 @@ import ReservationManagementDetail from './pages/admin/reservation-detail/Reserv
 import ReservationCancelList from './pages/admin/reservation-cancel/ReservationCancelList.page';
 import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 
-import ChatRoom from './pages/chat/chat-ui/Chat.room';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -41,7 +40,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
 
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
@@ -62,7 +60,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-
       <ToastContainer />
 
       {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
