@@ -13,11 +13,11 @@ const RoomMain = () => {
   const roomNo = id.roomSq;
   // const { no } = location.state;
 
-  useEffect(() => {
-    console.log('accomNo : ' + accomNo);
-    // console.log('no : ' + no);
-    console.log('roomNo : ' + roomNo);
-  }, []);
+  // useEffect(() => {
+  //   console.log('accomNo : ' + accomNo);
+  //   console.log('no : ' + no);
+  //   console.log('roomNo : ' + roomNo);
+  // }, []);
 
   return (
     <div className='room-main__container'>

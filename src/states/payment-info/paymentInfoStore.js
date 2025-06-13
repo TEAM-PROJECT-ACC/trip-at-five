@@ -11,6 +11,7 @@ const initialState = {
   checkIn: '',
   checkOut: '',
   numberOfPeople: 1,
+  totalPrice: 0,
 };
 
 export const usePaymentInfoStore = create((set, get) => {
@@ -26,6 +27,7 @@ export const usePaymentInfoStore = create((set, get) => {
       setCheckIn: (value) => set({ checkIn: value }),
       setCheckOut: (value) => set({ checkOut: value }),
       setNumberOfPeople: (value) => set({ numberOfPeople: value }),
+      setTotalPrice: (value) => set({ totalPrice: value }),
       resetState: () => set(initialState),
     },
   };

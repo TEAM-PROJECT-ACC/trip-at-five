@@ -56,7 +56,7 @@ const AdminImageList = ({ data, handleDeleteImageModal }) => {
       </div>
       {data?.imageList && data?.imageList.length > 0 ? (
         data?.imageList.map((value, idx) => {
-          console.log(value);
+          // console.log(value);
           const isChecked = images.some(
             (item) => item.hashCode === value.hashCode
           );

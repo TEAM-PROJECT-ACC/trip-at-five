@@ -31,7 +31,7 @@ const CartBody = ({ className }) => {
         navigate(-1);
       }
 
-      console.log(data);
+      // console.log(data);
 
       return data ?? [];
     },
@@ -68,9 +68,9 @@ const CartBody = ({ className }) => {
     navigate('/reservations', roomInfo);
   };
 
-  useEffect(() => {
-    console.log(JSON.stringify(data));
-  }, []);
+  // useEffect(() => {
+  //   console.log(JSON.stringify(data));
+  // }, []);
 
   return (
     <>

@@ -2,57 +2,56 @@ import { useEffect } from 'react';
 import { InputShrink, Select } from '../../../../components';
 import { usePaymentInfoStore } from '../../../../states';
 import './ReservationPerson.style.scss';
+import { calcTotalPrice } from '../../pay-info/utils/payData.util';
 
 /**
  * 예약자 정보를 입력받고 해당 값을 예약 상태관리 정보에 저장
  */
 const ReservationPerson = ({ className }) => {
   // 상태 정보
-  const { resName, resPhone, userCoupon } = usePaymentInfoStore(
+  const { resName, resPhone, userCoupon, totalPrice } = usePaymentInfoStore(
     (state) => state
   );
-  const { setResName, setResPhone, setUserCoupon } = usePaymentInfoStore(
-    (state) => state.actions
-  );
+  const { setResName, setResPhone, setUserCoupon, setTotalPrice } =
+    usePaymentInfoStore((state) => state.actions);
 
   /**
    * coupon은 추후 데이터 서버에서 불러와서 출력할 예정
    */
   const couponList = [
     {
-      label: '1만원권',
-      value: 10000,
+      label: '1천원권',
+      value: 1000,
     },
     {
-      label: '2만원권',
-      value: 20000,
+      label: '2천원권',
+      value: 2000,
     },
     {
-      label: '3만원권',
-      value: 30000,
+      label: '3천원권',
+      value: 3000,
     },
     {
-      label: '4만원권',
-      value: 40000,
+      label: '4천원권',
+      value: 4000,
     },
     {
-      label: '5만원권',
-      value: 50000,
+      label: '5천원권',
+      value: 5000,
     },
   ];
 
   // coupon 값 저장 핸들러
   const couponHandler = (data) => {
-    console.log(data);
+    // console.log(data);
     setUserCoupon(data);
   };
 
   // 상태 값 변경 확인
-  useEffect(() => {
-    console.log(resName);
-    console.log(resPhone);
-    console.log(userCoupon);
-  }, [resName, resPhone, userCoupon]);
+  // useEffect(() => {
+  //   const price = calcTotalPrice(userCoupon, totalPrice);
+  //   setTotalPrice(price);
+  // }, [userCoupon]);
 
   return (
     <div className={className}>
@@ -81,7 +80,7 @@ const ReservationPerson = ({ className }) => {
               }}
             />
           </div>
-          <div className='reservation-person-form-item'>
+          {/* <div className='reservation-person-form-item'>
             <Select
               defaultOption={{ label: '쿠폰을 선택해주세요' }}
               className='reservation-person-form-select'
@@ -90,7 +89,7 @@ const ReservationPerson = ({ className }) => {
                 couponHandler(data);
               }}
             />
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
