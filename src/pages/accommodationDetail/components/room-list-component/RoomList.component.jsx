@@ -22,6 +22,7 @@ import {
   deleteCartItem,
   insertCartItem,
 } from '../../../../services/cart/cartService.api';
+import { loginAccountStore } from '../../../../states/login/loginStore';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -55,15 +56,16 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
   const { resetSelectedCart, resetRemovedCart, toggleItem } =
     useAccomCartStore();
 
+  const memNo = loginAccountStore((state) => state.id); // 추후 회원 데이터 조회해야함
+
   const { mutate: insertCart } = useMutation({
     mutationKey: ['insertCartItem'],
     mutationFn: async (cartItem) => {
-      const memSq = 2; // 추후 회원 데이터 조회해야함
       // cartItem.map((cart, idx) => console.log(cart));
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo: memSq,
+          memNo,
         };
       });
       // console.log(cartInfo);
@@ -84,11 +86,10 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
   const { mutate: deleteCart } = useMutation({
     mutationKey: ['deleteCartItem'],
     mutationFn: async (cartItem) => {
-      const memSq = 2;
       const cartInfo = cartItem.map((cart, idx) => {
         return {
           roomNo: cart.roomSq,
-          memNo: memSq,
+          memNo,
         };
       });
 
@@ -125,6 +126,20 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
     }
   };
 
+  // 객실 단건 예약
+  const handleReservation = (room) => {
+    console.log('room : ' + JSON.stringify(room));
+
+    if (room.roomCnt > 0) {
+      const resInfo = {
+        roomNo: room.roomSq,
+        roomName: room.roomName,
+        roomPrice: room.roomPrice,
+        accomNo: room.accomNo,
+      };
+    } else toast.error('객실이 없습니다');
+  };
+
   // 장바구니 기능
   useEffect(() => {
     /**
@@ -133,20 +148,22 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
      * 타이머 사용해서 일정 시간동안
      * 상태에 변화가 없을 경우 API 호출
      */
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+    if (memNo) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        if (selectedItems.length > 0) {
+          insertCart(selectedItems);
+        }
+        if (removedItems.length > 0) {
+          deleteCart(removedItems);
+        }
+      }, 3000);
+
+      return () => clearTimeout(timeoutRef.current);
     }
-
-    timeoutRef.current = setTimeout(() => {
-      if (selectedItems.length > 0) {
-        insertCart(selectedItems);
-      }
-      if (removedItems.length > 0) {
-        deleteCart(removedItems);
-      }
-    }, 3000);
-
-    return () => clearTimeout(timeoutRef.current);
   }, [selectedItems.length, removedItems.length]);
 
   return (
@@ -189,13 +206,20 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
             </div>
           </div>
           <div className='room-info__btn'>
+            {memNo && (
+              <Button
+                className={`btn-cart ${isSelected(room) ? 'active' : ''}`}
+                onClick={() => handleCartClick(room)}
+              >
+                <GrCart />
+              </Button>
+            )}
             <Button
-              className={`btn-cart ${isSelected(room) ? 'active' : ''}`}
-              onClick={() => handleCartClick(room)}
+              className='btn-reserve'
+              onClick={() => handleReservation(room)}
             >
-              <GrCart />
+              객실 예약
             </Button>
-            <Button className='btn-reserve'>객실 예약</Button>
           </div>
         </div>
       ))}
