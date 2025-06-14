@@ -90,3 +90,19 @@ export const deleteImageAPI = async (accomNo, roomNo, imageList) => {
 
   return response;
 };
+
+/**
+ * 객실 수 조회
+ * @param {*} selectObj : 숙박 번호, 체크인/아웃 날짜
+ * @returns
+ */
+export const selectRoomCnt = async (selectObj) => {
+  const response = await apiAxios.get(
+    `accommodations/${selectObj.accomNo}/rooms/room-cnt`,
+    {
+      params: selectObj,
+    }
+  );
+
+  return response;
+};

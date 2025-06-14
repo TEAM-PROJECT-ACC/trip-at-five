@@ -58,8 +58,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer />
-
       {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
       {!isAdmin && <AppHeader />}
       <Routes>
@@ -219,6 +217,7 @@ function App() {
       {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
       {!isAdmin && <AppFooter />}
       <ReactQueryDevtools />
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
