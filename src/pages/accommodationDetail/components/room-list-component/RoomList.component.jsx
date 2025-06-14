@@ -58,7 +58,9 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
   const timeoutRef = useRef(null);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  const { checkIn, checkOut } = useAccomSearchStore((state) => state);
+  const { checkIn, checkOut, numberOfPeople } = useAccomSearchStore(
+    (state) => state
+  );
 
   const { selectedItems, removedItems } = useAccomCartStore((state) => state);
   const { resetSelectedCart, resetRemovedCart, toggleItem } =
@@ -252,7 +254,11 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
             {getRoomCnt(room.roomSq, roomCntList) < room.roomCnt ? (
               <Button
                 className='btn-reserve'
-                onClick={() => handleReservation(room)}
+                onClick={() => {
+                  if (numberOfPeople <= room.roomMaxPpl) {
+                    handleReservation(room);
+                  } else toast.warn('객실 인원수 범위를 초과했습니다.');
+                }}
               >
                 객실 예약
               </Button>
