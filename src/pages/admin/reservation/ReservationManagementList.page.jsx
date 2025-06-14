@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AdminHeader from '../local-components/header/AdminHeader.component';
 import AdminSearch from '../local-components/header/search/AdminSearch.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
-import { sampleReservations } from '../../../assets/sample-data/reservation';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import './ReservationManagementList.style.scss';
-
-const dataList = sampleReservations;
+import { selectReservationList } from './api/reservationList.api';
 
 const reservationColumnList = [
   { name: '예약코드', className: 'col-w-10' },
@@ -18,8 +18,28 @@ const reservationColumnList = [
 
 const ReservationManagementList = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const currentPage = parseInt(query.get('currentPage') || '1', 10);
+
+  const [pageInfo, setPageInfo] = useState({
+    currentPage,
+    numOfRows: 10,
+  });
+
+  const { data } = useQuery({
+    queryKey: ['adminReservationList', pageInfo],
+    queryFn: () => selectReservationList(pageInfo).then((res) => res.data),
+    keepPreviousData: true,
+  });
+
   const detailPageHandler = (resCode) => {
     navigate(`/admin/reservations/${resCode}/detail`);
+  };
+
+  const handlePagination = (pageNo) => {
+    setPageInfo((prev) => ({ ...prev, currentPage: pageNo }));
+    navigate(`?currentPage=${pageNo}`);
   };
 
   return (
@@ -35,8 +55,12 @@ const ReservationManagementList = () => {
       </AdminHeader>
       <AdminManagementList
         columnList={reservationColumnList}
-        dataList={dataList}
+        dataList={data?.dataList || []}
+        totalCount={data?.totalCount || 0}
+        currentPage={pageInfo.currentPage}
+        numOfRows={pageInfo.numOfRows}
         onClickRow={detailPageHandler}
+        onPageChange={handlePagination}
       />
     </div>
   );

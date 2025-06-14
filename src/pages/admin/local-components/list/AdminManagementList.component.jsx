@@ -5,7 +5,15 @@ import { AdminPagination } from '../../../../components/admin-pagination/AdminPa
 import './AdminManagementList.style.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
+const AdminManagementList = ({
+  columnList,
+  dataList,
+  totalCount,
+  currentPage,
+  numOfRows,
+  onClickRow,
+  onPageChange,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryString = location.search;
@@ -30,35 +38,24 @@ const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
     navigate(location.pathname + '?currentPage=' + pageNo);
   };
 
-  const [displayData, setDisplayData] = useState([]);
-  useEffect(() => {
-    setPageNationProps((prev) => ({
-      ...prev,
-      totalCount: dataList.length,
-    }));
-
-    const startIdx =
-      (pageNationProps.currentPage - 1) * pageNationProps.pageLength;
-    const endIdx = startIdx + pageNationProps.pageLength;
-    setDisplayData(dataList.slice(startIdx, endIdx));
-  }, [dataList, pageNationProps.currentPage, pageNationProps.pageLength]);
-
   return (
     <>
       <div className='admin-main-body'>
         <table className='admin-table'>
           <AdminTableHead columnList={columnList} />
           <AdminTableBody
-            dataList={displayData}
+            dataList={dataList}
             onClickRow={onClickRow}
           />
         </table>
       </div>
-      {/* 관리자 페이지 네이션 */}
       <AdminPagination
-        onClick={handlePagination}
+        className=''
+        totalCount={totalCount}
+        currentPage={currentPage}
+        numOfRows={numOfRows}
+        onClick={onPageChange}
         useMoveToEnd
-        {...pageNationProps}
       />
     </>
   );
