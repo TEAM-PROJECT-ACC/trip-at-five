@@ -8,31 +8,24 @@ import { useNavigate } from 'react-router-dom';
 
 const Reservation = () => {
   const navigate = useNavigate();
-  const { checkIn, checkOut, numberOfPeople } = useAccomSearchStore(
-    (state) => ({
-      checkIn: state.checkIn,
-      checkOut: state.checkOut,
-      numberOfPeople: state.numberOfPeople,
-    })
+  const checkIn = useAccomSearchStore((state) => state.checkIn);
+  const checkOut = useAccomSearchStore((state) => state.checkOut);
+  const numberOfPeople = useAccomSearchStore((state) => state.numberOfPeople);
+  const { setCheckIn, setCheckOut, setNumberOfPeople } = usePaymentInfoStore(
+    (state) => state.actions
   );
-
-  const setPaymentInfo = usePaymentInfoStore((state) => ({
-    setCheckIn: state.actions.setCheckIn,
-    setCheckOut: state.actions.setCheckOut,
-    setNumberOfPeople: state.actions.setNumberOfPeople,
-  }));
 
   const { roomInfo } = usePaymentInfoStore((state) => state);
 
   useEffect(() => {
-    if (!checkIn || !checkOut || !numberOfPeople) {
+    if (roomInfo.length === 0) {
       navigate(-1);
       return;
     }
-    setPaymentInfo.setCheckIn(checkIn);
-    setPaymentInfo.setCheckOut(checkOut);
-    setPaymentInfo.setNumberOfPeople(numberOfPeople);
-  }, [checkIn, checkOut, numberOfPeople]);
+    setCheckIn(checkIn);
+    setCheckOut(checkOut);
+    setNumberOfPeople(numberOfPeople);
+  }, []);
 
   return (
     <PageContainer className='reservation__container'>
