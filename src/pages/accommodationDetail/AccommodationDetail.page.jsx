@@ -273,7 +273,7 @@ const AccommodationDetail = () => {
         >
            {latestReview
             ? (
-              <div className="accom-latest-review">
+              <>
                 <div className="review-header">
                   <span className="nickname-header">{latestReview.memNick}</span>
                   <StarList
@@ -285,7 +285,7 @@ const AccommodationDetail = () => {
                   />
                 </div>
                 <div className="review-content">{latestReview.revCont}</div>
-              </div>
+              </>
             )
             : <div className='noReviewYetOnHeader'>아직 후기가 작성되지 않았습니다.</div>
           }

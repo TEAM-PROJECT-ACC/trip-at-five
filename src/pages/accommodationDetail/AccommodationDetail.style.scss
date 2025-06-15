@@ -122,33 +122,32 @@
   .accom-info__review {
     display: flex;
     font-size: 7px;
-    padding: 50px;
+    padding: 35px;
     line-height: 1.4;
     flex-direction: column;
 
     .review-header {
-  display: flex;
-  align-items: center;   
-  gap: 8px;
-  
-  margin-bottom: 40px;
+      display: flex;
+      align-items: center;   
+      gap: 8px;
+      
+      margin-bottom: 40px;
 
-  .nickname-header {
-    font-weight: bold;
-    font-size: 18px;
-    margin-right: 5px;
-    @include color-5500ff;
-  }
+    .nickname-header {
+      font-weight: bold;
+      font-size: 22px;
+      margin-right: 5px;
+      @include color-5500ff;
+    }
 
-  .latest-review-stars {
-    display: flex;           
-    align-items: center;     
-    float: left;
-    width: 20px;
+    .latest-review-stars {
+      display: flex;          
+      float: left;
+      width: 20px;
+    }
   }
-}
     .review-content{
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 }
