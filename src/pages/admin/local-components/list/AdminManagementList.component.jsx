@@ -13,29 +13,30 @@ const AdminManagementList = ({
   numOfRows,
   onClickRow,
   onPageChange,
+  pageLength = 5,
 }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [pageNationProps, setPageNationProps] = useState(() => {
-    return {
-      className: '',
-      totalCount: dataList.length,
-      pageLength: 10,
-      currentPage: 1,
-      numOfRows: 10,
-    };
-  });
+  // const location = useLocation();
+  // const navigate = useNavigate();
+  // const [pageNationProps, setPageNationProps] = useState(() => {
+  //   return {
+  //     className: '',
+  //     totalCount: dataList.length,
+  //     pageLength: 5,
+  //     currentPage: 1,
+  //     numOfRows: 5,
+  //   };
+  // });
 
-  const handlePagination = (pageNo) => {
-    // 상태가 변경된 현재 페이지 번호 : pageNo
-    setPageNationProps((prev) => {
-      return {
-        ...prev,
-        currentPage: pageNo,
-      };
-    });
-    navigate(location.pathname + '?currentPage=' + pageNo);
-  };
+  // const handlePagination = (pageNo) => {
+  //   // 상태가 변경된 현재 페이지 번호 : pageNo
+  //   setPageNationProps((prev) => {
+  //     return {
+  //       ...prev,
+  //       currentPage: pageNo,
+  //     };
+  //   });
+  //   navigate(location.pathname + '?currentPage=' + pageNo);
+  // };
 
   return (
     <>

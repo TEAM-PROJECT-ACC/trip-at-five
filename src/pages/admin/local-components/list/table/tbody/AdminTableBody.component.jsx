@@ -20,7 +20,7 @@ const AdminTableBody = ({ dataList, onClickRow }) => {
                   key={i}
                   className='t-body-item-col'
                 >
-                  {v === 'no' ? value[v].slice(0, 5) : value[v]}
+                  {v === 'resCd' ? value[v].slice(0, 5) : value[v]}
                 </td>
               );
             })}

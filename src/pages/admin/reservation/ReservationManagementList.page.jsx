@@ -124,6 +124,7 @@ const ReservationManagementList = () => {
         numOfRows={pageInfo.numOfRows}
         onClickRow={detailPageHandler}
         onPageChange={handlePagination}
+        pageLength={5}
       />
     </div>
   );
