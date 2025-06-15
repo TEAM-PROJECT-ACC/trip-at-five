@@ -16,10 +16,9 @@ export const ChallengeItem = ({ challenge }) => {
 
   const Test = async () => {
     const result = await challengeSucces(loginInfo.memSq, chalHistoryNo);
-	setIsGet(true);
+    setIsGet(true);
     console.log(result);
   };
-
 
   return (
     <div className='user-page challenge-item__container'>
@@ -35,7 +34,7 @@ export const ChallengeItem = ({ challenge }) => {
           className={classNames(
             'challenge-item__coupon-button',
             // !isDone ? 'disabled' : ''
-			(!isDone || isGet) ? 'disabled' : ''
+            !isDone || isGet ? 'disabled' : ''
           )}
           onClick={Test}
           disabled={!isDone || isGet}

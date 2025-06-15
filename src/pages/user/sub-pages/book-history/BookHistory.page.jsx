@@ -214,18 +214,16 @@ export const BookHistoryPage = () => {
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    console.log
+    console.log;
     const fetchData = async () => {
       const result = await reservationSelect(loginInfo.memSq);
       if (result.status === 200) {
-        setList(result.data); 
+        setList(result.data);
         console.log(result);
       }
     };
     fetchData();
   }, [refresh]);
-
-
 
   return (
     <UserPageContainer className='user-page book-history__container'>
@@ -235,7 +233,7 @@ export const BookHistoryPage = () => {
           <BookHistoryItem
             key={idx}
             bookHistory={bookHistory}
-             onRefresh={() => setRefresh(prev => !prev)}
+            onRefresh={() => setRefresh((prev) => !prev)}
           />
         );
       })}
