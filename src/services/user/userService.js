@@ -35,15 +35,14 @@ export const reservationSelect = async (userMemSq) => {
 };
 
 export const reservationCancelUpdate = async (resCd) => {
-  const response = await baseServerAxios.put(
-    `/users/reservationCancelUpdate`,
-    {resCd:resCd}
-  );
+  const response = await baseServerAxios.put(`/users/reservationCancelUpdate`, {
+    resCd: resCd,
+  });
   return response;
 };
 
 /* 회원 챌린지 완료 수정 */
-export const challengeSucces = async (memSq, chalHistoryNo) => {
+export const challengeSuccess = async (memSq, chalHistoryNo) => {
   const response = await baseServerAxios.put(`/users/challengeSuccess`, {
     memSq: memSq,
     chalHistoryNo: chalHistoryNo,

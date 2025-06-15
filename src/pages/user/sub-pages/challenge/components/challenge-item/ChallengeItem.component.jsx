@@ -3,22 +3,27 @@ import { FaFireAlt } from '../../../../../../assets/icons/index';
 import './challengeItem.style.scss';
 import { ButtonPrimary } from '../../../../../../components';
 import { classNames } from '../../../../../../utils';
-import { challengeSucces } from '../../../../../../services/user/userService';
-import { useEffect, useState } from 'react';
+import { challengeSuccess } from '../../../../../../services/user/userService';
 import { loginStateStore } from '../../../../../../states/login/loginStore';
+import { useState } from 'react';
 
 export const ChallengeItem = ({ onRefresh, challenge }) => {
-  const { chalName, chalCond, currentStep, rewardCouponName, chalHistoryNo } =
-    challenge;
+  const {
+    chalName,
+    chalCond,
+    currentStep,
+    rewardCouponName,
+    chalHistoryNo,
+    ckCouponSt,
+  } = challenge;
   const { loginInfo } = loginStateStore();
   const [isGet, setIsGet] = useState(false);
   const isDone = chalCond === currentStep;
 
-  const Test = async () => {
-    const result = await challengeSucces(loginInfo.memSq, chalHistoryNo);
-    setIsGet(true);
+  const challengeSuccessBtn = async () => {
+    const result = await challengeSuccess(loginInfo.memSq, chalHistoryNo);
     onRefresh();
-    console.log(result);
+    setIsGet();
   };
 
   return (
@@ -35,10 +40,10 @@ export const ChallengeItem = ({ onRefresh, challenge }) => {
           className={classNames(
             'challenge-item__coupon-button',
             // !isDone ? 'disabled' : ''
-            !isDone || isGet ? 'disabled' : ''
+           (!isDone || isGet) ? 'disabled' : ''
           )}
-          onClick={Test}
-          disabled={!isDone || isGet}
+          onClick={challengeSuccessBtn}
+           disabled={!isDone || isGet}
         >
           혜택 받기
         </ButtonPrimary>
