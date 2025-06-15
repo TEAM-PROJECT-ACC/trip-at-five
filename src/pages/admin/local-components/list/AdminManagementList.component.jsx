@@ -5,38 +5,43 @@ import { AdminPagination } from '../../../../components/admin-pagination/AdminPa
 import './AdminManagementList.style.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const AdminManagementList = ({
-  columnList,
-  dataList = [],
-  totalCount,
-  currentPage,
-  numOfRows,
-  onClickRow,
-  onPageChange,
-  pageLength = 5,
-}) => {
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // const [pageNationProps, setPageNationProps] = useState(() => {
-  //   return {
-  //     className: '',
-  //     totalCount: dataList.length,
-  //     pageLength: 5,
-  //     currentPage: 1,
-  //     numOfRows: 5,
-  //   };
-  // });
+const AdminManagementList = ({ columnList, dataList, onClickRow }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryString = location.search;
+  const [pageNationProps, setPageNationProps] = useState(() => {
+    return {
+      className: '',
+      totalCount: dataList.length,
+      pageLength: 10,
+      currentPage: 1,
+      numOfRows: 10,
+    };
+  });
 
-  // const handlePagination = (pageNo) => {
-  //   // 상태가 변경된 현재 페이지 번호 : pageNo
-  //   setPageNationProps((prev) => {
-  //     return {
-  //       ...prev,
-  //       currentPage: pageNo,
-  //     };
-  //   });
-  //   navigate(location.pathname + '?currentPage=' + pageNo);
-  // };
+  const handlePagination = (pageNo) => {
+    // 상태가 변경된 현재 페이지 번호 : pageNo
+    setPageNationProps((prev) => {
+      return {
+        ...prev,
+        currentPage: pageNo,
+      };
+    });
+    navigate(location.pathname + '?currentPage=' + pageNo);
+  };
+
+  const [displayData, setDisplayData] = useState([]);
+  useEffect(() => {
+    setPageNationProps((prev) => ({
+      ...prev,
+      totalCount: dataList.length,
+    }));
+
+    const startIdx =
+      (pageNationProps.currentPage - 1) * pageNationProps.pageLength;
+    const endIdx = startIdx + pageNationProps.pageLength;
+    setDisplayData(dataList.slice(startIdx, endIdx));
+  }, [dataList, pageNationProps.currentPage, pageNationProps.pageLength]);
 
   return (
     <>
@@ -44,18 +49,16 @@ const AdminManagementList = ({
         <table className='admin-table'>
           <AdminTableHead columnList={columnList} />
           <AdminTableBody
-            dataList={dataList}
+            dataList={displayData}
             onClickRow={onClickRow}
           />
         </table>
       </div>
+      {/* 관리자 페이지 네이션 */}
       <AdminPagination
-        className=''
-        totalCount={totalCount}
-        currentPage={currentPage}
-        numOfRows={numOfRows}
-        onClick={onPageChange}
+        onClick={handlePagination}
         useMoveToEnd
+        {...pageNationProps}
       />
     </>
   );

@@ -96,7 +96,9 @@ const ReservationManagementList = () => {
     }
   }, [keyword]);
 
-  const detailPageHandler = (resCode) => {
+  const detailPageHandler = (no) => {
+    const resCode = no; // 예약코드
+    console.log('예약 상세 페이지로 이동:', resCode);
     navigate(`/admin/reservations/${resCode}/detail`);
   };
 
