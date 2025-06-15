@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const AdminManagementList = ({
   columnList,
-  dataList,
+  dataList = [],
   totalCount,
   currentPage,
   numOfRows,
@@ -16,7 +16,6 @@ const AdminManagementList = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const queryString = location.search;
   const [pageNationProps, setPageNationProps] = useState(() => {
     return {
       className: '',

@@ -14,13 +14,13 @@ const AdminTableBody = ({ dataList, onClickRow }) => {
             onClick={() => onClickRow(value.no, id?.id)}
           >
             {Object.keys(dataList[idx]).map((v, i) => {
-              console.log(v, i);
+              // console.log(v, i);
               return (
                 <td
                   key={i}
                   className='t-body-item-col'
                 >
-                  {v === 'resCd' ? value[v].slice(0, 5) : value[v]}
+                  {v === 'no' ? value[v].slice(0, 5) : value[v]}
                 </td>
               );
             })}
