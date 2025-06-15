@@ -1,22 +1,22 @@
 .register-circle-wrap {
-	width: 76px;
-	display: flex;
-	justify-content: space-between;
-	margin-top: 10%;
-	margin-left: 40%;
+  width: 76px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10%;
+  margin-left: 40%;
 }
 
 .register-circle-max {
-	width: 12px;
-	height: 12px;
-	border-radius: 100%;
-	@include background-5500ff;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  @include background-5500ff;
 }
 
 .register-circle-min {
-	width: 8px;
-	height: 8px;
-	margin: 2px 2px;
-	border-radius: 100%;
-	@include background-c8adff;
+  width: 8px;
+  height: 8px;
+  margin: 2px 2px;
+  border-radius: 100%;
+  @include background-c8adff;
 }

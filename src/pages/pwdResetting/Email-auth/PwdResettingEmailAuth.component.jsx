@@ -4,9 +4,9 @@ import { ButtonPrimary } from '../../../components';
 import {
 	useIsResetting,
 	useResettingInfo,
-} from '../../../states/pwdRestting/pwdResettingStore';
+} from '../../../states/pwdResetting/pwdResettingStore';
 import { ResettingInput } from '../resetting-input/PwdResettingInput.component';
-import { ResttingTitle } from '../resetting-title/PwdResettingTitle.component';
+import { ResettingTitle } from '../resetting-title/PwdResettingTitle.component';
 import { validateEmail } from '../../register/util/validate';
 import {
 	emailCodeCheck,
@@ -27,7 +27,7 @@ export function EmailAuth() {
 		const value = e.target.value;
 		setEmail(value);
 
-		if (value.lengt === 0) {
+		if (value.length === 0) {
 			setError('');
 			if (!validateEmail(value)) {
 				setError('올바른 이메일 형식이 아닙니다.');
@@ -95,7 +95,7 @@ export function EmailAuth() {
 							setEmailCode(e.target.value);
 						}}
 					/>
-					<ResttingTitle
+					<ResettingTitle
 						className={'pwd-resetting-receive'}
 						text={'인증메일을 받지 못하셨나요?'}
 					/>

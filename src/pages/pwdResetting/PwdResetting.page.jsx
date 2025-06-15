@@ -1,12 +1,12 @@
 import './pwdResetting.style.scss';
 import { PageContainer } from '../../components';
-import { ResttingTitle } from './resetting-title/PwdResettingTitle.component';
+import { ResettingTitle } from './resetting-title/PwdResettingTitle.component';
 import { EmailAuth } from './Email-auth/PwdResettingEmailAuth.component';
 import { PasswordResetting } from './password-resetting/PwdResetting.component';
-import { useIsResetting } from '../../states/pwdRestting/pwdResettingStore';
+import { useIsResetting } from '../../states/pwdResetting/pwdResettingStore';
 import { useEffect } from 'react';
 
-export default function PwdRestting() {
+export default function PwdResetting() {
 	const { isTrue, resetIsTrue } = useIsResetting();
 
 	useEffect(()=>{

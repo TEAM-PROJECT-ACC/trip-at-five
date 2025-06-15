@@ -3,7 +3,7 @@ import './emailPwdInput.style.scss';
 import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../register/util/validate';
 import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
-import { adminlLogin, nomalLogin } from '../../../services/login/loginService';
+import { adminLogin, normalLogin } from '../../../services/login/loginService';
 import {
   loginStateStore,
   loginAccountStore,
@@ -15,14 +15,20 @@ import {
 } from '../../../components';
 
 export default function LoginInputBox() {
-  const { id, pwd, setId, setPwd } = loginAccountStore();
+  const { isLogin, setIslogin } = loginAccountStore();
+  const [email, setEmail] = useState();
+  const [pwd, setPwd] = useState();
   const { loginInfo, setLoginInfo } = loginStateStore();
   const [error, setError] = useState();
   const navigate = useNavigate();
 
+  const checkEmailDomain = (email) => {
+    return typeof email === 'string' && email.includes('@clock.com');
+  };
+
   const validateEmailCheck = (e) => {
     const value = e.target.value;
-    setId(value);
+    setEmail(value);
 
     if (value.length === 0) {
       setError('');
@@ -32,15 +38,12 @@ export default function LoginInputBox() {
       setError('');
     }
   };
-  const checkEmailDomain = (id) => {
-    return typeof id === 'string' && id.includes('@clock.com');
-  };
 
   const sendLogin = async () => {
-    if (id?.length != 0 && pwd?.length != 0) {
-      const result = checkEmailDomain(id)
-        ? await adminlLogin(id, pwd)
-        : await nomalLogin(id, pwd);
+    if (email?.length != 0 && pwd?.length != 0) {
+      const result = checkEmailDomain(email)
+        ? await adminLogin(email, pwd)
+        : await normalLogin(email, pwd);
       if (result.status === 200) {
         if (result.data.INACTIVE === 'INACTIVE') {
           errorAlert('비활성화된 계정입니다.');
@@ -50,30 +53,32 @@ export default function LoginInputBox() {
           errorAlert('pwd를 다시 확인해주세요');
         } else {
           successAlert('login 성공');
-          sessionStorage.setItem('Logined', true);
+          sessionStorage.setItem('Logged', true);
           setLoginInfo(result.data);
+          setIslogin();
         }
         if (result.data.memType === 'admin') {
           navigate('/admin');
-        } else {
-          navigate('/user');
+        }
+        if (result.data.memType === 'user') {
+          navigate('/');
         }
       }
     } else {
-      console.log('Test');
+      errorAlert('아이디 또는 비밀번호를 입력하세요');
     }
   };
 
   /*이메일 형식 체크 */
   useEffect(() => {
-    validateEmail(id);
-  }, [id]);
+    validateEmail(email);
+  }, [email]);
 
   return (
     <div className='login-page mid'>
       <InputShrink
         className={'login-email-input'}
-        id='email-input'
+        email='email-input'
         type={'email'}
         labelText={'이메일'}
         onChange={validateEmailCheck}
@@ -82,7 +87,7 @@ export default function LoginInputBox() {
 
       <InputShrink
         className={'login-pwd-input'}
-        id='pwd-input'
+        email='pwd-input'
         type={'password'}
         labelText={'비밀번호'}
         onChange={(e) => {

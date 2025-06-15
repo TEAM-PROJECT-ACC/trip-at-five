@@ -27,3 +27,7 @@ export const infoAlert = (msg) => {
 export const warningAlert = (msg) => {
 	toast.warn(msg, defaultConfig);
 };
+
+export const warningAlertLeft = (msg) => {
+	toast.warn(msg, {position:'top-left', autoClose: 1800});
+};
