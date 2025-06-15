@@ -45,7 +45,7 @@ export default function RegisterEmail() {
 			/*인증코드 보내기*/
 			setIsTrue();
 			sendmailCode(email);
-			setError('인증코드를 발송했습니다.');
+			setText('인증코드를 발송했습니다.');
 		}
 	};
 
@@ -77,7 +77,8 @@ export default function RegisterEmail() {
 					placeholder={'이메일을 입력해주세요'}
 					onChange={validateEmailCheck}
 				/>
-				{error && <p className='validateEmail-step1-text'>{error}</p>}
+				{error && <p className='validateEmail-step1-error'>{error}</p>}
+				{error && <p className='validateEmail-step1-text'>{text}</p>}
 			</div>
 
 			{isTrue && (
