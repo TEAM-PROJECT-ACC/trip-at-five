@@ -43,7 +43,7 @@ export default function LoginInputBox() {
 		if (email?.length != 0 && pwd?.length != 0) {
 			const result = checkEmailDomain(email)
 				? await adminLogin(email, pwd)
-				: await nomalLogin(email, pwd);
+				: await normalLogin(email, pwd);
 			if (result.status === 200) {
 				if (result.data.INACTIVE === 'INACTIVE') {
 					errorAlert('비활성화된 계정입니다.');

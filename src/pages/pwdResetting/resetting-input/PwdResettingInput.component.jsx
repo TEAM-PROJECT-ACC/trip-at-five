@@ -1,5 +1,5 @@
 import { InputPrimary } from '../../../components';
-import { ResttingTitle } from '../resetting-title/PwdResettingTitle.component';
+import { ResettingTitle } from '../resetting-title/PwdResettingTitle.component';
 
 export function ResettingInput({
 	TclassName,
@@ -11,7 +11,7 @@ export function ResettingInput({
 }) {
 	return (
 		<>
-			<ResttingTitle
+			<ResettingTitle
 				className={TclassName}
 				text={text}
 			/>
