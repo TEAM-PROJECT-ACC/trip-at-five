@@ -225,7 +225,7 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
             <div className='room-info_top'>
               <div className='room-info__name'>{room.roomName}</div>
               <div className='room-info__price'>
-                {room.roomPrice?.toLocaleString()}원
+                {room.roomPrice?.toLocaleString('ko-KR')}원
               </div>
 
               <div className='room-info_bottom'>

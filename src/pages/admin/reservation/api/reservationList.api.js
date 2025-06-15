@@ -23,7 +23,8 @@ export const selectReservationList = async ({
  * @param {*} resNo
  * @returns
  */
-export const selectReservationDetail = async (resNo) => {
-  const response = await apiAxios.get(`/admin/reservations/${resNo}`);
+export const selectReservationDetail = async (resCode) => {
+  const response = await apiAxios.get(`/admin/reservations/${resCode}`);
+  // console.log(response);
   return response;
 };
