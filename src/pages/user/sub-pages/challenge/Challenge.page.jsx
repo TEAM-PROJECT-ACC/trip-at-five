@@ -151,6 +151,7 @@ import { loginStateStore } from '../../../../states/login/loginStore';
 export const ChallengePage = () => {
   const [list, setList] = useState([]);
   const { loginInfo } = loginStateStore();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,6 +172,7 @@ export const ChallengePage = () => {
           <ChallengeItem
             key={idx}
             challenge={challenge}
+            onRefresh={() => setRefresh((prev) => !prev)}
           />
         );
       })}

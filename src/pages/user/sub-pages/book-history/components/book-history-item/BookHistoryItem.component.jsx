@@ -7,12 +7,11 @@ import {
   getBookStateText,
 } from '../../utils/getBookState.util';
 import './bookHistoryItem.style.scss';
-import { loginStateStore } from '../../../../../../states/login/loginStore';
 import { infoAlert } from '../../../../../../utils/toastUtils/toastUtils';
-import { useEffect, useState } from 'react';
 
 export const BookHistoryItem = ({ onRefresh, bookHistory }) => {
   const {
+    resCd,
     resName,
     resPhone,
     checkInDt,
@@ -23,13 +22,8 @@ export const BookHistoryItem = ({ onRefresh, bookHistory }) => {
     roomNo,
   } = bookHistory;
 
-  const { loginInfo } = loginStateStore();
-  const resInfo = {
-    userMemSq: loginInfo.memSq,
-    roomNo: roomNo,
-  };
   const reservationCancel = async () => {
-    const response = await reservationCancelUpdate(resInfo);
+    const response = await reservationCancelUpdate(resCd);
     if (response.status === 200) {
       infoAlert('예약취소가 접수되었습니다.');
       onRefresh();

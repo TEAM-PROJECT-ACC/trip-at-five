@@ -7,7 +7,7 @@ import { challengeSucces } from '../../../../../../services/user/userService';
 import { useEffect, useState } from 'react';
 import { loginStateStore } from '../../../../../../states/login/loginStore';
 
-export const ChallengeItem = ({ challenge }) => {
+export const ChallengeItem = ({ onRefresh, challenge }) => {
   const { chalName, chalCond, currentStep, rewardCouponName, chalHistoryNo } =
     challenge;
   const { loginInfo } = loginStateStore();
@@ -17,6 +17,7 @@ export const ChallengeItem = ({ challenge }) => {
   const Test = async () => {
     const result = await challengeSucces(loginInfo.memSq, chalHistoryNo);
     setIsGet(true);
+    onRefresh();
     console.log(result);
   };
 

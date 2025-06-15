@@ -34,10 +34,10 @@ export const reservationSelect = async (userMemSq) => {
   return response;
 };
 
-export const reservationCancelUpdate = async (resInfo) => {
+export const reservationCancelUpdate = async (resCd) => {
   const response = await baseServerAxios.put(
     `/users/reservationCancelUpdate`,
-    resInfo
+    {resCd:resCd}
   );
   return response;
 };
