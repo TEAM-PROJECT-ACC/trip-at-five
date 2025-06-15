@@ -164,7 +164,9 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
         >
           <img
             className='room-img'
-            src='/assets/images/room-page/sample1.png'
+            src={room.roomImgPathName ? room.roomImgPathName : '/assets/images/alternative-images/alternative-image.png'}
+            alt='객실 이미지'
+            onError={e => { e.target.src = '/assets/images/alternative-images/alternative-image.png'; }}
           />
           <div className='room-info-container'>
             <div className='room-info-line'></div>

@@ -10,14 +10,19 @@ const MapInnerCard = ({ accom }) => {
     navigate(`/accommodations/${accom.id}`);
   };
 
+  const thumbnail =
+    accom.images && accom.images.length > 0
+      ? accom.images[0].accomImgPathName
+      : '/assets/images/alternative-images/alternative-image.png';
+
   return (
     <>
       <li className='acc-list__box' onClick={handleCardClick}>
-        <div className='acc-list-img'>
-          <img
-            src={accom.thumbnail}
+          <img className="acc-list-img"
+            src={thumbnail}
+            alt='숙박시설 이미지'
+            onError={e => { e.target.src = '/assets/images/alternative-images/alternative-image.png'; }}
           />
-        </div>
         <div className='acc-list-info'>
           <div className='acc-list-title'>{accom.name}</div>
           <div className='acc-list-price'>
@@ -29,4 +34,5 @@ const MapInnerCard = ({ accom }) => {
     </>
   );
 };
+
 export default MapInnerCard;

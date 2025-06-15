@@ -13,21 +13,11 @@ export const searchAccommodationByKeyword = async (params) => {
 };
 
 // 클라이언트 숙박 상세
-export const accommodationDetailByAccomSq = async (accomSq, memNo) => {
-  const response = await apiAxios.get(`/accommodations/${accomSq}`, {
-    params: { memNo },
-  });
-  const data = response.data;
-  data.memNo = data.memNo;
-  data.accomNo = data.accomSq;
-  if (data && data.roomList) {
-    data.roomList = data.roomList.map((room) => ({
-      ...room,
-      accomNo: room.accomNo,
-    }));
-  }
-  return data;
-};
+export async function accommodationDetailByAccomSq(accomSq, memNo) {
+  let url = `/accommodations/${accomSq}`;
+  if (memNo !== undefined && memNo !== null) url += `?memNo=${memNo}`;
+  return apiAxios.get(url).then(res => res.data);
+}
 
 // 관리자 숙박 목록
 export const selectAdminAccomList = async (keyword = '') => {

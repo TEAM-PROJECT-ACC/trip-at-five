@@ -12,13 +12,18 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { accommodationDetailByAccomSq } from '../../services/accom/accomService.api';
-import { AccomReview } from './components/room-review-component/AccomReview.component';
+import  {AccomReview}  from './components/room-review-component/AccomReview.component';
+import { getAccomLatestReviewAPI } from '../../services/review/reviewService.api';
+import { loginStateStore } from '../../states/login/loginStore';
+import { StarList } from '../../components/star-rating/components/star-list/StarList.component'; 
 
-const AccommodationDetail = ({ memNo }) => {
+const AccommodationDetail = () => {
   const { id } = useParams();
 
-  const [accom, setAccom] = useState([]);
-  const loginMemNo = memNo ?? Number(localStorage.getItem('memNo'));
+  const [accom, setAccom] = useState({});
+  const [latestReview, setLatestReview] = useState(null);
+  
+  const memNo = loginStateStore.getState().loginInfo.memSq;
 
   const imageList = [
     '/assets/images/room-page/sampleImg2.png',
@@ -97,7 +102,6 @@ const AccommodationDetail = ({ memNo }) => {
     setSelectedImage(imgUrl);
     setShowImageList(false);
   };
-
   const mapRef = useRef(null);
 
   const init = () => {
@@ -182,31 +186,28 @@ const AccommodationDetail = ({ memNo }) => {
     }
   }, [accom]);
 
-  useEffect(() => {
-    const fetchAccomDetail = async () => {
-      try {
-        const data = await accommodationDetailByAccomSq(id, memNo);
-        console.log('data: ' + JSON.stringify(data));
-        console.log('data: ' + data);
-        if (data && data.roomList) {
-          data.roomList = data.roomList.map((room) => ({
-            ...room,
-            accomNo: data.accomNo,
-            memNo: data.memSq,
-          }));
-        }
-        setAccom(data);
+ useEffect(() => {
+  const fetchAccomDetail = async () => {
+    try {
+      const data = await accommodationDetailByAccomSq(id, memNo);
+      // 상세 로그 추가
+      console.log('=== [AccomDetail] 서버 응답 데이터 ===');
+      console.log('accomSq:', data.accomSq, '| 프론트 id:', id);
+      
+      setAccom(data);
+      if (data && data.images && data.images.length > 0) setSelectedImage(data.images[0]);
+    } catch (error) {
+      console.error('숙소 상세 데이터 불러오기 실패:', error);
+    }
+  };
+  fetchAccomDetail();
+}, [id, memNo]);
 
-        console.log('객실 리스트:', data.roomList);
-        if (data && data.images && data.images.length > 0) {
-          setSelectedImage(data.images[0]);
-        }
-      } catch (error) {
-        console.error('숙소 상세 데이터 불러오기 실패:', error);
-      }
-    };
-    fetchAccomDetail();
-  }, [id, memNo]);
+  useEffect(() => {
+    if (accom.accomSq) {
+      getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+    }
+  }, [accom.accomSq]);
 
   if (!accom) {
     return <div>Loading...</div>;
@@ -270,14 +271,24 @@ const AccommodationDetail = ({ memNo }) => {
           onClick={handleScrollToReview}
           className='accom-info__review'
         >
-          <div className='review-header'>
-            <p className='nickname'>닉네임</p>
-            <div className='stars'>⭐⭐⭐⭐⭐</div>
-          </div>
-          <p className='info-comment'>
-            편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
-            좋고 청결해서 다시 방문하고 싶어요.
-          </p>
+           {latestReview
+            ? (
+              <div className="accom-latest-review">
+                <div className="review-header">
+                  <span className="nickname-header">{latestReview.memNick}</span>
+                  <StarList
+                    className="latest-review-stars"
+                    score={latestReview.revSco}
+                    starList={Array(5).fill(0)}
+                    starCount={5}
+                    isDisabled={true}
+                  />
+                </div>
+                <div className="review-content">{latestReview.revCont}</div>
+              </div>
+            )
+            : <div className='noReviewYetOnHeader'>아직 후기가 작성되지 않았습니다.</div>
+          }
         </button>
         <div className='accom-info__facility'>
           <FacilityFilterView
@@ -315,12 +326,14 @@ const AccommodationDetail = ({ memNo }) => {
       <AccomReview
         resCd={accom.resCd}
         accomSq={accom.accomSq}
-        memNo={loginMemNo}
+        memNo={memNo}
+        onReviewSubmitted={() => {
+          getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+        }}
       />
-
       {/* 상세 정보 */}
 
-      <RoomDetailText />
+      <RoomDetailText accom={accom}/>
 
       <section
         id='ancher-map'

@@ -95,7 +95,7 @@ const AccommodationList = () => {
         maxPrice: filterState.priceRange[1],
       };
       const data = await searchAccommodationByKeyword(params);
-      //console.log('fetchAllData :', data);
+      console.log('fetchAllData :', data);
       setAllAccommodations(data);
     };
     fetchAllData();
@@ -112,6 +112,7 @@ const AccommodationList = () => {
     resetFilters();
     setCurrentPage(1);
   }, [searchState.keyword]);
+  
   return (
     <PageContainer>
       <div className='search-bar'>
