@@ -2,7 +2,7 @@ import { InputPrimary } from '../../../../../../components';
 import { classNames } from '../../../../../../utils';
 import './infoInput.style.scss';
 
-export const InfoInput = ({ children, onChange, placeholder, type , value}) => {
+export const InfoInput = ({ children, onChange, placeholder, type, value }) => {
   const handleChange = (event) => {
     const targetValue = event.target.value;
     if (onChange) {

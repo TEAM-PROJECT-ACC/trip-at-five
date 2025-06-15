@@ -5,7 +5,7 @@ import { ButtonPrimary } from '../../../components';
 import {
 	useIsResetting,
 	useResettingInfo,
-} from '../../../states/pwdRestting/pwdResettingStore';
+} from '../../../states/pwdResetting/pwdResettingStore';
 import { Link } from 'react-router-dom';
 import { updatePwd } from '../../../services/pwdResetting/pwdResetting';
 import { successAlert } from '../../../utils/toastUtils/toastUtils';

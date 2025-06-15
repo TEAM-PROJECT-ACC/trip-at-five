@@ -4,7 +4,7 @@ import { AppFooter, AppHeader } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import LoginPage from './pages/login/Login.page';
 import Register from './pages/register/Register.page';
-import PwdRestting from './pages/pwdResetting/PwdResetting.page';
+import PwdResetting from './pages/pwdResetting/PwdResetting.page';
 import { Chat } from './pages/chat/ChatMain.page';
 import ChatRoom from './pages/chat/chat-ui/ChatRoom.component';
 import LoginInterceptor from './pages/login/loginInterCepter/LoginInterceptor.component';
@@ -45,7 +45,7 @@ function App() {
   const { loginInfo, resetLoginedStateStore } = loginStateStore();
 
   useEffect(() => {
-    if (!sessionStorage.getItem('Logined')) {
+    if (!sessionStorage.getItem('Logged')) {
       localStorage.removeItem('userInfo');
     }
   }, []);
@@ -110,7 +110,7 @@ function App() {
         {/* 비밀번호 재설정 */}
         <Route
           path='/resetting'
-          element={<PwdRestting />}
+          element={<PwdResetting />}
         />
 
         {/* 채팅 */}
@@ -134,7 +134,11 @@ function App() {
         />
         <Route
           path='/carts'
-          element={<CartMain />}
+          element={
+            <LoginInterceptor>
+              <CartMain />
+            </LoginInterceptor>
+          }
         />
         <Route
           path='/guest/reservations'

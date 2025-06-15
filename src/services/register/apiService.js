@@ -1,19 +1,19 @@
-import baseServrAxios from '../Interceptor/Interceptor';
+import baseServerAxios from '../Interceptor/Interceptor';
 
 export const emailDuplicationCheck = async (email) => {
-  const response = await baseServrAxios.post('/register/emailDuplication', {
+  const response = await baseServerAxios.post('/register/emailDuplication', {
     email: email,
   });
   return response;
 };
 
 export const sendEmailCode = async (email) => {
-  const response = await baseServrAxios.post('/email/send', { email: email });
+  const response = await baseServerAxios.post('/email/send', { email: email });
   return response;
 };
 
 export const emailCodeCheck = async (email, code) => {
-  const response = await baseServrAxios.post('/email/verify', {
+  const response = await baseServerAxios.post('/email/verify', {
     email: email,
     code: code,
   });
@@ -21,7 +21,7 @@ export const emailCodeCheck = async (email, code) => {
 };
 
 export const nickNameDuplicationCheck = async (nickName) => {
-  const response = await baseServrAxios.post(
+  const response = await baseServerAxios.post(
     '/register/nickNameDuplicationCheck',
     {
       nickName: nickName,
@@ -31,7 +31,7 @@ export const nickNameDuplicationCheck = async (nickName) => {
 };
 
 export const sendRegister = async (email, pwd, nickName, tel, address) => {
-  const response = await baseServrAxios.post('/register/send', {
+  const response = await baseServerAxios.post('/register/send', {
     email: email,
     pwd: pwd,
     nickName: nickName,
