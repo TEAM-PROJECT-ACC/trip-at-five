@@ -1,20 +1,18 @@
 import { apiAxios } from '../../../../services/service';
 
 /**
- * 예약 조회 API
- * @param {*} 조회 정보
+ * 예약 전체 목록 조회 API (프론트에서 페이징)
+ * @param {string} keyword
  * @returns
  */
 export const selectReservationList = async ({
+  keyword = '',
   currentPage = 1,
   numOfRows = 10,
-  keyword = '',
 }) => {
-  const params = { currentPage, numOfRows };
-  if (keyword && keyword.trim().length > 0) {
-    params.keyword = keyword;
-  }
-  const response = await apiAxios.get(`/admin/reservations`, { params });
+  const response = await apiAxios.get('/admin/reservations', {
+    params: { keyword, currentPage, numOfRows },
+  });
   return response;
 };
 

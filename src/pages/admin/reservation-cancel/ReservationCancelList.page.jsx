@@ -15,6 +15,7 @@ import {
 } from './api/reservationCancel.api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
 
 const cancelReservationColumnList = [
   { name: '예약코드', className: 'col-w-20' },
@@ -30,20 +31,27 @@ const ReservationCancelList = () => {
   const [modalRow, setModalRow] = useState(null);
   const [modalDetail, setModalDetail] = useState(null);
   const [modalLoading, setModalLoading] = useState(false);
+  const query = new URLSearchParams(location.search);
+  const currentPage = parseInt(query.get('currentPage') || '1', 10);
 
+  const { keyword } = useAdminSearchStore((state) => state);
   const [pageInfo, setPageInfo] = useState({
-    currentPage: 1,
+    currentPage,
     numOfRows: 10,
   });
+
+  // 검색 파라미터 상태
   const [searchParams, setSearchParams] = useState({
-    currentPage: 1,
+    currentPage,
     numOfRows: 10,
     keyword: '',
   });
+
+  // 검색 버튼 클릭 여부
   const [isSearchClicked, setIsSearchClicked] = useState(false);
 
-  // 검색어 상태 (검색창에서 입력받는 값)
-  const [keyword, setKeyword] = useState('');
+  // 초기 로드 여부 판단
+  const isInitialLoad = !searchParams.keyword && !isSearchClicked;
 
   const {
     data: resCancelList,
@@ -57,9 +65,10 @@ const ReservationCancelList = () => {
         throw new Error('예약취소건 조회에 실패했습니다.');
       }
 
-      console.log(data);
+      console.log('예약 목록 조회 성공:', data);
       return data;
     },
+    enabled: isInitialLoad, // 처음 로드 시 자동 실행, 검색 시에는 refetch로만 실행
     keepPreviousData: true,
   });
 
@@ -80,6 +89,7 @@ const ReservationCancelList = () => {
     });
     setIsSearchClicked(true);
     navigate(`?currentPage=1`);
+    setTimeout(() => refetch(), 0);
   };
 
   const modalHandler = async (resCode) => {
@@ -124,9 +134,6 @@ const ReservationCancelList = () => {
     }
   };
 
-  // 검색어 입력값이 바뀌면 keyword 상태 업데이트
-  const handleKeywordChange = (e) => setKeyword(e.target.value);
-
   // 검색어가 비어있어지면 전체 조회로 복귀
   useEffect(() => {
     if (!keyword) {
@@ -155,16 +162,15 @@ const ReservationCancelList = () => {
       <AdminManagementList
         columnList={cancelReservationColumnList}
         dataList={
-          !isLoading && resCancelList && Array.isArray(resCancelList.dataList)
-            ? resCancelList.dataList
+          !isLoading && resCancelList && Array.isArray(resCancelList?.dataList)
+            ? resCancelList?.dataList
             : []
         }
         totalCount={resCancelList?.totalCount || 0}
         currentPage={pageInfo.currentPage}
         numOfRows={pageInfo.numOfRows}
-        onClickRow={modalHandler}
         onPageChange={handlePagination}
-        pageLength={5}
+        pageLength={10}
       />
 
       {isModalOpen && modalRow && (

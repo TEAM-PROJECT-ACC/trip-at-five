@@ -46,13 +46,19 @@ const ReservationManagementList = () => {
   // 초기 로드 여부 판단
   const isInitialLoad = !searchParams.keyword && !isSearchClicked;
 
-  const { data, isLoading, refetch } = useQuery({
+  const {
+    data: resDataList,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['adminReservationList', searchParams],
     queryFn: async () => {
       const { data, status } = await selectReservationList(searchParams);
       if (status !== HttpStatusCode.Ok) {
         throw new Error('예약 목록 조회에 실패했습니다.');
       }
+
+      console.log('예약 목록 조회 성공:', data);
       return data;
     },
 
@@ -91,6 +97,12 @@ const ReservationManagementList = () => {
     setTimeout(() => refetch(), 0);
   };
 
+  const detailPageHandler = (no) => {
+    const resCode = no; // 예약코드
+    console.log('예약 상세 페이지로 이동:', resCode);
+    navigate(`/admin/reservations/${resCode}/detail`);
+  };
+
   // 검색어가 비어있어지면(검색창 clear 등) 전체 조회로 복귀
   useEffect(() => {
     if (!keyword) {
@@ -102,12 +114,6 @@ const ReservationManagementList = () => {
       setIsSearchClicked(false);
     }
   }, [keyword]);
-
-  const detailPageHandler = (no) => {
-    const resCode = no; // 예약코드
-    console.log('예약 상세 페이지로 이동:', resCode);
-    navigate(`/admin/reservations/${resCode}/detail`);
-  };
 
   return (
     <div className='reservation-management__container'>
@@ -124,16 +130,16 @@ const ReservationManagementList = () => {
       <AdminManagementList
         columnList={reservationColumnList}
         dataList={
-          !isLoading && data && Array.isArray(data.dataList)
-            ? data.dataList
+          !isLoading && resDataList && Array.isArray(resDataList?.dataList)
+            ? resDataList?.dataList
             : []
         }
-        totalCount={data?.totalCount || 0}
+        onClickRow={detailPageHandler}
+        totalCount={resDataList?.totalCount || 0}
         currentPage={pageInfo.currentPage}
         numOfRows={pageInfo.numOfRows}
-        onClickRow={detailPageHandler}
         onPageChange={handlePagination}
-        pageLength={5}
+        pageLength={10}
       />
     </div>
   );
