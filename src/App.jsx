@@ -58,9 +58,10 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ToastContainer />
+
       {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
       {!isAdmin && <AppHeader />}
-      <ToastContainer />
       <Routes>
         <Route
           path='/test'
