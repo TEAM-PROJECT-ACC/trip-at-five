@@ -158,11 +158,10 @@ export const ChallengePage = () => {
       const result = await challengeSelect(loginInfo.memSq);
       if (result.status === 200) {
         setList(result.data); // result.data가 배열이어야 함
-        console.log(result);
       }
     };
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <UserPageContainer className='user-page challenge__container'>

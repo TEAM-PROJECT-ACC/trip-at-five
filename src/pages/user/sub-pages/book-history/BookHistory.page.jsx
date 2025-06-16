@@ -219,7 +219,6 @@ export const BookHistoryPage = () => {
       const result = await reservationSelect(loginInfo.memSq);
       if (result.status === 200) {
         setList(result.data);
-        console.log(result);
       }
     };
     fetchData();
