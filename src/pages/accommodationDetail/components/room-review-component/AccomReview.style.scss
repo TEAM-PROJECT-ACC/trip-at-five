@@ -1,7 +1,4 @@
-
-
 .review-card {
-  margin-bottom: 44px;
   border-radius: 8px;
   padding: 0 0 24px 0;
   width: 100%;
@@ -12,12 +9,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  padding-left: 100px;
 
   .nickname {
     font-weight: 600;
     font-size: 24px;
     margin-right: 8px;
-    
   }
 
   .review-stars {
@@ -29,10 +26,10 @@
 }
 
 .review-desc {
-  font-size: 18px;
+  font-size: 21px;
   color: #222;
   margin: 6px 0 0 0;
-  padding-left: 2px;
+  padding: 0 105px;
 }
 
 .noReviewYet {
@@ -60,7 +57,7 @@
   object-fit: cover;
   border-radius: 8px;
   border: 1.5px solid #baabfa;
-  box-shadow: 0 2px 8px rgba(186,171,250,0.07);
+  box-shadow: 0 2px 8px rgba(186, 171, 250, 0.07);
 }
 .remove-thumb-btn {
   position: absolute;
@@ -96,20 +93,35 @@
   color: #5500ff;
 }
 
-.review-start-one{
+.review-start-one {
   color: #ffaf45;
 }
 
-.star-number-text{
+.star-number-text {
   @include color-5500ff;
 }
 
-.star-size-one{
-  width: 30px;
+.star-size-one {
+  width: 28px;
 }
 
-.review-thumb-img{
-  width: 120px;
-  height: 120px;
+.review-thumb-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 15px;
+  margin-right: 30px;
 }
 
+.review-img-list {
+  align-items: center;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.review-average-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid #5500ff;
+  border-radius: 12px;
+  padding: 4px 16px;
+}

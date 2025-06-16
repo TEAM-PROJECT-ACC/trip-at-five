@@ -15,7 +15,7 @@
   @include color-ffaf45;
   @include background-5500ff;
 }
-.noReviewYetOnHeader{
+.noReviewYetOnHeader {
   font-size: 20px;
   padding-top: 65px;
   color: #888888;
@@ -128,25 +128,25 @@
 
     .review-header {
       display: flex;
-      align-items: center;   
+      align-items: center;
       gap: 8px;
-      
+
       margin-bottom: 40px;
 
-    .nickname-header {
-      font-weight: bold;
-      font-size: 22px;
-      margin-right: 5px;
-      @include color-5500ff;
-    }
+      .nickname-header {
+        font-weight: bold;
+        font-size: 22px;
+        margin-right: 5px;
+        @include color-5500ff;
+      }
 
-    .latest-review-stars {
-      display: flex;          
-      float: left;
-      width: 20px;
+      .latest-review-stars {
+        display: flex;
+        float: left;
+        width: 20px;
+      }
     }
-  }
-    .review-content{
+    .review-content {
       font-size: 18px;
     }
   }

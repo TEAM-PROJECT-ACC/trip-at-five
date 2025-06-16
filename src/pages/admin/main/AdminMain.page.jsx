@@ -21,12 +21,14 @@ const accomColumnList = [
 const AdminMain = () => {
   const { keyword } = useAdminSearchStore((state) => state);
   const [dataList, setDataList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
 
   const handleSearch = async () => {
     try {
       const data = await selectAdminAccomList(keyword);
-      setDataList(data);
+      setDataList(data.dataList);
+      setPageInfo(data.pageInfo);
     } catch (error) {
       console.error(error);
     }
@@ -70,6 +72,7 @@ const AdminMain = () => {
         </AdminSearch>
       </AdminHeader>
       <AdminManagementList
+        pageInfo={pageInfo}
         columnList={accomColumnList}
         dataList={dataList}
         onClickRow={detailPageHandler}

@@ -52,7 +52,10 @@ const AccommodationCard = ({ accom }) => {
           <img
             src={thumbnail}
             alt='숙박시설 이미지'
-            onError={e => { e.target.src = '/assets/images/alternative-images/alternative-image.png'; }}
+            onError={(e) => {
+              e.target.src =
+                '/assets/images/alternative-images/alternative-image.png';
+            }}
           />
         </div>
         <div className='accom-info'>
@@ -67,7 +70,10 @@ const AccommodationCard = ({ accom }) => {
           </div>
           <p className='accom-address'>{accom.accomAddr}</p>
           <div className='star'>
-            <span className='star-icon'><Star className='accom-list-star-size'/>{reviewCount} 명 평가</span>
+            <span className='star-icon'>
+              <Star className='accom-list-star-size' />
+              {reviewCount} 명 평가
+            </span>
           </div>
           <div className='accom-info-time-price'>
             {/* <div className='v-line'></div> */}

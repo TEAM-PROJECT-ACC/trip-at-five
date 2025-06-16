@@ -23,6 +23,7 @@ import {
   insertCartItem,
 } from '../../../../services/cart/cartService.api';
 import { loginStateStore } from '../../../../states/login/loginStore';
+import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 
 const roomFacilities = [
   { icon: <FaHotTub />, label: '스파/월풀' },
@@ -164,9 +165,12 @@ const RoomList = ({ rooms = [], selectedFacilities = [] }) => {
         >
           <img
             className='room-img'
-            src={room.roomImgPathName ? room.roomImgPathName : '/assets/images/alternative-images/alternative-image.png'}
+            src={`${VITE_SERVER_BASE_URL}${room.roomImgPathName}`}
             alt='객실 이미지'
-            onError={e => { e.target.src = '/assets/images/alternative-images/alternative-image.png'; }}
+            onError={(e) => {
+              e.target.src =
+                '/assets/images/alternative-images/alternative-image.png';
+            }}
           />
           <div className='room-info-container'>
             <div className='room-info-line'></div>

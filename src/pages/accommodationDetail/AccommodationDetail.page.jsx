@@ -4,7 +4,7 @@ import { PageContainer } from '../../components/page-container/PageContainer.com
 import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
-import { Button } from '../../components';
+import { Button, StarRating } from '../../components';
 import { FaArrowUp } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
@@ -12,27 +12,33 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { accommodationDetailByAccomSq } from '../../services/accom/accomService.api';
-import  {AccomReview}  from './components/room-review-component/AccomReview.component';
-import { getAccomLatestReviewAPI } from '../../services/review/reviewService.api';
+import { AccomReview } from './components/room-review-component/AccomReview.component';
+import {
+  getAccomLatestReviewAPI,
+  getAccomReviewListAPI,
+} from '../../services/review/reviewService.api';
 import { loginStateStore } from '../../states/login/loginStore';
-import { StarList } from '../../components/star-rating/components/star-list/StarList.component'; 
+import { StarList } from '../../components/star-rating/components/star-list/StarList.component';
 
 const AccommodationDetail = () => {
   const { id } = useParams();
 
   const [accom, setAccom] = useState({});
   const [latestReview, setLatestReview] = useState(null);
-  
+
   const memNo = loginStateStore.getState().loginInfo.memSq;
 
   const imageList = [
-    '/assets/images/room-page/sampleImg2.png',
-    '/assets/images/room-page/bedroom.png',
-    '/assets/images/room-page/sample1.png',
-    '/assets/images/room-page/waterpark.png',
-    '/assets/images/room-page/pool.png',
-    '/assets/images/room-page/bedroom.png',
-    '/assets/images/room-page/sample1.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
   ];
 
   const settings = {
@@ -186,22 +192,23 @@ const AccommodationDetail = () => {
     }
   }, [accom]);
 
- useEffect(() => {
-  const fetchAccomDetail = async () => {
-    try {
-      const data = await accommodationDetailByAccomSq(id, memNo);
-      // 상세 로그 추가
-      console.log('=== [AccomDetail] 서버 응답 데이터 ===');
-      console.log('accomSq:', data.accomSq, '| 프론트 id:', id);
-      
-      setAccom(data);
-      if (data && data.images && data.images.length > 0) setSelectedImage(data.images[0]);
-    } catch (error) {
-      console.error('숙소 상세 데이터 불러오기 실패:', error);
-    }
-  };
-  fetchAccomDetail();
-}, [id, memNo]);
+  useEffect(() => {
+    const fetchAccomDetail = async () => {
+      try {
+        const data = await accommodationDetailByAccomSq(id, memNo);
+        // 상세 로그 추가
+        console.log('=== [AccomDetail] 서버 응답 데이터 ===');
+        console.log('accomSq:', data.accomSq, '| 프론트 id:', id);
+
+        setAccom(data);
+        if (data && data.images && data.images.length > 0)
+          setSelectedImage(data.images[0]);
+      } catch (error) {
+        console.error('숙소 상세 데이터 불러오기 실패:', error);
+      }
+    };
+    fetchAccomDetail();
+  }, [id, memNo]);
 
   useEffect(() => {
     if (accom.accomSq) {
@@ -271,24 +278,25 @@ const AccommodationDetail = () => {
           onClick={handleScrollToReview}
           className='accom-info__review'
         >
-           {latestReview
-            ? (
-              <>
-                <div className="review-header">
-                  <span className="nickname-header">{latestReview.memNick}</span>
-                  <StarList
-                    className="latest-review-stars"
-                    score={latestReview.revSco}
-                    starList={Array(5).fill(0)}
-                    starCount={5}
-                    isDisabled={true}
-                  />
-                </div>
-                <div className="review-content">{latestReview.revCont}</div>
-              </>
-            )
-            : <div className='noReviewYetOnHeader'>아직 후기가 작성되지 않았습니다.</div>
-          }
+          {latestReview ? (
+            <>
+              <div className='review-header'>
+                <span className='nickname-header'>{latestReview.memNick}</span>
+                <StarRating
+                  className='latest-review-stars'
+                  score={latestReview.revSco}
+                  starList={Array(5).fill(0)}
+                  starCount={5}
+                  isDisabled={true}
+                />
+              </div>
+              <div className='review-content'>{latestReview.revCont}</div>
+            </>
+          ) : (
+            <div className='noReviewYetOnHeader'>
+              아직 후기가 작성되지 않았습니다.
+            </div>
+          )}
         </button>
         <div className='accom-info__facility'>
           <FacilityFilterView
@@ -329,11 +337,12 @@ const AccommodationDetail = () => {
         memNo={memNo}
         onReviewSubmitted={() => {
           getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+          getAccomReviewListAPI(accom.reviewList);
         }}
       />
       {/* 상세 정보 */}
 
-      <RoomDetailText accom={accom}/>
+      <RoomDetailText accom={accom} />
 
       <section
         id='ancher-map'

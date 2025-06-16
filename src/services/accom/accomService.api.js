@@ -16,7 +16,7 @@ export const searchAccommodationByKeyword = async (params) => {
 export async function accommodationDetailByAccomSq(accomSq, memNo) {
   let url = `/accommodations/${accomSq}`;
   if (memNo !== undefined && memNo !== null) url += `?memNo=${memNo}`;
-  return apiAxios.get(url).then(res => res.data);
+  return apiAxios.get(url).then((res) => res.data);
 }
 
 // 관리자 숙박 목록
@@ -24,13 +24,13 @@ export const selectAdminAccomList = async (keyword = '') => {
   const response = await apiAxios.get('/admin/accommodations', {
     params: { keyword },
   });
+  console.log(response);
   return response.data;
 };
 
 // 관리자 숙박 상세 페이지
 export const selectAdminAcommDetail = async (accomSq) => {
   const response = await apiAxios.get(`/admin/accommodations/${accomSq}/edit`);
-
   return response.data;
 };
 
