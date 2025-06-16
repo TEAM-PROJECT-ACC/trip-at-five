@@ -2,69 +2,65 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 const initialState = {
-	id: '',
-	pwd: '',
-	isLogin: false,
-	error: '',
+  isLogin: false,
+  error: '',
 };
 
-export const loginAccountStore = create((set) => ({
-	setId: (text) =>
-		set({
-			id: text,
-		}),
+export const loginAccountStore = create(
+  persist(
+    (set) => ({
+      ...initialState,
+      setIslogin: () =>
+        set({
+          isLogin: true,
+        }),
 
-	setPwd: (text) =>
-		set({
-			pwd: text,
-		}),
+      setError: (text) =>
+        set({
+          error: text,
+        }),
 
-	setIslogin: (text) =>
-		set({
-			isLogin: text,
-		}),
-
-	setError: (text) =>
-		set({
-			error: text,
-		}),
-
-	resetLoginAccountStore: () => set(() => ({ ...initialState })),
-}));
+      resetLoginAccountStore: () => set(() => ({ ...initialState })),
+    }),
+    {
+      name: 'islogin',
+    }
+  )
+);
 
 const snsInitialState = {
-	plaform: '',
+  platform: '',
 };
 
 export const loginSnsStateStore = create(
-	persist(
-		(set) => ({
-			...snsInitialState,
-			setPlaform: (text) =>
-				set({
-					plaform: text,
-				}),
-			resetLoginSnsStateStore: () => set(() => ({ ...snsInitialState })),
-		}),
-		{
-			name: 'login-plaform-Info',
-		}
-	)
+  persist(
+    (set) => ({
+      ...snsInitialState,
+      setPlatform: (text) =>
+        set({
+          platform: text,
+        }),
+      resetLoginSnsStateStore: () => set(() => ({ ...snsInitialState })),
+    }),
+    {
+      name: 'login-platform-Info',
+    }
+  )
 );
 
 /* 로그인한 정보 저장용 */
 export const loginStateStore = create(
-	persist(
-		(set) => ({
-			loginInfo: '',
-			setLoginInfo: (text) =>
-				set({
-					loginInfo: text,
-				}),
-			resetLoginedStateStore: () => set(() => ({ loginInfo: '' })),
-		}),
-		{
-			name: 'userInfo',
-		}
-	)
+  persist(
+    (set) => ({
+      loginInfo: '',
+      setLoginInfo: (text) =>
+        set({
+          loginInfo: text,
+        }),
+      resetLoginedStateStore: () => set(() => ({ loginInfo: '' })),
+    }),
+    {
+      name: 'userInfo',
+    }
+  )
 );
