@@ -6,11 +6,10 @@ export const reservationCancelList = async ({
   numOfRows = 10,
   keyword = '',
 }) => {
-  const params = { currentPage, numOfRows };
-  if (keyword && keyword.trim().length > 0) {
-    params.keyword = keyword;
-  }
-  return await apiAxios.get('/admin/reservations/cancel/list', { params });
+  const response = await apiAxios.get('/admin/reservations/cancel/list', {
+    params: { keyword, currentPage, numOfRows },
+  });
+  return response;
 };
 
 // 취소요청 단건 조회

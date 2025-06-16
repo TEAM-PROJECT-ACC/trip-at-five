@@ -58,7 +58,6 @@ const ReservationManagementList = () => {
         throw new Error('예약 목록 조회에 실패했습니다.');
       }
 
-      console.log('예약 목록 조회 성공:', data);
       return data;
     },
 
