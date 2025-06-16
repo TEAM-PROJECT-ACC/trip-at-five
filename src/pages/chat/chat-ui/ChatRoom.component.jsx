@@ -119,6 +119,7 @@ const ChatRoom = () => {
         inqCtgCd: category.value,
       };
       getInitChatRoom(apiRequestData).then((data) => {
+        console.log(data);
         createWebSocket({
           requestURL: `${VITE_WEB_SOCKET_URL}${CHAT_REQUEST.initChatRoom}`,
           type: data.messages && data.messages.length > 0 ? 'EXISTING' : 'INIT',
