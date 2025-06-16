@@ -22,13 +22,17 @@ export async function accommodationDetailByAccomSq(accomSq, memNo) {
 // 관리자 숙박 목록
 export const selectAdminAccomList = async (
   keyword = '',
-  currentPage = 1,
+  pageNo = 1,      // ## 1. 파라미터 이름을 currentPage -> pageNo 로 수정 ##
   numOfRows = 10
 ) => {
   const response = await apiAxios.get('/admin/accommodations', {
-    params: { keyword, currentPage, numOfRows },
+    params: { 
+      keyword, 
+      pageNo,      // ## 2. 백엔드로 보낼 파라미터 이름도 pageNo 로 수정 ##
+      numOfRows 
+    },
   });
-  console.log(response);
+  console.log(response); // 디버깅용 로그는 그대로 두셔도 됩니다.
   return response.data;
 };
 

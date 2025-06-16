@@ -8,7 +8,6 @@ import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import { selectAdminAccomList } from '../../../services/accom/accomService.api';
 import './AdminMain.style.scss';
 import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
-import { HttpStatusCode } from 'axios';
 
 const accomColumnList = [
   { name: '숙소번호', className: 'col-w-5' },
@@ -20,51 +19,31 @@ const accomColumnList = [
 ];
 
 const AdminMain = () => {
+
   const { keyword } = useAdminSearchStore((state) => state);
   const [dataList, setDataList] = useState([]);
-
   const [totalCount, setTotalCount] = useState(0);
 
-  const [pageInfo, setPageInfo] = useState({
-    currentPage: 1,
-    numOfRows: 10,
-  });
-
-  const [searchParams, setSearchParams] = useState({
-    currentPage: 1,
+  const [params, setParams] = useState({
+    pageNo: 1,
     numOfRows: 10,
     keyword: '',
   });
 
   const navigate = useNavigate();
 
-  const handleSearch = async () => {
-    try {
-      const { data, status } = await selectAdminAccomList(
-        searchParams.keyword,
-        searchParams.currentPage,
-        searchParams.numOfRows
-      );
-
-      if (status !== HttpStatusCode.Ok) {
-        throw new Error('숙박목록 조회에 실패했습니다');
-      }
-
-      setDataList(data.dataList);
-      setTotalCount(data.pageInfo.totalCount);
-      setPageInfo({
-        currentPage: data.pageInfo.pageNo,
-        numOfRows: data.pageInfo.numOfRows,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePagination = (pageNo) => {
-    setSearchParams((prev) => ({
+  const handleSearch = () => {
+    setParams(prev => ({
       ...prev,
-      currentPage: pageNo,
+      keyword: keyword, 
+      pageNo: 1,   
+    }));
+  };
+  
+  const handlePagination = (pageNo) => {
+    setParams((prev) => ({
+      ...prev,
+      pageNo: pageNo,
     }));
     navigate(`?currentPage=${pageNo}`);
   };
@@ -82,12 +61,28 @@ const AdminMain = () => {
   };
 
   useEffect(() => {
-    handleSearch();
-  }, [searchParams]);
+    const fetchData = async () => {
+      try {
+        // API 응답 데이터를 직접 변수에 저장합니다.
+        const responseData = await selectAdminAccomList(
+          params.keyword,
+          params.pageNo,      // ## 여기를 params.currentPage 에서 params.pageNo 로 수정! ##
+          params.numOfRows
+        );
 
-  // useEffect(() => {
-  //   console.log(keyword);
-  // }, [keyword]);
+        if (!responseData || !responseData.dataList) {
+          throw new Error("API 응답 데이터 형식이 올바르지 않습니다.");
+        }
+
+        setDataList(responseData.dataList);
+        setTotalCount(responseData.pageInfo.totalCount);
+      } catch (error) {
+        console.error("데이터 처리 중 에러 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, [params]);
 
   return (
     <div className='accom-list__container'>
@@ -107,8 +102,8 @@ const AdminMain = () => {
         </AdminSearch>
       </AdminHeader>
       <AdminManagementList
-        numOfRows={pageInfo.numOfRows}
-        currentPage={pageInfo.currentPage}
+        numOfRows={params.numOfRows}
+        currentPage={params.pageNo}
         columnList={accomColumnList}
         dataList={dataList}
         pageLength={10}

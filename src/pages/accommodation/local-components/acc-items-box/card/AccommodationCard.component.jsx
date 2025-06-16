@@ -12,6 +12,7 @@ import {
 import './accommodationCard.style.scss';
 import { Star } from '../../../../../components/star-rating/components/star/Star.component';
 import { getAccomReviewCountAPI } from '../../../../../services/review/reviewService.api';
+import { VITE_SERVER_BASE_URL } from '../../../../../../env.config';
 const typeNameMap = {
   21: '모텔',
   22: '호텔',
@@ -37,11 +38,6 @@ const AccommodationCard = ({ accom }) => {
   const typeIcon = typeIconMap[typeName] || typeIconMap['미지정'];
   const reviewCount = accom.reviewCount || 0;
 
-  const thumbnail =
-    accom.images && accom.images.length > 0
-      ? accom.images[0].accomImgPathName
-      : '/assets/images/alternative-images/alternative-image.png';
-
   return (
     <li className='accommodation-item'>
       <Link
@@ -50,7 +46,7 @@ const AccommodationCard = ({ accom }) => {
       >
         <div className='image'>
           <img
-            src={thumbnail}
+            src={`${VITE_SERVER_BASE_URL}${accom.accomImgPathName}`}
             alt='숙박시설 이미지'
             onError={(e) => {
               e.target.src =
