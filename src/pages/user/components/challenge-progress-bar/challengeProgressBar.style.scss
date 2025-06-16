@@ -13,6 +13,7 @@
 		left: 0;
 		width: 00%;
 		height: 100%;
+		transition: width 0.5s ease;
 		@include background-5500ff;
 	}
 
