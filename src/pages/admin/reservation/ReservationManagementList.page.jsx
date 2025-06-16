@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import './ReservationManagementList.style.scss';
 import { selectReservationList } from './api/reservationList.api';
 import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
+import { HttpStatusCode } from 'axios';
 
 const reservationColumnList = [
   { name: '예약코드', className: 'col-w-10' },
@@ -47,7 +48,13 @@ const ReservationManagementList = () => {
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['adminReservationList', searchParams],
-    queryFn: () => selectReservationList(searchParams).then((res) => res.data),
+    queryFn: async () => {
+      const { data, status } = await selectReservationList(searchParams);
+      if (status !== HttpStatusCode.Ok) {
+        throw new Error('예약 목록 조회에 실패했습니다.');
+      }
+      return data;
+    },
 
     // 쿼리가 자동으로 실행될지 여부를 결정
     enabled: isInitialLoad, // 처음 로드 시 자동 실행, 검색 시에는 refetch로만 실행

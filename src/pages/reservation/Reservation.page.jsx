@@ -5,6 +5,7 @@ import { PageContainer } from '../../components';
 import { useAccomSearchStore, usePaymentInfoStore } from '../../states';
 import './Reservation.style.scss';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const Reservation = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const Reservation = () => {
           roomInfo={roomInfo}
         />
       )}
+      <ToastContainer />
     </PageContainer>
   );
 };

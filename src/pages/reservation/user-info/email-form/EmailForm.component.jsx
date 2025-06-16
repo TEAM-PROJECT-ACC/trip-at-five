@@ -40,7 +40,7 @@ const EmailForm = ({ className, memEmail }) => {
       console.log(result);
       toast.warn('다시 인증해주세요');
     } else {
-      setEmailState(true);
+      // setEmailState(true);
       toast.success('이메일 인증 성공');
     }
   };
