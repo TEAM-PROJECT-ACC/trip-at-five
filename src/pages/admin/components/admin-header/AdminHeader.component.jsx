@@ -22,8 +22,6 @@ const buttonIcons = {
 };
 
 export const AdminHeader = () => {
-  // TODO: 사용자 문의 실시간 데이터 확인 필요
-
   const { data: resCancelCount } = useQuery({
     queryKey: ['cancelCount'],
     queryFn: async () => {
@@ -35,9 +33,11 @@ export const AdminHeader = () => {
       console.log('예약 취소 건수:', data);
       return data;
     },
-    staleTime: 1000 * 60, // 1분 동안 캐시 유지
-    retry: 3, // 실패 시 재시도 횟수
+    staleTime: 1000 * 60,
+    retry: 3,
   });
+
+  // TODO: 사용자 문의 실시간 데이터 확인 필요
 
   return (
     <header className='admin-header__container'>
