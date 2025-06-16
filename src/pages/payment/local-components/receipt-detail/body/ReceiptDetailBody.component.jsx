@@ -22,7 +22,10 @@ const ReceiptDetailBody = ({ className, resInfo }) => {
                 <div className='room-name-item'>
                   <p>{value.resCode}</p>
                   <p>{value.roomName}</p>
-                  <p>{`${value.checkInDt} ~ ${value.checkOutDt}`}</p>
+                  <p>{`${value.checkInDt.slice(
+                    0,
+                    10
+                  )} ~ ${value.checkOutDt.slice(0, 10)}`}</p>
                   <p>{value.roomPrice.toLocaleString('ko-KR')} 원</p>
                 </div>
               </div>

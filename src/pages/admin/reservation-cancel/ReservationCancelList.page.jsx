@@ -166,6 +166,7 @@ const ReservationCancelList = () => {
             ? resCancelList?.dataList
             : []
         }
+        onClickRow={modalHandler}
         totalCount={resCancelList?.totalCount || 0}
         currentPage={pageInfo.currentPage}
         numOfRows={pageInfo.numOfRows}
