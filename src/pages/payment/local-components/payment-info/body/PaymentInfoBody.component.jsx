@@ -5,7 +5,7 @@ const PaymentInfoBody = ({ className, payInfo }) => {
         결제수단 : <span>{payInfo.payMethod}</span>
       </p>
       <p>
-        금액 : <span>{payInfo.payPrice.toLocaleString()} 원</span>
+        금액 : <span>{payInfo.payPrice.toLocaleString('ko-KR')} 원</span>
       </p>
     </div>
   );

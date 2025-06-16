@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaUser } from '../../../../assets/icons/index';
-import { Button } from '../../../buttons/button/Button.component';
 import { classNames } from '../../../../utils';
 import './loginButton.style.scss';
-import { Link } from 'react-router-dom';
 
 export const LoginButton = ({ className }) => {
+  const isLogin = sessionStorage.getItem('Logined');
   const [isHover, setIsHover] = useState(() => false);
 
   const handleMouseOver = () => {
@@ -16,17 +16,16 @@ export const LoginButton = ({ className }) => {
     setIsHover(() => false);
   };
 
-  // TODO: 로그인/회원가입 페이지 이동 기능 구현
   return (
     <Link
       className={classNames(
         'global-header__login-button',
-        isHover ? 'hover' : '',
+        !isLogin && isHover ? 'hover' : '',
         className
       )}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      to='/login'
+      to={!isLogin ? '/login' : '/users'}
     >
       <span
         className={classNames(
@@ -34,7 +33,7 @@ export const LoginButton = ({ className }) => {
           isHover ? 'hover' : ''
         )}
       >
-        {isHover ? (
+        {!isLogin && isHover ? (
           '로그인/회원가입'
         ) : (
           <FaUser className='login-button__icon' />

@@ -23,6 +23,9 @@
       border-bottom: 1px solid;
       @include border-c8adff;
     }
+    &.logout {
+      text-align: left;
+    }
   }
 }
 

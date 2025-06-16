@@ -8,6 +8,7 @@ import { BsFillHouseAddFill } from '../../../assets/icons/index';
 import { selectAdminAccomList } from '../../../services/accom/accomService.api';
 import './AdminMain.style.scss';
 import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
+import { HttpStatusCode } from 'axios';
 
 const accomColumnList = [
   { name: '숙소번호', className: 'col-w-5' },
@@ -21,17 +22,51 @@ const accomColumnList = [
 const AdminMain = () => {
   const { keyword } = useAdminSearchStore((state) => state);
   const [dataList, setDataList] = useState([]);
-  const [pageInfo, setPageInfo] = useState({});
+
+  const [totalCount, setTotalCount] = useState(0);
+
+  const [pageInfo, setPageInfo] = useState({
+    currentPage: 1,
+    numOfRows: 10,
+  });
+
+  const [searchParams, setSearchParams] = useState({
+    currentPage: 1,
+    numOfRows: 10,
+    keyword: '',
+  });
+
   const navigate = useNavigate();
 
   const handleSearch = async () => {
     try {
-      const data = await selectAdminAccomList(keyword);
+      const { data, status } = await selectAdminAccomList(
+        searchParams.keyword,
+        searchParams.currentPage,
+        searchParams.numOfRows
+      );
+
+      if (status !== HttpStatusCode.Ok) {
+        throw new Error('숙박목록 조회에 실패했습니다');
+      }
+
       setDataList(data.dataList);
-      setPageInfo(data.pageInfo);
+      setTotalCount(data.pageInfo.totalCount);
+      setPageInfo({
+        currentPage: data.pageInfo.pageNo,
+        numOfRows: data.pageInfo.numOfRows,
+      });
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handlePagination = (pageNo) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      currentPage: pageNo,
+    }));
+    navigate(`?currentPage=${pageNo}`);
   };
 
   // 등록 페이지 이동 핸들러
@@ -48,7 +83,7 @@ const AdminMain = () => {
 
   useEffect(() => {
     handleSearch();
-  }, []);
+  }, [searchParams]);
 
   // useEffect(() => {
   //   console.log(keyword);
@@ -72,10 +107,14 @@ const AdminMain = () => {
         </AdminSearch>
       </AdminHeader>
       <AdminManagementList
-        pageInfo={pageInfo}
+        numOfRows={pageInfo.numOfRows}
+        currentPage={pageInfo.currentPage}
         columnList={accomColumnList}
         dataList={dataList}
+        pageLength={10}
+        totalCount={totalCount}
         onClickRow={detailPageHandler}
+        onPageChange={handlePagination}
       />
     </div>
   );

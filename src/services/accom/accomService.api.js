@@ -20,9 +20,13 @@ export async function accommodationDetailByAccomSq(accomSq, memNo) {
 }
 
 // 관리자 숙박 목록
-export const selectAdminAccomList = async (keyword = '') => {
+export const selectAdminAccomList = async (
+  keyword = '',
+  currentPage = 1,
+  numOfRows = 10
+) => {
   const response = await apiAxios.get('/admin/accommodations', {
-    params: { keyword },
+    params: { keyword, currentPage, numOfRows },
   });
   console.log(response);
   return response.data;

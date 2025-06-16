@@ -315,6 +315,7 @@ const AccommodationDetail = () => {
       {/* 객실 목록 */}
 
       <RoomList
+        accomName={accom.accomName}
         rooms={accom.roomList}
         selectedFacilities={[
           ...(accom.inRoomFacInfo
