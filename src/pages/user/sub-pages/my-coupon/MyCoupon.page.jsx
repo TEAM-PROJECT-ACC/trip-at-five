@@ -13,7 +13,7 @@ const dummyData = [
     couponPrice: 10000,
     couponRegDt: '2025-05-01',
   },
-]
+];
 //   {
 //     couponSq: 2,
 //     couponName: '가정의달 특별할인',
@@ -70,23 +70,20 @@ const dummyData = [
 //   },
 // ];
 
-
-
 export const MyCouponPage = () => {
+  const [list, setList] = useState([]);
+  const { loginInfo } = loginStateStore();
 
-    const [list, setList] = useState([]);
-    const { loginInfo } = loginStateStore();
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        const result = await couponSelect(loginInfo.memSq);
-        if (result.status === 200) {
-          setList(result.data); // result.data가 배열이어야 함
-          console.log(result);
-        }
-      };
-      fetchData();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await couponSelect(loginInfo.memSq);
+      if (result.status === 200) {
+        setList(result.data); // result.data가 배열이어야 함
+        console.log(result);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <UserPageContainer

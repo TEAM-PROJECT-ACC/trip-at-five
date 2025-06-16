@@ -23,7 +23,7 @@ import {
 } from '../../../states/login/loginStore';
 
 export default function SnsButtons() {
-  const { plaform, setPlaform } = loginSnsStateStore();
+  const { platform, setPlatform } = loginSnsStateStore();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -33,13 +33,13 @@ export default function SnsButtons() {
   const { loginInfo, setLoginInfo } = loginStateStore();
 
   const sendCode = async () => {
-    if (plaform === 'kakao') {
+    if (platform === 'kakao') {
       const kakaoResult = await kakaoLogin(searchTerm);
       if (kakaoResult.data.memSq >= 0 && kakaoResult.status == 200) {
         successAlert('login 성공');
-        sessionStorage.setItem('Logined', true);
+        sessionStorage.setItem('Logged', true);
         setLoginInfo(kakaoResult.data);
-        navigate('/user');
+        navigate('/');
       } else if (kakaoResult.data.INACTIVE === 'INACTIVE') {
         errorAlert('비활성화 된 계정입니다.');
       } else {
@@ -47,26 +47,26 @@ export default function SnsButtons() {
       }
     }
 
-    if (plaform === 'naver') {
+    if (platform === 'naver') {
       const naverResult = await naverLogin(searchTerm);
       if (naverResult.data.memSq >= 0 && naverResult.status == 200) {
         successAlert('login 성공');
-        sessionStorage.setItem('Logined', true);
+        sessionStorage.setItem('Logged', true);
         setLoginInfo(naverResult.data);
-        navigate('/user');
+        navigate('/');
       } else if (naverResult.data.INACTIVE === 'INACTIVE') {
         errorAlert('비활성화 된 계정입니다.');
       } else {
         infoAlert(naverResult.data.ckSocPlt + '로 로그인해주시기 바랍니다.');
       }
     }
-    if (plaform === 'google') {
+    if (platform === 'google') {
       const googleResult = await googleLogin(searchTerm);
       if (googleResult.data.memSq >= 0 && googleResult.status == 200) {
         successAlert('login 성공');
-        sessionStorage.setItem('Logined', true);
+        sessionStorage.setItem('Logged', true);
         setLoginInfo(googleResult.data);
-        navigate('/user');
+        navigate('/');
       } else if (googleResult.data.INACTIVE === 'INACTIVE') {
         errorAlert('비활성화 된 계정입니다.');
       } else {
@@ -75,17 +75,17 @@ export default function SnsButtons() {
     }
   };
 
-  const snsLogin = (snsplaform) => {
-    if (snsplaform == 'kakao') {
-      setPlaform(snsplaform);
+  const snsLogin = (snsPlatform) => {
+    if (snsPlatform == 'kakao') {
+      setPlatform(snsPlatform);
       window.location.href = KAKAO_AUTH_URL;
     }
-    if (snsplaform == 'naver') {
-      setPlaform(snsplaform);
+    if (snsPlatform == 'naver') {
+      setPlatform(snsPlatform);
       window.location.href = NAVER_AUTH_URL;
     }
-    if (snsplaform == 'google') {
-      setPlaform(snsplaform);
+    if (snsPlatform == 'google') {
+      setPlatform(snsPlatform);
       window.location.href = GOOGLE_AUTH_URL;
     }
   };
