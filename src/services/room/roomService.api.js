@@ -1,20 +1,17 @@
 import { apiAxios } from '../service';
-
 /**
- * 객실 전체 목록 조회 API (페이징처리 부분 완료 시 이어서 구현 예정)
- * @param {*} accomNo
- * @param {*} currentPage
+ * 객실 전체 목록 조회 API
+ * @param {*} param0
  * @returns
  */
-export const selectRoomListAPI = async (accomNo, currentPage) => {
-  currentPage = currentPage === null ? 1 : currentPage;
-  // console.log('서버 전달 전 accomNo : ' + accomNo);
-  // console.log(currentPage);
-  const response = await apiAxios.get(
-    `admin/accommodations/${accomNo}/rooms?currentPage=${currentPage}`
-  );
-
-  // console.log('서버 response : ' + response.data);
+export const selectRoomListAPI = async (
+  accomNo,
+  { keyword = '', currentPage = 1, numOfRows = 10 }
+) => {
+  console.log(accomNo);
+  const response = await apiAxios.get(`admin/accommodations/${accomNo}/rooms`, {
+    params: { keyword, currentPage, numOfRows },
+  });
 
   return response;
 };
@@ -86,6 +83,22 @@ export const deleteImageAPI = async (accomNo, roomNo, imageList) => {
   const response = await apiAxios.delete(
     `admin/accommodations/${accomNo}/rooms/${roomNo}/images`,
     { data: imageList }
+  );
+
+  return response;
+};
+
+/**
+ * 객실 수 조회
+ * @param {*} selectObj : 숙박 번호, 체크인/아웃 날짜
+ * @returns
+ */
+export const selectRoomCnt = async (selectObj) => {
+  const response = await apiAxios.get(
+    `accommodations/${selectObj.accomNo}/rooms/room-cnt`,
+    {
+      params: selectObj,
+    }
   );
 
   return response;
