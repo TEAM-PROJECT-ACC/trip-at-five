@@ -9,6 +9,10 @@ import { classNames } from '../../../../utils';
 import { AdminLinkButton } from '../../../../components/buttons/admin-link-button/AdminLinkButton.component';
 import { ADMIN_ROUTE } from '../../constants/routes-path/adminRoute.constant';
 import './adminHeader.style.scss';
+import { use } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { HttpStatusCode } from 'axios';
+import { isCancelCountAPI } from '../api/adminHeader.api';
 
 const buttonIcons = {
   accommodations: FaHotel,
@@ -19,6 +23,21 @@ const buttonIcons = {
 
 export const AdminHeader = () => {
   // TODO: 사용자 문의 실시간 데이터 확인 필요
+
+  const { data: resCancelCount } = useQuery({
+    queryKey: ['cancelCount'],
+    queryFn: async () => {
+      const { data, status } = await isCancelCountAPI();
+
+      if (status !== HttpStatusCode.Ok) {
+        throw new Error('예약 취소 건수 조회 실패');
+      }
+      console.log('예약 취소 건수:', data);
+      return data;
+    },
+    staleTime: 1000 * 60, // 1분 동안 캐시 유지
+    retry: 3, // 실패 시 재시도 횟수
+  });
 
   return (
     <header className='admin-header__container'>
@@ -34,14 +53,26 @@ export const AdminHeader = () => {
           {ADMIN_ROUTE.map((route, idx) => {
             const Icons = buttonIcons[route.path];
             return (
-              <AdminLinkButton
-                key={idx}
-                className={classNames('admin-header__button', route.className)}
-                to={route.path}
-              >
-                {<Icons className='admin-header__btn-icon' />}
-                {route.title}
-              </AdminLinkButton>
+              <div className='admin-header-button__container'>
+                <AdminLinkButton
+                  key={idx}
+                  className={classNames(
+                    'admin-header__button',
+                    route.className
+                  )}
+                  to={route.path}
+                >
+                  {<Icons className='admin-header__btn-icon' />}
+                  {route.title}
+                </AdminLinkButton>
+                {route.title === '예약취소요청' && resCancelCount > 0 && (
+                  <>
+                    <span className='admin-header__badge'>
+                      {resCancelCount}
+                    </span>
+                  </>
+                )}
+              </div>
             );
           })}
         </div>

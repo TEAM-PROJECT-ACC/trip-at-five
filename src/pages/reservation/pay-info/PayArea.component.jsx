@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { HttpStatusCode } from 'axios';
 import { loginStateStore } from '../../../states/login/loginStore';
 import { toast } from 'react-toastify';
+import { formatDateForApi } from '../../../utils/formatDate/formatDate';
 
 const PayArea = ({ className, roomInfo }) => {
   const navigate = useNavigate();
@@ -111,8 +112,10 @@ const PayArea = ({ className, roomInfo }) => {
         resName: resInfo.paymentState.resName,
         resPhone: resInfo.paymentState.resPhone,
         resNumOfPeo: resInfo.paymentState.numberOfPeople,
-        checkInDt: resInfo.paymentState.checkIn.slice(0, 10), // YYYY-mm-dd 형태로 추출
-        checkOutDt: resInfo.paymentState.checkOut.slice(0, 10), // YYYY-mm-dd 형태로 추출
+        checkInDt: formatDateForApi(resInfo.paymentState.checkIn.slice(0, 10)),
+        checkOutDt: formatDateForApi(
+          resInfo.paymentState.checkOut.slice(0, 10)
+        ),
         memNo,
       };
 
