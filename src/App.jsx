@@ -72,7 +72,7 @@ function App() {
 
         {
           <Route
-            path='/user'
+            path='/users'
             element={
               <LoginInterceptor>
                 <UserPage />

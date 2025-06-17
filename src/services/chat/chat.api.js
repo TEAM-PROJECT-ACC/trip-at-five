@@ -1,7 +1,7 @@
 import { apiAxios } from '..';
 import { CHAT_REQUEST } from './chat.requests';
 
-export const getInitChatRoom = async ({ loginInfo, inqCtgCd }) => {
+export const getInitChatRoom = async ({ loginInfo, inqCtgCd, roomNo }) => {
   const { memType } = loginInfo;
   const isAdmin = memType === 'admin';
   const memNo = isAdmin ? loginInfo.adminSq : loginInfo.memSq;
@@ -14,6 +14,7 @@ export const getInitChatRoom = async ({ loginInfo, inqCtgCd }) => {
         loginInfo: JSON.stringify(loginInfo),
         userEmail,
         inqCtgCd,
+        roomNo: roomNo || 0,
       },
     }
   );
