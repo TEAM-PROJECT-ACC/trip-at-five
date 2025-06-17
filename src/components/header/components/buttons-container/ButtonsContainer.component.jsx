@@ -6,12 +6,12 @@ import './buttonsContainer.style.scss';
 import { loginAccountStore } from '../../../../states/login/loginStore';
 
 export const ButtonsContainer = ({ className }) => {
-	const isLogin = sessionStorage.getItem('Logined');
+	const isLogin = sessionStorage.getItem('Logged');
 
 	return (
 		<div className={classNames('global-header__btn-container', className)}>
 			{/* 로그인/회원가입 버튼 */}
-			{isLogin && <LoginButton />}
+			{!isLogin ? <LoginButton /> : ''}
 			{/* 햄버거 버튼 */}
 			<HeaderMenu />
 		</div>

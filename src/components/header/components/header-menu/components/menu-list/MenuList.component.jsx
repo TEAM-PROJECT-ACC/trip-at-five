@@ -37,7 +37,7 @@ export const MenuList = ({ isShow, onClick }) => {
 			>
 				챌린지
 			</LinkButton>
-			{isLogin && (
+			{!isLogin ? (
 				<LinkButton
 					to='/guest/reservations'
 					className='global-header__menu-link-btn'
@@ -45,6 +45,8 @@ export const MenuList = ({ isShow, onClick }) => {
 				>
 					비회원 예약 조회
 				</LinkButton>
+			) : (
+				''
 			)}
 			<LinkButton
 				to='/carts'
