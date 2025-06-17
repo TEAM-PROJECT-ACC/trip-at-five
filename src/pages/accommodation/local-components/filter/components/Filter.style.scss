@@ -38,6 +38,12 @@
       @include color-ffffff;
     }
   }
+  .rc-slider {
+    .rc-slider-track {
+      @include background-5500ff;
+    }
+  }
+
   p.price-range {
     text-align: center;
     @include color-888888;

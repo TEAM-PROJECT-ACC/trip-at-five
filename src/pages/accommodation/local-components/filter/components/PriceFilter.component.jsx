@@ -27,7 +27,7 @@ const PriceFilter = () => {
           step={100}
           value={priceRange}
           onChange={handleChange}
-          trackStyle={[{ backgroundColor: '#5500ff' }]}
+          // trackStyle={[{ backgroundColor: '#5500ff' }]}
           handleStyle={[{ borderColor: '#5500ff' }, { borderColor: '#5500ff' }]}
         />
       </div>
