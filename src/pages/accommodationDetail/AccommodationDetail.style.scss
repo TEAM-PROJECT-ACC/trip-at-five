@@ -110,7 +110,8 @@
     padding: 24px;
     font-size: 16px;
     box-shadow: inset 0px 0px 8px rgb(0, 0, 0, 0.25);
-    @include border-baabfa-1_5px;
+    border: 1.5px solid;
+    @include border-baabfa;
     @include background-fafafa;
   }
   .accom-info__map {
@@ -253,7 +254,8 @@
   display: flex;
   font-weight: 700;
   align-items: center;
-  @include border-5500ff-2px;
+  border: 2px solid;
+  @include border-5500ff;
 
   .review-star-style {
     width: 18px;

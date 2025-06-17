@@ -25,7 +25,8 @@
     .item-line {
       margin-bottom: 20px;
       width: 814px;
-      @include border-top-color-baabfa;
+      border-top: 1px solid;
+      @include border-baabfa;
     }
   }
 }

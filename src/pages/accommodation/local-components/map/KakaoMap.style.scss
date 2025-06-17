@@ -40,10 +40,11 @@
   .acc-list-map {
     position: relative;
     width: 82%;
-    border: 3px solid #c8adff;
+    border: 3px solid;
     border-radius: 5px;
     margin-left: 10px;
     display: flex;
+    @include border-c8adff;
   }
 
   .btn-exit {
@@ -123,7 +124,8 @@
   visibility: visible;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  @include border-bottom-2px-5500ff;
+  border-bottom: 2px soild;
+  @include border-5500ff;
   @include background-5500ff;
   @include color-fafafa;
 }

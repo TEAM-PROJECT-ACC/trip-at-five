@@ -73,7 +73,7 @@
   align-items: center;
   justify-content: center;
   @include background-ffffff;
-  @include border-5500ff-1px;
+  @include border-5500ff;
   @include color-5500ff;
 }
 .remove-thumb-btn:hover {
@@ -123,7 +123,7 @@
   align-items: center;
   border-radius: 12px;
   padding: 4px 16px;
-  @include border-5500ff-1px;
+  @include border-5500ff;
 }
 
 .accom-modal-btn {
