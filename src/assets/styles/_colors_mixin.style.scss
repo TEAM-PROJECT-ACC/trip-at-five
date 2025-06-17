@@ -17,11 +17,35 @@
   & {
     color: $color-5500ff;
   }
+  @at-root .spring & {
+    color: $color-ffa6b8;
+  }
+  @at-root .summer & {
+    color: $color-4e90f5;
+  }
+  @at-root .autumn & {
+    color: $color-69140e;
+  }
+  @at-root .winter & {
+    color: $color-38506a;
+  }
 }
 
 @mixin color-c8adff {
   & {
     color: $color-c8adff;
+  }
+  @at-root .spring & {
+    color: $color-fee088;
+  }
+  @at-root .summer & {
+    color: $color-9ebeed;
+  }
+  @at-root .autumn & {
+    color: $color-a44200;
+  }
+  @at-root .winter & {
+    color: $color-7c92a8;
   }
 }
 
@@ -76,17 +100,35 @@
   & {
     border-color: $color-5500ff;
   }
+  @at-root .spring & {
+    border-color: $color-ffa6b8;
+  }
+  @at-root .summer & {
+    border-color: $color-4e90f5;
+  }
+  @at-root .autumn & {
+    border-color: $color-69140e;
+  }
+  @at-root .winter & {
+    border-color: $color-38506a;
+  }
 }
 
 @mixin border-c8adff {
   & {
     border-color: $color-c8adff;
   }
-}
-
-@mixin color-c8adff {
-  & {
-    color: #c8adff;
+  @at-root .spring & {
+    border-color: $color-fee088;
+  }
+  @at-root .summer & {
+    border-color: $color-9ebeed;
+  }
+  @at-root .autumn & {
+    border-color: $color-a44200;
+  }
+  @at-root .winter & {
+    border-color: $color-7c92a8;
   }
 }
 
@@ -100,11 +142,35 @@
   & {
     background: $color-5500ff;
   }
+  @at-root .spring & {
+    background: $color-ffa6b8;
+  }
+  @at-root .summer & {
+    background: $color-4e90f5;
+  }
+  @at-root .autumn & {
+    background: $color-69140e;
+  }
+  @at-root .winter & {
+    background: $color-38506a;
+  }
 }
 
 @mixin background-c8adff {
   & {
     background: $color-c8adff;
+  }
+  @at-root .spring & {
+    background: $color-fee088;
+  }
+  @at-root .summer & {
+    background: $color-9ebeed;
+  }
+  @at-root .autumn & {
+    background: $color-a44200;
+  }
+  @at-root .winter & {
+    background: $color-7c92a8;
   }
 }
 
@@ -193,12 +259,6 @@
   }
 }
 
-@mixin border-c8adff {
-  & {
-    border-color: $color-c8adff;
-  }
-}
-
 @mixin border-bottom-baabfa {
   & {
     border-bottom-color: $color-baabfa;
@@ -208,6 +268,18 @@
 @mixin border-bottom-reservation-5500ff {
   & {
     border-bottom-color: $color-5500ff;
+  }
+  @at-root .spring & {
+    border-bottom-color: $color-ffa6b8;
+  }
+  @at-root .summer & {
+    border-bottom-color: $color-4e90f5;
+  }
+  @at-root .autumn & {
+    border-bottom-color: $color-69140e;
+  }
+  @at-root .winter & {
+    border-bottom-color: $color-38506a;
   }
 }
 
