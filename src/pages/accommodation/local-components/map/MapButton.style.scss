@@ -8,7 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  @include border-baabfa-3px;
+  border: 3px solid;
+  @include border-baabfa;
   .map-btn-text {
     padding: 15px 40px;
     border-radius: 8px;
@@ -19,7 +20,7 @@
     @include color-fafafa;
   }
   .map-btn-text:hover {
-    @include background-baabfa;
+    @include background-c8adff;
     @include color-5500ff;
   }
 }

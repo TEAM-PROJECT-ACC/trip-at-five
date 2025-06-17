@@ -24,7 +24,8 @@
     padding: 5px 15px;
     border-radius: 8px;
     font-size: 16px;
-    @include border-5500ff-1px;
+    border: 1px solid;
+    @include border-5500ff;
     @include color-5500ff;
 
     &:hover {

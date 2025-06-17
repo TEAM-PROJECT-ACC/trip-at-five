@@ -46,7 +46,7 @@
         justify-content: center;
         margin-top: 5px;
         @include color-5500ff;
-        @include background-baabfa;
+        @include background-c8adff;
       }
     }
     p.accom-address {
@@ -66,7 +66,8 @@
       flex-direction: column;
       gap: 16px;
       padding: 8px;
-      @include border-left-color-baabfa;
+      border-left: 3px solid;
+      @include border-baabfa;
       p:nth-child(1) {
         display: flex;
         width: 100%;

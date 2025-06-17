@@ -53,7 +53,7 @@
   }
 
   .accom-header-img-change-btn:hover {
-    @include background-baabfa;
+    @include background-c8adff;
     .image-icons {
       @include color-5500ff;
     }
@@ -61,7 +61,7 @@
 
   .image-icons {
     font-size: 30px;
-    @include color-baabfa;
+    @include color-c8adff;
   }
 
   &__text {
@@ -110,7 +110,8 @@
     padding: 24px;
     font-size: 16px;
     box-shadow: inset 0px 0px 8px rgb(0, 0, 0, 0.25);
-    @include border-baabfa-1_5px;
+    border: 1.5px solid;
+    @include border-baabfa;
     @include background-fafafa;
   }
   .accom-info__map {
@@ -126,7 +127,7 @@
     }
     .accom-location-btn:hover {
       @include color-5500ff;
-      @include background-baabfa;
+      @include background-c8adff;
     }
   }
 
@@ -159,7 +160,7 @@
     }
     .review-content {
       font-size: 18px;
-      text-align: right;
+      text-align: center;
     }
   }
 }
@@ -253,7 +254,8 @@
   display: flex;
   font-weight: 700;
   align-items: center;
-  @include border-5500ff-2px;
+  border: 2px solid;
+  @include border-5500ff;
 
   .review-star-style {
     width: 18px;

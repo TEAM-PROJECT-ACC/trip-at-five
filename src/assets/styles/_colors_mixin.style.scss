@@ -497,18 +497,6 @@
   }
 }
 
-@mixin border-5500ff-1px {
-  & {
-    border: 1px solid #5500ff;
-  }
-}
-
-@mixin border-5500ff-2px {
-  & {
-    border: 2px solid #5500ff;
-  }
-}
-
 @mixin background-eeeeee {
   & {
     background-color: #eeeeee;
@@ -517,13 +505,7 @@
 
 @mixin border-bottom-5500ff-2px {
   & {
-    border-bottom: 2px solid #5500ff;
-  }
-}
-
-@mixin border-bottom-5500ff-1px {
-  & {
-    border-bottom: 1px solid #5500ff;
+    // border-bottom: 2px solid #5500ff;
   }
 }
 
@@ -580,3 +562,51 @@
       url(../../assets/images/main-page/main4.png);
   }
 }
+
+@mixin border-top-5500ff {
+  & {
+    border-top-color: #5500ff;
+  }
+}
+
+@mixin border-bottom-2px-5500ff {
+  & {
+    border-bottom: 2px solid #5500ff;
+  }
+}
+
+@mixin border-baabfa {
+  & {
+    border-color: $color-baabfa;
+  }
+  @at-root .spring & {
+    border-color: $color-fee088;
+  }
+  @at-root .summer & {
+    border-color: $color-9ebeed;
+  }
+  @at-root .autumn & {
+    border-color: $color-a44200;
+  }
+  @at-root .winter & {
+    border-color: $color-7c92a8;
+  }
+}
+
+// @mixin border-5500ff {
+//   & {
+//     border-bottom: 1px solid #5500ff;
+//   }
+//   @at-root .spring & {
+//     border-bottom: $color-fee088;
+//   }
+//   @at-root .summer & {
+//     border-bottom: $color-9ebeed;
+//   }
+//   @at-root .autumn & {
+//     border-bottom: $color-a44200;
+//   }
+//   @at-root .winter & {
+//     border-bottom: $color-7c92a8;
+//   }
+// }

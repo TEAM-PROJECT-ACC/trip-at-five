@@ -1,7 +1,8 @@
 .filter-panel__container {
   border-radius: 5px;
   padding: 3px 15px;
-  @include border-c8adff-3px;
+  border: 3px solid;
+  @include border-c8adff;
 
   .line {
     margin: 10px 0;
