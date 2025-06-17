@@ -24,14 +24,12 @@ export const DeactiveAccModal = ({ onClose }) => {
 
 		if (result) {
 			const response = await userInactive(loginInfo.memEmailId, pwd);
-			console.log(response);
 			if (response.status === 200 && response.data === 1) {
 				infoAlert('이용해주셔서 감사합니다.');
 				resetLoginedStateStore();
 				localStorage.clear();
 				sessionStorage.clear();
-				navigate('/', replace);
-        console.log(navigate('/', replace));
+				navigate('/', { replace: true });
 			}
 		} else {
 			errorAlert('비밀번호를 확인해주세요');
