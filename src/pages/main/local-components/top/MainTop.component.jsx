@@ -4,6 +4,7 @@ import './MainTop.style.scss';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccomSearchStore } from '../../../../states';
+import { toast } from 'react-toastify';
 
 const MainTop = () => {
   const state = useAccomSearchStore((state) => state);
