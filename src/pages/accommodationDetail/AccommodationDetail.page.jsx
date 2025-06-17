@@ -5,7 +5,7 @@ import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
 import { Button, StarRating } from '../../components';
-import { FaArrowUp } from '../../assets/icons/ys/index';
+import { FaArrowUp, IoMdImages } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
 import 'slick-carousel/slick/slick.css';
@@ -21,6 +21,7 @@ import { loginStateStore } from '../../states/login/loginStore';
 import { StarList } from '../../components/star-rating/components/star-list/StarList.component';
 import { SampleNextArrow } from './SampleNextArrow.component';
 import { SamplePrevArrow } from './SamplePrevArrow.component';
+import { VITE_SERVER_BASE_URL } from '../../../env.config';
 const AccommodationDetail = () => {
   const { id } = useParams();
 
@@ -206,7 +207,9 @@ const AccommodationDetail = () => {
             <button
               className='accom-header-img-change-btn'
               onClick={toggleImageList}
-            ></button>
+            >
+              <IoMdImages className='image-icons' />
+            </button>
           )}
         </div>
 
