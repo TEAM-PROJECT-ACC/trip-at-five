@@ -17,9 +17,7 @@ export const MenuList = ({ isShow }) => {
 		sessionStorage.clear();
 	};
 
-	useEffect(() => {
-		
-	}, [isLogin]);
+	useEffect(() => {}, [isLogin]);
 
 	return (
 		<div
@@ -31,12 +29,14 @@ export const MenuList = ({ isShow }) => {
 			>
 				챌린지
 			</LinkButton>
-			<LinkButton
-				to='/guest/reservations'
-				className='global-header__menu-link-btn'
-			>
-				비회원 예약 조회
-			</LinkButton>
+			{!isLogin && (
+				<LinkButton
+					to='/guest/reservations'
+					className='global-header__menu-link-btn'
+				>
+					비회원 예약 조회
+				</LinkButton>
+			)}
 			<LinkButton
 				to='/carts'
 				className='global-header__menu-link-btn'

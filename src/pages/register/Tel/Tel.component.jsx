@@ -60,20 +60,14 @@ export default function RegisterTel() {
 				{telText && <p className='validatePhone-step4-telText'>{telText}</p>}
 			</div>
 
-			<div className='register-tel-btn'>
-				<ButtonSecondary
-					className={'tel-btn-later'}
-					onClick={telSkip}
-				>
-					나중에 입력
-				</ButtonSecondary>
+
 				<ButtonPrimary
 					className={'tel-btn-check'}
 					onClick={telOk}
 				>
 					확인
 				</ButtonPrimary>
-			</div>
+
 		</div>
 	);
 }

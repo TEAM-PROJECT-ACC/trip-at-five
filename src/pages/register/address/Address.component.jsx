@@ -12,7 +12,7 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useState } from 'react';
 import { sendRegister } from '../../../services/register/apiService';
 import { postCodeUrl } from '../../../services/login/loginService';
-import { successAlert } from '../../../utils/toastUtils/toastUtils';
+import { errorAlert, successAlert } from '../../../utils/toastUtils/toastUtils';
 
 export default function RegisterAdress() {
 	const { setAddStep } = useRegisterStore();
@@ -56,16 +56,14 @@ export default function RegisterAdress() {
 		}
 	};
 
-	const addressSikp = () => {
-		if (sendRegisterCall() == 0) {
-			setAddStep();
-		}
-	};
-
 	const sendAddress = async () => {
-		setAddress(postNum + ',' + basicAddress + ',' + otherAddress);
-		if (sendRegisterCall() == 1) {
-			successAlert('가입성공');
+		if (postNum.length !== 0 && otherAddress.length !== 0) {
+			setAddress(postNum + ',' + basicAddress + ',' + otherAddress);
+			if (sendRegisterCall() == 1) {
+				successAlert('가입성공');
+			}
+		} else {
+			errorAlert('주소를 입력해주세요');
 		}
 	};
 
@@ -106,20 +104,12 @@ export default function RegisterAdress() {
 				}}
 			/>
 
-			<div className='register-address-btn'>
-				<ButtonSecondary
-					className={'address-btn-later'}
-					onClick={addressSikp}
-				>
-					나중에 입력
-				</ButtonSecondary>
-				<ButtonPrimary
-					className={'adress-btn-check'}
-					onClick={sendAddress}
-				>
-					회원가입
-				</ButtonPrimary>
-			</div>
+			<ButtonPrimary
+				className={'adress-btn-check'}
+				onClick={sendAddress}
+			>
+				회원가입
+			</ButtonPrimary>
 		</div>
 	);
 }

@@ -12,8 +12,8 @@ export default function Login() {
 
 	useEffect(() => {
 		if (loginInfo) {
-			sessionStorage.removeItem('Logged');
-			localStorage.removeItem('userInfo');
+			localStorage.clear();
+			sessionStorage.clear();
 		}
 	}, []);
 

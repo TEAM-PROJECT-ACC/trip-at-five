@@ -38,7 +38,7 @@ export default function RegisterEmail() {
 			return;
 		}
 		const response = await emailDuplicationCheck(email);
-		if (response == 1) {
+		if (response.data == 1) {
 			setError('이메일이 중복됩니다.');
 			setIsFalse();
 		} else {

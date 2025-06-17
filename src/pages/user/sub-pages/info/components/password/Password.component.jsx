@@ -39,6 +39,7 @@ export const Password = () => {
 					onChange={(e) => {
 						setPwd(e);
 					}}
+					value={pwd}
 				>
 					<p className='input__p'> {pwdText} </p>
 				</InfoInput>
@@ -51,6 +52,7 @@ export const Password = () => {
 					onChange={(e) => {
 						setPwdCheck(e);
 					}}
+					value={pwdCheck}
 				>
 					<p className='input__p'> {pwdCheckText} </p>
 				</InfoInput>

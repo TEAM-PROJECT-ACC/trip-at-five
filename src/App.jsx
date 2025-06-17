@@ -93,7 +93,11 @@ function App() {
 				}
 				<Route
 					path='/diary'
-					element={<DiaryPage />}
+					element={
+						<LoginInterceptor>
+							<DiaryPage />
+						</LoginInterceptor>
+					}
 				/>
 				{/* 로그인 부분 */}
 				<Route
@@ -169,7 +173,11 @@ function App() {
 				{/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
 				<Route
 					path='/admin'
-					element={<AdminLayout />}
+					element={
+						<LoginInterceptor>
+							<AdminLayout />
+						</LoginInterceptor>
+					}
 				>
 					{/* 사용자 문의 */}
 					<Route
@@ -179,7 +187,11 @@ function App() {
 					<Route path='accommodations'>
 						<Route
 							index
-							element={<AdminMain />}
+							element={
+								<LoginInterceptor>
+									<AdminMain />
+								</LoginInterceptor>
+							}
 						/>
 						{/* 숙박등록/수정페이지 */}
 						<Route
