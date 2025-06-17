@@ -7,8 +7,7 @@ import './userProfile.style.scss';
 const CLASSNAME = 'aside-user-profile';
 
 export const UserProfile = ({ className }) => {
-
-   const {loginInfo} = loginStateStore();
+  const { loginInfo } = loginStateStore();
   return (
     <div className={classNames(className, `${CLASSNAME}__container`)}>
       <div className={`${CLASSNAME}__user-nickname`}>
