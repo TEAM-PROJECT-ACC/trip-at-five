@@ -41,6 +41,14 @@ export const reservationCancelUpdate = async (resCd) => {
   return response;
 };
 
+
+export const reservationCancellationUpdate = async (resCd) => {
+  const response = await baseServerAxios.put(`/users/reservationCancellationUpdate`, {
+    resCd: resCd,
+  });
+  return response;
+};
+
 /* 회원 챌린지 완료 수정 */
 export const challengeSuccess = async (memSq, chalHistoryNo) => {
   const response = await baseServerAxios.put(`/users/challengeSuccess`, {

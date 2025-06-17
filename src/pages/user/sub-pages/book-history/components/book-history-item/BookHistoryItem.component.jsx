@@ -1,5 +1,5 @@
 import { ButtonPrimary, Label } from '../../../../../../components';
-import { reservationCancelUpdate } from '../../../../../../services/user/userService';
+import { reservationCancellationUpdate, reservationCancelUpdate } from '../../../../../../services/user/userService';
 import { classNames, getDateLocaleString } from '../../../../../../utils';
 import {
 	BOOK_STATE,
@@ -29,6 +29,15 @@ export const BookHistoryItem = ({ onRefresh, bookHistory }) => {
 			onRefresh();
 		}
 	};
+
+		const reservationCancellation = async () => {
+		const response = await reservationCancellationUpdate(resCd);
+		if (response.status === 200) {
+			infoAlert('예약취소 요청을 취소했습니다.');
+			onRefresh();
+		}
+	};
+
 
 	return (
 		<article className='user-page book-history-item__container'>
@@ -67,6 +76,17 @@ export const BookHistoryItem = ({ onRefresh, bookHistory }) => {
 							onClick={reservationCancel}
 						>
 							예약 취소
+						</ButtonPrimary>
+					</div>
+				)}
+
+				{ckResSt === BOOK_STATE.processing && (
+					<div className='book-history-item__btn-container'>
+						<ButtonPrimary
+							className='book-history-item__button'
+							onClick={reservationCancellation}
+						>
+							요청 취소
 						</ButtonPrimary>
 					</div>
 				)}
