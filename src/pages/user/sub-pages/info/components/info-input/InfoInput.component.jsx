@@ -2,7 +2,7 @@ import { InputPrimary } from '../../../../../../components';
 import { classNames } from '../../../../../../utils';
 import './infoInput.style.scss';
 
-export const InfoInput = ({ children, onChange, placeholder }) => {
+export const InfoInput = ({ children, onChange, placeholder, type, value }) => {
   const handleChange = (event) => {
     const targetValue = event.target.value;
     if (onChange) {
@@ -16,6 +16,8 @@ export const InfoInput = ({ children, onChange, placeholder }) => {
         className='info__input'
         onChange={handleChange}
         placeholder={placeholder}
+        type={type}
+        value={value}
       />
       <div className='info__input-btn-container'>{children}</div>
     </div>

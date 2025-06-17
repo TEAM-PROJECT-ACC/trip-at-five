@@ -4,7 +4,6 @@ import './linkButton.style.scss';
 
 export const LinkButton = ({ className, children, to, ...props }) => {
   return (
-    // div style
     <Link
       className={classNames('global-link__button', className)}
       to={to}

@@ -1,23 +1,21 @@
 import React from 'react';
 import AccommodationCard from './card/AccommodationCard.component';
-import { useFilterState } from '../../hooks/useFilterState.hook';
+import './AccommodationListBox.style.scss';
 
-const AccommodationListBox = ({ data }) => {
-  const filterHook = useFilterState();
-  const { filter } = filterHook;
-
-  const filteredData = filter.selectedCategory
-    ? data.filter((accom) => accom.type === filter.selectedCategory)
-    : data;
+const AccommodationListBox = ({ filteredAccommodations }) => {
+  if (!filteredAccommodations || filteredAccommodations.length === 0) {
+    return (
+      <ul className='accom-list-ul no-data-list'>
+        <li className='no-data-msg'>해당되는 데이터가 없습니다</li>
+      </ul>
+    );
+  }
 
   return (
     <ul className='accom-list-ul'>
-      {filteredData.map((accom, idx) => (
-        <React.Fragment key={accom.id || idx}>
-          <AccommodationCard
-            accom={accom}
-            filterHook={filterHook}
-          />
+      {filteredAccommodations.map((accom, idx) => (
+        <React.Fragment key={accom.accomSq || idx}>
+          <AccommodationCard accom={accom} />
           <div className='item-line' />
         </React.Fragment>
       ))}

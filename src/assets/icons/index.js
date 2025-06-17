@@ -20,6 +20,7 @@ import {
   FaHotel,
   FaRegCalendarCheck,
   FaTimesCircle,
+  FaTrashAlt,
 } from 'react-icons/fa';
 import {
   MdOutlineArrowDropDown,
@@ -69,6 +70,7 @@ export {
   FaFill,
   FaEdit,
   FaHotel,
+  FaTrashAlt,
   MdDelete,
   MdArrowForwardIos,
   MdDocumentScanner,

@@ -32,7 +32,31 @@
         width: 100%;
         display: flex;
         align-items: center;
+        flex-direction: column;
         justify-content: space-around;
+        gap: 16px;
+        .room-resCode {
+          display: flex;
+          flex-direction: column;
+          span:last-child {
+            font-size: 14px;
+            font-weight: 900;
+          }
+        }
+        div {
+          width: 100%;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          gap: 16px;
+          .room-price {
+            font-size: 24px;
+            border-radius: 8px;
+            padding: 8px;
+            @include background-c8adff;
+          }
+        }
       }
     }
   }

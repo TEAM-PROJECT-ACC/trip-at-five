@@ -38,8 +38,8 @@
     }
 
     .room-info__price {
-      font-size: 26px;
-      font-weight: 700;
+      font-size: 28px;
+      font-weight: bold;
       margin: 10px 0 12px;
       color: #5500ff;
     }
@@ -116,10 +116,13 @@
   border-radius: 8px;
   font-size: 20px;
   box-shadow: 2px 2px 2px #888888;
+  @include background-baabfa;
+  @include color-5500ff;
+}
+.room-icon:hover {
   @include background-5500ff;
   @include color-baabfa;
 }
-
 div .room-icon {
   margin-right: 4px;
 }

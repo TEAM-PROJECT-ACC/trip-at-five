@@ -3,9 +3,16 @@ import { FcGoogle } from '../../../../assets/icons/index';
 import { BottomButtons, Email, Nickname, Password, Social } from './components';
 
 import './userInfo.style.scss';
+import { useUserInfoUpdateStore } from '../../../../states/user/userStore';
+import { useEffect } from 'react';
 
 export const UserInfo = () => {
   // TODO: 유저 정보 local storage에서 가지고 옴
+  const { resetUserInfoUpdateStore } = useUserInfoUpdateStore();
+
+  useEffect(() => {
+    resetUserInfoUpdateStore();
+  }, []);
 
   return (
     <UserPageContainer className='user-info'>
