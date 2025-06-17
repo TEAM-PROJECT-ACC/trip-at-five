@@ -37,7 +37,6 @@
   .accom-header-img-change-btn {
     width: 60px;
     height: 60px;
-    background-color: #5500ffab;
     border-radius: 50%;
     position: absolute;
     bottom: 50px;
@@ -49,10 +48,15 @@
     justify-content: center;
     border: none;
     cursor: pointer;
+    opacity: 0.7;
+    @include background-5500ff;
   }
 
   .accom-header-img-change-btn:hover {
-    @include background-5500ff;
+    @include background-baabfa;
+    .image-icons {
+      @include color-5500ff;
+    }
   }
 
   .image-icons {
