@@ -55,7 +55,7 @@ export default function LoginInputBox() {
           successAlert('login 성공');
           sessionStorage.setItem('Logged', true);
           setLoginInfo(result.data);
-          setIslogin();
+          setIslogin(true);
         }
         if (result.data.memType === 'admin') {
           navigate('/admin');
