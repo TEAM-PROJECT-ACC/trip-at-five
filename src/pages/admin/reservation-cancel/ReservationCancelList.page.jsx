@@ -21,7 +21,7 @@ const cancelReservationColumnList = [
   { name: '예약코드', className: 'col-w-20' },
   { name: '영수증ID', className: 'col-w-30' },
   { name: '예약자명', className: 'col-w-20' },
-  { name: '결제수단', className: 'col-w-10' },
+  { name: '결제가격', className: 'col-w-10' },
   { name: '결제상태', className: 'col-w-20' },
 ];
 
@@ -112,14 +112,18 @@ const ReservationCancelList = () => {
   };
 
   // 결제 취소 이벤트 핸들러
-  const paymentCancelHandler = async (receiptId, resCd) => {
-    console.log('receiptId, resCd : ' + receiptId + ',' + resCd);
+  const paymentCancelHandler = async (receiptId, resCd, cancelPay) => {
+    console.log(
+      'receiptId, resCd : ' + receiptId + ',' + resCd,
+      +',' + cancelPay
+    );
     if (!receiptId) return;
 
     try {
       const { data: cancelResult, status } = await getPaymentCancel(
         receiptId,
-        resCd
+        resCd,
+        cancelPay
       );
       console.log('결제취소 : ', cancelResult);
 
