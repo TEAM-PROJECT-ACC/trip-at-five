@@ -10,8 +10,9 @@
 .card__container {
   width: 100%;
   border-radius: 1rem;
-  border: 0.1rem solid $color-c8adff;
+  border: 0.1rem solid;
   padding: 1rem;
+  @include border-c8adff;
 
   & * {
     @include color-5500ff;

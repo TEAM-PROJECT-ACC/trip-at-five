@@ -18,7 +18,7 @@ const initialState = {
   checkIn: formatDate(checkInDate),
   checkOut: formatDate(checkOutDate),
   tripDay: 1,
-  numberOfPeople: 1,
+  numberOfPeople: 2,
 };
 
 export const useAccomSearchStore = create(
@@ -30,7 +30,8 @@ export const useAccomSearchStore = create(
       setCheckInState: (date) => set({ checkIn: date }),
       setCheckOutState: (date) => set({ checkOut: date }),
       setTripDayState: (day) => set({ tripDay: day }),
-      setNumberOfPeople: (count) => set({ numberOfPeople: count }),
+      setNumberOfPeople: (count) =>
+        set({ numberOfPeople: count === 1 ? 2 : count }), // 최소 2명으로 설정
 
       resetState: () => set(initialState),
     }),

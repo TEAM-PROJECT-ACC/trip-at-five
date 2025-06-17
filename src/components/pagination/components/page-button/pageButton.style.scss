@@ -13,28 +13,20 @@
     font-weight: 600;
   }
 
-  &:hover {
+  &:hover:not(&.selected) {
     @include background-c8adff;
-
-    .global-pagination__button {
-      @include color-5500ff;
-    }
+    @include color-5500ff;
   }
 
   &.selected {
     @include background-5500ff;
-    .global-pagination__button {
-      @include color-fafafa;
-    }
+    @include color-fafafa;
   }
 
   &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
     @include background-fafafa;
-
-    .global-pagination__button {
-      pointer-events: none;
-      cursor: not-allowed;
-      @include color-b8b8b8;
-    }
+    @include color-b8b8b8;
   }
 }

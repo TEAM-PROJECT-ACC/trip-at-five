@@ -4,17 +4,18 @@
   width: 100%;
   padding: 1rem;
   border-radius: 0.7rem;
-  border: 0.1rem solid $color-c8adff;
+  border: 0.1rem solid;
   display: flex;
   flex-direction: column;
   box-shadow: 0.15rem 0.15rem rgba(0, 0, 0, 0.5);
   gap: 1.5rem;
+  @include border-c8adff;
 
   .pay-info-item {
     width: 100%;
     h2 {
-      color: $color-5500ff;
       margin-bottom: 1rem;
+      @include color-5500ff;
     }
     h3 {
       justify-self: flex-end;
