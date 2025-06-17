@@ -33,7 +33,7 @@ export const selectAdminAccomList = async (
     },
   });
   console.log(response);
-  return response;
+  return response.data;
 };
 
 // 관리자 숙박 상세 페이지
