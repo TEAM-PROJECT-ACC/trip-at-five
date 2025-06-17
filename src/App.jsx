@@ -65,13 +65,21 @@ function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
+
+
+
 			<div className={classNames('app__container', selectedTheme.value)}>
+
+				{loginInfo.memType !== 'admin' ?
 				<Select
 					className='app__selector'
 					defaultOption={selectedTheme}
 					optionList={APP_THEME_OPTIONS}
 					onSelect={onSelectTheme}
 				/>
+				: ''}
+
+
 				<ToastContainer />
 
 				{/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
