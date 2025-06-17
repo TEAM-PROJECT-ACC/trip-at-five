@@ -1,0 +1,10 @@
+.app__container {
+  position: relative;
+
+  .app__selector {
+    position: fixed;
+    top: 18px;
+    left: 200px;
+    z-index: 9999;
+  }
+}
