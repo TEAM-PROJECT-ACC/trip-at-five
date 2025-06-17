@@ -1,19 +1,18 @@
 .container {
   width: 95rem;
-  height: 75vh;
+  height: 67vh;
   padding: 4rem 1rem 1rem 1rem;
-  border: 2px solid #baabfa;
   border-radius: 8px;
-  background-color: #fafafa;
   z-index: 100;
   position: absolute;
   left: -124px;
   box-sizing: border-box;
-  top: -90px;
+  top: 27px;
   display: flex;
   flex-direction: row;
   box-shadow: 3px 3px 4px 0px rgb(0, 0, 0, 0.5);
-
+  @include background-fafafa;
+  @include border-baabfa-2px;
   .map {
     flex: 1;
     width: 100%;
@@ -41,10 +40,11 @@
   .acc-list-map {
     position: relative;
     width: 82%;
-    border: 3px solid #c8adff;
+    border: 3px solid;
     border-radius: 5px;
     margin-left: 10px;
     display: flex;
+    @include border-c8adff;
   }
 
   .btn-exit {
@@ -120,11 +120,12 @@
   left: 50%;
   position: absolute;
   z-index: 1000;
-  border-bottom: 2px solid #5500ff;
   opacity: 1;
   visibility: visible;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  border-bottom: 2px soild;
+  @include border-5500ff;
   @include background-5500ff;
   @include color-fafafa;
 }
@@ -136,7 +137,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 8px solid transparent;
-  border-top-color: #5500ff;
+  @include border-top-5500ff;
 }
 
 .text__box {
@@ -192,5 +193,11 @@
 
   .btn-close:hover {
     @include color-5500ff;
+  }
+}
+.text__box:hover {
+  @include background-fafafa;
+  .address {
+    color: #2e2e2e;
   }
 }

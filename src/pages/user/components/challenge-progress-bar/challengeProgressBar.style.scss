@@ -1,18 +1,29 @@
 .challenge-progress-bar {
-  position: relative;
-  width: 100%;
-  height: 22px;
-  border-radius: 8px;
-  overflow: hidden;
-  @include background-b8b8b8;
+	position: relative;
+	width: 100%;
+	height: 22px;
+	border-radius: 8px;
+	overflow: hidden;
+	@include background-b8b8b8;
 
-  &:after {
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 30%;
-    height: 100%;
-    @include background-5500ff;
-  }
+	&:after {
+		position: absolute;
+		content: '';
+		top: 0;
+		left: 0;
+		width: 00%;
+		height: 100%;
+		transition: width 0.5s ease;
+		@include background-5500ff;
+	}
+
+	&.bar30:after {
+		width: 30%;
+	}
+	&.bar60:after {
+		width: 60%;
+	}
+	&.bar100:after {
+		width: 100%;
+	}
 }

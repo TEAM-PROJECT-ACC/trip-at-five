@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import AdminHeader from '../local-components/header/AdminHeader.component';
 import AdminSearch from '../local-components/header/search/AdminSearch.component';
 import AdminIconButton from '../../../components/buttons/admin-icon-button/AdminIconButton.component';
 import AdminManagementList from '../local-components/list/AdminManagementList.component';
 import { BsFillHouseAddFill } from '../../../assets/icons/index';
-import { listSampleData } from '../../../assets/sample-data/listSampleData';
+import { selectAdminAccomList } from '../../../services/accom/accomService.api';
 import './AdminMain.style.scss';
-
-const dataList = listSampleData.accommodation_tb;
+import { useAdminSearchStore } from '../../../states/admin-search/adminSearchStore';
+import { HttpStatusCode } from 'axios';
 
 const accomColumnList = [
   { name: '숙소번호', className: 'col-w-5' },
@@ -19,17 +20,77 @@ const accomColumnList = [
 ];
 
 const AdminMain = () => {
+  const { keyword } = useAdminSearchStore((state) => state);
+  const [dataList, setDataList] = useState([]);
+
+  const [totalCount, setTotalCount] = useState(0);
+
+  const [params, setParams] = useState({
+    pageNo: 1,
+    numOfRows: 10,
+    keyword: '',
+  });
+
   const navigate = useNavigate();
+
+  const handleSearch = () => {
+    setParams((prev) => ({
+      ...prev,
+      keyword: keyword,
+      pageNo: 1,
+    }));
+  };
+
+  const handlePagination = (pageNo) => {
+    setParams((prev) => ({
+      ...prev,
+      pageNo: pageNo,
+    }));
+    navigate(`?currentPage=${pageNo}`);
+  };
 
   // 등록 페이지 이동 핸들러
   const registerPageHandler = () => {
     navigate('/admin/accommodations/new');
   };
   // 수정 페이지 이동 핸들러
-  const detailPageHandler = (accomNo) => {
+  const detailPageHandler = (no, id) => {
+    let accomNo = `${no !== undefined ? no : ''}`;
     console.log(accomNo);
+    // console.log(accomNo);
     navigate(`/admin/accommodations/${accomNo}/edit`);
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(keyword);
+  // }, [keyword]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseData = await selectAdminAccomList(
+          params.keyword,
+          params.pageNo,
+          params.numOfRows
+        );
+
+        if (!responseData || !responseData.dataList) {
+          throw new Error('API 응답 데이터 형식이 올바르지 않습니다.');
+        }
+
+        setDataList(responseData.dataList);
+        setTotalCount(responseData.pageInfo.totalCount);
+      } catch (error) {
+        console.error('데이터 처리 중 에러 발생:', error);
+      }
+    };
+
+    fetchData();
+  }, [params]);
 
   return (
     <div className='accom-list__container'>
@@ -40,6 +101,7 @@ const AdminMain = () => {
         <AdminSearch
           className='admin-search-area__container'
           placeholder={'숙박업소명 혹은 지역을 입력해주세요'}
+          onClick={handleSearch}
         >
           <AdminIconButton
             onClick={registerPageHandler}
@@ -48,9 +110,14 @@ const AdminMain = () => {
         </AdminSearch>
       </AdminHeader>
       <AdminManagementList
+        numOfRows={params.numOfRows}
+        currentPage={params.pageNo}
         columnList={accomColumnList}
         dataList={dataList}
+        pageLength={10}
+        totalCount={totalCount}
         onClickRow={detailPageHandler}
+        onPageChange={handlePagination}
       />
     </div>
   );

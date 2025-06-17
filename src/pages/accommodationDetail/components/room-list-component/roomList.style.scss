@@ -3,7 +3,7 @@
   align-items: flex-start;
   gap: 36px;
   padding: 32px;
-  border-bottom: 1px solid #5500ff;
+  @include border-5500ff;
 
   .room-img {
     width: 460px;
@@ -24,8 +24,8 @@
     width: 3px;
     height: 130px;
     margin-top: 170px;
-    background-color: #5500ff;
     border-radius: 2px;
+    @include background-5500ff;
   }
 
   .room-info_top {
@@ -38,10 +38,10 @@
     }
 
     .room-info__price {
-      font-size: 26px;
-      font-weight: 700;
+      font-size: 28px;
+      font-weight: bold;
       margin: 10px 0 12px;
-      color: #5500ff;
+      @include color-5500ff;
     }
 
     .room-info-other {
@@ -82,7 +82,7 @@
       @include color-fafafa;
     }
     .btn-cart:hover {
-      @include background-baabfa;
+      @include background-c8adff;
       @include color-5500ff;
     }
 
@@ -96,7 +96,7 @@
       align-items: center;
       gap: 8px;
       box-shadow: 1px 1px 3px #888888;
-      @include background-baabfa;
+      @include background-c8adff;
       @include color-5500ff;
 
       &:hover {
@@ -116,10 +116,13 @@
   border-radius: 8px;
   font-size: 20px;
   box-shadow: 2px 2px 2px #888888;
+  @include background-c8adff;
+  @include color-5500ff;
+}
+.room-icon:hover {
   @include background-5500ff;
   @include color-baabfa;
 }
-
 div .room-icon {
   margin-right: 4px;
 }
@@ -136,7 +139,7 @@ button.accom-modal-btn {
 
 button.accom-modal-btn:hover {
   @include color-5500ff;
-  @include background-baabfa;
+  @include background-c8adff;
 }
 
 .btn-more-container {

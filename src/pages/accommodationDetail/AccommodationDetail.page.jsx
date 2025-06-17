@@ -1,41 +1,48 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
 import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
-import {
-  ButtonPrimary,
-  Modal,
-  Pagination,
-  StarRating,
-  Textarea,
-} from '../../components';
-import { MdAddPhotoAlternate } from '../../assets/icons/ys/index';
+import { Button, StarRating } from '../../components';
+import { FaArrowUp, IoMdImages } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
-import { accomData } from '../../assets/sample-data/accomSampleData';
-import { Star } from '../../components/star-rating/components/star/Star.component';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-
+import { accommodationDetailByAccomSq } from '../../services/accom/accomService.api';
+import { AccomReview } from './components/room-review-component/AccomReview.component';
+import {
+  getAccomLatestReviewAPI,
+  getAccomReviewListAPI,
+} from '../../services/review/reviewService.api';
+import { loginStateStore } from '../../states/login/loginStore';
+import { StarList } from '../../components/star-rating/components/star-list/StarList.component';
+import { SampleNextArrow } from './SampleNextArrow.component';
+import { SamplePrevArrow } from './SamplePrevArrow.component';
+import { VITE_SERVER_BASE_URL } from '../../../env.config';
 const AccommodationDetail = () => {
   const { id } = useParams();
-  const accom = accomData.accommodation_tb.find(
-    (item) => String(item.accom_sq) === String(id)
-  );
 
+  const [accom, setAccom] = useState({});
+  const [latestReview, setLatestReview] = useState(null);
+
+  const memNo = loginStateStore.getState().loginInfo.memSq;
+  /*
   const imageList = [
-    '/assets/images/room-page/sampleImg2.png',
-    '/assets/images/room-page/bedroom.png',
-    '/assets/images/room-page/sample1.png',
-    '/assets/images/room-page/waterpark.png',
-    '/assets/images/room-page/pool.png',
-    '/assets/images/room-page/bedroom.png',
-    '/assets/images/room-page/sample1.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
   ];
-
+  */
   const settings = {
     dots: true,
     infinite: true,
@@ -46,77 +53,26 @@ const AccommodationDetail = () => {
     prevArrow: <SamplePrevArrow />,
   };
 
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: 'flex',
-          backgroundColor: '#5500ff',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          top: '75px',
-          left: '5px',
-          zIndex: 100,
-        }}
-        onClick={onClick}
-      />
-    );
-  }
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: 'flex',
-          backgroundColor: '#5500ff',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          left: '1195px',
-          zIndex: 100,
-        }}
-        onClick={onClick}
-      ></div>
-    );
-  }
-  const [starRateScore, setStarRateScore] = useState(() => 2.6);
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const [selectedImage, setSelectedImage] = useState(imageList[0]);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [showImageList, setShowImageList] = useState(false);
-
   const toggleImageList = () => setShowImageList((prev) => !prev);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = () => {
     setCurrentPage(pageNo);
   };
-  const handleImageSelect = (imgUrl) => {
-    setSelectedImage(imgUrl);
+  const handleImageSelect = (imgObject) => {
+    setSelectedImage(imgObject);
     setShowImageList(false);
   };
-
-  const handleRatingStar = (score) => {
-    setStarRateScore(() => score);
-  };
-
   const mapRef = useRef(null);
 
   const init = () => {
     if (window.kakao && window.kakao.maps && mapRef.current) {
       /* 해당 숙박업체의 위도경도에 따라 지도에 마커 위치가 변경*/
-      const lat = accom.accom_lat;
-      const lon = accom.accom_lon;
+      const lat = accom.accomLat;
+      const lon = accom.accomLon;
       const markPosition = new window.kakao.maps.LatLng(lat, lon);
       const map = new window.kakao.maps.Map(mapRef.current, {
         center: markPosition,
@@ -140,7 +96,7 @@ const AccommodationDetail = () => {
 
       const overlayContent = `
         <div class="custom-overlay-bubble">
-          <div class="custom-overlay-label">${accom.accom_name}</div>
+          <div class="custom-overlay-label">${accom.accomName}</div>
         </div>
       `;
       const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -167,10 +123,6 @@ const AccommodationDetail = () => {
     clearInterval(scrollInterval);
   };
 
-  const modalHandler = () => {
-    setModalOpen(true);
-  };
-
   const handleScrollToReview = () => {
     const target = document.getElementById('ancher-review');
     if (target) {
@@ -185,6 +137,21 @@ const AccommodationDetail = () => {
     }
   };
 
+  const roomsWithImages = useMemo(() => {
+    if (!accom.roomList || !accom.roomImageList) {
+      return [];
+    }
+    return accom.roomList.map((room, index) => ({
+      ...room,
+      roomImgPathName: accom.roomImageList[index],
+    }));
+  }, [accom.roomList, accom.roomImageList]);
+
+  // 페이지 넘어올때 항상 상단으로 오게 설정
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(() => {
@@ -193,29 +160,87 @@ const AccommodationDetail = () => {
     }
   }, [accom]);
 
+  useEffect(() => {
+    const fetchAccomDetail = async () => {
+      try {
+        const data = await accommodationDetailByAccomSq(id, memNo);
+        console.log('fff', data);
+        setAccom(data);
+        if (data && data.images && data.images.length > 0) {
+          setSelectedImage(data.images[0]);
+        }
+      } catch (error) {
+        console.error('숙소 상세 데이터 불러오기 실패:', error);
+      }
+    };
+    fetchAccomDetail();
+  }, [id, memNo]);
+
+  useEffect(() => {
+    if (accom.accomSq) {
+      getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+    }
+  }, [accom.accomSq]);
+
+  if (!accom) {
+    return <div>Loading...</div>;
+  }
+  console.log(accom);
+
+  const fallbackImage =
+    '/assets/images/alternative-images/alternative-image.png';
+
   return (
     <PageContainer>
+      <Button
+        className='scroll-to-top-btn'
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <FaArrowUp />
+      </Button>
       <section className='accom-header'>
         <div className='image-wrapper'>
           <img
             className='accom-header__image'
-            src={selectedImage}
+            src={
+              selectedImage && selectedImage.accomImgPathName
+                ? `${VITE_SERVER_BASE_URL}${selectedImage.accomImgPathName}`
+                : fallbackImage
+            }
+            alt={accom.accomName || '숙소 대표 이미지'}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = fallbackImage;
+            }}
           />
-          <button
-            className='accom-header-img-change-btn'
-            onClick={toggleImageList}
-          ></button>
+          {accom.images && accom.images.length > 1 && (
+            <button
+              className='accom-header-img-change-btn'
+              onClick={toggleImageList}
+            >
+              <IoMdImages className='image-icons' />
+            </button>
+          )}
         </div>
 
         {showImageList && (
           <div className='slick-container'>
             <Slider {...settings}>
-              {imageList.map((img, idx) => (
-                <div key={idx}>
+              {accom.images?.map((img) => (
+                <div key={img.accomImgSq}>
                   <img
-                    src={img}
+                    src={
+                      img.accomImgPathName
+                        ? `${VITE_SERVER_BASE_URL}${img.accomImgPathName}`
+                        : fallbackImage
+                    }
                     className='image-box'
+                    alt={`숙소 이미지 ${img.accomImgSq}`}
                     onClick={() => handleImageSelect(img)}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = fallbackImage;
+                    }}
                   />
                 </div>
               ))}
@@ -223,16 +248,12 @@ const AccommodationDetail = () => {
           </div>
         )}
         <div className='accom-header__text'>
-          {accom?.accom_name}
+          {accom.accomName}
           <div className='accom-header__price'>
-            {accom &&
-              Math.min(
-                ...accom.rooms.map((room) => room.room_price)
-              ).toLocaleString()}
-            원~ / <p className='accom-room-sub__price'>1박</p>
+            {accom.roomPrice}원~ / <p className='accom-room-sub__price'>1박</p>
           </div>
         </div>
-        <p className='accom-location'>{accom?.accom_location}</p>
+        <p className='accom-location'>{accom.accomAddr}</p>
       </section>
 
       {/* 숙소 정보 카드 */}
@@ -249,287 +270,73 @@ const AccommodationDetail = () => {
           onClick={handleScrollToReview}
           className='accom-info__review'
         >
-          <div className='review-header'>
-            <p className='nickname'>닉네임</p>
-            <div className='stars'>⭐⭐⭐⭐⭐</div>
-          </div>
-          <p className='info-comment'>
-            편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
-            좋고 청결해서 다시 방문하고 싶어요.
-          </p>
+          {latestReview ? (
+            <>
+              <div className='review-header'>
+                <span className='nickname-header'>{latestReview.memNick}</span>
+                <StarRating
+                  className='latest-review-stars'
+                  score={latestReview.revSco}
+                  starList={Array(5).fill(0)}
+                  starCount={5}
+                  isDisabled={true}
+                />
+              </div>
+              <div className='review-content'>{latestReview.revCont}</div>
+            </>
+          ) : (
+            <div className='noReviewYetOnHeader'>
+              아직 후기가 작성되지 않았습니다.
+            </div>
+          )}
         </button>
         <div className='accom-info__facility'>
-          <FacilityFilterView />
+          <FacilityFilterView
+            selectedFacilities={[
+              ...(accom.pubFacInfo
+                ? accom.pubFacInfo.split(',').map((f) => f.trim())
+                : []),
+              ...(accom.etcFacInfo
+                ? accom.etcFacInfo.split(',').map((f) => f.trim())
+                : []),
+            ]}
+          />
         </div>
       </section>
 
       {/* 객실 목록 */}
 
-      <RoomList />
+      <RoomList
+        roomImage={accom.roomImageList}
+        accomName={accom.accomName}
+        rooms={roomsWithImages}
+        selectedFacilities={[
+          ...(accom.inRoomFacInfo
+            ? accom.inRoomFacInfo.split(',').map((f) => f.trim())
+            : []),
+        ]}
+      />
 
       {/* 앵커 태그가 헤더 영역에 가려져서 빈 태그 추가 */}
       <div
         className='empty_blank'
         id='ancher-review'
       ></div>
+
       {/* 후기 섹션 */}
 
-      <section className='review-section'>
-        <div className='review-section__header'>
-          <div className='acc-detail-section__title'>이용 후기</div>
-          <div className='review-star'>
-            <Star className='review-star-style' />
-            3.0
-          </div>
-          <button
-            onClick={modalHandler}
-            className='accom-modal-btn'
-          >
-            후기 등록
-          </button>
-          {isModalOpen && (
-            <Modal
-              className='accom-modal__inner'
-              useCloseIcon={true}
-              modalHandler={() => {
-                setModalOpen(false);
-              }}
-            >
-              <div className='accom-modal-container'>
-                <div className='accom-modal-title'>
-                  이번 여행은 어떠쎴나요?
-                  <br />
-                  여행에 대한 짫은 후기를 편하게 남겨주세요
-                </div>
-                <StarRating
-                  score={starRateScore}
-                  onClick={handleRatingStar}
-                  className='accom-modal-stars'
-                />
-                <div className='accom-modal-body'>
-                  <Textarea
-                    placeholder={'후기를 작성해주세요'}
-                    className='accom-modal-textbox'
-                  />
-                  <div
-                    type='file'
-                    className='accom-modal-img'
-                  >
-                    <MdAddPhotoAlternate className='accom-modal-img-icon' />
-                  </div>
-                </div>
-                <ButtonPrimary
-                  className='accom-modal-btn-inner'
-                  onClick={() => {
-                    setModalOpen(false);
-                  }}
-                >
-                  등록하기
-                </ButtonPrimary>
-              </div>
-            </Modal>
-          )}
-        </div>
-        <div className='review-card'>
-          <div className='images'>
-            <img
-              src='/assets/images/room-page/office.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/office.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/office.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/office.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/office.png'
-              className='img'
-            ></img>
-          </div>
-          <br />
-          <div className='review-text-box'>
-            <span className='nickname'>코알라잉</span>
-            <span className='stars'>⭐⭐⭐⭐⭐</span>
-            <div className='inner-card-comment'>
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
-              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-            </div>
-            <div className='see-more-comment'>더보기</div>
-          </div>
-        </div>
-        <div className='review-card'>
-          <div className='images'>
-            <img
-              src='/assets/images/room-page/waterpark.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/waterpark.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/waterpark.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/waterpark.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/waterpark.png'
-              className='img'
-            ></img>
-          </div>
-          <br />
-          <div className='review-text-box'>
-            <span className='nickname'>코알라잉</span>
-            <span className='stars'>⭐⭐⭐⭐⭐</span>
-            <div className='inner-card-comment'>
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
-              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-            </div>
-            <div className='see-more-comment'>더보기</div>
-          </div>
-        </div>
-        <div className='review-card'>
-          <div className='images'>
-            <img
-              src='/assets/images/room-page/sample1.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample1.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample1.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample1.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample1.png'
-              className='img'
-            ></img>
-          </div>
-          <br />
-          <div className='review-text-box'>
-            <span className='nickname'>코알라잉</span>
-            <span className='stars'>⭐⭐⭐⭐⭐</span>
-            <div className='inner-card-comment'>
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
-              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-            </div>
-            <div className='see-more-comment'>더보기</div>
-          </div>
-        </div>
-        <div className='review-card'>
-          <div className='images'>
-            <img
-              src='/assets/images/room-page/sample.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/sample.png'
-              className='img'
-            ></img>
-          </div>
-          <br />
-          <div className='review-text-box'>
-            <span className='nickname'>코알라잉</span>
-            <span className='stars'>⭐⭐⭐⭐⭐</span>
-            <div className='inner-card-comment'>
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
-              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-            </div>
-            <div className='see-more-comment'>더보기</div>
-          </div>
-        </div>
-        <div className='review-card'>
-          <div className='images'>
-            <img
-              src='/assets/images/room-page/pool.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/pool.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/pool.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/pool.png'
-              className='img'
-            ></img>
-            <img
-              src='/assets/images/room-page/pool.png'
-              className='img'
-            ></img>
-          </div>
-          <br />
-          <div className='review-text-box'>
-            <span className='nickname'>코알라잉</span>
-            <span className='stars'>⭐⭐⭐⭐⭐</span>
-            <div className='inner-card-comment'>
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!리조트는 멋진 산책로와 수영장이
-              있었고 매우 조용해서 힐링할 수 있었습니다. 직원도 매우 친절했어요!
-              리조트는 멋진 산책로와 수영장이 있었고 매우 조용해서 힐링할 수
-              있었습니다. 직원도 매우 친절했어요!
-            </div>
-            <div className='see-more-comment'>더보기</div>
-          </div>
-        </div>
-
-        <Pagination
-          className='accom-review-pagination'
-          totalCount={100}
-          pageLength={5}
-          currentPage={currentPage}
-          numOfRows={10}
-          useMoveToEnd={true}
-          onChangePage={handlePageChange}
-        />
-      </section>
-
+      <AccomReview
+        resCd={accom.resCd}
+        accomSq={accom.accomSq}
+        memNo={memNo}
+        onReviewSubmitted={() => {
+          getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+          getAccomReviewListAPI(accom.reviewList);
+        }}
+      />
       {/* 상세 정보 */}
 
-      <RoomDetailText />
+      <RoomDetailText accom={accom} />
 
       <section
         id='ancher-map'

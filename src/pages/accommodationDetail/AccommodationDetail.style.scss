@@ -1,3 +1,25 @@
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 2px 2px 3px #727272;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  @include color-5500ff;
+  @include background-baabfa;
+}
+.scroll-to-top-btn:hover {
+  @include color-ffaf45;
+  @include background-5500ff;
+}
+.noReviewYetOnHeader {
+  font-size: 20px;
+  padding-top: 65px;
+  @include color-888888;
+}
 .accom-header {
   display: flex;
   flex-direction: column;
@@ -13,9 +35,8 @@
     background-image: url(./img/sampleImg2.png);
   }
   .accom-header-img-change-btn {
-    width: 50px;
-    height: 50px;
-    background-color: #22222254;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     position: absolute;
     bottom: 50px;
@@ -27,6 +48,20 @@
     justify-content: center;
     border: none;
     cursor: pointer;
+    opacity: 0.7;
+    @include background-5500ff;
+  }
+
+  .accom-header-img-change-btn:hover {
+    @include background-c8adff;
+    .image-icons {
+      @include color-5500ff;
+    }
+  }
+
+  .image-icons {
+    font-size: 30px;
+    @include color-c8adff;
   }
 
   &__text {
@@ -65,7 +100,6 @@
   gap: 40px;
   margin: 32px 0;
   flex-wrap: wrap;
-  height: 240px;
 
   .accom-info__map,
   .accom-info__review,
@@ -76,7 +110,8 @@
     padding: 24px;
     font-size: 16px;
     box-shadow: inset 0px 0px 8px rgb(0, 0, 0, 0.25);
-    border: 1.5px solid #baabfa;
+    border: 1.5px solid;
+    @include border-baabfa;
     @include background-fafafa;
   }
   .accom-info__map {
@@ -92,41 +127,46 @@
     }
     .accom-location-btn:hover {
       @include color-5500ff;
-      @include background-baabfa;
+      @include background-c8adff;
     }
   }
 
   .accom-info__review {
     display: flex;
     font-size: 7px;
-    padding: 50px;
+    padding: 35px;
     line-height: 1.4;
     flex-direction: column;
 
     .review-header {
       display: flex;
+      align-items: center;
       gap: 8px;
+
       margin-bottom: 40px;
 
-      .nickname {
+      .nickname-header {
         font-weight: bold;
-        font-size: 24px;
+        font-size: 22px;
+        margin-right: 5px;
         @include color-5500ff;
       }
 
-      .stars {
-        font-size: 14px;
-        color: #ffaa00;
-        vertical-align: middle;
+      .latest-review-stars {
         display: flex;
-        align-items: center;
+        float: left;
+        width: 20px;
       }
+    }
+    .review-content {
+      font-size: 18px;
+      text-align: center;
     }
   }
 }
 
 .room-line {
-  border-bottom: 2px solid #5500ff;
+  @include border-bottom-5500ff-2px;
 }
 .review-section {
   margin: 24px 0;
@@ -147,13 +187,13 @@
       gap: 10px;
       justify-content: space-evenly;
       .img {
-        border: 1px solid #baabfa;
         width: 200px;
         height: 160px;
         object-fit: cover;
         background-size: cover;
         background-image: url(./img/sample1.png);
         border-radius: 4px;
+        @include border-baabfa-1px;
       }
     }
   }
@@ -171,6 +211,9 @@
 .acc-detail-section__title {
   font-size: 28px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .review-text-box {
@@ -206,12 +249,13 @@
 }
 
 .review-star {
-  border: 2px solid #5500ff;
   padding: 5px 10px;
   border-radius: 4px;
   display: flex;
   font-weight: 700;
   align-items: center;
+  border: 2px solid;
+  @include border-5500ff;
 
   .review-star-style {
     width: 18px;
@@ -231,7 +275,7 @@
 
 .accom-modal-container {
   text-align: center;
-  padding: 60px;
+  padding: 20px 60px;
 }
 
 .accom-modal-title {
@@ -244,7 +288,7 @@ textarea.global-textarea.accom-modal-textbox {
   height: 140px;
   margin-top: 12px;
   font-size: 16px;
-  border: 2px solid #baabfa;
+  @include border-baabfa-2px;
 }
 
 button.global-button.global-button__primary.accom-modal-btn-inner {
@@ -256,11 +300,11 @@ button.global-button.global-button__primary.accom-modal-btn-inner {
 .accom-modal-img {
   width: 50px;
   height: 50px;
-  border: 2px solid #baabfa;
   border-radius: 4px;
   margin-top: 5px;
   font-size: 36px;
   padding-top: 3px;
+  @include border-baabfa-2px;
   @include color-baabfa;
 }
 
@@ -271,9 +315,9 @@ button.global-button.global-button__primary.accom-modal-btn-inner {
 .custom-overlay-bubble {
   font-weight: 700;
   border-radius: 6px;
-  border: 1px solid #baabfa;
   padding: 10px 20px;
   box-shadow: 1px 1px 3px #888888;
+  @include border-baabfa-1px;
   @include background-fafafa;
 }
 .info-comment {

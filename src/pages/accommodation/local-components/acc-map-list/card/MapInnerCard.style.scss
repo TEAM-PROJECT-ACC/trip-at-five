@@ -1,6 +1,7 @@
 .acc-list__box {
   display: flex;
   padding: 19px;
+  cursor: pointer;
 
   .acc-list-img {
     width: 100px;
@@ -8,7 +9,6 @@
     border-radius: 8px;
     margin-right: 10px;
     flex-shrink: 0;
-    background-image: url(/src/assets/images/acc-list-page/sampleImg.png);
     background-size: cover;
   }
 
@@ -35,6 +35,5 @@
 }
 
 .line {
-  border-bottom: 1px solid #baabfa;
   margin: 0px 12px;
 }

@@ -1,0 +1,30 @@
+.deactive-acc-modal__container {
+  .deactive-acc-modal__title {
+    text-align: center;
+    padding: 14px 0;
+    font-weight: 600;
+    @include background-5500ff;
+    @include color-fafafa;
+  }
+  .deactive-acc-modal__input-container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: 8px 16px;
+    padding: 28px 12px;
+
+    .deactive-acc-modal__input-label {
+      font-weight: 600;
+    }
+  }
+  .deactive-acc-modal__btn-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    padding: 12px 24px;
+
+    .deactive-acc-modal__button {
+      border-radius: 4px;
+    }
+  }
+}

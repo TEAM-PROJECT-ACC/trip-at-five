@@ -1,0 +1,11 @@
+.no-data-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .no-data-msg {
+    font-size: 24px;
+    padding: 60px 0;
+    font-weight: 500;
+    @include color-888888;
+  }
+}

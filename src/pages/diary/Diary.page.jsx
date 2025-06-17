@@ -1,7 +1,8 @@
-import { Button, ButtonPrimary, Modal, PageContainer } from '../../components';
+import { Button, Modal, PageContainer, Pagination } from '../../components';
+import { ToastContainer } from 'react-toastify';
 import { useModal } from '../../hooks';
-import { DiaryItem } from './components/diary-item/DiaryItem.component';
-import { DiaryModal } from './components/modal/DiaryModal.component';
+import { InsertModal } from './components/modal/InsertModal.component';
+import { DiaryList } from './components/diary-list/DiaryList.component';
 import './diary.style.scss';
 
 export const DiaryPage = () => {
@@ -14,7 +15,6 @@ export const DiaryPage = () => {
   return (
     <PageContainer className='diary-page__container'>
       <div className='diary-page__title-container'>
-        {/* 타이틀 폰트 변경 */}
         <div className='diary-page__title'>나의 일지</div>
         <Button
           className='diary-page__button'
@@ -27,24 +27,15 @@ export const DiaryPage = () => {
             modalHandler={handleModalOpen}
             useCloseIcon={true}
           >
-            <DiaryModal isReadOnly={false} />
+            <InsertModal
+              isReadOnly={false}
+              onClose={handleClickPost}
+            />
           </Modal>
         )}
       </div>
-      <div className='diary-page__diary-list-container'>
-        {/* TODO: diaryList map */}
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        <DiaryItem />
-        {/* totalCount > 10 && pagination */}
-      </div>
+      <DiaryList />
+      <ToastContainer />
     </PageContainer>
   );
 };

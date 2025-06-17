@@ -11,6 +11,10 @@ const initialState = {
   checkIn: '',
   checkOut: '',
   numberOfPeople: 1,
+  totalPrice: 0,
+
+  // 이메일 인증 확인
+  emailState: false,
 };
 
 export const usePaymentInfoStore = create((set, get) => {
@@ -26,6 +30,8 @@ export const usePaymentInfoStore = create((set, get) => {
       setCheckIn: (value) => set({ checkIn: value }),
       setCheckOut: (value) => set({ checkOut: value }),
       setNumberOfPeople: (value) => set({ numberOfPeople: value }),
+      setTotalPrice: (value) => set({ totalPrice: value }),
+      setEmailState: (value) => set({ emailState: value }),
       resetState: () => set(initialState),
     },
   };

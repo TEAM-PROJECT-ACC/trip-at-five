@@ -18,9 +18,9 @@ export const getBookStateClass = (state) => {
 export const getBookStateText = (state) => {
   switch (state) {
     case BOOK_STATE.completed:
-      return '이용 완료';
+      return '예약 완료';
     case BOOK_STATE.processing:
-      return '예약 중';
+      return '처리중';
     default:
       return '예약 취소';
   }

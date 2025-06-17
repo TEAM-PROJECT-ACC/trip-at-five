@@ -3,7 +3,7 @@
   @include background-5500ff;
   @include color-fafafa;
 
-  &:hover {
+  &:hover:not(&.disabled) {
     @include color-5500ff;
     @include background-c8adff;
   }

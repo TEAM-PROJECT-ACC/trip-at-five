@@ -26,7 +26,7 @@ export const PageList = ({ pageLength, currentPage, totalPage, onClick }) => {
     }
 
     for (let i = startPage; i <= endPage; i++) {
-      if (startPage >= totalPage) {
+      if (startPage > totalPage) {
         break;
       }
       list.push(i);
