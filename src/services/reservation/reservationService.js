@@ -27,9 +27,6 @@ export const createOrderId = async (resCodeObj) => {
 
 // 사용자 예약 정보 저장
 export const insertReservation = async (insertResInfo, roomInfo) => {
-  // console.log('insertReservation : ' + JSON.stringify(insertResInfo));
-  // console.log('insertReservation1 : ' + JSON.stringify(roomInfo));
-
   const roomNoList = roomInfo.map((value, idx) => value.roomNo);
   // console.log('insertReservation2 : ' + roomNoList);
 
@@ -37,6 +34,8 @@ export const insertReservation = async (insertResInfo, roomInfo) => {
     ...insertResInfo,
     roomInfo: roomNoList,
   };
+
+  console.log('insertResInfo:', insertResInfo);
 
   const response = await apiAxios.post('/reservations', insertResInfo);
 

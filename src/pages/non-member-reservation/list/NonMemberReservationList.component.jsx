@@ -1,10 +1,37 @@
-import { accomData } from '../../../assets/sample-data/accomSampleData';
+import { useEffect } from 'react';
 import { ButtonPrimary, Label } from '../../../components';
+import { loginStateStore } from '../../../states/login/loginStore';
 import './NonMemberReservationList.style.scss';
+import { useNavigate } from 'react-router-dom';
 
-const dataList = accomData;
+const NonMemberReservationList = ({
+  className,
+  reservationList,
+  nonMemberInfo,
+}) => {
+  const { setLoginInfo } = loginStateStore();
+  const navigate = useNavigate();
 
-const NonMemberReservationList = ({ className }) => {
+  const onClickContact = () => {
+    // 비회원 정보 임시 저장 - 1:1 문의 용도
+    setLoginInfo({
+      memEmailId: nonMemberInfo.email, // memEmailId: "k@naver.com"
+      memNick: '비회원', // memNick: "여행다섯시"
+      resCd: nonMemberInfo.resCd, // 비회원 예약 코드
+      memSq: 0, // memSq: 1
+      memType: 'non-m', // memType: "user"
+    });
+
+    navigate('/chat/room');
+  };
+
+  useEffect(() => {
+    return () => {
+      // 비회원 정보는 저장하지 않음 언마운트 시 초기화
+      // setLoginInfo(null);
+    };
+  }, [nonMemberInfo.email, nonMemberInfo.resCd, setLoginInfo]);
+
   return (
     <div className={className}>
       <div className='non-m-reservation-list-title'>
@@ -13,37 +40,48 @@ const NonMemberReservationList = ({ className }) => {
 
       <div className='non-m-reservation-list'>
         <ul>
-          <li className='no-data'>
-            <span>조회된 내역이 없습니다.</span>
-          </li>
-          {dataList.accommodation_tb?.map((value, idx) => (
-            <li
-              key={idx}
-              className='non-m-reservation-item__container'
-            >
-              <img src='/assets/images/room-page/sample.png' />
-              <div className='non-m-reservation-item'>
-                <div className='non-m-reservation-info'>
-                  {/* 예약 상태, 숙박시설명, 객실정보, 예약정보 출력 */}
-                  <p>
-                    <Label className='neutral'>예약상태</Label>
-                  </p>
-                  <h3>
-                    {value.accom_name} - {value.rooms[0].room_name}
-                  </h3>
-                  <p>예약자명 - 예약자전화번호</p>
-                  <p>{value.rooms[0].room_price.toLocaleString('ko-kr')}원</p>
+          {reservationList.length > 0 ? (
+            reservationList.map((reservationInfo, idx) => (
+              <li
+                key={idx}
+                className='non-m-reservation-item__container'
+              >
+                <img src='/assets/images/room-page/sample.png' />
+                <div className='non-m-reservation-item'>
+                  <div className='non-m-reservation-info'>
+                    <p>
+                      <Label className='neutral'>예약상태</Label>
+                    </p>
+                    <h3>
+                      {reservationInfo.accomInfo.accomName} -{' '}
+                      {reservationInfo.roomInfo.roomName}
+                    </h3>
+                    <p>
+                      {reservationInfo.item.resName} -{' '}
+                      {reservationInfo.item.resPhone}
+                    </p>
+                    <p>
+                      {reservationInfo.roomInfo.roomPrice.toLocaleString(
+                        'ko-kr'
+                      )}
+                      원
+                    </p>
+                  </div>
+                  <div className='button-area'>
+                    <ButtonPrimary
+                      className='inquiry-button'
+                      children={'예약문의'}
+                      onClick={onClickContact}
+                    />
+                  </div>
                 </div>
-                <div className='button-area'>
-                  {/* 예약 문의 버튼 : 추후 채팅 문의 페이지로 이동 */}
-                  <ButtonPrimary
-                    className='inquiry-button'
-                    children={'예약문의'}
-                  />
-                </div>
-              </div>
+              </li>
+            ))
+          ) : (
+            <li className='no-data'>
+              <span>조회된 내역이 없습니다.</span>
             </li>
-          ))}
+          )}
         </ul>
       </div>
     </div>

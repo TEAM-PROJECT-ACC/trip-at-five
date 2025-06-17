@@ -17,6 +17,8 @@ import { getRoomInfo } from './utils/payData.util';
 import { useEffect } from 'react';
 import { HttpStatusCode } from 'axios';
 import { loginStateStore } from '../../../states/login/loginStore';
+import { toast } from 'react-toastify';
+import { formatDateForApi } from '../../../utils/formatDate/formatDate';
 
 const PayArea = ({ className, roomInfo }) => {
   const navigate = useNavigate();
@@ -91,14 +93,29 @@ const PayArea = ({ className, roomInfo }) => {
   const { mutate: resMutate } = useMutation({
     mutationKey: ['reservation', roomInfo],
     mutationFn: async ({ resInfo }) => {
-      // console.log('resInfo: ' + JSON.stringify(resInfo));
+      let message = '';
+      if (!resInfo.paymentState.resEmail) {
+        message = '이메일을 입력해주세요';
+      } else if (!resInfo.paymentState.resName) {
+        message = '예약자명을 입력해주세요';
+      } else if (!resInfo.paymentState.resPhone) {
+        message = '전화번호를 입력해주세요';
+      }
+
+      if (message !== '') {
+        toast.error(message);
+        return;
+      }
+
       const insertResInfo = {
         resEmail: resInfo.paymentState.resEmail,
         resName: resInfo.paymentState.resName,
         resPhone: resInfo.paymentState.resPhone,
         resNumOfPeo: resInfo.paymentState.numberOfPeople,
-        checkInDt: resInfo.paymentState.checkIn,
-        checkOutDt: resInfo.paymentState.checkOut,
+        checkInDt: formatDateForApi(resInfo.paymentState.checkIn.slice(0, 10)),
+        checkOutDt: formatDateForApi(
+          resInfo.paymentState.checkOut.slice(0, 10)
+        ),
         memNo,
       };
 
@@ -150,7 +167,7 @@ const PayArea = ({ className, roomInfo }) => {
                 console.error('PG 오류 : ', e.message);
                 break;
             }
-
+            toast.error('결제 승인 실패. 다시 시도해주세요');
             navigate(-1);
           });
       });
@@ -172,29 +189,31 @@ const PayArea = ({ className, roomInfo }) => {
 
   useEffect(() => {
     setRoomInfo(roomInfo);
-  }, []);
+  }, [roomInfo]);
 
   return (
-    <div className={className}>
-      <div className='room-area__container'>
-        <ul>
-          {roomInfo.map((value, idx) => (
-            <li key={idx}>
-              <Room
-                className='room-item'
-                checkArea={false}
-                value={value}
-              />
-            </li>
-          ))}
-        </ul>
+    <>
+      <div className={className}>
+        <div className='room-area__container'>
+          <ul>
+            {roomInfo.map((value, idx) => (
+              <li key={idx}>
+                <Room
+                  className='room-item'
+                  checkArea={false}
+                  value={value}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+        <PayInfo
+          className='pay-area__container'
+          clickHandler={paymentHandler}
+          roomInfo={roomInfo}
+        />
       </div>
-      <PayInfo
-        className='pay-area__container'
-        clickHandler={paymentHandler}
-        roomInfo={roomInfo}
-      />
-    </div>
+    </>
   );
 };
 

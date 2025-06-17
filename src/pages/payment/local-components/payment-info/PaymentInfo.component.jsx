@@ -5,7 +5,10 @@ import './PaymentInfo.style.scss';
 const PaymentInfo = ({ payInfo, ...props }) => {
   return (
     <div {...props}>
-      <PaymentInfoHeader className='pay-info-header' />
+      <PaymentInfoHeader
+        className='pay-info-header'
+        payInfo={payInfo}
+      />
       <PaymentInfoBody
         className='pay-info-body'
         payInfo={payInfo}

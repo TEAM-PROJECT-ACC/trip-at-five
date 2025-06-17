@@ -209,34 +209,34 @@ import { BookHistoryItem } from './components/book-history-item/BookHistoryItem.
 // ];
 
 export const BookHistoryPage = () => {
-  const [list, setList] = useState([]);
-  const { loginInfo } = loginStateStore();
-  const [refresh, setRefresh] = useState(false);
+	const [list, setList] = useState([]);
+	const { loginInfo } = loginStateStore();
+	const [refresh, setRefresh] = useState(false);
 
-  useEffect(() => {
-    console.log;
-    const fetchData = async () => {
-      const result = await reservationSelect(loginInfo.memSq);
-      if (result.status === 200) {
-        setList(result.data);
-      }
-    };
-    fetchData();
-  }, [refresh]);
+	useEffect(() => {
+		console.log;
+		const fetchData = async () => {
+			const result = await reservationSelect(loginInfo.memSq);
+			if (result.status === 200) {
+				setList(result.data);
+			}
+		};
+		fetchData();
+	}, [refresh]);
 
-  return (
-    <UserPageContainer className='user-page book-history__container'>
-      {/* TODO: history list map, dummyData를 bookHistoryList로 변경해야 함 */}
-      {list.map((bookHistory, idx) => {
-        return (
-          <BookHistoryItem
-            key={idx}
-            bookHistory={bookHistory}
-            onRefresh={() => setRefresh((prev) => !prev)}
-          />
-        );
-      })}
-      {/* TODO: totalCount > 10 && pagination */}
-    </UserPageContainer>
-  );
+	return (
+		<UserPageContainer className='user-page book-history__container'>
+			{/* TODO: history list map, dummyData를 bookHistoryList로 변경해야 함 */}
+			{list.map((bookHistory, idx) => {
+				return (
+					<BookHistoryItem
+						key={idx}
+						bookHistory={bookHistory}
+						onRefresh={() => setRefresh((prev) => !prev)}
+					/>
+				);
+			})}
+			{/* TODO: totalCount > 10 && pagination */}
+		</UserPageContainer>
+	);
 };
