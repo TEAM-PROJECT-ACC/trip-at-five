@@ -15,7 +15,8 @@ baseServerAxios.interceptors.response.use(
 		console.log(error);
 
 		if (error.response?.status === 401) {
-			sessionStorage.removeItem('Logined');
+			sessionStorage.removeItem('Logged');
+			localStorage.clear();
 			window.location.href = '/login';
 		}
 

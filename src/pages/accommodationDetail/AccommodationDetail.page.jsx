@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
 import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
 import { Button, StarRating } from '../../components';
-import { FaArrowUp } from '../../assets/icons/ys/index';
+import { FaArrowUp, IoMdImages } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
 import 'slick-carousel/slick/slick.css';
@@ -21,6 +21,7 @@ import { loginStateStore } from '../../states/login/loginStore';
 import { StarList } from '../../components/star-rating/components/star-list/StarList.component';
 import { SampleNextArrow } from './SampleNextArrow.component';
 import { SamplePrevArrow } from './SamplePrevArrow.component';
+import { VITE_SERVER_BASE_URL } from '../../../env.config';
 const AccommodationDetail = () => {
   const { id } = useParams();
 
@@ -136,6 +137,16 @@ const AccommodationDetail = () => {
     }
   };
 
+  const roomsWithImages = useMemo(() => {
+    if (!accom.roomList || !accom.roomImageList) {
+      return [];
+    }
+    return accom.roomList.map((room, index) => ({
+      ...room,
+      roomImgPathName: accom.roomImageList[index],
+    }));
+  }, [accom.roomList, accom.roomImageList]);
+
   // 페이지 넘어올때 항상 상단으로 오게 설정
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -206,7 +217,9 @@ const AccommodationDetail = () => {
             <button
               className='accom-header-img-change-btn'
               onClick={toggleImageList}
-            ></button>
+            >
+              <IoMdImages className='image-icons' />
+            </button>
           )}
         </div>
 
@@ -294,8 +307,9 @@ const AccommodationDetail = () => {
       {/* 객실 목록 */}
 
       <RoomList
+        roomImage={accom.roomImageList}
         accomName={accom.accomName}
-        rooms={accom.roomList}
+        rooms={roomsWithImages}
         selectedFacilities={[
           ...(accom.inRoomFacInfo
             ? accom.inRoomFacInfo.split(',').map((f) => f.trim())

@@ -35,9 +35,8 @@
     background-image: url(./img/sampleImg2.png);
   }
   .accom-header-img-change-btn {
-    width: 50px;
-    height: 50px;
-    background-color: #22222254;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     position: absolute;
     bottom: 50px;
@@ -49,10 +48,22 @@
     justify-content: center;
     border: none;
     cursor: pointer;
+    opacity: 0.7;
+    @include background-5500ff;
   }
+
   .accom-header-img-change-btn:hover {
-    background-color: #1b181875;
+    @include background-baabfa;
+    .image-icons {
+      @include color-5500ff;
+    }
   }
+
+  .image-icons {
+    font-size: 30px;
+    @include color-baabfa;
+  }
+
   &__text {
     display: flex;
     justify-content: space-between;
@@ -99,7 +110,7 @@
     padding: 24px;
     font-size: 16px;
     box-shadow: inset 0px 0px 8px rgb(0, 0, 0, 0.25);
-    border: 1.5px solid #baabfa;
+    @include border-baabfa-1_5px;
     @include background-fafafa;
   }
   .accom-info__map {
@@ -154,7 +165,7 @@
 }
 
 .room-line {
-  border-bottom: 2px solid #5500ff;
+  @include border-bottom-5500ff-2px;
 }
 .review-section {
   margin: 24px 0;
@@ -175,13 +186,13 @@
       gap: 10px;
       justify-content: space-evenly;
       .img {
-        border: 1px solid #baabfa;
         width: 200px;
         height: 160px;
         object-fit: cover;
         background-size: cover;
         background-image: url(./img/sample1.png);
         border-radius: 4px;
+        @include border-baabfa-1px;
       }
     }
   }
@@ -237,12 +248,12 @@
 }
 
 .review-star {
-  border: 2px solid #5500ff;
   padding: 5px 10px;
   border-radius: 4px;
   display: flex;
   font-weight: 700;
   align-items: center;
+  @include border-5500ff-2px;
 
   .review-star-style {
     width: 18px;
@@ -275,7 +286,7 @@ textarea.global-textarea.accom-modal-textbox {
   height: 140px;
   margin-top: 12px;
   font-size: 16px;
-  border: 2px solid #baabfa;
+  @include border-baabfa-2px;
 }
 
 button.global-button.global-button__primary.accom-modal-btn-inner {
@@ -287,11 +298,11 @@ button.global-button.global-button__primary.accom-modal-btn-inner {
 .accom-modal-img {
   width: 50px;
   height: 50px;
-  border: 2px solid #baabfa;
   border-radius: 4px;
   margin-top: 5px;
   font-size: 36px;
   padding-top: 3px;
+  @include border-baabfa-2px;
   @include color-baabfa;
 }
 
@@ -302,9 +313,9 @@ button.global-button.global-button__primary.accom-modal-btn-inner {
 .custom-overlay-bubble {
   font-weight: 700;
   border-radius: 6px;
-  border: 1px solid #baabfa;
   padding: 10px 20px;
   box-shadow: 1px 1px 3px #888888;
+  @include border-baabfa-1px;
   @include background-fafafa;
 }
 .info-comment {

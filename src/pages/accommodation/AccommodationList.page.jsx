@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useState, useEffect, useMemo } from 'react';
 import { Pagination } from '../../components/pagination/Pagination.component';
 import FilterPanel from './local-components/filter/FilterPanel.component';
@@ -23,6 +23,7 @@ const AccommodationList = () => {
   const searchState = useAccomSearchStore((state) => state);
   const filterState = useFilterStore((state) => state);
   const resetFilters = useFilterStore((state) => state.resetFilters);
+  const isInit = useRef(false);
 
   // 숙박목록용 데이터
   const [allAccommodations, setAllAccommodations] = useState([]);
@@ -75,46 +76,49 @@ const AccommodationList = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    const fetchAllData = async () => {
-      const params = {
-        keyword: searchState.keyword,
-        checkIn: searchState.checkIn,
-        checkOut: searchState.checkOut,
-        guests: searchState.numberOfPeople,
-        page: 0,
-        size: 9999,
-        accomTypeNo: filterState.selectedCategory
-          ? Number(filterState.selectedCategory)
-          : null,
-        selectedPub: filterState.selectedPub,
-        selectedInroom: filterState.selectedInroom,
-        selectedEtc: filterState.selectedEtc,
-        minPrice: filterState.priceRange[0],
-        maxPrice: filterState.priceRange[1],
-      };
-      const data = await searchAccommodationByKeyword(params);
-      console.log('fetchAllData :', data);
-      setAllAccommodations(data);
+  const fetchAllData = async () => {
+    const params = {
+      keyword: searchState.keyword,
+      checkIn: searchState.checkIn,
+      checkOut: searchState.checkOut,
+      guests: searchState.numberOfPeople,
+      page: 0,
+      size: 9999,
+      accomTypeNo: filterState.selectedCategory
+        ? Number(filterState.selectedCategory)
+        : null,
+      selectedPub: filterState.selectedPub,
+      selectedInroom: filterState.selectedInroom,
+      selectedEtc: filterState.selectedEtc,
+      minPrice: filterState.priceRange[0],
+      maxPrice: filterState.priceRange[1],
     };
-    fetchAllData();
-  }, [
-    currentPage,
-    searchState.keyword,
-    searchState.checkIn,
-    searchState.checkOut,
-    searchState.numberOfPeople,
-  ]);
+    const data = await searchAccommodationByKeyword(params);
+    console.log('fetchAllData :', data);
+    setAllAccommodations(data);
+  };
 
   useEffect(() => {
     resetFilters();
     setCurrentPage(1);
   }, []);
 
+  useEffect(() => {
+    if (!isInit.current) {
+      const getInitData = async () => {
+        // api 호출
+        await fetchAllData();
+        // 호출이 끝난 후
+        isInit.current = false;
+      };
+      getInitData();
+    }
+  }, []);
+
   return (
     <PageContainer>
       <div className='search-bar'>
-        <SearchArea />
+        <SearchArea searchHandler={fetchAllData} />
       </div>
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>

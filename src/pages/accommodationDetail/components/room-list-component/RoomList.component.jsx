@@ -53,7 +53,12 @@ const renderIcons = (selectedFacilities) =>
       </div>
     ));
 
-const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
+const RoomList = ({
+  accomName,
+  rooms = [],
+  selectedFacilities = [],
+  roomImage = [],
+}) => {
   const navigate = useNavigate();
   const { id: accomNo } = useParams(); // 숙박번호 값
   const timeoutRef = useRef(null);
@@ -204,6 +209,8 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
     return () => clearTimeout(timeoutRef.current);
   }, [selectedItems, removedItems]);
 
+  const fallbackImage =
+    '/assets/images/alternative-images/alternative-image.png';
   return (
     <section className='room-list'>
       <ToastContainer
@@ -219,11 +226,15 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
         >
           <img
             className='room-img'
-            src={`${VITE_SERVER_BASE_URL}${room.roomImgPathName}`}
-            alt='객실 이미지'
+            src={
+              room.roomImgPathName
+                ? `${VITE_SERVER_BASE_URL}${room.roomImgPathName}`
+                : fallbackImage
+            }
+            alt={room.roomName || '객실 이미지'}
             onError={(e) => {
-              e.target.src =
-                '/assets/images/alternative-images/alternative-image.png';
+              e.target.onerror = null; // 무한 루프 방지
+              e.target.src = fallbackImage;
             }}
           />
           <div className='room-info-container'>

@@ -56,8 +56,8 @@
   height: 48px;
   object-fit: cover;
   border-radius: 8px;
-  border: 1.5px solid #baabfa;
   box-shadow: 0 2px 8px rgba(186, 171, 250, 0.07);
+  @include border-baabfa-1_5px;
 }
 .remove-thumb-btn {
   position: absolute;
@@ -65,29 +65,29 @@
   right: -3px;
   width: 18px;
   height: 18px;
-  background: #fff;
   border-radius: 50%;
-  border: 1px solid #5500ff;
   font-size: 14px;
   cursor: pointer;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
+  @include background-ffffff;
+  @include border-5500ff-1px;
   @include color-5500ff;
 }
 .remove-thumb-btn:hover {
-  color: #fff;
+  @include color-ffffff;
   @include background-5500ff;
 }
 
 .accom-modal-img-icon {
   font-size: 55px;
   margin-bottom: 15px;
-  color: #baabfa;
   cursor: pointer;
   margin-left: 2px;
   transition: color 0.2s;
+  @include color-baabfa;
 }
 .accom-modal-img-icon:hover {
   @include color-5500ff;
@@ -121,9 +121,9 @@
 .review-average-wrap {
   display: flex;
   align-items: center;
-  border: 1px solid #5500ff;
   border-radius: 12px;
   padding: 4px 16px;
+  @include border-5500ff-1px;
 }
 
 .accom-modal-btn {

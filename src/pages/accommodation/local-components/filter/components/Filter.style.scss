@@ -21,10 +21,10 @@
   }
 
   .filter-btn {
-    border: 1px solid #5500ff;
     padding: 5px 15px;
     border-radius: 8px;
     font-size: 16px;
+    @include border-5500ff-1px;
     @include color-5500ff;
 
     &:hover {
@@ -38,6 +38,12 @@
       @include color-ffffff;
     }
   }
+  .rc-slider {
+    .rc-slider-track {
+      @include background-5500ff;
+    }
+  }
+
   p.price-range {
     text-align: center;
     @include color-888888;

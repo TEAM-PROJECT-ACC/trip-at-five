@@ -10,9 +10,11 @@
     object-fit: cover;
     background-size: cover;
   }
+
   .accom-info:hover {
-    background-color: #eeeeee;
+    @include background-eeeeee;
   }
+
   .accom-info {
     width: 453px;
     height: 240px;
@@ -60,12 +62,11 @@
     .accom-info-time-price {
       margin-top: 30px;
       position: relative;
-      border-left: 3px solid #baabfa;
       display: flex;
       flex-direction: column;
       gap: 16px;
       padding: 8px;
-
+      @include border-left-color-baabfa;
       p:nth-child(1) {
         display: flex;
         width: 100%;

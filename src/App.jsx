@@ -27,7 +27,6 @@ import { AdminContactPage } from './pages/admin/contact/AdminContact.page';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
-import { loginStateStore } from './states/login/loginStore';
 import { WebSocketProvider } from './components/websocket/contexts/WebSocket.provider';
 import { classNames } from './utils';
 import './App.scss';
@@ -35,6 +34,8 @@ import {
 	APP_THEME_OPTIONS,
 	useAppTheme,
 } from './hooks/use-app-theme/appTheme.constant';
+import { loginStateStore } from './states/login/loginStore';
+import UserInterceptor from './pages/login/loginInterCepter/adminInterceptor/AdminIntercetor.component';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -64,17 +65,26 @@ function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
+
+
+
 			<div className={classNames('app__container', selectedTheme.value)}>
+
+				{loginInfo.memType !== 'admin' ?
 				<Select
 					className='app__selector'
 					defaultOption={selectedTheme}
 					optionList={APP_THEME_OPTIONS}
 					onSelect={onSelectTheme}
 				/>
+				: ''}
+
+
 				<ToastContainer />
 
 				{/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
-				{!isAdmin && <AppHeader />}
+				{loginInfo.memType !== 'admin' ? <AppHeader /> : ''}
+				{/* <AppHeader /> */}
 				<Routes>
 					<Route
 						path='/test'
@@ -187,9 +197,9 @@ function App() {
 					<Route
 						path='/admin'
 						element={
-							<LoginInterceptor>
+							<UserInterceptor>
 								<AdminLayout />
-							</LoginInterceptor>
+							</UserInterceptor>
 						}
 					>
 						{/* 사용자 문의 */}

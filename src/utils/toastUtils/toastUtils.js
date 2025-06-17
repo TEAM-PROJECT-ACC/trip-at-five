@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
 const defaultConfig = {
-	position: 'top-center',
+	position: 'top-right',
 	autoClose: 1800,
 };
 export const topCenterAlert = (msg) => {
