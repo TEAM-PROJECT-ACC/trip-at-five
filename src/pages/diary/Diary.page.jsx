@@ -12,8 +12,6 @@ export const DiaryPage = () => {
     handleModalOpen();
   };
 
-  // TODO: 로그인 정보가 없으면 로그인 페이지로 리디렉션 (useEffect)
-
   return (
     <PageContainer className='diary-page__container'>
       <div className='diary-page__title-container'>

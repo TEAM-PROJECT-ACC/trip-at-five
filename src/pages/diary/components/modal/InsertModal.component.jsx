@@ -5,9 +5,11 @@ import { ButtonPrimary } from '../../../../components';
 import { useDiaryList } from '../../hooks/useDiaryList.hook';
 import { DiaryModal } from './DiaryModal.component';
 import './diaryModal.style.scss';
+import { loginStateStore } from '../../../../states/login/loginStore';
 
 export const InsertModal = ({ onClose }) => {
   const navigate = useNavigate();
+  const { loginInfo } = loginStateStore();
   const { insertDiary } = useDiaryList();
   const [diaryTitle, setDiaryTitle] = useState(() => '');
   const [diaryCont, setDiaryCont] = useState(() => '');
@@ -24,7 +26,7 @@ export const InsertModal = ({ onClose }) => {
 
   const handleInsertDiary = () => {
     const diary = {
-      memNo: 23,
+      memNo: loginInfo.memSq,
       diaryTitle,
       diaryCont,
     };
