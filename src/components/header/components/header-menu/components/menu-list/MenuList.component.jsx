@@ -13,14 +13,16 @@ import './menuList.style.scss';
 export const MenuList = ({ isShow, onClick }) => {
 	const { loginInfo } = loginStateStore();
 	// TODO: loginInfo 상태 수정 변경 확인 후 수정
-	const isLogin = sessionStorage.getItem('Logged');
-
+	const { isLogin, resetLoginAccountStore } = loginAccountStore();
 	const navigate = useNavigate();
 
 	const onClickLogout = async () => {
 		const result = await logout();
 		if (result.data === 'ok') {
 			successAlert('로그아웃 했습니다.');
+			resetLoginAccountStore();
+			sessionStorage.clear();
+			localStorage.clear();
 			navigate('/');
 			onClick();
 		}
