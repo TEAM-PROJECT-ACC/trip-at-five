@@ -254,7 +254,7 @@ function App() {
 				{/* TODO: 관리자인 경우 사용자 푸터 제거 */}
 				{!isAdmin && <AppFooter />}
 			</div>
-			<ReactQueryDevtools />
+			{/* <ReactQueryDevtools /> */}
 		</QueryClientProvider>
 	);
 }
