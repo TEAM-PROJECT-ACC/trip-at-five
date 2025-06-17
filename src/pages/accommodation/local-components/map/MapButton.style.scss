@@ -1,5 +1,4 @@
 .map-button {
-  border: 3px solid #baabfa;
   height: 227px;
   border-radius: 8px;
   background-image: url(/src/assets/images/acc-list-page/fakeMapImg.png);
@@ -9,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  @include border-baabfa-3px;
   .map-btn-text {
     padding: 15px 40px;
     border-radius: 8px;

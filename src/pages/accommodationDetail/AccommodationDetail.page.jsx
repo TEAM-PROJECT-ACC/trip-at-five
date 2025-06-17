@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageContainer } from '../../components/page-container/PageContainer.component';
 import './accommodationDetail.style.scss';
@@ -136,6 +136,16 @@ const AccommodationDetail = () => {
       target.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const roomsWithImages = useMemo(() => {
+    if (!accom.roomList || !accom.roomImageList) {
+      return [];
+    }
+    return accom.roomList.map((room, index) => ({
+      ...room,
+      roomImgPathName: accom.roomImageList[index],
+    }));
+  }, [accom.roomList, accom.roomImageList]);
 
   // 페이지 넘어올때 항상 상단으로 오게 설정
   useEffect(() => {
@@ -297,8 +307,9 @@ const AccommodationDetail = () => {
       {/* 객실 목록 */}
 
       <RoomList
+        roomImage={accom.roomImageList}
         accomName={accom.accomName}
-        rooms={accom.roomList}
+        rooms={roomsWithImages}
         selectedFacilities={[
           ...(accom.inRoomFacInfo
             ? accom.inRoomFacInfo.split(',').map((f) => f.trim())

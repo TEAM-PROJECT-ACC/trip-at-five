@@ -3,7 +3,7 @@
   align-items: flex-start;
   gap: 36px;
   padding: 32px;
-  border-bottom: 1px solid #5500ff;
+  @include border-bottom-5500ff-1px;
 
   .room-img {
     width: 460px;
