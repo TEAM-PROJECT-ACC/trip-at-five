@@ -19,7 +19,8 @@ import {
 } from '../../services/review/reviewService.api';
 import { loginStateStore } from '../../states/login/loginStore';
 import { StarList } from '../../components/star-rating/components/star-list/StarList.component';
-
+import { SampleNextArrow } from './SampleNextArrow.component';
+import { SamplePrevArrow } from './SamplePrevArrow.component';
 const AccommodationDetail = () => {
   const { id } = useParams();
 
@@ -27,7 +28,7 @@ const AccommodationDetail = () => {
   const [latestReview, setLatestReview] = useState(null);
 
   const memNo = loginStateStore.getState().loginInfo.memSq;
-
+  /*
   const imageList = [
     '/assets/images/alternative-images/alternative-image.png',
     '/assets/images/alternative-images/alternative-image.png',
@@ -40,7 +41,7 @@ const AccommodationDetail = () => {
     '/assets/images/alternative-images/alternative-image.png',
     '/assets/images/alternative-images/alternative-image.png',
   ];
-
+  */
   const settings = {
     dots: true,
     infinite: true,
@@ -51,61 +52,17 @@ const AccommodationDetail = () => {
     prevArrow: <SamplePrevArrow />,
   };
 
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: 'flex',
-          backgroundColor: '#5500ff',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          top: '75px',
-          left: '5px',
-          zIndex: 100,
-        }}
-        onClick={onClick}
-      />
-    );
-  }
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: 'flex',
-          backgroundColor: '#5500ff',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          left: '1195px',
-          zIndex: 100,
-        }}
-        onClick={onClick}
-      ></div>
-    );
-  }
-
-  const [selectedImage, setSelectedImage] = useState(imageList[0]);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [showImageList, setShowImageList] = useState(false);
-
   const toggleImageList = () => setShowImageList((prev) => !prev);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = () => {
     setCurrentPage(pageNo);
   };
-  const handleImageSelect = (imgUrl) => {
-    setSelectedImage(imgUrl);
+  const handleImageSelect = (imgObject) => {
+    setSelectedImage(imgObject);
     setShowImageList(false);
   };
   const mapRef = useRef(null);
@@ -196,13 +153,11 @@ const AccommodationDetail = () => {
     const fetchAccomDetail = async () => {
       try {
         const data = await accommodationDetailByAccomSq(id, memNo);
-        // 상세 로그 추가
-        console.log('=== [AccomDetail] 서버 응답 데이터 ===');
-        console.log('accomSq:', data.accomSq, '| 프론트 id:', id);
-
+        console.log('fff', data);
         setAccom(data);
-        if (data && data.images && data.images.length > 0)
+        if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0]);
+        }
       } catch (error) {
         console.error('숙소 상세 데이터 불러오기 실패:', error);
       }
@@ -220,6 +175,10 @@ const AccommodationDetail = () => {
     return <div>Loading...</div>;
   }
   console.log(accom);
+
+  const fallbackImage =
+    '/assets/images/alternative-images/alternative-image.png';
+
   return (
     <PageContainer>
       <Button
@@ -232,23 +191,43 @@ const AccommodationDetail = () => {
         <div className='image-wrapper'>
           <img
             className='accom-header__image'
-            src={selectedImage}
+            src={
+              selectedImage && selectedImage.accomImgPathName
+                ? `${VITE_SERVER_BASE_URL}${selectedImage.accomImgPathName}`
+                : fallbackImage
+            }
+            alt={accom.accomName || '숙소 대표 이미지'}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = fallbackImage;
+            }}
           />
-          <button
-            className='accom-header-img-change-btn'
-            onClick={toggleImageList}
-          ></button>
+          {accom.images && accom.images.length > 1 && (
+            <button
+              className='accom-header-img-change-btn'
+              onClick={toggleImageList}
+            ></button>
+          )}
         </div>
 
         {showImageList && (
           <div className='slick-container'>
             <Slider {...settings}>
-              {imageList.map((img, idx) => (
-                <div key={idx}>
+              {accom.images?.map((img) => (
+                <div key={img.accomImgSq}>
                   <img
-                    src={img}
+                    src={
+                      img.accomImgPathName
+                        ? `${VITE_SERVER_BASE_URL}${img.accomImgPathName}`
+                        : fallbackImage
+                    }
                     className='image-box'
+                    alt={`숙소 이미지 ${img.accomImgSq}`}
                     onClick={() => handleImageSelect(img)}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = fallbackImage;
+                    }}
                   />
                 </div>
               ))}

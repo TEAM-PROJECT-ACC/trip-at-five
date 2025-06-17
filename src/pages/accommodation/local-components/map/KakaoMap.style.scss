@@ -195,7 +195,7 @@
   }
 }
 .text__box:hover {
-  background-color: #e6e6e6;
+  @include background-fafafa;
   .address {
     color: #2e2e2e;
   }

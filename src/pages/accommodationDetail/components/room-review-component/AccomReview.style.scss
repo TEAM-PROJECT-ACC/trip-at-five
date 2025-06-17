@@ -34,9 +34,9 @@
 
 .noReviewYet {
   font-size: 18px;
-  color: #888;
   text-align: center;
   margin: 32px 0;
+  @include color-888888;
 }
 
 .accom-modal-img-list {
@@ -90,11 +90,11 @@
   transition: color 0.2s;
 }
 .accom-modal-img-icon:hover {
-  color: #5500ff;
+  @include color-5500ff;
 }
 
 .review-start-one {
-  color: #ffaf45;
+  @include color-ffaf45;
 }
 
 .star-number-text {
@@ -135,6 +135,6 @@
 .accom-modal-btn:hover {
   &:disabled {
     background-color: #88888898;
-    color: #fafafa;
+    @include color-fafafa;
   }
 }

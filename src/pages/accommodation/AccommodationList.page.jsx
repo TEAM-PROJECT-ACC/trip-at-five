@@ -77,7 +77,6 @@ const AccommodationList = () => {
 
   useEffect(() => {
     const fetchAllData = async () => {
-      setCurrentPage(1); // 필터 적용하면 항상 첫페이지로 이동하게
       const params = {
         keyword: searchState.keyword,
         checkIn: searchState.checkIn,
