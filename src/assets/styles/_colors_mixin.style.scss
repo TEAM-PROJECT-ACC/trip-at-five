@@ -361,3 +361,198 @@
     color: $color-ff4545;
   }
 }
+
+@mixin main-location-button-shadow {
+  & {
+    box-shadow: 0 0 0 0.1rem $color-5500ff inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0.5rem 0 0 $color-c8adff,
+      0 0.5rem 0 0.1rem rgba(0, 0, 0, 0.4),
+      0 0.5rem 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
+  }
+  @at-root .spring & {
+    box-shadow: 0 0 0 0.1rem $color-fee088 inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0.5rem 0 0 $color-ffa6b8,
+      0 0.5rem 0 0.1rem rgba(0, 0, 0, 0.4),
+      0 0.5rem 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
+  }
+  @at-root .summer & {
+    box-shadow: 0 0 0 0.1rem $color-9ebeed inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0.5rem 0 0 $color-4e90f5,
+      0 0.5rem 0 0.1rem rgba(0, 0, 0, 0.4),
+      0 0.5rem 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
+  }
+  @at-root .autumn & {
+    box-shadow: 0 0 0 0.1rem $color-a44200 inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0.5rem 0 0 $color-69140e,
+      0 0.5rem 0 0.1rem rgba(0, 0, 0, 0.4),
+      0 0.5rem 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
+  }
+  @at-root .winter & {
+    box-shadow: 0 0 0 0.1rem $color-7c92a8 inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset, 0 0.5rem 0 0 $color-38506a,
+      0 0.5rem 0 0.1rem rgba(0, 0, 0, 0.4),
+      0 0.5rem 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
+  }
+}
+
+@mixin location-box-shadow-active {
+  & {
+    box-shadow: 0 0 0 0.1rem $color-5500ff inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset,
+      0 0 0 0.1rem rgba(0, 0, 0, 0.4);
+  }
+  @at-root .spring & {
+    box-shadow: 0 0 0 0.1rem $color-ffa6b8 inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset,
+      0 0 0 0.1rem rgba(0, 0, 0, 0.4);
+  }
+  @at-root .summer & {
+    box-shadow: 0 0 0 0.1rem $color-4e90f5 inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset,
+      0 0 0 0.1rem rgba(0, 0, 0, 0.4);
+  }
+  @at-root .autumn & {
+    box-shadow: 0 0 0 0.1rem $color-69140e inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset,
+      0 0 0 0.1rem rgba(0, 0, 0, 0.4);
+  }
+  @at-root .winter & {
+    box-shadow: 0 0 0 0.1rem $color-38506a inset,
+      0 0 0 0.2rem rgba(255, 255, 255, 0.15) inset,
+      0 0 0 0.1rem rgba(0, 0, 0, 0.4);
+  }
+}
+@mixin border-c8adff-3px {
+  & {
+    border: 3px solid #c8adff;
+  }
+}
+@mixin border-top-color-baabfa {
+  & {
+    border-top: 3px solid #baabfa;
+  }
+}
+
+@mixin border-left-color-baabfa {
+  & {
+    border-left: 3px solid #baabfa;
+  }
+}
+
+@mixin border-baabfa-3px {
+  & {
+    border: 3px solid #baabfa;
+  }
+}
+
+@mixin border-bottom-baabfa-1px {
+  & {
+    border: 3px solid #baabfa;
+  }
+}
+
+@mixin border-baabfa-1px {
+  & {
+    border: 1px solid #baabfa;
+  }
+}
+@mixin border-baabfa-1_5px {
+  & {
+    border: 1.5px solid #baabfa;
+  }
+}
+
+@mixin border-baabfa-2px {
+  & {
+    border: 2px solid #baabfa;
+  }
+}
+@mixin background-color-240 {
+  & {
+    background-color: rgb(240, 240, 240);
+  }
+}
+
+@mixin border-5500ff-1px {
+  & {
+    border: 1px solid #5500ff;
+  }
+}
+
+@mixin border-5500ff-2px {
+  & {
+    border: 2px solid #5500ff;
+  }
+}
+
+@mixin background-eeeeee {
+  & {
+    background-color: #eeeeee;
+  }
+}
+
+@mixin border-bottom-5500ff-2px {
+  & {
+    border-bottom: 2px solid #5500ff;
+  }
+}
+
+@mixin border-bottom-5500ff-1px {
+  & {
+    border-bottom: 1px solid #5500ff;
+  }
+}
+
+@mixin background-ffffff {
+  & {
+    background: #ffffff;
+  }
+}
+
+@mixin main-background-image {
+  & {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(90, 0, 92, 0.5),
+        rgba(137, 0, 139, 0.5),
+        rgba(174, 0, 194, 0.5)
+      ),
+      url(../../assets/images/main-page/bg.webp);
+  }
+  @at-root .spring & {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(90, 0, 92, 0.5),
+        rgba(137, 0, 139, 0.5),
+        rgba(174, 0, 194, 0.5)
+      ),
+      url(../../assets/images/main-page/main_1.png);
+  }
+  @at-root .summer & {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(90, 0, 92, 0.5),
+        rgba(137, 0, 139, 0.5),
+        rgba(174, 0, 194, 0.5)
+      ),
+      url(../../assets/images/main-page/main_2.png);
+  }
+  @at-root .autumn & {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(90, 0, 92, 0.5),
+        rgba(137, 0, 139, 0.5),
+        rgba(174, 0, 194, 0.5)
+      ),
+      url(../../assets/images/main-page/main_3.png);
+  }
+  @at-root .winter & {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(90, 0, 92, 0.5),
+        rgba(137, 0, 139, 0.5),
+        rgba(174, 0, 194, 0.5)
+      ),
+      url(../../assets/images/main-page/main4.png);
+  }
+}

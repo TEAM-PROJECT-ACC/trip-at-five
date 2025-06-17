@@ -21,10 +21,10 @@
   }
 
   .filter-btn {
-    border: 1px solid #5500ff;
     padding: 5px 15px;
     border-radius: 8px;
     font-size: 16px;
+    @include border-5500ff-1px;
     @include color-5500ff;
 
     &:hover {

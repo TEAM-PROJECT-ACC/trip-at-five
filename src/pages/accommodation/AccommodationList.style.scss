@@ -23,14 +23,14 @@
       display: flex;
     }
     .item-line {
-      border-top: 3px solid #baabfa;
       margin-bottom: 20px;
       width: 814px;
+      @include border-top-color-baabfa;
     }
   }
 }
 .search-bar {
   .search__container {
-    background-color: rgb(240, 240, 240);
+    @include background-color-240;
   }
 }

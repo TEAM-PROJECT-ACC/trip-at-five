@@ -1,19 +1,18 @@
 .container {
   width: 95rem;
-  height: 75vh;
+  height: 67vh;
   padding: 4rem 1rem 1rem 1rem;
-  border: 2px solid #baabfa;
   border-radius: 8px;
-  background-color: #fafafa;
   z-index: 100;
   position: absolute;
   left: -124px;
   box-sizing: border-box;
-  top: -90px;
+  top: 27px;
   display: flex;
   flex-direction: row;
   box-shadow: 3px 3px 4px 0px rgb(0, 0, 0, 0.5);
-
+  @include background-fafafa;
+  @include border-baabfa-2px;
   .map {
     flex: 1;
     width: 100%;
