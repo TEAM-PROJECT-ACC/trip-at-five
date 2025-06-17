@@ -72,7 +72,7 @@ function App() {
 
         {
           <Route
-            path='/user'
+            path='/users'
             element={
               <LoginInterceptor>
                 <UserPage />
@@ -93,7 +93,11 @@ function App() {
         }
         <Route
           path='/diary'
-          element={<DiaryPage />}
+          element={
+            <LoginInterceptor>
+              <DiaryPage />
+            </LoginInterceptor>
+          }
         />
         {/* 로그인 부분 */}
         <Route

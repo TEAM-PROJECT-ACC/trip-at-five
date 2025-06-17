@@ -3,6 +3,7 @@ import { create } from 'zustand';
 const initialState = {
   id: null,
   category: null,
+  roomNo: 0,
   message: '',
 };
 
@@ -11,7 +12,10 @@ const ChatStateStore = create((set) => ({
     set({
       id: text,
     }),
-
+  setRoomNo: (roomNo) =>
+    set({
+      roomNo,
+    }),
   setMessage: (text) =>
     set({
       message: text,

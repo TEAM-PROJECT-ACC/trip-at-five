@@ -20,13 +20,20 @@ const ReceiptDetailBody = ({ className, resInfo }) => {
               </div>
               <div className='room-name-list'>
                 <div className='room-name-item'>
-                  <p>{value.resCode}</p>
-                  <p>{value.roomName}</p>
-                  <p>{`${value.checkInDt.slice(
-                    0,
-                    10
-                  )} ~ ${value.checkOutDt.slice(0, 10)}`}</p>
-                  <p>{value.roomPrice.toLocaleString('ko-KR')} 원</p>
+                  <div className='room-resCode'>
+                    <span>{value.resCd}</span>
+                    <span>⬆️예약코드를 꼭 기억해주세요⬆️</span>
+                  </div>
+                  <div>
+                    <p>{value.roomName}</p>
+                    <p>{`${value.checkInDt.slice(
+                      0,
+                      10
+                    )} ~ ${value.checkOutDt.slice(0, 10)}`}</p>
+                    <p className='room-price'>
+                      {value.roomPrice.toLocaleString('ko-KR')} 원
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -149,33 +149,32 @@ import { loginStateStore } from '../../../../states/login/loginStore';
 // ];
 
 export const ChallengePage = () => {
-  const [list, setList] = useState([]);
-  const { loginInfo } = loginStateStore();
-  const [refresh, setRefresh] = useState(false);
+	const [list, setList] = useState([]);
+	const { loginInfo } = loginStateStore();
+	const [refresh, setRefresh] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await challengeSelect(loginInfo.memSq);
-      if (result.status === 200) {
-        setList(result.data); // result.data가 배열이어야 함
-        console.log(result);
-      }
-    };
-    fetchData();
-  }, []);
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await challengeSelect(loginInfo.memSq, loginInfo.memLvl);
+			if (result.status === 200) {
+				setList(result.data); // result.data가 배열이어야 함
+			}
+		};
+		fetchData();
+	}, [refresh]);
 
-  return (
-    <UserPageContainer className='user-page challenge__container'>
-      {/* TODO: challenge list map으로 변경해야 함 */}
-      {list.map((challenge, idx) => {
-        return (
-          <ChallengeItem
-            key={idx}
-            challenge={challenge}
-            onRefresh={() => setRefresh((prev) => !prev)}
-          />
-        );
-      })}
-    </UserPageContainer>
-  );
+	return (
+		<UserPageContainer className='user-page challenge__container'>
+			{/* TODO: challenge list map으로 변경해야 함 */}
+			{list.map((challenge, idx) => {
+				return (
+					<ChallengeItem
+						key={idx}
+						challenge={challenge}
+						onRefresh={() => setRefresh((prev) => !prev)}
+					/>
+				);
+			})}
+		</UserPageContainer>
+	);
 };

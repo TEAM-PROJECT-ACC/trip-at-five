@@ -53,9 +53,11 @@ export const AdminHeader = () => {
           {ADMIN_ROUTE.map((route, idx) => {
             const Icons = buttonIcons[route.path];
             return (
-              <div className='admin-header-button__container'>
+              <div
+                className='admin-header-button__container'
+                key={idx}
+              >
                 <AdminLinkButton
-                  key={idx}
                   className={classNames(
                     'admin-header__button',
                     route.className
