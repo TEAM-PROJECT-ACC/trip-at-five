@@ -13,6 +13,7 @@ import {
 	emailDuplicationCheck,
 	sendEmailCode,
 } from '../../../services/register/apiService';
+import { errorAlert } from '../../../utils/toastUtils/toastUtils';
 
 export function EmailAuth() {
 	const { email, setEmail } = useResettingInfo();
@@ -47,14 +48,14 @@ export function EmailAuth() {
 			const response = await emailDuplicationCheck(email);
 			if (response.data == 0) {
 				setIsFalse();
-				console.log('가입한 이메일이 없습니다.');
+				errorAlert('가입한 이메일이 없습니다.');
 			} else {
 				// 	/*인증코드 보내기*/
 				setIsSend(true);
 				const result = await sendCode(email);
 			}
 		} catch (error) {
-			console.log('실패');
+			errorAlert('실패');
 		}
 	};
 
@@ -67,7 +68,6 @@ export function EmailAuth() {
 	/* 인증코드 유효성 체크 부분 */
 	const codeCheck = async () => {
 		const result = await emailCodeCheck(email, emailCode);
-		console.log(result);
 		if (result.status === 200 && result.data === 'sussess') {
 			setIsTrue();
 		}

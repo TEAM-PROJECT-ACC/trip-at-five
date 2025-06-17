@@ -33,6 +33,7 @@ export const AuthEmailCodeInput = () => {
         onChange={(e) => {
           setEmailCode(e);
         }}
+        value={emailCode}
       >
         <ButtonSecondary
           className='input__button'

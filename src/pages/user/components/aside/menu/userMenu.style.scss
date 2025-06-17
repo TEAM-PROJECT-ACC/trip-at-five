@@ -1,13 +1,13 @@
 .user-page {
-  .aside-menu__container {
-    width: 100%;
-    border: 1px solid;
-    overflow: hidden;
-    border-radius: 8px;
-    @include border-c8adff;
+	.aside-menu__container {
+		width: 100%;
+		border: 1px solid;
+		overflow: hidden;
+		border-radius: 8px;
+		@include border-c8adff;
 
-    .aside-menu__list {
-      width: 100%;
-    }
-  }
+		.aside-menu__list {
+			width: 100%;
+		}
+	}
 }

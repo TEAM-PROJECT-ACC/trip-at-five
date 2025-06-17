@@ -6,30 +6,35 @@ import './userMenu.style.scss';
 const CLASSNAME = 'aside-menu';
 
 export const UserMenu = ({ className }) => {
-  return (
-    <div className={classNames(className, `${CLASSNAME}__container`)}>
-      <ul className={`${CLASSNAME}__list`}>
-        {USER_ROUTE.map((route, idx) => {
-          return (
-            !route.index && (
-              <UserMenuButton
-                key={idx}
-                className={CLASSNAME}
-                to={route.path}
-              >
-                {route.title}
-              </UserMenuButton>
-            )
-          );
-        })}
-        <UserMenuButton
-          className={CLASSNAME}
-          to={'/diary'}
-        >
-          나의 일지
-        </UserMenuButton>
-        <UserMenuButton classNAme={CLASSNAME}>문의하기</UserMenuButton>
-      </ul>
-    </div>
-  );
+	return (
+		<div className={classNames(className, `${CLASSNAME}__container`)}>
+			<ul className={`${CLASSNAME}__list`}>
+				{USER_ROUTE.map((route, idx) => {
+					return (
+						!route.index && (
+							<UserMenuButton
+								key={idx}
+								className={CLASSNAME}
+								to={route.path}
+							>
+								{route.title}
+							</UserMenuButton>
+						)
+					);
+				})}
+				<UserMenuButton
+					className={CLASSNAME}
+					to={'/diary'}
+				>
+					나의 일지
+				</UserMenuButton>
+				<UserMenuButton
+					classNAme={CLASSNAME}
+					to={'/chat'}
+				>
+					문의하기
+				</UserMenuButton>
+			</ul>
+		</div>
+	);
 };

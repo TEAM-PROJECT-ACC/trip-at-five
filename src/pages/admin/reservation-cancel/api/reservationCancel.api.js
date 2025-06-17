@@ -18,11 +18,12 @@ export const selectReservationDetail = async (resCode) => {
 };
 
 // 결제 취소 요청
-export const getPaymentCancel = async (receiptId, resCd) => {
-  console.log(receiptId, resCd);
+export const getPaymentCancel = async (receiptId, resCd, cancelPay) => {
+  console.log(receiptId, resCd, cancelPay);
   const response = await apiAxios.post('/payments/cancel', {
     receiptId,
     resCd,
+    cancelPay,
   });
 
   return response;
