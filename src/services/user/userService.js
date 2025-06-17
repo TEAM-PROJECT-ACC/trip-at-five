@@ -19,9 +19,9 @@ export const userInactive = async (userInfo, pwd) => {
 };
 
 /* 회원 챌린지 정보 조회 */
-export const challengeSelect = async (userMemSq) => {
+export const challengeSelect = async (userMemSq,memLvl) => {
   const response = await baseServerAxios.get(
-    `/users/challenge?userMemSq=${userMemSq}`
+    `/users/challenge?userMemSq=${userMemSq}&memLvl=${memLvl}`
   );
   return response;
 };
@@ -35,15 +35,14 @@ export const reservationSelect = async (userMemSq) => {
 };
 
 export const reservationCancelUpdate = async (resCd) => {
-  const response = await baseServerAxios.put(
-    `/users/reservationCancelUpdate`,
-    {resCd:resCd}
-  );
+  const response = await baseServerAxios.put(`/users/reservationCancelUpdate`, {
+    resCd: resCd,
+  });
   return response;
 };
 
 /* 회원 챌린지 완료 수정 */
-export const challengeSucces = async (memSq, chalHistoryNo) => {
+export const challengeSuccess = async (memSq, chalHistoryNo) => {
   const response = await baseServerAxios.put(`/users/challengeSuccess`, {
     memSq: memSq,
     chalHistoryNo: chalHistoryNo,

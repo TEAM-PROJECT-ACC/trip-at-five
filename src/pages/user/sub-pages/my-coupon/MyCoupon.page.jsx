@@ -7,12 +7,12 @@ import './myCoupon.style.scss';
 import { couponSelect } from '../../../../services/user/userService';
 
 const dummyData = [
-  {
-    couponSq: 1,
-    couponName: '웰컴 할인 쿠폰',
-    couponPrice: 10000,
-    couponRegDt: '2025-05-01',
-  },
+	{
+		couponSq: 1,
+		couponName: '웰컴 할인 쿠폰',
+		couponPrice: 10000,
+		couponRegDt: '2025-05-01',
+	},
 ];
 //   {
 //     couponSq: 2,
@@ -71,34 +71,33 @@ const dummyData = [
 // ];
 
 export const MyCouponPage = () => {
-  const [list, setList] = useState([]);
-  const { loginInfo } = loginStateStore();
+	const [list, setList] = useState([]);
+	const { loginInfo } = loginStateStore();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await couponSelect(loginInfo.memSq);
-      if (result.status === 200) {
-        setList(result.data); // result.data가 배열이어야 함
-        console.log(result);
-      }
-    };
-    fetchData();
-  }, []);
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await couponSelect(loginInfo.memSq);
+			if (result.status === 200) {
+				setList(result.data); // result.data가 배열이어야 함
+			}
+		};
+		fetchData();
+	}, []);
 
-  return (
-    <UserPageContainer
-      className={classNames('user-page', 'my-coupon__container')}
-    >
-      {/* TODO: dummyData 삭제 후 couponList map으로 변경 */}
-      {list.map((coupon, idx) => {
-        return (
-          <Coupon
-            key={idx}
-            coupon={coupon}
-          />
-        );
-      })}
-      {/* TODO: totalCount > 10, pagination */}
-    </UserPageContainer>
-  );
+	return (
+		<UserPageContainer
+			className={classNames('user-page', 'my-coupon__container')}
+		>
+			{/* TODO: dummyData 삭제 후 couponList map으로 변경 */}
+			{list.map((coupon, idx) => {
+				return (
+					<Coupon
+						key={idx}
+						coupon={coupon}
+					/>
+				);
+			})}
+			{/* TODO: totalCount > 10, pagination */}
+		</UserPageContainer>
+	);
 };

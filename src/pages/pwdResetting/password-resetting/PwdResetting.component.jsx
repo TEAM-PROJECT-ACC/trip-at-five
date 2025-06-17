@@ -20,10 +20,8 @@ export function PasswordResetting({ className }) {
 	/* 비밀번호 재설정 */
 	const updatePassword = async () => {
 		const result = await updatePwd(email, pwd);
-		console.log(result);
-
 		if ((result.data === 1) & (result.status === 200)) {
-			successAlert('비밀번호 변경 성공했습니다.')
+			successAlert('비밀번호 변경 성공했습니다.');
 			setIsFalse();
 			window.localStorage.removeItem('pwd-resetting');
 			window.localStorage.removeItem('pwdResettingInfo');
@@ -64,12 +62,12 @@ export function PasswordResetting({ className }) {
 			)}
 
 			<Link to='/login'>
-			<ButtonPrimary
-				className={'pwd-update'}
-				onClick={updatePassword}
-			>
-				비밀번호 재설정
-			</ButtonPrimary>
+				<ButtonPrimary
+					className={'pwd-update'}
+					onClick={updatePassword}
+				>
+					비밀번호 재설정
+				</ButtonPrimary>
 			</Link>
 		</div>
 	);
