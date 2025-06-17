@@ -27,7 +27,7 @@ import {
   FaAngleRight,
   FaAngleLeft,
   FaBuilding,
-  FaArrowUp, 
+  FaArrowUp,
 } from 'react-icons/fa';
 
 export {
@@ -103,3 +103,6 @@ export { GrCart };
 
 import { PiBuildingOfficeFill } from 'react-icons/pi';
 export { PiBuildingOfficeFill };
+
+import { IoMdImages } from 'react-icons/io';
+export { IoMdImages };

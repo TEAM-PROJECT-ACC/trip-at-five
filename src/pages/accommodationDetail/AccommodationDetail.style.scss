@@ -35,9 +35,8 @@
     background-image: url(./img/sampleImg2.png);
   }
   .accom-header-img-change-btn {
-    width: 50px;
-    height: 50px;
-    background-color: #22222254;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     position: absolute;
     bottom: 50px;
@@ -49,10 +48,22 @@
     justify-content: center;
     border: none;
     cursor: pointer;
+    opacity: 0.7;
+    @include background-5500ff;
   }
+
   .accom-header-img-change-btn:hover {
-    background-color: #1b181875;
+    @include background-baabfa;
+    .image-icons {
+      @include color-5500ff;
+    }
   }
+
+  .image-icons {
+    font-size: 30px;
+    @include color-baabfa;
+  }
+
   &__text {
     display: flex;
     justify-content: space-between;
