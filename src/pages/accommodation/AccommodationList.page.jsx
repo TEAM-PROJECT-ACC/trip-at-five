@@ -85,8 +85,8 @@ const AccommodationList = () => {
         guests: searchState.numberOfPeople,
         page: 0,
         size: 9999,
-        accomTypeNo: searchState.selectedCategory
-          ? Number(searchState.selectedCategory)
+        accomTypeNo: filterState.selectedCategory
+          ? Number(filterState.selectedCategory)
           : null,
         selectedPub: filterState.selectedPub,
         selectedInroom: filterState.selectedInroom,
