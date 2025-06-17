@@ -19,7 +19,6 @@ export const DiaryItem = () => {
 
   const onClickRead = () => {
     setIsStartAnimation(() => true);
-    // handleReadDiary({ memNo: 2, diarySq: diary.diarySq });
   };
 
   const onClickModify = () => {

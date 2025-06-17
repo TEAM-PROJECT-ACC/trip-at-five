@@ -11,7 +11,7 @@ const initialState = {
     pageNo: 1,
     numOfRows: 10,
   },
-  dataList: [],
+  diaryList: null,
 };
 
 export const useDiaryListStore = create((set) => ({

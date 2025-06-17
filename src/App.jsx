@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { DiaryPage, TestPage, UserPage } from './pages';
-import { AppFooter, AppHeader } from './components';
+import { AppFooter, AppHeader, Select } from './components';
 import { USER_ROUTE } from './pages/user/constants/routes-path/userRoute.constant';
 import LoginPage from './pages/login/Login.page';
 import Register from './pages/register/Register.page';
@@ -29,7 +29,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
 import { loginStateStore } from './states/login/loginStore';
 import { WebSocketProvider } from './components/websocket/contexts/WebSocket.provider';
-import './App.css';
+import { classNames } from './utils';
+import './App.scss';
+import {
+  APP_THEME_OPTIONS,
+  useAppTheme,
+} from './hooks/use-app-theme/appTheme.constant';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +47,7 @@ const queryClient = new QueryClient({
 function App() {
   // 로그인 정보 확인 후 사용자/관리자 처리 용 상태
   const [isAdmin, setIsAdmin] = useState(() => false);
+  const { selectedTheme, onSelectTheme } = useAppTheme();
   const { loginInfo, resetLoginedStateStore } = loginStateStore();
 
   useEffect(() => {
@@ -58,174 +64,182 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer />
-
-      {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
-      {!isAdmin && <AppHeader />}
-      <Routes>
-        <Route
-          path='/test'
-          element={<TestPage />}
+      <div className={classNames('app__container', selectedTheme.value)}>
+        <Select
+          className='app__selector'
+          defaultOption={selectedTheme}
+          optionList={APP_THEME_OPTIONS}
+          onSelect={onSelectTheme}
         />
-        {/* path member로 변경 */}
-        {/* 복수형으로  */}
+        <ToastContainer />
 
-        {
+        {/* TODO: 사용자 페이지, 관리자 페이지 헤더 분리 */}
+        {!isAdmin && <AppHeader />}
+        <Routes>
           <Route
-            path='/users'
+            path='/test'
+            element={<TestPage />}
+          />
+          {/* path member로 변경 */}
+          {/* 복수형으로  */}
+
+          {
+            <Route
+              path='/users'
+              element={
+                <LoginInterceptor>
+                  <UserPage />
+                </LoginInterceptor>
+              }
+            >
+              {USER_ROUTE.map((route, idx) => {
+                return (
+                  <Route
+                    key={idx}
+                    index={route.index}
+                    path={route.path}
+                    element={<route.element className={route.className} />}
+                  />
+                );
+              })}
+            </Route>
+          }
+          <Route
+            path='/diary'
             element={
               <LoginInterceptor>
-                <UserPage />
+                <DiaryPage />
               </LoginInterceptor>
             }
-          >
-            {USER_ROUTE.map((route, idx) => {
-              return (
-                <Route
-                  key={idx}
-                  index={route.index}
-                  path={route.path}
-                  element={<route.element className={route.className} />}
-                />
-              );
-            })}
-          </Route>
-        }
-        <Route
-          path='/diary'
-          element={
-            <LoginInterceptor>
-              <DiaryPage />
-            </LoginInterceptor>
-          }
-        />
-        {/* 로그인 부분 */}
-        <Route
-          path='/login'
-          element={<LoginPage />}
-        ></Route>
-        <Route
-          path='/auth/callback/'
-          element={<LoginPage />}
-        ></Route>
-        {/* 회원가입 */}
-        <Route
-          path='/register'
-          element={<Register />}
-        />
-        {/* 비밀번호 재설정 */}
-        <Route
-          path='/resetting'
-          element={<PwdResetting />}
-        />
+          />
+          {/* 로그인 부분 */}
+          <Route
+            path='/login'
+            element={<LoginPage />}
+          ></Route>
+          <Route
+            path='/auth/callback/'
+            element={<LoginPage />}
+          ></Route>
+          {/* 회원가입 */}
+          <Route
+            path='/register'
+            element={<Register />}
+          />
+          {/* 비밀번호 재설정 */}
+          <Route
+            path='/resetting'
+            element={<PwdResetting />}
+          />
 
-        {/* 채팅 */}
-        <Route path='/chat'>
+          {/* 채팅 */}
+          <Route path='/chat'>
+            <Route
+              index
+              element={<Chat />}
+            />
+            <Route
+              path='/chat/room'
+              element={
+                <WebSocketProvider>
+                  <ChatRoom />
+                </WebSocketProvider>
+              }
+            />
+          </Route>
           <Route
             index
-            element={<Chat />}
+            element={<Main />}
           />
           <Route
-            path='/chat/room'
+            path='/carts'
             element={
-              <WebSocketProvider>
-                <ChatRoom />
-              </WebSocketProvider>
+              <LoginInterceptor>
+                <CartMain />
+              </LoginInterceptor>
             }
           />
-        </Route>
-        <Route
-          index
-          element={<Main />}
-        />
-        <Route
-          path='/carts'
-          element={
-            <LoginInterceptor>
-              <CartMain />
-            </LoginInterceptor>
-          }
-        />
-        <Route
-          path='/guest/reservations'
-          element={<NonMemberReservation />}
-        />
-        <Route path='/accommodations'>
-          {/* 숙박 목록 페이지 */}
           <Route
-            index
-            element={<AccommodationList />}
+            path='/guest/reservations'
+            element={<NonMemberReservation />}
           />
-          {/* 숙박 상세 페이지 */}
-          <Route
-            path='/accommodations/:id'
-            element={<AccommodationDetail />}
-          />
-        </Route>
-        <Route
-          path='/reservations'
-          element={<Reservation />}
-        />
-        <Route
-          path='/orders/:id'
-          element={<Receipt />}
-        />
-        {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
-        <Route
-          path='/admin'
-          element={<AdminLayout />}
-        >
-          {/* 사용자 문의 */}
-          <Route
-            path='contact'
-            element={<AdminContactPage />}
-          />
-          <Route path='accommodations'>
+          <Route path='/accommodations'>
+            {/* 숙박 목록 페이지 */}
             <Route
               index
-              element={<AdminMain />}
+              element={<AccommodationList />}
             />
-            {/* 숙박등록/수정페이지 */}
+            {/* 숙박 상세 페이지 */}
             <Route
-              path='new'
-              element={<AccommodationFormContainer />}
-            />
-            <Route
-              path=':id/edit'
-              element={<AccommodationFormContainer />}
-            />
-            {/* 객실등록/수정페이지 */}
-            <Route
-              path=':id/rooms'
-              element={<RoomMain />}
-            />
-            <Route
-              path=':id/rooms/:roomSq'
-              element={<RoomMain />}
-            />
-          </Route>
-          <Route path='reservations'>
-            <Route
-              index
-              element={<ReservationManagementList />}
-            />
-            <Route
-              path=':id/detail'
-              element={<ReservationManagementDetail />}
+              path='/accommodations/:id'
+              element={<AccommodationDetail />}
             />
           </Route>
           <Route
-            path='cancel-reservations'
-            element={<ReservationCancelList />}
+            path='/reservations'
+            element={<Reservation />}
           />
-        </Route>
-        <Route
-          path='/chat/room'
-          element={<ChatRoom />}
-        />
-      </Routes>
-      {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
-      {!isAdmin && <AppFooter />}
+          <Route
+            path='/orders/:id'
+            element={<Receipt />}
+          />
+          {/* 관리자 라우팅 - 추후 AdminLayout 으로 한번 Layout을 잡고 Outlet 할 예정 */}
+          <Route
+            path='/admin'
+            element={<AdminLayout />}
+          >
+            {/* 사용자 문의 */}
+            <Route
+              path='contact'
+              element={<AdminContactPage />}
+            />
+            <Route path='accommodations'>
+              <Route
+                index
+                element={<AdminMain />}
+              />
+              {/* 숙박등록/수정페이지 */}
+              <Route
+                path='new'
+                element={<AccommodationFormContainer />}
+              />
+              <Route
+                path=':id/edit'
+                element={<AccommodationFormContainer />}
+              />
+              {/* 객실등록/수정페이지 */}
+              <Route
+                path=':id/rooms'
+                element={<RoomMain />}
+              />
+              <Route
+                path=':id/rooms/:roomSq'
+                element={<RoomMain />}
+              />
+            </Route>
+            <Route path='reservations'>
+              <Route
+                index
+                element={<ReservationManagementList />}
+              />
+              <Route
+                path=':id/detail'
+                element={<ReservationManagementDetail />}
+              />
+            </Route>
+            <Route
+              path='cancel-reservations'
+              element={<ReservationCancelList />}
+            />
+          </Route>
+          <Route
+            path='/chat/room'
+            element={<ChatRoom />}
+          />
+        </Routes>
+        {/* TODO: 관리자인 경우 사용자 푸터 제거 */}
+        {!isAdmin && <AppFooter />}
+      </div>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
