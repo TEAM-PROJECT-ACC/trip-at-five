@@ -56,14 +56,12 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState(() => []);
   const [chatRoom, setChatRoom] = useState(() => null);
   const { category, roomNo } = ChatStateStore();
-  const { loginInfo } = loginStateStore();
+  const { loginInfo, setLoginInfo } = loginStateStore();
   const navigate = useNavigate();
   const { data, createWebSocket, sendMessageWebSocket, closeWebSocket } =
     useWebSocket();
 
   const handleSend = (message) => {
-    // TODO: 비회원 예약 조회 구현 후 비회원 상태 관리 필요
-    // 비회원 : 이메일, 예약 코드
     let messageData = {};
     let sender = '';
 
@@ -104,7 +102,11 @@ const ChatRoom = () => {
       if (loginInfo.memType === 'admin') {
         navigate('/admin/contact');
       } else {
-        navigate('/user');
+        if (loginInfo.memType === 'non-m') {
+          navigate('/guest/reservations');
+        } else {
+          navigate('/users');
+        }
       }
     } else {
       navigate('/guest/reservations');
@@ -113,8 +115,6 @@ const ChatRoom = () => {
 
   useEffect(() => {
     if (loginInfo && category) {
-      console.log('init useEffect : ', loginInfo);
-      console.log(category);
       const apiRequestData = {
         loginInfo,
         inqCtgCd: category.value,
@@ -125,7 +125,6 @@ const ChatRoom = () => {
       }
 
       getInitChatRoom(apiRequestData).then((data) => {
-        console.log(data);
         createWebSocket({
           requestURL: `${VITE_WEB_SOCKET_URL}${CHAT_REQUEST.initChatRoom}`,
           type: data.messages && data.messages.length > 0 ? 'EXISTING' : 'INIT',
@@ -139,12 +138,21 @@ const ChatRoom = () => {
     return () => {
       closeWebSocket();
       console.log('websocket closed');
+      if (loginInfo.memType === 'non-m') {
+        setLoginInfo(null);
+      }
     };
-  }, [category, closeWebSocket, createWebSocket, loginInfo, roomNo]);
+  }, [
+    category,
+    closeWebSocket,
+    createWebSocket,
+    loginInfo,
+    roomNo,
+    setLoginInfo,
+  ]);
 
   useEffect(() => {
     if (data) {
-      console.log('data useEffect : ', data);
       const messages = getMessages(data.messages, loginInfo);
 
       if (messages.length > 0) {

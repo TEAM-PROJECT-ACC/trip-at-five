@@ -11,7 +11,7 @@ export const UserProfile = ({ className }) => {
   return (
     <div className={classNames(className, `${CLASSNAME}__container`)}>
       <div className={`${CLASSNAME}__user-nickname`}>
-        <TextLinkButton to={'/user'}>
+        <TextLinkButton to={'/users'}>
           <FaRegUser className={`${CLASSNAME}__nickname-icon`} />
           {loginInfo.memNick}
         </TextLinkButton>
