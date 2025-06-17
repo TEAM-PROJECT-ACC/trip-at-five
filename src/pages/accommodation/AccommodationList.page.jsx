@@ -75,36 +75,58 @@ const AccommodationList = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    const fetchAllData = async () => {
-      const params = {
-        keyword: searchState.keyword,
-        checkIn: searchState.checkIn,
-        checkOut: searchState.checkOut,
-        guests: searchState.numberOfPeople,
-        page: 0,
-        size: 9999,
-        accomTypeNo: filterState.selectedCategory
-          ? Number(filterState.selectedCategory)
-          : null,
-        selectedPub: filterState.selectedPub,
-        selectedInroom: filterState.selectedInroom,
-        selectedEtc: filterState.selectedEtc,
-        minPrice: filterState.priceRange[0],
-        maxPrice: filterState.priceRange[1],
-      };
-      const data = await searchAccommodationByKeyword(params);
-      console.log('fetchAllData :', data);
-      setAllAccommodations(data);
+  const fetchAllData = async () => {
+    const params = {
+      keyword: searchState.keyword,
+      checkIn: searchState.checkIn,
+      checkOut: searchState.checkOut,
+      guests: searchState.numberOfPeople,
+      page: 0,
+      size: 9999,
+      accomTypeNo: filterState.selectedCategory
+        ? Number(filterState.selectedCategory)
+        : null,
+      selectedPub: filterState.selectedPub,
+      selectedInroom: filterState.selectedInroom,
+      selectedEtc: filterState.selectedEtc,
+      minPrice: filterState.priceRange[0],
+      maxPrice: filterState.priceRange[1],
     };
-    fetchAllData();
-  }, [
-    currentPage,
-    searchState.keyword,
-    searchState.checkIn,
-    searchState.checkOut,
-    searchState.numberOfPeople,
-  ]);
+    const data = await searchAccommodationByKeyword(params);
+    console.log('fetchAllData :', data);
+    setAllAccommodations(data);
+  };
+
+  // useEffect(() => {
+  //   const fetchAllData = async () => {
+  //     const params = {
+  //       keyword: searchState.keyword,
+  //       checkIn: searchState.checkIn,
+  //       checkOut: searchState.checkOut,
+  //       guests: searchState.numberOfPeople,
+  //       page: 0,
+  //       size: 9999,
+  //       accomTypeNo: filterState.selectedCategory
+  //         ? Number(filterState.selectedCategory)
+  //         : null,
+  //       selectedPub: filterState.selectedPub,
+  //       selectedInroom: filterState.selectedInroom,
+  //       selectedEtc: filterState.selectedEtc,
+  //       minPrice: filterState.priceRange[0],
+  //       maxPrice: filterState.priceRange[1],
+  //     };
+  //     const data = await searchAccommodationByKeyword(params);
+  //     console.log('fetchAllData :', data);
+  //     setAllAccommodations(data);
+  //   };
+  //   fetchAllData();
+  // }, [
+  //   currentPage,
+  //   searchState.keyword,
+  //   searchState.checkIn,
+  //   searchState.checkOut,
+  //   searchState.numberOfPeople,
+  // ]);
 
   useEffect(() => {
     resetFilters();
@@ -114,7 +136,7 @@ const AccommodationList = () => {
   return (
     <PageContainer>
       <div className='search-bar'>
-        <SearchArea />
+        <SearchArea searchHandler={fetchAllData} />
       </div>
       <div className='main-section'>
         <aside className='filter-section accom-filter-section'>

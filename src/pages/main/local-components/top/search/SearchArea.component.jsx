@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AccomCalendar from '../../../../../components/accom-search/calendar/AccomCalendar.component';
 import NumberOfPeople from '../../../../../components/accom-search/number-of-people/NumberOfPeople.component';
 import { ButtonSecondary, InputSecondary } from '../../../../../components';
@@ -7,30 +7,10 @@ import './SearchArea.style.scss';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const SearchArea = () => {
-  const state = useAccomSearchStore.getState();
+const SearchArea = ({ searchHandler }) => {
+  const state = useAccomSearchStore((state) => state);
   const { setKeywordState } = useAccomSearchStore();
   // const [inputValue, setInputValue] = useState('');
-  const navigate = useNavigate();
-
-  const searchHandler = async () => {
-    if (state.keyword.trim() === '') {
-      toast.error('검색어를 입력해주세요.'); // 입력값없으면 애러
-      return;
-    }
-
-    // setKeywordState(inputValue);
-    navigate('/accommodations');
-
-    // 필요한 상태만 추출
-    const searchData = {
-      keyword: state.keyword,
-      checkIn: state.checkIn,
-      checkOut: state.checkOut,
-      tripDay: state.tripDay,
-      numberOfPeople: state.numberOfPeople,
-    };
-  };
 
   return (
     <div className='search__container'>
