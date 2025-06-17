@@ -16,6 +16,7 @@ export const BookHistoryItemModalModal = ({ onClose, ckResSt, resCd, onRefresh }
 		if (response.status === 200) {
 			infoAlert('예약취소가 접수되었습니다.');
 			onRefresh();
+			onClose();
 		}
 	};
 
@@ -24,6 +25,7 @@ export const BookHistoryItemModalModal = ({ onClose, ckResSt, resCd, onRefresh }
 		if (response.status === 200) {
 			infoAlert('예약취소 요청을 취소했습니다.');
 			onRefresh();
+			onClose();
 		}
 	};
 
