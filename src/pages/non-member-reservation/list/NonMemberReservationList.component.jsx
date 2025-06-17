@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import { ButtonPrimary, Label } from '../../../components';
 import { loginStateStore } from '../../../states/login/loginStore';
-import './NonMemberReservationList.style.scss';
 import { useNavigate } from 'react-router-dom';
+import './NonMemberReservationList.style.scss';
 
 const NonMemberReservationList = ({
   className,
@@ -24,13 +23,6 @@ const NonMemberReservationList = ({
 
     navigate('/chat/room');
   };
-
-  useEffect(() => {
-    return () => {
-      // 비회원 정보는 저장하지 않음 언마운트 시 초기화
-      // setLoginInfo(null);
-    };
-  }, [nonMemberInfo.email, nonMemberInfo.resCd, setLoginInfo]);
 
   return (
     <div className={className}>
