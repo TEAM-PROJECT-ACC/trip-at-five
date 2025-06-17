@@ -1,0 +1,27 @@
+.sample-arrow {
+  position: absolute;
+  display: flex;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  font-size: 20px;
+  cursor: pointer;
+  @include color-ffffff;
+}
+
+// 다음 화살표 (오른쪽)
+.sample-next-style {
+  @extend .sample-arrow;
+  right: 5px;
+  @include background-5500ff;
+}
+
+// 이전 화살표 (왼쪽)
+.sample-prev-style {
+  @extend .sample-arrow;
+  left: 5px;
+  @include background-5500ff;
+}

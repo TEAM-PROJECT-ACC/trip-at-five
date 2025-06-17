@@ -82,7 +82,7 @@
       @include color-fafafa;
     }
     .btn-cart:hover {
-      @include background-baabfa;
+      @include background-c8adff;
       @include color-5500ff;
     }
 
@@ -96,7 +96,7 @@
       align-items: center;
       gap: 8px;
       box-shadow: 1px 1px 3px #888888;
-      @include background-baabfa;
+      @include background-c8adff;
       @include color-5500ff;
 
       &:hover {
@@ -116,7 +116,7 @@
   border-radius: 8px;
   font-size: 20px;
   box-shadow: 2px 2px 2px #888888;
-  @include background-baabfa;
+  @include background-c8adff;
   @include color-5500ff;
 }
 .room-icon:hover {
@@ -139,7 +139,7 @@ button.accom-modal-btn {
 
 button.accom-modal-btn:hover {
   @include color-5500ff;
-  @include background-baabfa;
+  @include background-c8adff;
 }
 
 .btn-more-container {

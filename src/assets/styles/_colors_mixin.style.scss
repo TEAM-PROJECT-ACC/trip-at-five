@@ -556,3 +556,15 @@
       url(../../assets/images/main-page/main4.png);
   }
 }
+
+@mixin border-top-5500ff {
+  & {
+    border-top-color: #5500ff;
+  }
+}
+
+@mixin border-bottom-2px-5500ff {
+  & {
+    border-bottom: 2px solid #5500ff;
+  }
+}

@@ -53,7 +53,7 @@
   }
 
   .accom-header-img-change-btn:hover {
-    @include background-baabfa;
+    @include background-c8adff;
     .image-icons {
       @include color-5500ff;
     }
@@ -61,7 +61,7 @@
 
   .image-icons {
     font-size: 30px;
-    @include color-baabfa;
+    @include color-c8adff;
   }
 
   &__text {
@@ -126,7 +126,7 @@
     }
     .accom-location-btn:hover {
       @include color-5500ff;
-      @include background-baabfa;
+      @include background-c8adff;
     }
   }
 
@@ -159,7 +159,7 @@
     }
     .review-content {
       font-size: 18px;
-      text-align: right;
+      text-align: center;
     }
   }
 }

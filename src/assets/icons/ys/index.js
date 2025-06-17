@@ -104,5 +104,9 @@ export { GrCart };
 import { PiBuildingOfficeFill } from 'react-icons/pi';
 export { PiBuildingOfficeFill };
 
-import { IoMdImages } from 'react-icons/io';
-export { IoMdImages };
+import {
+  IoMdImages,
+  IoMdArrowDropleftCircle,
+  IoMdArrowDroprightCircle,
+} from 'react-icons/io';
+export { IoMdImages, IoMdArrowDropleftCircle, IoMdArrowDroprightCircle };

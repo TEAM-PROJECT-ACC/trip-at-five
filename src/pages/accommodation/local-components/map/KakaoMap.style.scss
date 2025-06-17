@@ -119,11 +119,11 @@
   left: 50%;
   position: absolute;
   z-index: 1000;
-  border-bottom: 2px solid #5500ff;
   opacity: 1;
   visibility: visible;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  @include border-bottom-2px-5500ff;
   @include background-5500ff;
   @include color-fafafa;
 }
@@ -135,7 +135,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 8px solid transparent;
-  border-top-color: #5500ff;
+  @include border-top-5500ff;
 }
 
 .text__box {
