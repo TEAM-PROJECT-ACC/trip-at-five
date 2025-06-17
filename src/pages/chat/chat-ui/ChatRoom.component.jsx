@@ -55,7 +55,7 @@ const getMessageComponent = (messages) => {
 const ChatRoom = () => {
   const [messages, setMessages] = useState(() => []);
   const [chatRoom, setChatRoom] = useState(() => null);
-  const { category } = ChatStateStore();
+  const { category, roomNo } = ChatStateStore();
   const { loginInfo } = loginStateStore();
   const navigate = useNavigate();
   const { data, createWebSocket, sendMessageWebSocket, closeWebSocket } =
@@ -114,10 +114,16 @@ const ChatRoom = () => {
   useEffect(() => {
     if (loginInfo && category) {
       console.log('init useEffect : ', loginInfo);
+      console.log(category);
       const apiRequestData = {
         loginInfo,
         inqCtgCd: category.value,
       };
+
+      if (loginInfo.memType === 'admin') {
+        apiRequestData.roomNo = roomNo;
+      }
+
       getInitChatRoom(apiRequestData).then((data) => {
         console.log(data);
         createWebSocket({
@@ -134,7 +140,7 @@ const ChatRoom = () => {
       closeWebSocket();
       console.log('websocket closed');
     };
-  }, [category, closeWebSocket, createWebSocket, loginInfo]);
+  }, [category, closeWebSocket, createWebSocket, loginInfo, roomNo]);
 
   useEffect(() => {
     if (data) {

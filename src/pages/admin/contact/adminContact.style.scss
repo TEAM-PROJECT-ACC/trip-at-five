@@ -7,14 +7,16 @@
         width: 160px;
         font-size: 16px;
         font-weight: 600;
-        padding: 16px 0;
+        padding: 8px 0;
         border: none;
         outline: none;
         border-radius: 10px;
-        text-align: center;
-
         appearance: none;
         @include admin-input-shadow;
+
+        .global-select__selected-button {
+          border: none;
+        }
       }
     }
   }
