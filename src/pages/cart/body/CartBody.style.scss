@@ -40,11 +40,12 @@
     flex-direction: column;
     width: 100%;
     padding: 1rem;
-    border: 0.1rem solid $color-c8adff;
+    border: 0.1rem solid;
     border-radius: 0.7rem;
     box-shadow: 0.15rem 0.15rem rgba(0, 0, 0, 0.5);
     display: flex;
     gap: 3rem;
+    @include border-c8adff;
     img {
       height: 100%;
     }
