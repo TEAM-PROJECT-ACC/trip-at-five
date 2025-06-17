@@ -125,3 +125,16 @@
   border-radius: 12px;
   padding: 4px 16px;
 }
+
+.accom-modal-btn {
+  &:disabled {
+    background-color: #88888898;
+  }
+}
+
+.accom-modal-btn:hover {
+  &:disabled {
+    background-color: #88888898;
+    color: #fafafa;
+  }
+}

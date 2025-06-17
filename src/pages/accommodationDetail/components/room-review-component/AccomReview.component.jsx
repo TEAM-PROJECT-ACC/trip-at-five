@@ -26,14 +26,20 @@ export const AccomReview = ({ resCd, memNo, accomSq, onReviewSubmitted }) => {
   const imageInputRef = useRef();
 
   const [reviewList, setReviewList] = useState({ list: [], count: 0 });
+  const [currentPage, setCurrentPage] = useState(1); // <<-- 이 줄을 위로 옮겼습니다.
   const [isModalOpen, setModalOpen] = useState(false);
   const [starRateScore, setStarRateScore] = useState(0);
   const [content, setContent] = useState('');
 
+  const itemsPerPage = 5;
   const reviewArr = Array.isArray(reviewList.list) ? reviewList.list : [];
 
-  const [currentPage, setCurrentPage] = useState(1);
-  // 별점 평균
+  const currentReviews = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return reviewArr.slice(startIndex, endIndex);
+  }, [currentPage, reviewArr, itemsPerPage]);
+
   const averageScore = useMemo(() => {
     if (!reviewArr.length) return 0;
     const sum = reviewArr.reduce((acc, cur) => acc + (cur.revSco || 0), 0);
@@ -49,12 +55,9 @@ export const AccomReview = ({ resCd, memNo, accomSq, onReviewSubmitted }) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    // 현재 이미지 목록
     const current = imageState.images || [];
-    // 누적해서 최대 5개만
     const next = [...current, ...files].slice(0, MAX_IMAGES);
     imageState.setImages(next);
-    // 같은 파일
     imageInputRef.current.value = '';
   };
 
@@ -103,11 +106,10 @@ export const AccomReview = ({ resCd, memNo, accomSq, onReviewSubmitted }) => {
     }
   };
 
-  const reviewCount = reviewList.count || 0;
-
   const onClickReviewHandler = (pageNo) => {
     setCurrentPage(pageNo);
   };
+
   return (
     <section className='review-section'>
       <div className='review-section__header'>
@@ -123,6 +125,7 @@ export const AccomReview = ({ resCd, memNo, accomSq, onReviewSubmitted }) => {
         <button
           onClick={handleOpenModal}
           className='accom-modal-btn'
+          disabled={!memNo}
         >
           후기 등록
         </button>
@@ -214,7 +217,7 @@ export const AccomReview = ({ resCd, memNo, accomSq, onReviewSubmitted }) => {
         {reviewArr.length === 0 ? (
           <div className='noReviewYet'>아직 등록된 후기가 없습니다.</div>
         ) : (
-          reviewArr.map((review, idx) => (
+          currentReviews.map((review, idx) => (
             <div
               key={review.revSq || idx}
               className='review-card'
@@ -258,10 +261,10 @@ export const AccomReview = ({ resCd, memNo, accomSq, onReviewSubmitted }) => {
       </div>
       <Pagination
         className='review-pagination'
-        totalCount={reviewArr.length}
+        totalCount={reviewList.count}
         pageLength={5}
         currentPage={currentPage}
-        numOfRows={5}
+        numOfRows={itemsPerPage}
         useMoveToEnd={true}
         onClick={onClickReviewHandler}
       />

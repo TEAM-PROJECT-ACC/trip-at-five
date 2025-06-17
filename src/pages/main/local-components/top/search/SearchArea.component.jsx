@@ -5,6 +5,7 @@ import { ButtonSecondary, InputSecondary } from '../../../../../components';
 import { useAccomSearchStore } from '../../../../../states';
 import './SearchArea.style.scss';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SearchArea = () => {
   const state = useAccomSearchStore.getState();
@@ -13,6 +14,11 @@ const SearchArea = () => {
   const navigate = useNavigate();
 
   const searchHandler = async () => {
+    if (inputValue.trim() === '') {
+      toast.error('검색어를 입력해주세요.'); // 입력값없으면 애러
+      return;
+    }
+
     setKeywordState(inputValue);
     navigate('/accommodations');
 
@@ -32,10 +38,12 @@ const SearchArea = () => {
         <InputSecondary
           className='search-input'
           type='search'
+          value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
           }}
           placeholder='가고싶은 곳 혹은 숙박명으로 찾아보세요'
+          required
         />
       </div>
       <AccomCalendar className='check-calendar__container' />
