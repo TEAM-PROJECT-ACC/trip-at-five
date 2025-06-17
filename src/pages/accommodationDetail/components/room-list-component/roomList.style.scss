@@ -24,8 +24,8 @@
     width: 3px;
     height: 130px;
     margin-top: 170px;
-    background-color: #5500ff;
     border-radius: 2px;
+    @include background-5500ff;
   }
 
   .room-info_top {
@@ -41,7 +41,7 @@
       font-size: 28px;
       font-weight: bold;
       margin: 10px 0 12px;
-      color: #5500ff;
+      @include color-5500ff;
     }
 
     .room-info-other {

@@ -24,6 +24,7 @@ import {
 } from '../../../../services/cart/cartService.api';
 import { useAccomSearchStore, usePaymentInfoStore } from '../../../../states';
 import { loginStateStore } from '../../../../states/login/loginStore';
+import { VITE_SERVER_BASE_URL } from '../../../../../env.config';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectRoomCnt } from '../../../../services/room/roomService.api';
 import { getRoomCnt } from './util/roomList.util';
@@ -218,7 +219,12 @@ const RoomList = ({ accomName, rooms = [], selectedFacilities = [] }) => {
         >
           <img
             className='room-img'
-            src='/assets/images/room-page/sample1.png'
+            src={`${VITE_SERVER_BASE_URL}${room.roomImgPathName}`}
+            alt='객실 이미지'
+            onError={(e) => {
+              e.target.src =
+                '/assets/images/alternative-images/alternative-image.png';
+            }}
           />
           <div className='room-info-container'>
             <div className='room-info-line'></div>

@@ -10,7 +10,9 @@ import {
   FaBuilding,
 } from '../../../../../assets/icons/ys/index';
 import './accommodationCard.style.scss';
-
+import { Star } from '../../../../../components/star-rating/components/star/Star.component';
+import { getAccomReviewCountAPI } from '../../../../../services/review/reviewService.api';
+import { VITE_SERVER_BASE_URL } from '../../../../../../env.config';
 const typeNameMap = {
   21: '모텔',
   22: '호텔',
@@ -34,6 +36,7 @@ const typeIconMap = {
 const AccommodationCard = ({ accom }) => {
   const typeName = typeNameMap[accom.accomTypeNo] || '미지정';
   const typeIcon = typeIconMap[typeName] || typeIconMap['미지정'];
+  const reviewCount = accom.reviewCount || 0;
 
   return (
     <li className='accommodation-item'>
@@ -43,8 +46,12 @@ const AccommodationCard = ({ accom }) => {
       >
         <div className='image'>
           <img
-            src='/src/assets/images/acc-list-page/hotel-img.png'
+            src={`${VITE_SERVER_BASE_URL}${accom.accomImgPathName}`}
             alt='숙박시설 이미지'
+            onError={(e) => {
+              e.target.src =
+                '/assets/images/alternative-images/alternative-image.png';
+            }}
           />
         </div>
         <div className='accom-info'>
@@ -59,8 +66,10 @@ const AccommodationCard = ({ accom }) => {
           </div>
           <p className='accom-address'>{accom.accomAddr}</p>
           <div className='star'>
-            <span className='star-icon'></span>
-            1000 명 평가
+            <span className='star-icon'>
+              <Star className='accom-list-star-size' />
+              {reviewCount} 명 평가
+            </span>
           </div>
           <div className='accom-info-time-price'>
             {/* <div className='v-line'></div> */}

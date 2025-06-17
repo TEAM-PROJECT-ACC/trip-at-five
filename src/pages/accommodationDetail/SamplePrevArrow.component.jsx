@@ -14,7 +14,7 @@ export function SamplePrevArrow(props) {
         height: '40px',
         justifyContent: 'center',
         alignItems: 'center',
-        left: '19px',
+        left: '5px',
         zIndex: 100,
       }}
       onClick={onClick}

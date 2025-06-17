@@ -18,7 +18,7 @@
     height: 240px;
     margin-left: 366px;
     margin-top: -240px;
-    padding: 25px;
+    padding: 10px 25px;
     border-radius: 8px;
     box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
     cursor: pointer;
@@ -52,6 +52,9 @@
     }
     .star {
       font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       @include color-c8adff;
     }
     .accom-info-time-price {
@@ -84,11 +87,30 @@
           strong {
             font-size: 26px;
             font-weight: 900;
-            // margin-left: 7px;
             @include color-5500ff;
           }
         }
       }
     }
   }
+}
+
+.accom-list-star-size {
+  width: 20px;
+  @include color-ffaf45;
+}
+
+.star-icon {
+  display: flex;
+  align-items: center;
+}
+.star-count {
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 2px;
+  @include color-5500ff;
+}
+.star-text {
+  color: #333;
+  margin-left: 2px;
 }

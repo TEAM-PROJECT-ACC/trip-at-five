@@ -7,6 +7,7 @@ import Script from './Script';
 import { useAccomSearchStore } from '../../../../states';
 import { useFilterStore } from '../../../../states/accom-filter/filterStore';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from '../../../../components';
 
 // 검색 결과 데이터 없는 경우에 지도에서 보여줄 위경도값
 const DEFAULT_CENTER = { lat: 37.579617, lon: 126.977041, mapLevel: 6 };

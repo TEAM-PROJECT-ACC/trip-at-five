@@ -4,7 +4,7 @@ import { PageContainer } from '../../components/page-container/PageContainer.com
 import './accommodationDetail.style.scss';
 import Script from '../accommodation/local-components/map/Script';
 import RoomList from './components/room-list-component/RoomList.component';
-import { Button } from '../../components';
+import { Button, StarRating } from '../../components';
 import { FaArrowUp } from '../../assets/icons/ys/index';
 import FacilityFilterView from './components/room-icon-component/FacilityFilterView.component';
 import { RoomDetailText } from './components/room-detail-text/RoomDetailText.component';
@@ -13,23 +13,35 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { accommodationDetailByAccomSq } from '../../services/accom/accomService.api';
 import { AccomReview } from './components/room-review-component/AccomReview.component';
-
-const AccommodationDetail = ({ memNo }) => {
+import {
+  getAccomLatestReviewAPI,
+  getAccomReviewListAPI,
+} from '../../services/review/reviewService.api';
+import { loginStateStore } from '../../states/login/loginStore';
+import { StarList } from '../../components/star-rating/components/star-list/StarList.component';
+import { SampleNextArrow } from './SampleNextArrow.component';
+import { SamplePrevArrow } from './SamplePrevArrow.component';
+const AccommodationDetail = () => {
   const { id } = useParams();
 
-  const [accom, setAccom] = useState([]);
-  const [resCd, setResCd] = useState('');
+  const [accom, setAccom] = useState({});
+  const [latestReview, setLatestReview] = useState(null);
 
+  const memNo = loginStateStore.getState().loginInfo.memSq;
+  /*
   const imageList = [
-    '/assets/images/room-page/sampleImg2.png',
-    '/assets/images/room-page/bedroom.png',
-    '/assets/images/room-page/sample1.png',
-    '/assets/images/room-page/waterpark.png',
-    '/assets/images/room-page/pool.png',
-    '/assets/images/room-page/bedroom.png',
-    '/assets/images/room-page/sample1.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
+    '/assets/images/alternative-images/alternative-image.png',
   ];
-
+  */
   const settings = {
     dots: true,
     infinite: true,
@@ -40,64 +52,19 @@ const AccommodationDetail = ({ memNo }) => {
     prevArrow: <SamplePrevArrow />,
   };
 
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: 'flex',
-          backgroundColor: '#5500ff',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          top: '75px',
-          left: '5px',
-          zIndex: 100,
-        }}
-        onClick={onClick}
-      />
-    );
-  }
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: 'flex',
-          backgroundColor: '#5500ff',
-          borderRadius: '50%',
-          width: '40px',
-          height: '40px',
-          justifyContent: 'center',
-          alignItems: 'center',
-          left: '1195px',
-          zIndex: 100,
-        }}
-        onClick={onClick}
-      ></div>
-    );
-  }
-
-  const [selectedImage, setSelectedImage] = useState(imageList[0]);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [showImageList, setShowImageList] = useState(false);
-
   const toggleImageList = () => setShowImageList((prev) => !prev);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = () => {
     setCurrentPage(pageNo);
   };
-  const handleImageSelect = (imgUrl) => {
-    setSelectedImage(imgUrl);
+  const handleImageSelect = (imgObject) => {
+    setSelectedImage(imgObject);
     setShowImageList(false);
   };
-
   const mapRef = useRef(null);
 
   const init = () => {
@@ -186,16 +153,8 @@ const AccommodationDetail = ({ memNo }) => {
     const fetchAccomDetail = async () => {
       try {
         const data = await accommodationDetailByAccomSq(id, memNo);
-        if (data && data.roomList) {
-          data.roomList = data.roomList.map((room) => ({
-            ...room,
-            accomNo: data.accomNo,
-            memNo: 2,
-          }));
-        }
+        console.log('fff', data);
         setAccom(data);
-
-        console.log('객실 리스트:', data.roomList);
         if (data && data.images && data.images.length > 0) {
           setSelectedImage(data.images[0]);
         }
@@ -206,9 +165,19 @@ const AccommodationDetail = ({ memNo }) => {
     fetchAccomDetail();
   }, [id, memNo]);
 
+  useEffect(() => {
+    if (accom.accomSq) {
+      getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+    }
+  }, [accom.accomSq]);
+
   if (!accom) {
     return <div>Loading...</div>;
   }
+  console.log(accom);
+
+  const fallbackImage =
+    '/assets/images/alternative-images/alternative-image.png';
 
   return (
     <PageContainer>
@@ -222,23 +191,43 @@ const AccommodationDetail = ({ memNo }) => {
         <div className='image-wrapper'>
           <img
             className='accom-header__image'
-            src={selectedImage}
+            src={
+              selectedImage && selectedImage.accomImgPathName
+                ? `${VITE_SERVER_BASE_URL}${selectedImage.accomImgPathName}`
+                : fallbackImage
+            }
+            alt={accom.accomName || '숙소 대표 이미지'}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = fallbackImage;
+            }}
           />
-          <button
-            className='accom-header-img-change-btn'
-            onClick={toggleImageList}
-          ></button>
+          {accom.images && accom.images.length > 1 && (
+            <button
+              className='accom-header-img-change-btn'
+              onClick={toggleImageList}
+            ></button>
+          )}
         </div>
 
         {showImageList && (
           <div className='slick-container'>
             <Slider {...settings}>
-              {imageList.map((img, idx) => (
-                <div key={idx}>
+              {accom.images?.map((img) => (
+                <div key={img.accomImgSq}>
                   <img
-                    src={img}
+                    src={
+                      img.accomImgPathName
+                        ? `${VITE_SERVER_BASE_URL}${img.accomImgPathName}`
+                        : fallbackImage
+                    }
                     className='image-box'
+                    alt={`숙소 이미지 ${img.accomImgSq}`}
                     onClick={() => handleImageSelect(img)}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = fallbackImage;
+                    }}
                   />
                 </div>
               ))}
@@ -268,14 +257,25 @@ const AccommodationDetail = ({ memNo }) => {
           onClick={handleScrollToReview}
           className='accom-info__review'
         >
-          <div className='review-header'>
-            <p className='nickname'>닉네임</p>
-            <div className='stars'>⭐⭐⭐⭐⭐</div>
-          </div>
-          <p className='info-comment'>
-            편안한 분위기와 친절한 직원들 덕분에 즐거운 여행이었습니다. 위치도
-            좋고 청결해서 다시 방문하고 싶어요.
-          </p>
+          {latestReview ? (
+            <>
+              <div className='review-header'>
+                <span className='nickname-header'>{latestReview.memNick}</span>
+                <StarRating
+                  className='latest-review-stars'
+                  score={latestReview.revSco}
+                  starList={Array(5).fill(0)}
+                  starCount={5}
+                  isDisabled={true}
+                />
+              </div>
+              <div className='review-content'>{latestReview.revCont}</div>
+            </>
+          ) : (
+            <div className='noReviewYetOnHeader'>
+              아직 후기가 작성되지 않았습니다.
+            </div>
+          )}
         </button>
         <div className='accom-info__facility'>
           <FacilityFilterView
@@ -313,12 +313,16 @@ const AccommodationDetail = ({ memNo }) => {
 
       <AccomReview
         resCd={accom.resCd}
-        memNo={accom.memNo}
+        accomSq={accom.accomSq}
+        memNo={memNo}
+        onReviewSubmitted={() => {
+          getAccomLatestReviewAPI(accom.accomSq).then(setLatestReview);
+          getAccomReviewListAPI(accom.reviewList);
+        }}
       />
-
       {/* 상세 정보 */}
 
-      <RoomDetailText />
+      <RoomDetailText accom={accom} />
 
       <section
         id='ancher-map'

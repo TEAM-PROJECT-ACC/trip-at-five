@@ -15,6 +15,11 @@
   @include color-ffaf45;
   @include background-5500ff;
 }
+.noReviewYetOnHeader {
+  font-size: 20px;
+  padding-top: 65px;
+  @include color-888888;
+}
 .accom-header {
   display: flex;
   flex-direction: column;
@@ -84,7 +89,6 @@
   gap: 40px;
   margin: 32px 0;
   flex-wrap: wrap;
-  height: 240px;
 
   .accom-info__map,
   .accom-info__review,
@@ -118,28 +122,33 @@
   .accom-info__review {
     display: flex;
     font-size: 7px;
-    padding: 50px;
+    padding: 35px;
     line-height: 1.4;
     flex-direction: column;
 
     .review-header {
       display: flex;
+      align-items: center;
       gap: 8px;
+
       margin-bottom: 40px;
 
-      .nickname {
+      .nickname-header {
         font-weight: bold;
-        font-size: 24px;
+        font-size: 22px;
+        margin-right: 5px;
         @include color-5500ff;
       }
 
-      .stars {
-        font-size: 14px;
-        color: #ffaa00;
-        vertical-align: middle;
+      .latest-review-stars {
         display: flex;
-        align-items: center;
+        float: left;
+        width: 20px;
       }
+    }
+    .review-content {
+      font-size: 18px;
+      text-align: right;
     }
   }
 }
@@ -190,6 +199,9 @@
 .acc-detail-section__title {
   font-size: 28px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .review-text-box {
@@ -250,7 +262,7 @@
 
 .accom-modal-container {
   text-align: center;
-  padding: 60px;
+  padding: 20px 60px;
 }
 
 .accom-modal-title {
