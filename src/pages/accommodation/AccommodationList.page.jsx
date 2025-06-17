@@ -22,12 +22,13 @@ const PAGE_LENGTH = 5;
 const AccommodationList = () => {
   const searchState = useAccomSearchStore((state) => state);
   const filterState = useFilterStore((state) => state);
-
   const resetFilters = useFilterStore((state) => state.resetFilters);
 
   // 숙박목록용 데이터
   const [allAccommodations, setAllAccommodations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [appliedFilters, setAppliedFilters] = useState(filterState);
 
   const filteredAccommodations = useMemo(() => {
     return allAccommodations.filter((item) => {
@@ -78,6 +79,7 @@ const AccommodationList = () => {
 
   useEffect(() => {
     const fetchAllData = async () => {
+      setCurrentPage(1); // 필터 적용하면 항상 첫페이지로 이동하게
       const params = {
         keyword: searchState.keyword,
         checkIn: searchState.checkIn,
@@ -85,8 +87,8 @@ const AccommodationList = () => {
         guests: searchState.numberOfPeople,
         page: 0,
         size: 9999,
-        accomTypeNo: filterState.selectedCategory
-          ? Number(filterState.selectedCategory)
+        accomTypeNo: appliedFilters.selectedCategory
+          ? Number(appliedFilters.selectedCategory)
           : null,
         selectedPub: filterState.selectedPub,
         selectedInroom: filterState.selectedInroom,
@@ -105,14 +107,13 @@ const AccommodationList = () => {
     searchState.checkIn,
     searchState.checkOut,
     searchState.numberOfPeople,
-    filterState,
   ]);
 
   useEffect(() => {
     resetFilters();
     setCurrentPage(1);
-  }, [searchState.keyword]);
-  
+  }, []);
+
   return (
     <PageContainer>
       <div className='search-bar'>

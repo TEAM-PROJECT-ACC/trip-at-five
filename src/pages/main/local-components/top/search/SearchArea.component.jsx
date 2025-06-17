@@ -10,21 +10,21 @@ import { toast } from 'react-toastify';
 const SearchArea = () => {
   const state = useAccomSearchStore.getState();
   const { setKeywordState } = useAccomSearchStore();
-  const [inputValue, setInputValue] = useState('');
+  // const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
 
   const searchHandler = async () => {
-    if (inputValue.trim() === '') {
+    if (state.keyword.trim() === '') {
       toast.error('검색어를 입력해주세요.'); // 입력값없으면 애러
       return;
     }
 
-    setKeywordState(inputValue);
+    // setKeywordState(inputValue);
     navigate('/accommodations');
 
     // 필요한 상태만 추출
     const searchData = {
-      keyword: inputValue,
+      keyword: state.keyword,
       checkIn: state.checkIn,
       checkOut: state.checkOut,
       tripDay: state.tripDay,
@@ -38,9 +38,9 @@ const SearchArea = () => {
         <InputSecondary
           className='search-input'
           type='search'
-          value={inputValue}
+          value={state.keyword}
           onChange={(e) => {
-            setInputValue(e.target.value);
+            setKeywordState(e.target.value);
           }}
           placeholder='가고싶은 곳 혹은 숙박명으로 찾아보세요'
           required
