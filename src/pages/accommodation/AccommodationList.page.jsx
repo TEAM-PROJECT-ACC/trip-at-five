@@ -28,8 +28,6 @@ const AccommodationList = () => {
   const [allAccommodations, setAllAccommodations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [appliedFilters, setAppliedFilters] = useState(filterState);
-
   const filteredAccommodations = useMemo(() => {
     return allAccommodations.filter((item) => {
       // 숙박 유형 카테고리
@@ -87,8 +85,8 @@ const AccommodationList = () => {
         guests: searchState.numberOfPeople,
         page: 0,
         size: 9999,
-        accomTypeNo: appliedFilters.selectedCategory
-          ? Number(appliedFilters.selectedCategory)
+        accomTypeNo: searchState.selectedCategory
+          ? Number(searchState.selectedCategory)
           : null,
         selectedPub: filterState.selectedPub,
         selectedInroom: filterState.selectedInroom,
