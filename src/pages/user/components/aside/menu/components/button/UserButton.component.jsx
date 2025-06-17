@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import './userButton.style.scss';
 
 export const UserMenuButton = ({ children, className, to }) => {
-  const match = useMatch('/user/:subPath');
+  const match = useMatch('/users/:subPath');
 
   const isActive = useMemo(() => {
     const subPath = match?.params.subPath;
