@@ -16,11 +16,11 @@ export default function PwdResetting() {
 	return (
 		<PageContainer className={'resetting-container'}>
 			<div className='pwd-resetting-wrap'>
-				<ResttingTitle
+				<ResettingTitle
 					className={'resetting-title'}
 					text={'비밀번호 재설정'}
 				/>
-				<ResttingTitle
+				<ResettingTitle
 					className={'resetting-Description'}
 					text={`${
 						isTrue == true
